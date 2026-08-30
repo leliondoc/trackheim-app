@@ -30,7 +30,7 @@ const pirata = Pirata_One({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://registre-des-ruines.leliondoc.chatgpt.site'),
+  metadataBase: new URL('https://trackheim.leliondoc.chatgpt.site'),
   title: 'Trackheim — créateur de bande et tracker de campagne Mordheim',
   description:
     'Créateur de bande et tracker de campagne Mordheim alimenté par la Grande Librairie de Mordheim.',
