@@ -69,10 +69,10 @@ function DialogContent({
                 size="icon-sm"
               />
             }
-          >
-            <XIcon />
-            <span className="sr-only">Close</span>
-          </DialogPrimitive.Close>
+            >
+              <XIcon />
+              <span className="sr-only">Fermer</span>
+            </DialogPrimitive.Close>
         )}
       </DialogPrimitive.Popup>
     </DialogPortal>
