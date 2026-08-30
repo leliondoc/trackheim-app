@@ -30,7 +30,7 @@ const pirata = Pirata_One({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.SITE_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL('https://registre-des-ruines.leliondoc.chatgpt.site'),
   title: 'Registre des Ruines — Mordheim',
   description:
     'Créateur de bande et tracker de campagne Mordheim alimenté par la Grande Librairie de Mordheim.',
