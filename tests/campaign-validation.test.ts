@@ -68,4 +68,24 @@ describe('contrat persistant des campagnes', () => {
     campagne.combattants[0].coutAcquisitionTotal = -1;
     assert.equal(validerCampagneV3(campagne).ok, false);
   });
+
+  it('refuse une date impossible avant qu’elle atteigne le rendu', () => {
+    const campagne = structuredClone(etatInitial);
+    campagne.parties[0].date = '2026-02-31';
+    assert.equal(validerCampagneV3(campagne).ok, false);
+  });
+
+  it('refuse une extension JSON anormalement imbriquée', () => {
+    const campagne = structuredClone(etatInitial) as unknown as Record<
+      string,
+      unknown
+    >;
+    let niveau: Record<string, unknown> = campagne;
+    for (let index = 0; index < 40; index += 1) {
+      const suivant: Record<string, unknown> = {};
+      niveau.extension = suivant;
+      niveau = suivant;
+    }
+    assert.equal(validerCampagneV3(campagne).ok, false);
+  });
 });

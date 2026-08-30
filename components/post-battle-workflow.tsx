@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   AlertTriangle,
   Check,
@@ -134,6 +134,16 @@ const MARQUEUR_BLESSURE = 'TRACKHEIM_BLESSURE_V1:';
 const MARQUEUR_PERSONNEL = 'TRACKHEIM_PERSONNEL_V1:';
 const CHOIX_AUTRE = '__autre__';
 
+function creerBrouillonBataille(): BrouillonBataille {
+  return {
+    scenario: '',
+    adversaire: '',
+    resultat: 'Victoire',
+    date: new Date().toISOString().slice(0, 10),
+    valeurAdverse: '',
+  };
+}
+
 const maximumsHumains: Record<keyof Statistiques, number> = {
   mouvement: 4,
   capaciteCombat: 6,
@@ -156,13 +166,9 @@ export function PostBattleWorkflow({
   valeurBande,
   recrutement,
 }: Props) {
-  const [creation, setCreation] = useState<BrouillonBataille>(() => ({
-    scenario: '',
-    adversaire: '',
-    resultat: 'Victoire',
-    date: new Date().toISOString().slice(0, 10),
-    valeurAdverse: '',
-  }));
+  const [creation, setCreation] = useState<BrouillonBataille>(
+    creerBrouillonBataille,
+  );
   const [participantsSelectionnes, setParticipantsSelectionnes] = useState<
     string[]
   >(() =>
@@ -195,6 +201,32 @@ export function PostBattleWorkflow({
     equipementId: '',
     combattantId: '',
   });
+  const batailleEtaitActive = useRef(Boolean(campagne.batailleEnCours));
+
+  useEffect(() => {
+    if (campagne.batailleEnCours) {
+      batailleEtaitActive.current = true;
+      return;
+    }
+
+    const disponibles = campagne.combattants
+      .filter(
+        (combattant) =>
+          combattant.statut !== 'Absent' && combattant.partiesManquees === 0,
+      )
+      .map((combattant) => combattant.id);
+    const ensembleDisponibles = new Set(disponibles);
+    setParticipantsSelectionnes((courants) =>
+      batailleEtaitActive.current
+        ? disponibles
+        : courants.filter((id) => ensembleDisponibles.has(id)),
+    );
+    if (batailleEtaitActive.current) {
+      setCreation(creerBrouillonBataille());
+      setErreur(null);
+    }
+    batailleEtaitActive.current = false;
+  }, [campagne.batailleEnCours, campagne.combattants]);
 
   /* Les actions du workflow ne sont rendues que lorsqu'une bataille existe. */
   const bataille = campagne.batailleEnCours as BatailleEnCours;
@@ -239,6 +271,18 @@ export function PostBattleWorkflow({
 
   function creerBataille() {
     const valeurAdverse = entierDepuisTexte(creation.valeurAdverse);
+    const profilsSousMinimum = profilsReiklanders.filter((profil) => {
+      const recrutes = campagne.combattants
+        .filter((combattant) => combattant.profilId === profil.id)
+        .reduce((total, combattant) => total + combattant.quantite, 0);
+      return recrutes < profil.minimum;
+    });
+    if (profilsSousMinimum.length > 0) {
+      setErreur(
+        `Composition invalide : recrutez au moins ${profilsSousMinimum.map((profil) => profil.nom).join(', ')} avant la première bataille.`,
+      );
+      return;
+    }
     if (!creation.scenario.trim() || !creation.adversaire.trim()) {
       setErreur('Le scénario et l’adversaire sont obligatoires.');
       return;
@@ -1070,6 +1114,12 @@ export function PostBattleWorkflow({
       return;
     }
     const notes = construireNotesPartie(bataille);
+    if (notes.length > 10_000) {
+      setErreur(
+        'Les notes archivées dépassent 10 000 caractères. Raccourcissez les notes générales ou la résolution d’exploration.',
+      );
+      return;
+    }
     const partie: Partie = {
       id: `partie-${bataille.numero}-${bataille.id}`,
       scenario: bataille.scenario,
@@ -1400,6 +1450,7 @@ function CreationBataille({
           <Champ libelle="Scénario" htmlFor="battle-scenario">
             <Input
               id="battle-scenario"
+              maxLength={300}
               value={creation.scenario}
               onChange={(event) =>
                 onCreationChange({ scenario: event.target.value })
@@ -1410,6 +1461,7 @@ function CreationBataille({
           <Champ libelle="Adversaire" htmlFor="battle-opponent">
             <Input
               id="battle-opponent"
+              maxLength={300}
               value={creation.adversaire}
               onChange={(event) =>
                 onCreationChange({ adversaire: event.target.value })
@@ -1696,6 +1748,7 @@ function EtapeBlessures({
                 >
                   <Textarea
                     id={`injury-note-${combattant.id}`}
+                    maxLength={10000}
                     disabled={suivi.blessureResolue}
                     value={suivi.blessureNote}
                     onChange={(event) =>
@@ -2148,6 +2201,7 @@ function EtapeExploration({
         <Champ libelle="Résolution du lieu spécial" htmlFor="exploration-note">
           <Textarea
             id="exploration-note"
+            maxLength={10000}
             disabled={bataille.exploration.appliquee}
             value={bataille.exploration.noteResultat}
             onChange={(event) => onNoteChange(event.target.value)}
@@ -2862,6 +2916,7 @@ function EtapeFinalisation({
       <Champ libelle="Notes générales de la bataille" htmlFor="battle-notes">
         <Textarea
           id="battle-notes"
+          maxLength={10000}
           value={bataille.notes}
           onChange={(event) => onNotesChange(event.target.value)}
           placeholder="Décisions de table, objectif, récompense spéciale…"

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpen,
   ChevronDown,
@@ -76,7 +76,12 @@ import {
   surcoutVeteran,
 } from '@/lib/mordheim-rules';
 import { RulesetProvenance } from '@/components/ruleset-provenance';
-import { PostBattleWorkflow } from '@/components/post-battle-workflow';
+
+const PostBattleWorkflow = lazy(() =>
+  import('@/components/post-battle-workflow').then((module) => ({
+    default: module.PostBattleWorkflow,
+  })),
+);
 
 type Vue =
   | 'overview'
@@ -176,6 +181,7 @@ export function MordheimApp() {
   const [cibleEnAttente, setCibleEnAttente] = useState<string | null>(null);
   const [etatSauvegarde, setEtatSauvegarde] =
     useState<EtatSauvegarde>('chargement');
+  const [erreurSauvegarde, setErreurSauvegarde] = useState<string | null>(null);
   const [hydratationTerminee, setHydratationTerminee] = useState(false);
   const [erreurChargement, setErreurChargement] = useState(false);
   const [tentativeChargement, setTentativeChargement] = useState(0);
@@ -192,6 +198,10 @@ export function MordheimApp() {
   const idCampagneCharge = useRef(ID_CAMPAGNE);
   const campagnesEnConflit = useRef<Set<string>>(new Set());
   const minuteursSauvegarde = useRef<Record<string, number>>({});
+  const minuteursCopiesLocales = useRef<Record<string, number>>({});
+  const copiesLocalesEnAttente = useRef<
+    Record<string, { campagne: EtatCampagne; revisionServeur: number }>
+  >({});
   const fileSauvegarde = useRef<Promise<void>>(Promise.resolve());
 
   useEffect(() => {
@@ -203,9 +213,30 @@ export function MordheimApp() {
       for (const minuteur of Object.values(minuteursSauvegarde.current)) {
         window.clearTimeout(minuteur);
       }
+      for (const [id, minuteur] of Object.entries(
+        minuteursCopiesLocales.current,
+      )) {
+        window.clearTimeout(minuteur);
+        const copie = copiesLocalesEnAttente.current[id];
+        if (copie) {
+          ecrireCopieLocale(id, copie.campagne, copie.revisionServeur, true);
+        }
+      }
     },
     [],
   );
+
+  useEffect(() => {
+    function viderCopiesLocales() {
+      for (const [id, copie] of Object.entries(
+        copiesLocalesEnAttente.current,
+      )) {
+        ecrireCopieLocale(id, copie.campagne, copie.revisionServeur, true);
+      }
+    }
+    window.addEventListener('beforeunload', viderCopiesLocales);
+    return () => window.removeEventListener('beforeunload', viderCopiesLocales);
+  }, []);
 
   /* D1 reste la source partagée ; la copie locale protège le travail hors ligne. */
   useEffect(() => {
@@ -330,12 +361,25 @@ export function MordheimApp() {
     generationsLocales.current[idCampagne] = generation;
     const instantane = campagne;
     const idInstantane = idCampagne;
-    ecrireCopieLocale(
-      idInstantane,
-      instantane,
-      revisionsServeur.current[idInstantane] ?? 0,
-      true,
-    );
+    const revisionLocale = revisionsServeur.current[idInstantane] ?? 0;
+    copiesLocalesEnAttente.current[idInstantane] = {
+      campagne: instantane,
+      revisionServeur: revisionLocale,
+    };
+    const minuteurCopie = minuteursCopiesLocales.current[idInstantane];
+    if (minuteurCopie) window.clearTimeout(minuteurCopie);
+    minuteursCopiesLocales.current[idInstantane] = window.setTimeout(() => {
+      delete minuteursCopiesLocales.current[idInstantane];
+      const copie = copiesLocalesEnAttente.current[idInstantane];
+      if (!copie) return;
+      delete copiesLocalesEnAttente.current[idInstantane];
+      ecrireCopieLocale(
+        idInstantane,
+        copie.campagne,
+        copie.revisionServeur,
+        true,
+      );
+    }, 180);
 
     const minuteurPrecedent = minuteursSauvegarde.current[idInstantane];
     if (minuteurPrecedent) window.clearTimeout(minuteurPrecedent);
@@ -351,6 +395,7 @@ export function MordheimApp() {
         const revisionAttendue = revisionsServeur.current[idInstantane] ?? 0;
         if (idCampagneCourant.current === idInstantane) {
           setEtatSauvegarde('sauvegarde');
+          setErreurSauvegarde(null);
         }
         try {
           const reponse = await fetch('/api/campaign', {
@@ -365,6 +410,7 @@ export function MordheimApp() {
           const donnees = (await reponse.json()) as {
             campagne?: EtatCampagne | null;
             revision?: number;
+            erreur?: string;
           };
           if (reponse.status === 409 && donnees.revision !== undefined) {
             const distante = donnees.campagne
@@ -398,6 +444,9 @@ export function MordheimApp() {
               true,
             );
             if (idCampagneCourant.current === idInstantane) {
+              setErreurSauvegarde(
+                donnees.erreur ?? 'La sauvegarde a été refusée par le serveur.',
+              );
               setEtatSauvegarde(
                 reponse.status >= 500 ? 'hors-ligne' : 'erreur',
               );
@@ -414,6 +463,7 @@ export function MordheimApp() {
               false,
             );
             if (idCampagneCourant.current === idInstantane) {
+              setErreurSauvegarde(null);
               setEtatSauvegarde('sauvegarde-ok');
             }
           } else {
@@ -434,6 +484,9 @@ export function MordheimApp() {
             true,
           );
           if (idCampagneCourant.current === idInstantane) {
+            setErreurSauvegarde(
+              'La sauvegarde distante est momentanément indisponible.',
+            );
             setEtatSauvegarde('hors-ligne');
           }
         }
@@ -486,6 +539,8 @@ export function MordheimApp() {
       return;
     }
     window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, id);
+    setHydratationTerminee(false);
+    setEtatSauvegarde('chargement');
     setGestionCampagnesOuverte(false);
     setIdCampagne(id);
   }
@@ -495,6 +550,8 @@ export function MordheimApp() {
     const nouvelle = creerEtatCampagne(nomCampagne, nomBande);
     ecrireCopieLocale(id, nouvelle, 0, true);
     window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, id);
+    setHydratationTerminee(false);
+    setEtatSauvegarde('chargement');
     setGestionCampagnesOuverte(false);
     setCampagne(nouvelle);
     setIdCampagne(id);
@@ -506,13 +563,17 @@ export function MordheimApp() {
       if (event.repeat || event.isComposing) return;
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
-        setRechercheOuverte((ouverte) => !ouverte);
+        if (rechercheOuverte) {
+          setRechercheOuverte(false);
+        } else if (!document.querySelector('[role="dialog"]')) {
+          setRechercheOuverte(true);
+        }
       }
     }
 
     window.addEventListener('keydown', ouvrirRecherche);
     return () => window.removeEventListener('keydown', ouvrirRecherche);
-  }, []);
+  }, [rechercheOuverte]);
 
   /* Après un changement de vue, le résultat précis est amené au centre de l’écran. */
   useEffect(() => {
@@ -557,11 +618,16 @@ export function MordheimApp() {
         <section className="workspace">
           <Topbar
             campagne={campagne}
+            erreurSauvegarde={erreurSauvegarde}
             etatSauvegarde={etatSauvegarde}
             rechercheOuverte={rechercheOuverte}
             onCampagnes={() => setGestionCampagnesOuverte(true)}
             onConflit={() => setDialogueConflitOuvert(true)}
-            onRecherche={() => setRechercheOuverte(true)}
+            onRecherche={() => {
+              if (!document.querySelector('[role="dialog"]')) {
+                setRechercheOuverte(true);
+              }
+            }}
           />
 
           <div className="content-wrap" key={idCampagne}>
@@ -584,6 +650,15 @@ export function MordheimApp() {
                     Réessayer le chargement
                   </Button>
                 </div>
+              </section>
+            ) : !hydratationTerminee ? (
+              <section className="campaign-loading" aria-live="polite">
+                <p className="eyebrow">Ouverture du registre</p>
+                <h1>Chargement de la campagne…</h1>
+                <p>
+                  La bande reste verrouillée jusqu’à la fin de la
+                  synchronisation.
+                </p>
               </section>
             ) : (
               <>
@@ -634,13 +709,15 @@ export function MordheimApp() {
         </section>
       </div>
 
-      <GlobalSearch
-        campagne={campagne}
-        ouvert={rechercheOuverte}
-        onOpenChange={setRechercheOuverte}
-        onNavigate={naviguerDepuisRecherche}
-        onSelectBand={ouvrirBandeDepuisRecherche}
-      />
+      {rechercheOuverte && (
+        <GlobalSearch
+          campagne={campagne}
+          ouvert
+          onOpenChange={setRechercheOuverte}
+          onNavigate={naviguerDepuisRecherche}
+          onSelectBand={ouvrirBandeDepuisRecherche}
+        />
+      )}
 
       <Dialog
         open={dialogueConflitOuvert}
@@ -656,6 +733,15 @@ export function MordheimApp() {
             </DialogDescription>
           </DialogHeader>
           <div className="save-conflict-options">
+            <button
+              type="button"
+              onClick={() => setDialogueConflitOuvert(false)}
+            >
+              <strong>Décider plus tard</strong>
+              <span>
+                Ferme ce message sans modifier aucune des deux versions.
+              </span>
+            </button>
             {conflitSauvegarde?.campagne && (
               <button type="button" onClick={chargerVersionServeur}>
                 <strong>Charger la version serveur</strong>
@@ -681,14 +767,16 @@ export function MordheimApp() {
         </DialogContent>
       </Dialog>
 
-      <CampaignManagerDialog
-        campagneCourante={campagne}
-        idCourant={idCampagne}
-        onCreate={creerCampagne}
-        onOpenChange={setGestionCampagnesOuverte}
-        onSelect={choisirCampagne}
-        open={gestionCampagnesOuverte}
-      />
+      {gestionCampagnesOuverte && (
+        <CampaignManagerDialog
+          campagneCourante={campagne}
+          idCourant={idCampagne}
+          onCreate={creerCampagne}
+          onOpenChange={setGestionCampagnesOuverte}
+          onSelect={choisirCampagne}
+          open
+        />
+      )}
     </main>
   );
 }
@@ -718,6 +806,7 @@ function Sidebar({
       >
         {navigation.map(({ id, libelle, icone: Icone }) => (
           <button
+            aria-label={libelle}
             key={id}
             className={
               vue === id ? 'navigation-item active' : 'navigation-item'
@@ -735,6 +824,7 @@ function Sidebar({
       <p className="sidebar-label">Outils</p>
       <nav className="navigation-stack tools-navigation" aria-label="Outils">
         <button
+          aria-label="Règles homebrew"
           className={
             vue === 'homebrew' ? 'navigation-item active' : 'navigation-item'
           }
@@ -746,6 +836,7 @@ function Sidebar({
           <span className="new-badge">Nouveau</span>
         </button>
         <button
+          aria-label="Paramètres"
           className={
             vue === 'settings'
               ? 'navigation-item settings-navigation-item active'
@@ -779,6 +870,7 @@ function Sidebar({
 
 function Topbar({
   campagne,
+  erreurSauvegarde,
   etatSauvegarde,
   rechercheOuverte,
   onCampagnes,
@@ -786,6 +878,7 @@ function Topbar({
   onRecherche,
 }: {
   campagne: EtatCampagne;
+  erreurSauvegarde: string | null;
   etatSauvegarde: EtatSauvegarde;
   rechercheOuverte: boolean;
   onCampagnes: () => void;
@@ -824,8 +917,16 @@ function Topbar({
             {libelles[etatSauvegarde]}
           </button>
         ) : (
-          <span className={`save-state ${etatSauvegarde}`}>
+          <span
+            aria-live="polite"
+            className={`save-state ${etatSauvegarde}`}
+            role={etatSauvegarde === 'erreur' ? 'alert' : undefined}
+            title={erreurSauvegarde ?? undefined}
+          >
             {libelles[etatSauvegarde]}
+            {erreurSauvegarde && (
+              <span className="sr-only"> : {erreurSauvegarde}</span>
+            )}
           </span>
         )}
         <button
@@ -873,7 +974,7 @@ function CampaignManagerDialog({
   onCreate: (nomCampagne: string, nomBande: string) => void;
 }) {
   const [campagnes, setCampagnes] = useState<ResumeCampagne[]>([]);
-  const [chargement, setChargement] = useState(false);
+  const [chargement, setChargement] = useState(true);
   const [nomCampagne, setNomCampagne] = useState('');
   const [nomBande, setNomBande] = useState('');
 
@@ -903,6 +1004,7 @@ function CampaignManagerDialog({
       ]);
     }
 
+    publierCatalogue([]);
     fetch('/api/campaign?liste=1')
       .then(async (reponse) => {
         if (!reponse.ok) throw new Error('Catalogue indisponible');
@@ -965,7 +1067,13 @@ function CampaignManagerDialog({
           ))}
         </div>
 
-        <div className="campaign-create-form">
+        <form
+          className="campaign-create-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            creer();
+          }}
+        >
           <h3>Nouveau registre</h3>
           <Input
             aria-label="Nom de la nouvelle campagne"
@@ -983,11 +1091,11 @@ function CampaignManagerDialog({
           />
           <Button
             disabled={!nomCampagne.trim() || !nomBande.trim()}
-            onClick={creer}
+            type="submit"
           >
             <Plus /> Créer la campagne
           </Button>
-        </div>
+        </form>
       </DialogContent>
     </Dialog>
   );
@@ -1153,29 +1261,33 @@ function GlobalSearch({
             </CommandGroup>
           )}
 
-          {rechercheDetaillee && (
+          {rechercheDetaillee && campagne.batailleEnCours && (
             <CommandGroup heading="Après-bataille">
-              {etapesApresBataille.map((etape, index) => (
-                <CommandItem
-                  key={etape}
-                  keywords={[
-                    etape,
-                    descriptionEtape(index),
-                    `étape ${index + 1}`,
-                  ]}
-                  onSelect={() =>
-                    selectionner(() => onNavigate('campaign', `etape-${index}`))
-                  }
-                  value={`etape-${index} ${etape} ${descriptionEtape(index)}`}
-                >
-                  <Swords aria-hidden="true" />
-                  <span className="search-result-copy">
-                    <strong>{etape}</strong>
-                    <small>{descriptionEtape(index)}</small>
-                  </span>
-                  <CommandShortcut>Étape {index + 1}</CommandShortcut>
-                </CommandItem>
-              ))}
+              {etapesApresBataille
+                .slice(0, campagne.batailleEnCours.etapeActive + 1)
+                .map((etape, index) => (
+                  <CommandItem
+                    key={etape}
+                    keywords={[
+                      etape,
+                      descriptionEtape(index),
+                      `étape ${index + 1}`,
+                    ]}
+                    onSelect={() =>
+                      selectionner(() =>
+                        onNavigate('campaign', `etape-${index}`),
+                      )
+                    }
+                    value={`etape-${index} ${etape} ${descriptionEtape(index)}`}
+                  >
+                    <Swords aria-hidden="true" />
+                    <span className="search-result-copy">
+                      <strong>{etape}</strong>
+                      <small>{descriptionEtape(index)}</small>
+                    </span>
+                    <CommandShortcut>Étape {index + 1}</CommandShortcut>
+                  </CommandItem>
+                ))}
             </CommandGroup>
           )}
 
@@ -1839,6 +1951,19 @@ function RecruitDialog({
     groupeCible && groupeCible.quantite + quantiteDemandee > 5,
   );
 
+  function reinitialiserBrouillon() {
+    setProfilId('guerrier');
+    setGroupeId('');
+    setNom('');
+    setQuantite(1);
+    setSelectionEquipement([]);
+  }
+
+  function changerOuverture(nouvelEtat: boolean) {
+    if (!nouvelEtat) reinitialiserBrouillon();
+    setOuvert(nouvelEtat);
+  }
+
   function recruter() {
     if (
       (!groupeCible && !nom.trim()) ||
@@ -1887,8 +2012,7 @@ function RecruitDialog({
             }
           : null,
       });
-      setGroupeId('');
-      setQuantite(1);
+      reinitialiserBrouillon();
       setOuvert(false);
       return;
     }
@@ -1916,10 +2040,7 @@ function RecruitDialog({
       couronnes: campagne.couronnes - cout,
       combattants: [...campagne.combattants, combattant],
     });
-    setNom('');
-    setGroupeId('');
-    setQuantite(1);
-    setSelectionEquipement([]);
+    reinitialiserBrouillon();
     setOuvert(false);
   }
 
@@ -1930,204 +2051,212 @@ function RecruitDialog({
   }
 
   return (
-    <Dialog open={ouvert} onOpenChange={setOuvert}>
+    <Dialog open={ouvert} onOpenChange={changerOuverture}>
       <DialogTrigger render={<Button className="primary-action" size="lg" />}>
         <Plus data-icon="inline-start" />
         Ajouter un combattant
       </DialogTrigger>
       <DialogContent className="recruit-dialog sm:max-w-2xl">
-        <DialogHeader>
-          <DialogTitle>Recruter un combattant</DialogTitle>
-          <DialogDescription>
-            Profils Reiklanders V2bFr, appliqués selon le manifeste de règles de
-            la campagne.
-          </DialogDescription>
-        </DialogHeader>
+        <form
+          className="dialog-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            recruter();
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>Recruter un combattant</DialogTitle>
+            <DialogDescription>
+              Profils Reiklanders V2bFr, appliqués selon le manifeste de règles
+              de la campagne.
+            </DialogDescription>
+          </DialogHeader>
 
-        {!creationDeBande && groupesRenforcables.length > 0 && (
-          <label className="field-group" htmlFor="recruit-group">
-            <span>Destination de la recrue</span>
-            <NativeSelect
-              id="recruit-group"
-              value={groupeId}
-              onChange={(event) => {
-                const id = event.target.value;
-                const groupe = campagne.combattants.find(
-                  (item) => item.id === id,
-                );
-                setGroupeId(id);
-                setQuantite(1);
-                if (groupe) {
-                  setProfilId(groupe.profilId);
-                  setNom(groupe.nom);
-                  setSelectionEquipement([...groupe.equipementIds]);
-                } else {
-                  setNom('');
+          {!creationDeBande && groupesRenforcables.length > 0 && (
+            <label className="field-group" htmlFor="recruit-group">
+              <span>Destination de la recrue</span>
+              <NativeSelect
+                id="recruit-group"
+                value={groupeId}
+                onChange={(event) => {
+                  const id = event.target.value;
+                  const groupe = campagne.combattants.find(
+                    (item) => item.id === id,
+                  );
+                  setGroupeId(id);
+                  setQuantite(1);
+                  if (groupe) {
+                    setProfilId(groupe.profilId);
+                    setNom(groupe.nom);
+                    setSelectionEquipement([...groupe.equipementIds]);
+                  } else {
+                    setNom('');
+                    setSelectionEquipement([]);
+                  }
+                }}
+              >
+                <NativeSelectOption value="">
+                  Créer un nouveau combattant ou groupe
+                </NativeSelectOption>
+                {groupesRenforcables.map((groupe) => (
+                  <NativeSelectOption key={groupe.id} value={groupe.id}>
+                    Renforcer {groupe.nom} — {groupe.quantite}/5 ·{' '}
+                    {groupe.experience} XP
+                  </NativeSelectOption>
+                ))}
+              </NativeSelect>
+            </label>
+          )}
+
+          <div className="form-grid recruit-identity-grid">
+            <label className="field-group" htmlFor="recruit-profile">
+              <span>Profil</span>
+              <NativeSelect
+                disabled={Boolean(groupeCible)}
+                id="recruit-profile"
+                value={profil.id}
+                onChange={(event) => {
+                  setProfilId(event.target.value);
+                  setQuantite(1);
                   setSelectionEquipement([]);
-                }
-              }}
-            >
-              <NativeSelectOption value="">
-                Créer un nouveau combattant ou groupe
-              </NativeSelectOption>
-              {groupesRenforcables.map((groupe) => (
-                <NativeSelectOption key={groupe.id} value={groupe.id}>
-                  Renforcer {groupe.nom} — {groupe.quantite}/5 ·{' '}
-                  {groupe.experience} XP
-                </NativeSelectOption>
+                }}
+              >
+                {profilsReiklanders.map((item) => (
+                  <NativeSelectOption key={item.id} value={item.id}>
+                    {item.nom} — {coutProfil(item, campagne)} CO
+                  </NativeSelectOption>
+                ))}
+              </NativeSelect>
+            </label>
+            <label className="field-group" htmlFor="recruit-name">
+              <span>Nom du combattant</span>
+              <Input
+                disabled={Boolean(groupeCible)}
+                id="recruit-name"
+                maxLength={160}
+                value={nom}
+                onChange={(event) => setNom(event.target.value)}
+                placeholder="Ex. Dieter le Borgne"
+              />
+            </label>
+            <label className="field-group" htmlFor="recruit-quantity">
+              <span>
+                {profil.categorie === 'Héros' ? 'Individu' : 'Taille du groupe'}
+              </span>
+              <NativeSelect
+                id="recruit-quantity"
+                disabled={profil.categorie === 'Héros'}
+                value={`${quantiteDemandee}`}
+                onChange={(event) => setQuantite(Number(event.target.value))}
+              >
+                {Array.from(
+                  { length: profil.categorie === 'Héros' ? 1 : 5 },
+                  (_, index) => index + 1,
+                ).map((nombre) => (
+                  <NativeSelectOption key={nombre} value={`${nombre}`}>
+                    {nombre}
+                  </NativeSelectOption>
+                ))}
+              </NativeSelect>
+            </label>
+          </div>
+
+          <div className="profile-preview">
+            <div>
+              <strong>{profil.nom}</strong>
+              <span>{profil.categorie}</span>
+            </div>
+            <code>{formaterStats(profil.statistiques)}</code>
+            {profil.regleSpeciale && <p>{profil.regleSpeciale}</p>}
+          </div>
+
+          <div className="equipment-picker">
+            <div className="section-title-row">
+              <h3>
+                {creationDeBande
+                  ? 'Équipement de départ'
+                  : 'Objets communs autorisés'}
+              </h3>
+              <span>Première dague gratuite</span>
+            </div>
+            <div className="equipment-options">
+              {(groupeCible
+                ? groupeCible.equipementIds.map(equipementParId)
+                : disponibles
+              ).map((item) => (
+                <div className="equipment-option" key={item.id}>
+                  <Checkbox
+                    aria-label={`Ajouter ${item.nom}`}
+                    checked={
+                      groupeCible ? true : selectionEquipement.includes(item.id)
+                    }
+                    disabled={Boolean(groupeCible)}
+                    onCheckedChange={(checked) =>
+                      basculerEquipement(item.id, checked === true)
+                    }
+                  />
+                  <span>
+                    <strong>{item.nom}</strong>
+                    <small>{item.categorie}</small>
+                  </span>
+                  <b>
+                    {groupeCible && item.rareteCommerce !== undefined
+                      ? 'Magot'
+                      : `${coutEquipement(item, campagne)} CO`}
+                  </b>
+                </div>
               ))}
-            </NativeSelect>
-          </label>
-        )}
+            </div>
+          </div>
 
-        <div className="form-grid recruit-identity-grid">
-          <label className="field-group" htmlFor="recruit-profile">
-            <span>Profil</span>
-            <NativeSelect
-              disabled={Boolean(groupeCible)}
-              id="recruit-profile"
-              value={profil.id}
-              onChange={(event) => {
-                setProfilId(event.target.value);
-                setQuantite(1);
-                setSelectionEquipement([]);
-              }}
+          {(limiteAtteinte ||
+            bandePleine ||
+            fondsInsuffisants ||
+            chefDejaRecrute ||
+            veteranIndisponible ||
+            groupeDepasse ||
+            stockRareInsuffisant) && (
+            <div className="form-alert" role="alert">
+              <CircleAlert />{' '}
+              {fondsInsuffisants
+                ? `Trésor insuffisant : il manque ${cout - campagne.couronnes} CO.`
+                : stockRareInsuffisant
+                  ? 'Le magot ne contient pas assez d’exemplaires des objets rares portés par ce groupe.'
+                  : veteranIndisponible
+                    ? `Réserve vétéran insuffisante : ${experienceVeteransDemandee} XP requis, ${Math.max(0, (disponibiliteVeterans ?? 0) - experienceVeteransDepensee)} encore disponible.`
+                    : groupeDepasse
+                      ? 'Un groupe d’hommes de main ne peut pas dépasser cinq membres.'
+                      : chefDejaRecrute
+                        ? 'Une bande ne peut pas recruter un second Chef.'
+                        : 'La limite de ce profil ou de la bande est atteinte.'}
+            </div>
+          )}
+
+          <DialogFooter>
+            <div className="dialog-total">
+              <span>
+                Total
+                {quantiteDemandee > 1 ? ` · ${quantiteDemandee} membres` : ''}
+              </span>
+              <strong>{cout} CO</strong>
+            </div>
+            <Button
+              type="submit"
+              disabled={
+                (!groupeCible && !nom.trim()) ||
+                limiteAtteinte ||
+                bandePleine ||
+                fondsInsuffisants ||
+                chefDejaRecrute ||
+                veteranIndisponible ||
+                groupeDepasse ||
+                stockRareInsuffisant
+              }
             >
-              {profilsReiklanders.map((item) => (
-                <NativeSelectOption key={item.id} value={item.id}>
-                  {item.nom} — {coutProfil(item, campagne)} CO
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
-          </label>
-          <label className="field-group" htmlFor="recruit-name">
-            <span>Nom du combattant</span>
-            <Input
-              disabled={Boolean(groupeCible)}
-              id="recruit-name"
-              maxLength={160}
-              value={nom}
-              onChange={(event) => setNom(event.target.value)}
-              placeholder="Ex. Dieter le Borgne"
-            />
-          </label>
-          <label className="field-group" htmlFor="recruit-quantity">
-            <span>
-              {profil.categorie === 'Héros' ? 'Individu' : 'Taille du groupe'}
-            </span>
-            <NativeSelect
-              id="recruit-quantity"
-              disabled={profil.categorie === 'Héros'}
-              value={`${quantiteDemandee}`}
-              onChange={(event) => setQuantite(Number(event.target.value))}
-            >
-              {Array.from(
-                { length: profil.categorie === 'Héros' ? 1 : 5 },
-                (_, index) => index + 1,
-              ).map((nombre) => (
-                <NativeSelectOption key={nombre} value={`${nombre}`}>
-                  {nombre}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
-          </label>
-        </div>
-
-        <div className="profile-preview">
-          <div>
-            <strong>{profil.nom}</strong>
-            <span>{profil.categorie}</span>
-          </div>
-          <code>{formaterStats(profil.statistiques)}</code>
-          {profil.regleSpeciale && <p>{profil.regleSpeciale}</p>}
-        </div>
-
-        <div className="equipment-picker">
-          <div className="section-title-row">
-            <h3>
-              {creationDeBande
-                ? 'Équipement de départ'
-                : 'Objets communs autorisés'}
-            </h3>
-            <span>Première dague gratuite</span>
-          </div>
-          <div className="equipment-options">
-            {(groupeCible
-              ? groupeCible.equipementIds.map(equipementParId)
-              : disponibles
-            ).map((item) => (
-              <div className="equipment-option" key={item.id}>
-                <Checkbox
-                  aria-label={`Ajouter ${item.nom}`}
-                  checked={
-                    groupeCible ? true : selectionEquipement.includes(item.id)
-                  }
-                  disabled={Boolean(groupeCible)}
-                  onCheckedChange={(checked) =>
-                    basculerEquipement(item.id, checked === true)
-                  }
-                />
-                <span>
-                  <strong>{item.nom}</strong>
-                  <small>{item.categorie}</small>
-                </span>
-                <b>
-                  {groupeCible && item.rareteCommerce !== undefined
-                    ? 'Magot'
-                    : `${coutEquipement(item, campagne)} CO`}
-                </b>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {(limiteAtteinte ||
-          bandePleine ||
-          fondsInsuffisants ||
-          chefDejaRecrute ||
-          veteranIndisponible ||
-          groupeDepasse ||
-          stockRareInsuffisant) && (
-          <div className="form-alert">
-            <CircleAlert />{' '}
-            {fondsInsuffisants
-              ? `Trésor insuffisant : il manque ${cout - campagne.couronnes} CO.`
-              : stockRareInsuffisant
-                ? 'Le magot ne contient pas assez d’exemplaires des objets rares portés par ce groupe.'
-                : veteranIndisponible
-                  ? `Réserve vétéran insuffisante : ${experienceVeteransDemandee} XP requis, ${Math.max(0, (disponibiliteVeterans ?? 0) - experienceVeteransDepensee)} encore disponible.`
-                  : groupeDepasse
-                    ? 'Un groupe d’hommes de main ne peut pas dépasser cinq membres.'
-                    : chefDejaRecrute
-                      ? 'Une bande ne peut pas recruter un second Chef.'
-                      : 'La limite de ce profil ou de la bande est atteinte.'}
-          </div>
-        )}
-
-        <DialogFooter>
-          <div className="dialog-total">
-            <span>
-              Total
-              {quantiteDemandee > 1 ? ` · ${quantiteDemandee} membres` : ''}
-            </span>
-            <strong>{cout} CO</strong>
-          </div>
-          <Button
-            onClick={recruter}
-            disabled={
-              (!groupeCible && !nom.trim()) ||
-              limiteAtteinte ||
-              bandePleine ||
-              fondsInsuffisants ||
-              chefDejaRecrute ||
-              veteranIndisponible ||
-              groupeDepasse ||
-              stockRareInsuffisant
-            }
-          >
-            {groupeCible ? 'Renforcer le groupe' : 'Recruter'}
-          </Button>
-        </DialogFooter>
+              {groupeCible ? 'Renforcer le groupe' : 'Recruter'}
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
@@ -2167,17 +2296,25 @@ function CampaignView({
       />
 
       <div className="campaign-layout workflow-layout">
-        <PostBattleWorkflow
-          campagne={campagne}
-          onCampagneChange={onCampagneChange}
-          valeurBande={synthese.valeurBande}
-          recrutement={
-            <RecruitDialog
-              campagne={campagne}
-              onCampagneChange={onCampagneChange}
-            />
+        <Suspense
+          fallback={
+            <section className="workflow-loading" aria-live="polite">
+              Chargement de l’assistant d’après-bataille…
+            </section>
           }
-        />
+        >
+          <PostBattleWorkflow
+            campagne={campagne}
+            onCampagneChange={onCampagneChange}
+            valeurBande={synthese.valeurBande}
+            recrutement={
+              <RecruitDialog
+                campagne={campagne}
+                onCampagneChange={onCampagneChange}
+              />
+            }
+          />
+        </Suspense>
 
         <aside className="campaign-tools">
           <ResourceCounter
@@ -2742,69 +2879,93 @@ function AddRuleDialog({
     setOuvert(false);
   }
 
+  function changerOuverture(nouvelEtat: boolean) {
+    if (!nouvelEtat) {
+      setTitre('');
+      setDescription('');
+      setPortee('Campagne');
+    }
+    setOuvert(nouvelEtat);
+  }
+
   return (
-    <Dialog open={ouvert} onOpenChange={setOuvert}>
+    <Dialog open={ouvert} onOpenChange={changerOuverture}>
       <DialogTrigger render={<Button variant="outline" />}>
         <Plus data-icon="inline-start" />
         Ajouter une règle
       </DialogTrigger>
       <DialogContent className="homebrew-rule-dialog sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>Nouvelle règle complémentaire</DialogTitle>
-          <DialogDescription>
-            Décrivez uniquement l’écart au livre officiel. La règle vanilla
-            reste héritée partout ailleurs.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="homebrew-rule-form">
-          <label className="field-group" htmlFor="homebrew-rule-title">
-            Nom de la règle
-            <Input
-              id="homebrew-rule-title"
-              maxLength={300}
-              value={titre}
-              onChange={(event) => setTitre(event.target.value)}
-              placeholder="Ex. Prime du chasseur"
-            />
-          </label>
-          <label className="field-group" htmlFor="homebrew-rule-scope">
-            Portée
-            <NativeSelect
-              id="homebrew-rule-scope"
-              value={portee}
-              onChange={(event) =>
-                setPortee(event.target.value as RegleHomebrew['portee'])
-              }
+        <form
+          className="dialog-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            ajouter();
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>Nouvelle règle complémentaire</DialogTitle>
+            <DialogDescription>
+              Décrivez uniquement l’écart au livre officiel. La règle vanilla
+              reste héritée partout ailleurs.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="homebrew-rule-form">
+            <label className="field-group" htmlFor="homebrew-rule-title">
+              Nom de la règle
+              <Input
+                id="homebrew-rule-title"
+                maxLength={300}
+                value={titre}
+                onChange={(event) => setTitre(event.target.value)}
+                placeholder="Ex. Prime du chasseur"
+              />
+            </label>
+            <label className="field-group" htmlFor="homebrew-rule-scope">
+              Portée
+              <NativeSelect
+                id="homebrew-rule-scope"
+                value={portee}
+                onChange={(event) =>
+                  setPortee(event.target.value as RegleHomebrew['portee'])
+                }
+              >
+                <NativeSelectOption value="Bande">Bande</NativeSelectOption>
+                <NativeSelectOption value="Campagne">
+                  Campagne
+                </NativeSelectOption>
+                <NativeSelectOption value="Combat">Combat</NativeSelectOption>
+                <NativeSelectOption value="Après-bataille">
+                  Après-bataille
+                </NativeSelectOption>
+              </NativeSelect>
+            </label>
+            <label className="field-group" htmlFor="homebrew-rule-description">
+              Texte de l’override ou du complément
+              <Textarea
+                id="homebrew-rule-description"
+                maxLength={10000}
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+                placeholder="Expliquez précisément ce qui change."
+              />
+            </label>
+          </div>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => changerOuverture(false)}
             >
-              <NativeSelectOption value="Bande">Bande</NativeSelectOption>
-              <NativeSelectOption value="Campagne">Campagne</NativeSelectOption>
-              <NativeSelectOption value="Après-bataille">
-                Après-bataille
-              </NativeSelectOption>
-            </NativeSelect>
-          </label>
-          <label className="field-group" htmlFor="homebrew-rule-description">
-            Texte de l’override ou du complément
-            <Textarea
-              id="homebrew-rule-description"
-              maxLength={10000}
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              placeholder="Expliquez précisément ce qui change."
-            />
-          </label>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOuvert(false)}>
-            Annuler
-          </Button>
-          <Button
-            disabled={!titre.trim() || !description.trim()}
-            onClick={ajouter}
-          >
-            Ajouter au set
-          </Button>
-        </DialogFooter>
+              Annuler
+            </Button>
+            <Button
+              disabled={!titre.trim() || !description.trim()}
+              type="submit"
+            >
+              Ajouter au set
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
@@ -3078,10 +3239,13 @@ function initiales(nom: string) {
 }
 
 function formaterDate(date: string) {
+  const valeur = new Date(`${date}T00:00:00Z`);
+  if (Number.isNaN(valeur.getTime())) return 'date inconnue';
   return new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric',
     month: 'short',
-  }).format(new Date(date));
+    timeZone: 'UTC',
+  }).format(valeur);
 }
 
 function cleCopieLocale(idCampagne: string) {

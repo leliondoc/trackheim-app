@@ -1,6 +1,54 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
+
+@custom-variant data-open {
+  &:where([data-state='open']),
+  &:where([data-open]:not([data-open='false'])) {
+    @slot;
+  }
+}
+
+@custom-variant data-closed {
+  &:where([data-state='closed']),
+  &:where([data-closed]:not([data-closed='false'])) {
+    @slot;
+  }
+}
+
+@custom-variant data-checked {
+  &:where([data-state='checked']),
+  &:where([data-checked]:not([data-checked='false'])) {
+    @slot;
+  }
+}
+
+@custom-variant data-unchecked {
+  &:where([data-state='unchecked']),
+  &:where([data-unchecked]:not([data-unchecked='false'])) {
+    @slot;
+  }
+}
+
+@custom-variant data-selected {
+  &:where([data-selected='true']) {
+    @slot;
+  }
+}
+
+@custom-variant data-disabled {
+  &:where([data-disabled]:not([data-disabled='false'])) {
+    @slot;
+  }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -266,9 +314,8 @@ button {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgb(96 67 39 / 16%);
-  background: rgb(245 238 219 / 72%);
+  background: rgb(245 238 219 / 96%);
   padding: 12px clamp(20px, 3vw, 42px);
-  backdrop-filter: blur(12px);
 }
 .eyebrow {
   margin: 0 0 3px;
@@ -1055,6 +1102,10 @@ button {
 }
 
 /* Dialogue de recrutement */
+.dialog-form {
+  display: contents;
+}
+
 .recruit-dialog {
   max-height: min(88vh, 760px);
   overflow-y: auto;
@@ -1200,6 +1251,14 @@ button {
   grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.7fr);
   gap: 16px;
   align-items: start;
+}
+
+.workflow-loading {
+  min-height: 220px;
+  border: 3px double #765535;
+  background: rgb(245 229 196 / 72%);
+  color: #6d5943;
+  padding: 28px;
 }
 .campaign-sequence {
   margin: 0;
@@ -2456,7 +2515,7 @@ body {
 }
 
 .application::before {
-  position: fixed;
+  position: absolute;
   z-index: -1;
   inset: 0;
   background:
@@ -3626,6 +3685,24 @@ select,
   margin: 0 0 18px;
   color: #6d5943;
   line-height: 1.55;
+}
+
+.campaign-loading {
+  max-width: 760px;
+  border-block: 3px double #765535;
+  background: rgb(245 229 196 / 72%);
+  padding: clamp(24px, 4vw, 42px);
+}
+
+.campaign-loading h1 {
+  margin: 0 0 8px;
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.campaign-loading p:last-child {
+  margin: 0;
+  color: #6d5943;
 }
 
 .save-conflict-dialog {

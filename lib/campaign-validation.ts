@@ -4,6 +4,9 @@ export const TAILLE_MAX_PAYLOAD_CAMPAGNE = 512 * 1024;
 
 const IDENTIFIANT_CAMPAGNE = /^[a-z0-9](?:[a-z0-9_-]{0,62}[a-z0-9])?$/;
 const IDENTIFIANT_TECHNIQUE = /^[a-z0-9](?:[a-z0-9._-]{0,126}[a-z0-9])?$/;
+const DATE_ISO = /^(\d{4})-(\d{2})-(\d{2})$/;
+const PROFONDEUR_JSON_MAXIMALE = 24;
+const NOEUDS_JSON_MAXIMUM = 50_000;
 
 type ValidationCampagne =
   | { ok: true; campagne: EtatCampagne }
@@ -27,6 +30,8 @@ export function estRevisionValide(valeur: unknown): valeur is number {
  * d'une évolution compatible du client.
  */
 export function validerCampagneV3(valeur: unknown): ValidationCampagne {
+  const erreurComplexite = validerComplexiteJson(valeur);
+  if (erreurComplexite) return echec(erreurComplexite);
   if (!estObjet(valeur)) return echec('La campagne doit être un objet JSON.');
   if (valeur.version !== 3) {
     return echec('La campagne doit utiliser la version 3 du format.');
@@ -203,7 +208,7 @@ function validerParties(valeur: unknown) {
     if (!['Victoire', 'Défaite', 'Égalité'].includes(String(partie.resultat))) {
       return `${chemin}.resultat est invalide.`;
     }
-    if (!estTexte(partie.date, 1, 64)) return `${chemin}.date est invalide.`;
+    if (!estDateIso(partie.date)) return `${chemin}.date est invalide.`;
     for (const cle of [
       'valeurAvant',
       'valeurAdverse',
@@ -238,8 +243,7 @@ function validerBataille(valeur: unknown) {
   if (!['Victoire', 'Défaite', 'Égalité'].includes(String(valeur.resultat))) {
     return 'batailleEnCours.resultat est invalide.';
   }
-  if (!estTexte(valeur.date, 1, 64))
-    return 'batailleEnCours.date est invalide.';
+  if (!estDateIso(valeur.date)) return 'batailleEnCours.date est invalide.';
   if (!estEntierNaturel(valeur.valeurAvant)) {
     return 'batailleEnCours.valeurAvant est invalide.';
   }
@@ -493,6 +497,50 @@ function validerListeDes(
 function estObjet(valeur: unknown): valeur is ObjetJson {
   return (
     typeof valeur === 'object' && valeur !== null && !Array.isArray(valeur)
+  );
+}
+
+function validerComplexiteJson(valeur: unknown) {
+  const aVisiter: Array<{ valeur: unknown; profondeur: number }> = [
+    { valeur, profondeur: 0 },
+  ];
+  let noeuds = 0;
+
+  while (aVisiter.length > 0) {
+    const courant = aVisiter.pop();
+    if (!courant) break;
+    noeuds += 1;
+    if (noeuds > NOEUDS_JSON_MAXIMUM) {
+      return 'La campagne contient trop de valeurs JSON.';
+    }
+    if (courant.profondeur > PROFONDEUR_JSON_MAXIMALE) {
+      return 'La campagne contient une imbrication JSON trop profonde.';
+    }
+    if (Array.isArray(courant.valeur)) {
+      for (const contenu of courant.valeur) {
+        aVisiter.push({ valeur: contenu, profondeur: courant.profondeur + 1 });
+      }
+    } else if (estObjet(courant.valeur)) {
+      for (const contenu of Object.values(courant.valeur)) {
+        aVisiter.push({ valeur: contenu, profondeur: courant.profondeur + 1 });
+      }
+    }
+  }
+  return null;
+}
+
+function estDateIso(valeur: unknown): valeur is string {
+  if (typeof valeur !== 'string') return false;
+  const correspondance = DATE_ISO.exec(valeur);
+  if (!correspondance) return false;
+  const annee = Number(correspondance[1]);
+  const mois = Number(correspondance[2]);
+  const jour = Number(correspondance[3]);
+  const date = new Date(Date.UTC(annee, mois - 1, jour));
+  return (
+    date.getUTCFullYear() === annee &&
+    date.getUTCMonth() === mois - 1 &&
+    date.getUTCDate() === jour
   );
 }
 

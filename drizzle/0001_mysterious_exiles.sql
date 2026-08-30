@@ -1,1 +1,0 @@
-ALTER TABLE `campaign_states` ADD `revision` integer DEFAULT 0 NOT NULL;
