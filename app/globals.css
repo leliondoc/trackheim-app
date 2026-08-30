@@ -1051,7 +1051,6 @@ body {
   padding: 14px 0 24px;
 }
 
-.warband-heading::before,
 .page-header::before {
   position: absolute;
   z-index: 0;
@@ -1450,7 +1449,7 @@ select,
 @media (max-width: 1080px) {
   .workspace::after { width: 480px; opacity: .055; }
   .brand-mark { width: 58px; }
-  .warband-heading::before, .page-header::before { right: 0; opacity: .1; }
+  .page-header::before { right: 0; opacity: .1; }
 }
 
 @media (max-width: 780px) {
@@ -1463,7 +1462,6 @@ select,
 
   .workspace::after,
   .topbar::before,
-  .warband-heading::before,
   .page-header::before { display: none; }
 
   .topbar { border-bottom-width: 3px; }
