@@ -182,11 +182,11 @@ function Sidebar({
         <div className="brand-mark" aria-hidden="true"><Skull /></div>
         <div>
           <p className="brand-kicker">Mordheim</p>
-          <p className="brand-title">Registre des Ruines</p>
+          <p className="brand-title">Trackheim</p>
         </div>
       </div>
 
-      <nav className="navigation-stack" aria-label="Navigation principale">
+      <nav className="navigation-stack primary-navigation" aria-label="Navigation principale">
         {navigation.map(({ id, libelle, icone: Icone }) => (
           <button
             key={id}
@@ -202,7 +202,7 @@ function Sidebar({
 
       <div className="sidebar-separator" />
       <p className="sidebar-label">Outils</p>
-      <nav className="navigation-stack" aria-label="Outils">
+      <nav className="navigation-stack tools-navigation" aria-label="Outils">
         <button
           className={vue === 'homebrew' ? 'navigation-item active' : 'navigation-item'}
           onClick={() => onVueChange('homebrew')}
@@ -212,7 +212,7 @@ function Sidebar({
           <span>Règles homebrew</span>
           <span className="new-badge">Nouveau</span>
         </button>
-        <button className="navigation-item" type="button">
+        <button className="navigation-item settings-navigation-item" type="button">
           <Settings2 aria-hidden="true" />
           <span>Paramètres</span>
         </button>

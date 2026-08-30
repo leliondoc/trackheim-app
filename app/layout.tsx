@@ -31,26 +31,26 @@ const pirata = Pirata_One({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://registre-des-ruines.leliondoc.chatgpt.site'),
-  title: 'Registre des Ruines — Mordheim',
+  title: 'Trackheim — créateur de bande et tracker de campagne Mordheim',
   description:
     'Créateur de bande et tracker de campagne Mordheim alimenté par la Grande Librairie de Mordheim.',
   openGraph: {
-    title: 'Registre des Ruines — Mordheim',
+    title: 'Trackheim',
     description: 'Créez votre bande. Survivez à la campagne.',
     type: 'website',
     locale: 'fr_FR',
     images: [
       {
         url: '/og.png',
-        width: 1536,
-        height: 1024,
-        alt: 'Registre des Ruines — créateur de bande Mordheim',
+        width: 1731,
+        height: 909,
+        alt: 'Trackheim — créateur de bande et tracker Mordheim',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Registre des Ruines — Mordheim',
+    title: 'Trackheim',
     description: 'Créez votre bande. Survivez à la campagne.',
     images: ['/og.png'],
   },
