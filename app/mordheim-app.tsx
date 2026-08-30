@@ -44,6 +44,7 @@ import {
   ProgressLabel,
 } from '@/components/ui/progress';
 import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
 import {
   bandesBibliotheque,
   equipements,
@@ -55,6 +56,8 @@ import {
   type Equipement,
   type EtatCampagne,
   type ProfilRecrue,
+  type RegleHomebrew,
+  type ReglagesHomebrew,
   type Statistiques,
 } from '@/lib/mordheim-data';
 
@@ -95,7 +98,9 @@ export function MordheimApp() {
         const donnees = (await reponse.json()) as {
           campagne: EtatCampagne | null;
         };
-        if (!annule && donnees.campagne) setCampagne(donnees.campagne);
+        if (!annule && donnees.campagne) {
+          setCampagne(normaliserCampagne(donnees.campagne));
+        }
         if (!annule) setEtatSauvegarde('sauvegarde-ok');
       } catch {
         if (!annule) setEtatSauvegarde('hors-ligne');
@@ -325,10 +330,15 @@ function WarbandHeading({
         <div className="title-line">
           <h1>{campagne.nomBande}</h1>
           <span className="grade-badge">Grade {campagne.grade}</span>
+          {campagne.homebrew.actifs && (
+            <span className="homebrew-badge">Homebrew actif</span>
+          )}
         </div>
         <p>
           Mercenaires Reiklanders · {campagne.numeroBataille}e bataille ·
-          règles officielles Games Workshop
+          {campagne.homebrew.actifs
+            ? ` ${campagne.homebrew.nomSet}, en complément des règles officielles`
+            : ' règles officielles Games Workshop'}
         </p>
       </div>
       <RecruitDialog campagne={campagne} onCampagneChange={onCampagneChange} />
@@ -869,30 +879,64 @@ function HomebrewView({
   campagne: EtatCampagne;
   onCampagneChange: (campagne: EtatCampagne) => void;
 }) {
-  function mettreAJourRecrue(id: string, valeur: number) {
+  const nombreSurcharges =
+    Object.keys(campagne.homebrew.coutsRecrues).length +
+    Object.keys(campagne.homebrew.coutsEquipements).length;
+  const reglesActives = campagne.homebrew.regles.filter((regle) => regle.active).length;
+
+  function mettreAJourHomebrew(changements: Partial<ReglagesHomebrew>) {
     onCampagneChange({
       ...campagne,
-      homebrew: {
-        ...campagne.homebrew,
-        coutsRecrues: { ...campagne.homebrew.coutsRecrues, [id]: valeur },
-      },
+      homebrew: { ...campagne.homebrew, ...changements },
+    });
+  }
+
+  function mettreAJourRecrue(id: string, valeur: number) {
+    mettreAJourHomebrew({
+      coutsRecrues: { ...campagne.homebrew.coutsRecrues, [id]: valeur },
     });
   }
 
   function mettreAJourEquipement(id: string, valeur: number) {
-    onCampagneChange({
-      ...campagne,
-      homebrew: {
-        ...campagne.homebrew,
-        coutsEquipements: { ...campagne.homebrew.coutsEquipements, [id]: valeur },
-      },
+    mettreAJourHomebrew({
+      coutsEquipements: { ...campagne.homebrew.coutsEquipements, [id]: valeur },
     });
   }
 
-  function restaurerPrix() {
-    onCampagneChange({
-      ...campagne,
-      homebrew: { ...campagne.homebrew, coutsRecrues: {}, coutsEquipements: {} },
+  function basculerSurchargeRecrue(id: string, active: boolean, officiel: number) {
+    const valeurs = { ...campagne.homebrew.coutsRecrues };
+    if (active) valeurs[id] = officiel;
+    else delete valeurs[id];
+    mettreAJourHomebrew({ coutsRecrues: valeurs });
+  }
+
+  function basculerSurchargeEquipement(id: string, active: boolean, officiel: number) {
+    const valeurs = { ...campagne.homebrew.coutsEquipements };
+    if (active) valeurs[id] = officiel;
+    else delete valeurs[id];
+    mettreAJourHomebrew({ coutsEquipements: valeurs });
+  }
+
+  function ajouterRegle(regle: Omit<RegleHomebrew, 'id' | 'active'>) {
+    mettreAJourHomebrew({
+      regles: [
+        ...campagne.homebrew.regles,
+        { ...regle, id: crypto.randomUUID(), active: true },
+      ],
+    });
+  }
+
+  function modifierRegle(id: string, changements: Partial<RegleHomebrew>) {
+    mettreAJourHomebrew({
+      regles: campagne.homebrew.regles.map((regle) =>
+        regle.id === id ? { ...regle, ...changements } : regle,
+      ),
+    });
+  }
+
+  function supprimerRegle(id: string) {
+    mettreAJourHomebrew({
+      regles: campagne.homebrew.regles.filter((regle) => regle.id !== id),
     });
   }
 
@@ -901,31 +945,211 @@ function HomebrewView({
       <PageHeader
         eyebrow="Règles maison"
         title="Atelier homebrew"
-        description="Remplacez les prix de recrutement et d’équipement sans modifier les données GLM d’origine. Les valeurs officielles restent toujours visibles."
-        action={<Button variant="outline" onClick={restaurerPrix}>Restaurer les prix</Button>}
+        description="Composez une couche de règles au-dessus du socle officiel. Seuls vos overrides remplacent les éléments concernés ; tout le reste demeure automatiquement en vanilla."
+        action={(
+          <Button
+            variant="outline"
+            disabled={nombreSurcharges === 0}
+            onClick={() => mettreAJourHomebrew({ coutsRecrues: {}, coutsEquipements: {} })}
+          >
+            Retirer les overrides de prix
+          </Button>
+        )}
       />
 
       <section className="homebrew-toggle">
-        <div><FlaskConical /><div><strong>Activer les coûts homebrew</strong><p>Le builder utilisera vos prix personnalisés pour tous les nouveaux achats.</p></div></div>
+        <div>
+          <FlaskConical />
+          <div>
+            <strong>Appliquer « {campagne.homebrew.nomSet} »</strong>
+            <p>{nombreSurcharges} overrides · {reglesActives} règles complémentaires actives</p>
+          </div>
+        </div>
         <Switch
+          aria-label="Appliquer le set homebrew"
           checked={campagne.homebrew.actifs}
-          onCheckedChange={(actifs) => onCampagneChange({ ...campagne, homebrew: { ...campagne.homebrew, actifs } })}
+          onCheckedChange={(actifs) => mettreAJourHomebrew({ actifs })}
         />
+      </section>
+
+      <section className="overlay-map" aria-label="Ordre d’application des règles">
+        <div className="overlay-node official-layer">
+          <Shield />
+          <span><small>Socle</small><strong>Règles officielles</strong></span>
+          <b>Vanilla complet</b>
+        </div>
+        <span className="overlay-operator">+</span>
+        <div className="overlay-node homebrew-layer">
+          <FlaskConical />
+          <span><small>Surcouche</small><strong>{campagne.homebrew.nomSet}</strong></span>
+          <b>{nombreSurcharges + reglesActives} éléments</b>
+        </div>
+        <span className="overlay-operator">=</span>
+        <div className="overlay-node effective-layer">
+          <Sparkles />
+          <span><small>Résultat</small><strong>Règles effectives</strong></span>
+          <b>Vanilla + overrides</b>
+        </div>
+      </section>
+
+      <section className="rule-set-card">
+        <div className="panel-header">
+          <div><p className="eyebrow">Identité de la surcouche</p><h2>Votre set de règles</h2></div>
+          <span className={campagne.homebrew.actifs ? 'layer-status active' : 'layer-status'}>
+            {campagne.homebrew.actifs ? 'Appliqué' : 'En préparation'}
+          </span>
+        </div>
+        <div className="rule-set-fields">
+          <label className="field-group" htmlFor="homebrew-set-name">
+            Nom du set
+            <Input
+              id="homebrew-set-name"
+              value={campagne.homebrew.nomSet}
+              onChange={(event) => mettreAJourHomebrew({ nomSet: event.target.value })}
+            />
+          </label>
+          <label className="field-group" htmlFor="homebrew-set-description">
+            Intention de la règle maison
+            <Textarea
+              id="homebrew-set-description"
+              value={campagne.homebrew.description}
+              onChange={(event) => mettreAJourHomebrew({ description: event.target.value })}
+            />
+          </label>
+        </div>
+      </section>
+
+      <section className="custom-rules-panel">
+        <div className="panel-header">
+          <div><p className="eyebrow">Compléments au livre de règles</p><h2>Règles personnalisées</h2></div>
+          <AddRuleDialog onAdd={ajouterRegle} />
+        </div>
+        {campagne.homebrew.regles.length > 0 ? (
+          <div className="custom-rule-list">
+            {campagne.homebrew.regles.map((regle) => (
+              <article className={regle.active ? 'custom-rule active' : 'custom-rule'} key={regle.id}>
+                <Switch
+                  aria-label={`Activer ${regle.titre}`}
+                  checked={regle.active}
+                  onCheckedChange={(active) => modifierRegle(regle.id, { active })}
+                />
+                <div>
+                  <div className="custom-rule-title">
+                    <strong>{regle.titre}</strong>
+                    <span>{regle.portee}</span>
+                  </div>
+                  <p>{regle.description}</p>
+                </div>
+                <Button
+                  aria-label={`Supprimer ${regle.titre}`}
+                  size="icon-sm"
+                  variant="ghost"
+                  onClick={() => supprimerRegle(regle.id)}
+                >
+                  <Trash2 />
+                </Button>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            icon={FlaskConical}
+            title="Aucune règle complémentaire"
+            text="Ajoutez uniquement ce qui change ou complète le livre officiel."
+          />
+        )}
       </section>
 
       <div className="homebrew-grid">
         <PriceTable
           title="Recrues"
-          items={profilsReiklanders.map((profil) => ({ id: profil.id, nom: profil.nom, officiel: profil.cout, valeur: campagne.homebrew.coutsRecrues[profil.id] ?? profil.cout }))}
+          items={profilsReiklanders.map((profil) => ({
+            id: profil.id,
+            nom: profil.nom,
+            officiel: profil.cout,
+            valeur: campagne.homebrew.coutsRecrues[profil.id],
+          }))}
           onChange={mettreAJourRecrue}
+          onToggle={basculerSurchargeRecrue}
         />
         <PriceTable
           title="Équipements"
-          items={equipements.map((item) => ({ id: item.id, nom: item.nom, officiel: item.cout, valeur: campagne.homebrew.coutsEquipements[item.id] ?? item.cout }))}
+          items={equipements.map((item) => ({
+            id: item.id,
+            nom: item.nom,
+            officiel: item.cout,
+            valeur: campagne.homebrew.coutsEquipements[item.id],
+          }))}
           onChange={mettreAJourEquipement}
+          onToggle={basculerSurchargeEquipement}
         />
       </div>
     </section>
+  );
+}
+
+function AddRuleDialog({
+  onAdd,
+}: {
+  onAdd: (regle: Omit<RegleHomebrew, 'id' | 'active'>) => void;
+}) {
+  const [ouvert, setOuvert] = useState(false);
+  const [titre, setTitre] = useState('');
+  const [portee, setPortee] = useState<RegleHomebrew['portee']>('Campagne');
+  const [description, setDescription] = useState('');
+
+  function ajouter() {
+    if (!titre.trim() || !description.trim()) return;
+    onAdd({ titre: titre.trim(), portee, description: description.trim() });
+    setTitre('');
+    setDescription('');
+    setPortee('Campagne');
+    setOuvert(false);
+  }
+
+  return (
+    <Dialog open={ouvert} onOpenChange={setOuvert}>
+      <DialogTrigger render={<Button variant="outline" />}>
+        <Plus data-icon="inline-start" />
+        Ajouter une règle
+      </DialogTrigger>
+      <DialogContent className="homebrew-rule-dialog sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Nouvelle règle complémentaire</DialogTitle>
+          <DialogDescription>
+            Décrivez uniquement l’écart au livre officiel. La règle vanilla reste héritée partout ailleurs.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="homebrew-rule-form">
+          <label className="field-group" htmlFor="homebrew-rule-title">
+            Nom de la règle
+            <Input id="homebrew-rule-title" value={titre} onChange={(event) => setTitre(event.target.value)} placeholder="Ex. Prime du chasseur" />
+          </label>
+          <label className="field-group" htmlFor="homebrew-rule-scope">
+            Portée
+            <NativeSelect id="homebrew-rule-scope" value={portee} onChange={(event) => setPortee(event.target.value as RegleHomebrew['portee'])}>
+              <NativeSelectOption value="Bande">Bande</NativeSelectOption>
+              <NativeSelectOption value="Campagne">Campagne</NativeSelectOption>
+              <NativeSelectOption value="Combat">Combat</NativeSelectOption>
+              <NativeSelectOption value="Après-bataille">Après-bataille</NativeSelectOption>
+            </NativeSelect>
+          </label>
+          <label className="field-group" htmlFor="homebrew-rule-description">
+            Texte de l’override ou du complément
+            <Textarea
+              id="homebrew-rule-description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              placeholder="Expliquez précisément ce qui change."
+            />
+          </label>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setOuvert(false)}>Annuler</Button>
+          <Button disabled={!titre.trim() || !description.trim()} onClick={ajouter}>Ajouter au set</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -933,22 +1157,42 @@ function PriceTable({
   title,
   items,
   onChange,
+  onToggle,
 }: {
   title: string;
-  items: Array<{ id: string; nom: string; officiel: number; valeur: number }>;
+  items: Array<{ id: string; nom: string; officiel: number; valeur?: number }>;
   onChange: (id: string, valeur: number) => void;
+  onToggle: (id: string, active: boolean, officiel: number) => void;
 }) {
   return (
     <section className="price-panel">
-      <div className="panel-header"><div><p className="eyebrow">Surcharge de prix</p><h2>{title}</h2></div></div>
+      <div className="panel-header"><div><p className="eyebrow">Overrides ciblés</p><h2>{title}</h2></div></div>
       <div className="price-list">
-        {items.map((item) => (
-          <div className="price-row" key={item.id}>
-            <span><strong>{item.nom}</strong><small>Officiel : {item.officiel} CO</small></span>
-            <Input aria-label={`Prix homebrew de ${item.nom}`} type="number" min="0" value={item.valeur} onChange={(event) => onChange(item.id, Math.max(0, Number(event.target.value)))} />
-            <b>CO</b>
-          </div>
-        ))}
+        {items.map((item) => {
+          const surchargeActive = item.valeur !== undefined;
+          return (
+            <div className={surchargeActive ? 'price-row override-active' : 'price-row'} key={item.id}>
+              <span>
+                <strong>{item.nom}</strong>
+                <small>Officiel : {item.officiel} CO · {surchargeActive ? 'override actif' : 'hérité en vanilla'}</small>
+              </span>
+              <Switch
+                aria-label={`Surcharger le prix de ${item.nom}`}
+                checked={surchargeActive}
+                onCheckedChange={(active) => onToggle(item.id, active, item.officiel)}
+              />
+              <Input
+                aria-label={`Prix homebrew de ${item.nom}`}
+                disabled={!surchargeActive}
+                type="number"
+                min="0"
+                value={item.valeur ?? item.officiel}
+                onChange={(event) => onChange(item.id, Math.max(0, Number(event.target.value)))}
+              />
+              <b>CO</b>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
@@ -990,6 +1234,26 @@ function EmptyState({
 function coutProfil(profil: ProfilRecrue, campagne: EtatCampagne) {
   if (!campagne.homebrew.actifs) return profil.cout;
   return campagne.homebrew.coutsRecrues[profil.id] ?? profil.cout;
+}
+
+/**
+ * Les campagnes enregistrées avant l’atelier de règles ne contiennent que les
+ * overrides de prix. Cette normalisation les enrichit sans perdre leurs choix.
+ */
+function normaliserCampagne(campagne: EtatCampagne): EtatCampagne {
+  const homebrew = (campagne.homebrew ?? {}) as Partial<ReglagesHomebrew>;
+
+  return {
+    ...campagne,
+    version: 2,
+    homebrew: {
+      ...etatInitial.homebrew,
+      ...homebrew,
+      coutsRecrues: homebrew.coutsRecrues ?? {},
+      coutsEquipements: homebrew.coutsEquipements ?? {},
+      regles: homebrew.regles ?? [],
+    },
+  };
 }
 
 function coutEquipement(equipement: Equipement, campagne: EtatCampagne) {

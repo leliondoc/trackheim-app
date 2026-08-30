@@ -53,12 +53,23 @@ export type Partie = {
 
 export type ReglagesHomebrew = {
   actifs: boolean;
+  nomSet: string;
+  description: string;
   coutsRecrues: Record<string, number>;
   coutsEquipements: Record<string, number>;
+  regles: RegleHomebrew[];
+};
+
+export type RegleHomebrew = {
+  id: string;
+  titre: string;
+  portee: 'Bande' | 'Campagne' | 'Combat' | 'Après-bataille';
+  description: string;
+  active: boolean;
 };
 
 export type EtatCampagne = {
-  version: 1;
+  version: 2;
   nomCampagne: string;
   nomBande: string;
   factionId: 'mercenaires-reiklanders';
@@ -237,7 +248,7 @@ export const etapesApresBataille = [
 ];
 
 export const etatInitial: EtatCampagne = {
-  version: 1,
+  version: 2,
   nomCampagne: 'Les Cendres de Sigmar',
   nomBande: 'Les Corbeaux de Reikland',
   factionId: 'mercenaires-reiklanders',
@@ -255,7 +266,14 @@ export const etatInitial: EtatCampagne = {
   parties: [
     { id: 'partie-7', scenario: 'La Tour du Sorcier', adversaire: 'Skavens', resultat: 'Victoire', date: '2026-08-28' },
   ],
-  homebrew: { actifs: false, coutsRecrues: {}, coutsEquipements: {} },
+  homebrew: {
+    actifs: false,
+    nomSet: 'Règles des Cendres',
+    description: 'Ajustements de campagne appliqués au-dessus des règles officielles.',
+    coutsRecrues: {},
+    coutsEquipements: {},
+    regles: [],
+  },
 };
 
 function stats(
