@@ -1,0 +1,292 @@
+export type Statistiques = {
+  mouvement: number;
+  capaciteCombat: number;
+  capaciteTir: number;
+  force: number;
+  endurance: number;
+  pointsVie: number;
+  initiative: number;
+  attaques: number;
+  commandement: number;
+};
+
+export type ProfilRecrue = {
+  id: string;
+  nom: string;
+  categorie: 'Héros' | 'Hommes de main';
+  cout: number;
+  minimum: number;
+  maximum: number | null;
+  experienceInitiale: number;
+  statistiques: Statistiques;
+  listeEquipement: 'mercenaires' | 'tireurs';
+  regleSpeciale?: string;
+};
+
+export type Equipement = {
+  id: string;
+  nom: string;
+  categorie: 'Corps à corps' | 'Tir' | 'Armure';
+  cout: number;
+  reserveAuxHeros?: boolean;
+  listeTireurs?: boolean;
+};
+
+export type Combattant = {
+  id: string;
+  nom: string;
+  profilId: string;
+  experience: number;
+  statut: 'Prêt' | 'Blessé' | 'Absent';
+  statistiques: Statistiques;
+  equipementIds: string[];
+  notes: string;
+};
+
+export type Partie = {
+  id: string;
+  scenario: string;
+  adversaire: string;
+  resultat: 'Victoire' | 'Défaite' | 'Égalité';
+  date: string;
+};
+
+export type ReglagesHomebrew = {
+  actifs: boolean;
+  coutsRecrues: Record<string, number>;
+  coutsEquipements: Record<string, number>;
+};
+
+export type EtatCampagne = {
+  version: 1;
+  nomCampagne: string;
+  nomBande: string;
+  factionId: 'mercenaires-reiklanders';
+  grade: '1a';
+  couronnes: number;
+  fragments: number;
+  numeroBataille: number;
+  etapesApresBataille: boolean[];
+  combattants: Combattant[];
+  parties: Partie[];
+  homebrew: ReglagesHomebrew;
+};
+
+export type BandeBibliotheque = {
+  nom: string;
+  slug: string;
+  grade: '1a' | '1b' | '1c' | '2';
+  pdfUrl?: string;
+};
+
+export const SOURCE_GLM =
+  'https://sites.google.com/view/grande-librairie-de-mordheim';
+
+export const profilsReiklanders: ProfilRecrue[] = [
+  {
+    id: 'capitaine',
+    nom: 'Capitaine mercenaire',
+    categorie: 'Héros',
+    cout: 60,
+    minimum: 1,
+    maximum: 1,
+    experienceInitiale: 20,
+    statistiques: stats(4, 4, 4, 3, 3, 1, 4, 1, 8),
+    listeEquipement: 'mercenaires',
+    regleSpeciale: 'Chef : commandement utilisable à 12 ps.',
+  },
+  {
+    id: 'champion',
+    nom: 'Champion',
+    categorie: 'Héros',
+    cout: 35,
+    minimum: 0,
+    maximum: 2,
+    experienceInitiale: 8,
+    statistiques: stats(4, 4, 3, 3, 3, 1, 3, 1, 7),
+    listeEquipement: 'mercenaires',
+  },
+  {
+    id: 'recrue',
+    nom: 'Recrue',
+    categorie: 'Héros',
+    cout: 15,
+    minimum: 0,
+    maximum: 2,
+    experienceInitiale: 0,
+    statistiques: stats(4, 2, 2, 3, 3, 1, 3, 1, 6),
+    listeEquipement: 'mercenaires',
+  },
+  {
+    id: 'guerrier',
+    nom: 'Guerrier',
+    categorie: 'Hommes de main',
+    cout: 25,
+    minimum: 0,
+    maximum: null,
+    experienceInitiale: 0,
+    statistiques: stats(4, 3, 3, 3, 3, 1, 3, 1, 7),
+    listeEquipement: 'mercenaires',
+  },
+  {
+    id: 'tireur',
+    nom: 'Tireur',
+    categorie: 'Hommes de main',
+    cout: 25,
+    minimum: 0,
+    maximum: 7,
+    experienceInitiale: 0,
+    statistiques: stats(4, 3, 4, 3, 3, 1, 3, 1, 7),
+    listeEquipement: 'tireurs',
+  },
+  {
+    id: 'bretteur',
+    nom: 'Bretteur',
+    categorie: 'Hommes de main',
+    cout: 35,
+    minimum: 0,
+    maximum: 5,
+    experienceInitiale: 0,
+    statistiques: stats(4, 4, 3, 3, 3, 1, 3, 1, 7),
+    listeEquipement: 'mercenaires',
+    regleSpeciale: 'Expert à l’épée : relance les touches ratées en charge.',
+  },
+];
+
+export const equipements: Equipement[] = [
+  { id: 'dague', nom: 'Dague supplémentaire', categorie: 'Corps à corps', cout: 2, listeTireurs: true },
+  { id: 'masse', nom: 'Masse', categorie: 'Corps à corps', cout: 3, listeTireurs: true },
+  { id: 'marteau', nom: 'Marteau', categorie: 'Corps à corps', cout: 3, listeTireurs: true },
+  { id: 'hache', nom: 'Hache', categorie: 'Corps à corps', cout: 5, listeTireurs: true },
+  { id: 'epee', nom: 'Épée', categorie: 'Corps à corps', cout: 10, listeTireurs: true },
+  { id: 'hallebarde', nom: 'Hallebarde', categorie: 'Corps à corps', cout: 10 },
+  { id: 'lance', nom: 'Lance', categorie: 'Corps à corps', cout: 10 },
+  { id: 'morgenstern', nom: 'Morgenstern', categorie: 'Corps à corps', cout: 15 },
+  { id: 'rapiere', nom: 'Rapière', categorie: 'Corps à corps', cout: 15, reserveAuxHeros: true },
+  { id: 'deux-mains', nom: 'Arme à deux mains', categorie: 'Corps à corps', cout: 15 },
+  { id: 'arc', nom: 'Arc', categorie: 'Tir', cout: 10, listeTireurs: true },
+  { id: 'arc-long', nom: 'Arc long', categorie: 'Tir', cout: 15, listeTireurs: true },
+  { id: 'arbalete', nom: 'Arbalète', categorie: 'Tir', cout: 25, listeTireurs: true },
+  { id: 'pistolet', nom: 'Pistolet', categorie: 'Tir', cout: 15, listeTireurs: true },
+  { id: 'pistolet-duel', nom: 'Pistolet de duel', categorie: 'Tir', cout: 25 },
+  { id: 'tromblon', nom: 'Tromblon', categorie: 'Tir', cout: 30, listeTireurs: true },
+  { id: 'arquebuse', nom: 'Arquebuse', categorie: 'Tir', cout: 35, listeTireurs: true },
+  { id: 'armure-legere', nom: 'Armure légère', categorie: 'Armure', cout: 20, listeTireurs: true },
+  { id: 'armure-lourde', nom: 'Armure lourde', categorie: 'Armure', cout: 50 },
+  { id: 'casque', nom: 'Casque', categorie: 'Armure', cout: 10, listeTireurs: true },
+  { id: 'bouclier', nom: 'Bouclier', categorie: 'Armure', cout: 5, listeTireurs: true },
+  { id: 'rondache', nom: 'Rondache', categorie: 'Armure', cout: 5 },
+];
+
+/** Catalogue éditorial issu des grades publiés par la Grande Librairie. */
+export const bandesBibliotheque: BandeBibliotheque[] = [
+  ...bandes('1a', [
+    ['Chasseurs de Trésors Nains', 'chasseurs-de-tresors-nains'],
+    ['Culte des Possédés', 'culte-des-possedes', 'https://drive.google.com/file/d/183YdNBSFhn_KumszvRFd_--TQ8csoAPl/view'],
+    ['Horde Orque', 'horde-orque'],
+    ['Kermesse du Chaos', 'kermesse-du-chaos'],
+    ['Kislévites', 'kislevites'],
+    ['Mercenaires Averlanders', 'mercenaires-averlanders'],
+    ['Mercenaires Marienburgers', 'mercenaires-marienburgers', 'https://drive.google.com/file/d/11E_fKx-2HqP6kfGeZstD6tJvstJYOVV5/view'],
+    ['Mercenaires Middenheimers', 'mercenaires-middenheimers', 'https://drive.google.com/file/d/11E_fKx-2HqP6kfGeZstD6tJvstJYOVV5/view'],
+    ['Mercenaires Ostermarkers', 'mercenaires-ostermarkers'],
+    ['Mercenaires Ostlanders', 'mercenaires-ostlanders'],
+    ['Mercenaires Reiklanders', 'mercenaires-reiklanders', 'https://drive.google.com/file/d/11E_fKx-2HqP6kfGeZstD6tJvstJYOVV5/view'],
+    ['Morts-Vivants', 'morts-vivants', 'https://drive.google.com/file/d/1M07ch-ZgRYS_LgfL59v4_IEVbqm0dzi5/view'],
+    ['Pillards Hommes-Bêtes', 'pillards-hommes-betes'],
+    ['Répurgateurs', 'repurgateurs', 'https://drive.google.com/file/d/1CAXbjM9y81RKn98E2IHDQUxOhEoDXF2O/view'],
+    ['Skavens du Clan Eshin', 'skavens-du-clan-eshin', 'https://drive.google.com/file/d/1Zai8Bs5wNSgrl2kogFUPPbuPxjavthBT/view'],
+    ['Sœurs de Sigmar', 'soeurs-de-sigmar', 'https://drive.google.com/file/d/1zAUei0vH4AntYdMcluqAXacWjrKoNqOj/view'],
+  ]),
+  ...bandes('1b', [
+    ['Amazones (L)', 'amazones-l'], ['Amazones (M)', 'amazones-m'],
+    ['Artilleurs de Nuln', 'artilleurs-de-nuln'], ['Bandits du Hochland', 'bandits-du-hochland'],
+    ['Chasseurs Cornus', 'chasseurs-cornus'], ['Chevaliers Bretonniens', 'chevaliers-bretonniens'],
+    ['Elfes Noirs', 'elfes-noirs'], ['Escorteurs Impériaux', 'escorteurs-imperiaux'],
+    ['Expéditions Runiques', 'expeditions-runiques'], ['Gardiens des Tombes', 'gardiens-des-tombes'],
+    ['Gladiateurs', 'gladiateurs'], ['Gobelins des Forêts', 'gobelins-des-forets'],
+    ['Guerriers Fantômes', 'guerriers-fantomes'], ['Hommes-Lézards', 'hommes-lezards'],
+    ['Hors-la-loi de Stirwood', 'hors-la-loi-de-stirwood'], ['Mootlanders', 'mootlanders'],
+    ['Norses', 'norses'], ['Orques Noirs', 'orques-noirs'],
+    ['Pilleurs de Tombes Arabiens', 'pilleurs-de-tombes-arabiens'], ['Pirates', 'pirates'],
+    ['Skavens du Clan Pestilens', 'skavens-du-clan-pestilens'], ['Tiléens', 'tileens'],
+  ]),
+  ...bandes('1c', [
+    ['Caravane des Marchands', 'caravane-des-marchands'], ['Fils d’Hashut', 'fils-dhashut'],
+    ['Gardiens de Chapelle Bretonniens', 'gardiens-de-chapelle-bretonniens'],
+    ['Gobelins de la Nuit', 'gobelins-de-la-nuit'], ['Mangeurs d’Hommes', 'mangeurs-dhommes'],
+    ['Maraudeurs du Chaos', 'maraudeurs-du-chaos'], ['Moines Guerriers de Cathay', 'moines-guerriers-de-cathay'],
+    ['Morts Tourmentés', 'morts-tourmentes'], ['Nains du Chaos', 'nains-du-chaos'],
+  ]),
+  ...bandes('2', [
+    ['Arpenteurs Fimirs', 'arpenteurs-fimirs'], ['Strigannes', 'strigannes'],
+  ]),
+];
+
+export const etapesApresBataille = [
+  'Blessures graves',
+  'Expérience',
+  'Revenus',
+  'Vente de la pierre magique',
+  'Disponibilité des vétérans',
+  'Jets de rareté et objets rares',
+  'Personnages spéciaux',
+  'Nouvelles recrues et objets communs',
+  'Allocation de l’équipement',
+  'Mise à jour de la valeur de bande',
+];
+
+export const etatInitial: EtatCampagne = {
+  version: 1,
+  nomCampagne: 'Les Cendres de Sigmar',
+  nomBande: 'Les Corbeaux de Reikland',
+  factionId: 'mercenaires-reiklanders',
+  grade: '1a',
+  couronnes: 72,
+  fragments: 4,
+  numeroBataille: 7,
+  etapesApresBataille: [true, true, true, true, true, true, true, false, false, false],
+  combattants: [
+    combattant('wilhelm', 'Wilhelm Krieger', 'capitaine', 34, ['epee', 'pistolet', 'armure-legere']),
+    combattant('otto', 'Otto le Rouge', 'champion', 22, ['masse', 'bouclier', 'casque']),
+    combattant('hanna', 'Hanna Brume', 'tireur', 11, ['arc-long'], 'Blessé'),
+    combattant('markus', 'Markus Klein', 'guerrier', 6, ['hallebarde']),
+  ],
+  parties: [
+    { id: 'partie-7', scenario: 'La Tour du Sorcier', adversaire: 'Skavens', resultat: 'Victoire', date: '2026-08-28' },
+  ],
+  homebrew: { actifs: false, coutsRecrues: {}, coutsEquipements: {} },
+};
+
+function stats(
+  mouvement: number,
+  capaciteCombat: number,
+  capaciteTir: number,
+  force: number,
+  endurance: number,
+  pointsVie: number,
+  initiative: number,
+  attaques: number,
+  commandement: number,
+): Statistiques {
+  return { mouvement, capaciteCombat, capaciteTir, force, endurance, pointsVie, initiative, attaques, commandement };
+}
+
+function combattant(
+  id: string,
+  nom: string,
+  profilId: string,
+  experience: number,
+  equipementIds: string[],
+  statut: Combattant['statut'] = 'Prêt',
+): Combattant {
+  const profil = profilsReiklanders.find((item) => item.id === profilId)!;
+  return { id, nom, profilId, experience, statut, statistiques: profil.statistiques, equipementIds, notes: '' };
+}
+
+function bandes(
+  grade: BandeBibliotheque['grade'],
+  entrees: Array<[string, string, string?]>,
+): BandeBibliotheque[] {
+  return entrees.map(([nom, slug, pdfUrl]) => ({ nom, slug, grade, pdfUrl }));
+}
