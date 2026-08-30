@@ -1163,7 +1163,6 @@ function GlobalSearch({
                     <strong>{libelle}</strong>
                     <small>{description}</small>
                   </span>
-                  <CommandShortcut>Page</CommandShortcut>
                 </CommandItem>
               ),
             )}
@@ -1203,7 +1202,6 @@ function GlobalSearch({
                         {combattant.experience} XP
                       </small>
                     </span>
-                    <CommandShortcut>Ma bande</CommandShortcut>
                   </CommandItem>
                 );
               })}
@@ -1235,7 +1233,6 @@ function GlobalSearch({
                       {profil.categorie} · {profil.cout} CO
                     </small>
                   </span>
-                  <CommandShortcut>Profil</CommandShortcut>
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -1308,7 +1305,6 @@ function GlobalSearch({
                   <strong>{campagne.homebrew.nomSet}</strong>
                   <small>{campagne.homebrew.description}</small>
                 </span>
-                <CommandShortcut>Set</CommandShortcut>
               </CommandItem>
               {campagne.homebrew.regles.map((regle) => (
                 <CommandItem
@@ -1328,7 +1324,6 @@ function GlobalSearch({
                       {regle.portee} · {regle.active ? 'active' : 'inactive'}
                     </small>
                   </span>
-                  <CommandShortcut>Règle</CommandShortcut>
                 </CommandItem>
               ))}
             </CommandGroup>

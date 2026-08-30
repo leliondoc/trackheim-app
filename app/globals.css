@@ -3272,29 +3272,28 @@ body {
   max-height: min(760px, calc(100dvh - max(110px, 14vh)));
   border: 2px solid #57442e;
   border-radius: 0 !important;
-  background:
-    repeating-linear-gradient(
-      2deg,
-      transparent 0 34px,
-      rgb(78 52 27 / 3%) 34px 35px
-    ),
-    #efe0c1;
+  background: #efe0c1;
   box-shadow:
     8px 10px 0 rgb(43 27 14 / 24%),
     0 24px 70px rgb(25 16 10 / 40%);
-  transform: translateX(-50%);
 }
 
 .global-search-dialog > [data-slot='dialog-close'] {
   z-index: 3;
-  top: 13px;
-  right: 13px;
-  width: 40px;
-  height: 40px;
-  border: 1px solid #7a6243;
+  top: 17px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border: 0;
   border-radius: 0;
-  background: #e0cda7;
-  color: var(--ink-soft);
+  background: transparent;
+  color: #d9c398;
+}
+
+.global-search-dialog > [data-slot='dialog-close']:hover,
+.global-search-dialog > [data-slot='dialog-close']:focus-visible {
+  background: rgb(238 220 180 / 10%);
+  color: #fff1cf;
 }
 
 .global-search-command {
@@ -3306,50 +3305,93 @@ body {
 }
 
 .global-search-command [data-slot='command-input-wrapper'] {
-  border-bottom: 3px double #735f43;
-  padding: 12px 62px 12px 12px;
+  border-bottom: 0;
+  background:
+    linear-gradient(102deg, rgb(255 255 255 / 3%), transparent 38%),
+    #1d1813;
+  padding: 13px 66px 13px 14px;
 }
 
 .global-search-command [data-slot='input-group'] {
-  height: 48px !important;
-  border: 1px solid #756043;
+  height: 50px !important;
+  border: 1px solid #a78d64;
   border-radius: 0 !important;
-  background: rgb(250 240 216 / 78%);
-  box-shadow: inset 2px 2px 0 rgb(82 54 27 / 7%);
+  background: #f0dfbc;
+  box-shadow: none;
+}
+
+.global-search-command [data-slot='input-group']:focus-within {
+  border-color: var(--oxblood);
+  box-shadow: none !important;
+}
+
+.global-search-command [data-slot='input-group-addon'] {
+  color: #6c5538;
 }
 
 .global-search-command [data-slot='command-input'] {
+  height: 100%;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
   color: var(--ink);
   font-size: 15px;
+  outline: 0 !important;
 }
 
 .global-search-command [data-slot='command-list'] {
   max-height: min(520px, calc(100dvh - 245px));
-  padding: 8px;
+  padding: 12px 10px 14px;
   scrollbar-color: #8b6c45 transparent;
   scrollbar-width: thin;
 }
 
+.global-search-command [data-slot='command-group'] +
+  [data-slot='command-group'] {
+  margin-top: 8px;
+}
+
 .global-search-command [cmdk-group-heading] {
-  color: var(--oxblood);
+  width: fit-content;
+  margin: 4px 0 6px 3px;
+  background: #211b15;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+  color: #e7d2a8;
   font-family: var(--font-fell), Georgia, serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  padding: 7px 17px 7px 9px;
   text-transform: uppercase;
 }
 
 .global-search-command [data-slot='command-item'] {
   min-height: 54px;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 0 !important;
-  padding: 8px 10px;
+  padding: 8px 11px;
 }
 
 .global-search-command [data-slot='command-item'][data-selected='true'] {
-  border-color: #816748;
-  background: rgb(118 43 37 / 10%);
-  box-shadow: inset 4px 0 var(--oxblood);
+  background: #30271d;
+  box-shadow: none;
+  color: #f2dfb8;
+}
+
+.global-search-command
+  [data-slot='command-item'][data-selected='true']
+  .search-result-copy strong,
+.global-search-command
+  [data-slot='command-item'][data-selected='true']
+  .search-result-copy small,
+.global-search-command
+  [data-slot='command-item'][data-selected='true']
+  [data-slot='command-shortcut'],
+.global-search-command
+  [data-slot='command-item'][data-selected='true']
+  > svg {
+  color: #f2dfb8;
 }
 
 .global-search-command [data-slot='command-item'] > svg {
@@ -3393,9 +3435,9 @@ body {
   min-height: 42px;
   align-items: center;
   gap: 18px;
-  border-top: 1px solid #846e4e;
-  background: rgb(87 62 36 / 6%);
-  color: #756654;
+  border-top: 0;
+  background: #211b15;
+  color: #c8b38d;
   padding: 8px 14px;
   font-size: 11px;
 }
@@ -3406,9 +3448,9 @@ body {
   gap: 5px;
 }
 .global-search-footer kbd {
-  border: 1px solid #8b7555;
-  background: #e1cda5;
-  color: #4f4031;
+  border: 1px solid #7e6b4c;
+  background: #342a20;
+  color: #f0dcb3;
   padding: 1px 5px;
   font: inherit;
 }
@@ -4411,6 +4453,10 @@ select,
 
   .global-search-command [data-slot='command-item'] {
     min-height: 64px;
+  }
+
+  .global-search-command [cmdk-group-heading] {
+    font-size: 13px;
   }
 
   .search-result-copy strong {
