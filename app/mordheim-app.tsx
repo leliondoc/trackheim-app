@@ -1226,7 +1226,13 @@ function WarbandHeading({
           )}
         </div>
         <p>
-          Mercenaires Reiklanders · {campagne.numeroBataille}e bataille ·
+          Mercenaires Reiklanders ·{' '}
+          {campagne.numeroBataille === 0
+            ? 'aucune bataille jouée'
+            : campagne.numeroBataille === 1
+              ? '1re bataille'
+              : `${campagne.numeroBataille}e bataille`}{' '}
+          ·
           {campagne.homebrew.actifs
             ? ` ${campagne.homebrew.nomSet}, en complément des règles officielles`
             : ' règles officielles Games Workshop'}
