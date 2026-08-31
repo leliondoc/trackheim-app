@@ -9,7 +9,7 @@ Trackheim est un projet fan non officiel, sans affiliation ni approbation de Gam
 ## Ressources visuelles
 
 - Corbeau : Brett Croft, distribué par [FreePNGimg](https://freepngimg.com/png/108894-pic-bird-raven-download-hq) sous [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). La teinte a été adaptée pour l'interface. Cette ressource n'autorise pas un usage commercial.
-- Les autres visuels propres à l'interface (`og.png`, `ui-skel.png` et `ui-skull-ribbon.png`) ne proviennent pas de publications, logos ou photographies de produits Games Workshop.
+- Les autres visuels propres à l'interface (`og.png` et `ui-skel.png`) ne proviennent pas de publications, logos ou photographies de produits Games Workshop.
 
 ## Icônes et typographie
 
@@ -17,6 +17,9 @@ Trackheim est un projet fan non officiel, sans affiliation ni approbation de Gam
 - Geist et Geist Mono : SIL Open Font License 1.1.
 - IM FELL English : SIL Open Font License 1.1.
 - Pirata One : SIL Open Font License 1.1.
+
+Ces polices sont servies directement avec l’application ; aucune requête vers
+un fournisseur de polices n’est effectuée pendant l’utilisation.
 
 ## Bibliothèques logicielles
 

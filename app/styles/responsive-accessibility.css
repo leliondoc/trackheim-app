@@ -1,0 +1,40 @@
+@media (max-width: 780px) {
+  .band-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .band-details-grid > div + div {
+    border-top: 1px solid rgb(79 57 34 / 38%);
+    border-left: 0;
+  }
+
+  .band-details-actions {
+    align-items: stretch;
+  }
+
+  .band-details-actions .source-button {
+    justify-content: center;
+  }
+
+  .recruit-dialog [data-slot='input'],
+  .recruit-dialog [data-slot='native-select'] {
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .recruit-dialog > [data-slot='dialog-close'] {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -1,9 +1,6 @@
-'use client';
-
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpen,
-  ChevronDown,
   CircleAlert,
   Coins,
   Download,
@@ -25,7 +22,7 @@ import {
   Upload,
   Users,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Command,
@@ -79,10 +76,28 @@ import {
 } from '@/lib/mordheim-rules';
 import { RulesetProvenance } from '@/components/ruleset-provenance';
 import {
+  IndicationNouvelOnglet,
+  Sidebar,
+  Topbar,
+  type EtatSauvegarde,
+} from '@/components/app-shell';
+import {
   importerCampagneDepuisJson,
   nomFichierCampagne,
   serialiserCampagne,
 } from '@/lib/campaign-transfer';
+import { TAILLE_MAX_PAYLOAD_CAMPAGNE } from '@/lib/campaign-validation';
+import {
+  ConflitSauvegardeLocale,
+  cleCopieLocale,
+  ecrireCopieLocale,
+  lireCampagneActive,
+  lireCopieLocale,
+  listerCopiesLocales,
+  memoriserCampagneActive,
+  type ResumeCampagneLocale,
+} from '@/lib/campaign-storage';
+import { hashPourVue, vueDepuisHash, type Vue } from '@/lib/app-navigation';
 
 const PostBattleWorkflow = lazy(() =>
   import('@/components/post-battle-workflow').then((module) => ({
@@ -90,34 +105,10 @@ const PostBattleWorkflow = lazy(() =>
   })),
 );
 
-type Vue =
-  | 'overview'
-  | 'warband'
-  | 'campaign'
-  | 'library'
-  | 'homebrew'
-  | 'settings';
-type EtatSauvegarde = 'chargement' | 'sauvegarde' | 'sauvegarde-ok' | 'erreur';
 type FiltreGrade = 'tous' | BandeBibliotheque['grade'];
 
 const ID_CAMPAGNE = 'campagne-principale';
-const CLE_CAMPAGNE_ACTIVE = 'trackheim:campagne-active';
-
-type CopieLocale = {
-  campagne: EtatCampagne;
-  date: string;
-};
-
-const navigation: Array<{
-  id: Vue;
-  libelle: string;
-  icone: typeof LayoutDashboard;
-}> = [
-  { id: 'overview', libelle: 'Vue d’ensemble', icone: LayoutDashboard },
-  { id: 'warband', libelle: 'Ma bande', icone: Shield },
-  { id: 'campaign', libelle: 'Campagne', icone: Swords },
-  { id: 'library', libelle: 'Bibliothèque', icone: BookOpen },
-];
+const ID_SESSION = crypto.randomUUID();
 
 const pagesRecherche: Array<{
   id: Vue;
@@ -165,7 +156,7 @@ const pagesRecherche: Array<{
 
 export function MordheimApp() {
   const [idCampagne, setIdCampagne] = useState(ID_CAMPAGNE);
-  const [vue, setVue] = useState<Vue>('overview');
+  const [vue, setVue] = useState<Vue>(() => vueDepuisHash(location.hash));
   const [campagne, setCampagne] = useState<EtatCampagne>(etatInitial);
   const [rechercheOuverte, setRechercheOuverte] = useState(false);
   const [rechercheBibliotheque, setRechercheBibliotheque] = useState('');
@@ -177,9 +168,17 @@ export function MordheimApp() {
   const [erreurSauvegarde, setErreurSauvegarde] = useState<string | null>(null);
   const [hydratationTerminee, setHydratationTerminee] = useState(false);
   const [gestionCampagnesOuverte, setGestionCampagnesOuverte] = useState(false);
+  const [sauvegardeCorrompue, setSauvegardeCorrompue] = useState<{
+    erreur: string;
+    contenuBrut: string;
+  } | null>(null);
+  const [conflitSauvegarde, setConflitSauvegarde] = useState(false);
   const campagneActiveInitialisee = useRef(false);
   const idCampagneCourant = useRef(idCampagne);
   const campagneCourante = useRef(campagne);
+  const versionStockage = useRef(0);
+  const contenuPrincipal = useRef<HTMLElement>(null);
+  const navigationInitialisee = useRef(false);
 
   useEffect(() => {
     idCampagneCourant.current = idCampagne;
@@ -187,9 +186,41 @@ export function MordheimApp() {
   }, [campagne, idCampagne]);
 
   useEffect(() => {
+    function synchroniserVue() {
+      setVue(vueDepuisHash(location.hash));
+    }
+    window.addEventListener('hashchange', synchroniserVue);
+    return () => window.removeEventListener('hashchange', synchroniserVue);
+  }, []);
+
+  useEffect(() => {
+    if (!navigationInitialisee.current) {
+      navigationInitialisee.current = true;
+      return;
+    }
+    requestAnimationFrame(() => contenuPrincipal.current?.focus());
+  }, [vue]);
+
+  function naviguerVers(vueCible: Vue) {
+    const hash = hashPourVue(vueCible);
+    if (location.hash !== hash) history.pushState(null, '', hash);
+    setVue(vueCible);
+  }
+
+  useEffect(() => {
     function sauvegarderAvantFermeture() {
+      if (sauvegardeCorrompue || conflitSauvegarde) return;
       try {
-        ecrireCopieLocale(idCampagneCourant.current, campagneCourante.current);
+        const copie = ecrireCopieLocale(
+          window.localStorage,
+          idCampagneCourant.current,
+          campagneCourante.current,
+          {
+            auteur: ID_SESSION,
+            versionAttendue: versionStockage.current,
+          },
+        );
+        versionStockage.current = copie.versionStockage;
       } catch {
         // Le navigateur peut bloquer le stockage pendant sa fermeture.
       }
@@ -197,7 +228,7 @@ export function MordheimApp() {
     window.addEventListener('beforeunload', sauvegarderAvantFermeture);
     return () =>
       window.removeEventListener('beforeunload', sauvegarderAvantFermeture);
-  }, []);
+  }, [conflitSauvegarde, sauvegardeCorrompue]);
 
   /* Le navigateur est la source de vérité : aucun compte ni serveur requis. */
   useEffect(() => {
@@ -206,7 +237,7 @@ export function MordheimApp() {
       if (annule) return;
       if (!campagneActiveInitialisee.current) {
         campagneActiveInitialisee.current = true;
-        const memorisee = lireCampagneActive();
+        const memorisee = lireCampagneActive(window.localStorage);
         if (memorisee && memorisee !== idCampagne) {
           setIdCampagne(memorisee);
           return;
@@ -216,16 +247,40 @@ export function MordheimApp() {
       setHydratationTerminee(false);
       setEtatSauvegarde('chargement');
       setErreurSauvegarde(null);
+      setSauvegardeCorrompue(null);
+      setConflitSauvegarde(false);
 
-      const copieLocale = lireCopieLocale(idCampagne);
+      const lecture = lireCopieLocale(window.localStorage, idCampagne);
+      if (lecture.statut === 'invalide') {
+        versionStockage.current = 0;
+        setCampagne(etatInitial);
+        setSauvegardeCorrompue({
+          erreur: lecture.erreur,
+          contenuBrut: lecture.contenuBrut,
+        });
+        setErreurSauvegarde(lecture.erreur);
+        setEtatSauvegarde('erreur');
+        setHydratationTerminee(true);
+        return;
+      }
       const campagneChargee = normaliserCampagne(
-        copieLocale?.campagne ?? etatInitial,
+        lecture.statut === 'valide' ? lecture.copie.campagne : etatInitial,
       );
       setCampagne(campagneChargee);
 
       try {
-        if (!copieLocale) ecrireCopieLocale(idCampagne, campagneChargee);
-        window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, idCampagne);
+        if (lecture.statut === 'absente') {
+          const copie = ecrireCopieLocale(
+            window.localStorage,
+            idCampagne,
+            campagneChargee,
+            { auteur: ID_SESSION, versionAttendue: 0 },
+          );
+          versionStockage.current = copie.versionStockage;
+        } else {
+          versionStockage.current = lecture.copie.versionStockage;
+        }
+        memoriserCampagneActive(window.localStorage, idCampagne);
         setEtatSauvegarde('sauvegarde-ok');
       } catch {
         setErreurSauvegarde(
@@ -241,22 +296,63 @@ export function MordheimApp() {
   }, [idCampagne]);
 
   useEffect(() => {
-    if (!hydratationTerminee) return;
+    if (!hydratationTerminee || sauvegardeCorrompue || conflitSauvegarde)
+      return;
     const minuteur = window.setTimeout(() => {
       setEtatSauvegarde('sauvegarde');
       setErreurSauvegarde(null);
       try {
-        ecrireCopieLocale(idCampagne, campagne);
+        const copie = ecrireCopieLocale(
+          window.localStorage,
+          idCampagne,
+          campagne,
+          { auteur: ID_SESSION, versionAttendue: versionStockage.current },
+        );
+        versionStockage.current = copie.versionStockage;
         setEtatSauvegarde('sauvegarde-ok');
-      } catch {
+      } catch (erreur) {
+        if (erreur instanceof ConflitSauvegardeLocale) {
+          setConflitSauvegarde(true);
+        }
         setErreurSauvegarde(
-          'La campagne n’a pas pu être enregistrée dans ce navigateur. Exportez-la en JSON pour ne rien perdre.',
+          erreur instanceof ConflitSauvegardeLocale
+            ? 'Cette campagne a changé dans un autre onglet. Choisissez la version à conserver.'
+            : 'La campagne n’a pas pu être enregistrée dans ce navigateur. Exportez-la en JSON pour ne rien perdre.',
         );
         setEtatSauvegarde('erreur');
       }
     }, 250);
     return () => window.clearTimeout(minuteur);
-  }, [campagne, hydratationTerminee, idCampagne]);
+  }, [
+    campagne,
+    conflitSauvegarde,
+    hydratationTerminee,
+    idCampagne,
+    sauvegardeCorrompue,
+  ]);
+
+  useEffect(() => {
+    function detecterModificationExterne(event: StorageEvent) {
+      if (event.key !== cleCopieLocale(idCampagne) || event.newValue === null) {
+        return;
+      }
+      const lecture = lireCopieLocale(window.localStorage, idCampagne);
+      if (
+        lecture.statut === 'valide' &&
+        lecture.copie.auteur !== ID_SESSION &&
+        lecture.copie.versionStockage !== versionStockage.current
+      ) {
+        setConflitSauvegarde(true);
+        setEtatSauvegarde('erreur');
+        setErreurSauvegarde(
+          'Cette campagne a changé dans un autre onglet. Choisissez la version à conserver.',
+        );
+      }
+    }
+    window.addEventListener('storage', detecterModificationExterne);
+    return () =>
+      window.removeEventListener('storage', detecterModificationExterne);
+  }, [idCampagne]);
 
   function choisirCampagne(id: string) {
     if (id === idCampagne) {
@@ -264,7 +360,7 @@ export function MordheimApp() {
       return;
     }
     ecrireCampagneCouranteSansErreur();
-    window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, id);
+    memoriserCampagneActive(window.localStorage, id);
     setHydratationTerminee(false);
     setEtatSauvegarde('chargement');
     setGestionCampagnesOuverte(false);
@@ -274,8 +370,12 @@ export function MordheimApp() {
   function creerCampagne(nomCampagne: string, nomBande: string) {
     const id = `campagne-${Date.now().toString(36)}-${crypto.randomUUID().slice(0, 8)}`;
     const nouvelle = creerEtatCampagne(nomCampagne, nomBande);
-    ecrireCopieLocale(id, nouvelle);
-    window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, id);
+    const copie = ecrireCopieLocale(window.localStorage, id, nouvelle, {
+      auteur: ID_SESSION,
+      versionAttendue: 0,
+    });
+    versionStockage.current = copie.versionStockage;
+    memoriserCampagneActive(window.localStorage, id);
     setHydratationTerminee(false);
     setEtatSauvegarde('chargement');
     setGestionCampagnesOuverte(false);
@@ -284,22 +384,21 @@ export function MordheimApp() {
   }
 
   function exporterCampagne() {
-    const blob = new Blob([serialiserCampagne(campagne)], {
-      type: 'application/json;charset=utf-8',
-    });
-    const url = URL.createObjectURL(blob);
-    const lien = document.createElement('a');
-    lien.href = url;
-    lien.download = nomFichierCampagne(campagne);
-    lien.click();
-    URL.revokeObjectURL(url);
+    telechargerTexte(
+      serialiserCampagne(campagne),
+      nomFichierCampagne(campagne),
+    );
   }
 
   function importerCampagne(texte: string) {
     const importee = normaliserCampagne(importerCampagneDepuisJson(texte));
     const id = `campagne-${Date.now().toString(36)}-${crypto.randomUUID().slice(0, 8)}`;
-    ecrireCopieLocale(id, importee);
-    window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, id);
+    const copie = ecrireCopieLocale(window.localStorage, id, importee, {
+      auteur: ID_SESSION,
+      versionAttendue: 0,
+    });
+    versionStockage.current = copie.versionStockage;
+    memoriserCampagneActive(window.localStorage, id);
     setHydratationTerminee(false);
     setEtatSauvegarde('chargement');
     setCampagne(importee);
@@ -308,11 +407,61 @@ export function MordheimApp() {
   }
 
   function ecrireCampagneCouranteSansErreur() {
+    if (sauvegardeCorrompue || conflitSauvegarde) return;
     try {
-      ecrireCopieLocale(idCampagne, campagne);
+      const copie = ecrireCopieLocale(
+        window.localStorage,
+        idCampagne,
+        campagne,
+        { auteur: ID_SESSION, versionAttendue: versionStockage.current },
+      );
+      versionStockage.current = copie.versionStockage;
     } catch {
       // Le statut de sauvegarde courant explique déjà l’échec à l’utilisateur.
     }
+  }
+
+  function telechargerSauvegardeCorrompue() {
+    if (!sauvegardeCorrompue) return;
+    telechargerTexte(
+      sauvegardeCorrompue.contenuBrut,
+      `trackheim-recuperation-${new Date().toISOString().slice(0, 10)}.json`,
+    );
+  }
+
+  function reinitialiserSauvegardeCorrompue() {
+    const copie = ecrireCopieLocale(
+      window.localStorage,
+      idCampagne,
+      etatInitial,
+      { auteur: ID_SESSION, forcer: true },
+    );
+    versionStockage.current = copie.versionStockage;
+    setCampagne(etatInitial);
+    setSauvegardeCorrompue(null);
+    setErreurSauvegarde(null);
+    setEtatSauvegarde('sauvegarde-ok');
+  }
+
+  function chargerVersionAutreOnglet() {
+    const lecture = lireCopieLocale(window.localStorage, idCampagne);
+    if (lecture.statut !== 'valide') return;
+    versionStockage.current = lecture.copie.versionStockage;
+    setCampagne(normaliserCampagne(lecture.copie.campagne));
+    setConflitSauvegarde(false);
+    setErreurSauvegarde(null);
+    setEtatSauvegarde('sauvegarde-ok');
+  }
+
+  function conserverVersionCetOnglet() {
+    const copie = ecrireCopieLocale(window.localStorage, idCampagne, campagne, {
+      auteur: ID_SESSION,
+      forcer: true,
+    });
+    versionStockage.current = copie.versionStockage;
+    setConflitSauvegarde(false);
+    setErreurSauvegarde(null);
+    setEtatSauvegarde('sauvegarde-ok');
   }
 
   /* Le même raccourci fonctionne sur Windows, Linux et macOS. */
@@ -357,7 +506,7 @@ export function MordheimApp() {
   const synthese = useMemo(() => calculerSynthese(campagne), [campagne]);
 
   function naviguerDepuisRecherche(vueCible: Vue, cible?: string) {
-    setVue(vueCible);
+    naviguerVers(vueCible);
     setRechercheOuverte(false);
     setCibleEnAttente(cible ?? null);
   }
@@ -369,11 +518,14 @@ export function MordheimApp() {
   }
 
   return (
-    <main className="application">
+    <div className="application">
+      <a className="skip-link" href="#contenu-principal">
+        Aller au contenu principal
+      </a>
       <div className="application-layout">
-        <Sidebar vue={vue} onVueChange={setVue} />
+        <Sidebar vue={vue} onVueChange={naviguerVers} />
 
-        <section className="workspace">
+        <div className="workspace">
           <Topbar
             campagne={campagne}
             erreurSauvegarde={erreurSauvegarde}
@@ -387,7 +539,13 @@ export function MordheimApp() {
             }}
           />
 
-          <div className="content-wrap" key={idCampagne}>
+          <main
+            className="content-wrap"
+            id="contenu-principal"
+            key={idCampagne}
+            ref={contenuPrincipal}
+            tabIndex={-1}
+          >
             {!hydratationTerminee ? (
               <section className="campaign-loading" aria-live="polite">
                 <div className="campaign-loading-banner">
@@ -412,6 +570,58 @@ export function MordheimApp() {
                   </small>
                 </div>
               </section>
+            ) : sauvegardeCorrompue ? (
+              <section className="data-recovery-panel" role="alert">
+                <CircleAlert aria-hidden="true" />
+                <div>
+                  <p className="eyebrow">Sauvegarde à protéger</p>
+                  <h1>Le registre local est illisible</h1>
+                  <p>{sauvegardeCorrompue.erreur}</p>
+                  <p>
+                    Trackheim ne l’écrasera pas. Téléchargez d’abord le contenu
+                    brut pour permettre une récupération ultérieure.
+                  </p>
+                  <div className="recovery-actions">
+                    <Button
+                      onClick={telechargerSauvegardeCorrompue}
+                      type="button"
+                    >
+                      <Download aria-hidden="true" /> Télécharger la copie brute
+                    </Button>
+                    <Button
+                      onClick={reinitialiserSauvegardeCorrompue}
+                      type="button"
+                      variant="outline"
+                    >
+                      Créer un registre neuf
+                    </Button>
+                  </div>
+                </div>
+              </section>
+            ) : conflitSauvegarde ? (
+              <section className="data-recovery-panel" role="alert">
+                <CircleAlert aria-hidden="true" />
+                <div>
+                  <p className="eyebrow">Conflit entre deux onglets</p>
+                  <h1>Deux versions du registre existent</h1>
+                  <p>
+                    Choisissez explicitement celle à conserver. Aucune donnée
+                    n’est remplacée automatiquement.
+                  </p>
+                  <div className="recovery-actions">
+                    <Button onClick={chargerVersionAutreOnglet} type="button">
+                      Charger l’autre onglet
+                    </Button>
+                    <Button
+                      onClick={conserverVersionCetOnglet}
+                      type="button"
+                      variant="outline"
+                    >
+                      Conserver cet onglet
+                    </Button>
+                  </div>
+                </div>
+              </section>
             ) : (
               <>
                 {vue === 'overview' && (
@@ -419,7 +629,7 @@ export function MordheimApp() {
                     campagne={campagne}
                     synthese={synthese}
                     onCampagneChange={setCampagne}
-                    onVueChange={setVue}
+                    onVueChange={naviguerVers}
                   />
                 )}
                 {vue === 'warband' && (
@@ -458,12 +668,12 @@ export function MordheimApp() {
                 )}
               </>
             )}
-          </div>
+          </main>
           <footer className="site-disclaimer">
             Trackheim est un projet fan non officiel, sans affiliation ni
             approbation de Games Workshop Limited.
           </footer>
-        </section>
+        </div>
       </div>
 
       {rechercheOuverte && (
@@ -488,173 +698,11 @@ export function MordheimApp() {
           open
         />
       )}
-    </main>
+    </div>
   );
 }
 
-function Sidebar({
-  vue,
-  onVueChange,
-}: {
-  vue: Vue;
-  onVueChange: (vue: Vue) => void;
-}) {
-  return (
-    <aside className="sidebar">
-      <div className="brand-block">
-        <div className="brand-mark" aria-hidden="true">
-          <Skull />
-        </div>
-        <div>
-          <p className="brand-kicker">Mordheim</p>
-          <p className="brand-title">Trackheim</p>
-        </div>
-      </div>
-
-      <nav
-        className="navigation-stack primary-navigation"
-        aria-label="Navigation principale"
-      >
-        {navigation.map(({ id, libelle, icone: Icone }) => (
-          <button
-            aria-label={libelle}
-            key={id}
-            className={
-              vue === id ? 'navigation-item active' : 'navigation-item'
-            }
-            onClick={() => onVueChange(id)}
-            type="button"
-          >
-            <Icone aria-hidden="true" />
-            <span>{libelle}</span>
-          </button>
-        ))}
-      </nav>
-
-      <div className="sidebar-separator" />
-      <p className="sidebar-label">Outils</p>
-      <nav className="navigation-stack tools-navigation" aria-label="Outils">
-        <button
-          aria-label="Règles homebrew"
-          className={
-            vue === 'homebrew' ? 'navigation-item active' : 'navigation-item'
-          }
-          onClick={() => onVueChange('homebrew')}
-          type="button"
-        >
-          <FlaskConical aria-hidden="true" />
-          <span>Règles homebrew</span>
-          <span className="new-badge">Nouveau</span>
-        </button>
-        <button
-          aria-label="Paramètres"
-          className={
-            vue === 'settings'
-              ? 'navigation-item settings-navigation-item active'
-              : 'navigation-item settings-navigation-item'
-          }
-          onClick={() => onVueChange('settings')}
-          type="button"
-        >
-          <Settings2 aria-hidden="true" />
-          <span>Paramètres</span>
-        </button>
-      </nav>
-
-      <div className="sidebar-source">
-        <Sparkles aria-hidden="true" />
-        <div>
-          <strong className="unofficial-label">Projet fan non officiel</strong>
-          <p>Données indexées depuis la Grande Librairie de Mordheim.</p>
-          <a
-            className="raven-credit"
-            href="https://freepngimg.com/png/108894-pic-bird-raven-download-hq"
-            target="_blank"
-            rel="noreferrer license"
-          >
-            Corbeau : Brett Croft · CC BY-NC 4.0 · teinte adaptée
-          </a>
-        </div>
-      </div>
-    </aside>
-  );
-}
-
-function Topbar({
-  campagne,
-  erreurSauvegarde,
-  etatSauvegarde,
-  rechercheOuverte,
-  onCampagnes,
-  onRecherche,
-}: {
-  campagne: EtatCampagne;
-  erreurSauvegarde: string | null;
-  etatSauvegarde: EtatSauvegarde;
-  rechercheOuverte: boolean;
-  onCampagnes: () => void;
-  onRecherche: () => void;
-}) {
-  const libelles: Record<EtatSauvegarde, string> = {
-    chargement: 'Chargement…',
-    sauvegarde: 'Sauvegarde…',
-    'sauvegarde-ok': 'Enregistré sur cet appareil',
-    erreur: 'Sauvegarde locale impossible',
-  };
-
-  return (
-    <header className="topbar">
-      <div>
-        <p className="eyebrow">Campagne active</p>
-        <button
-          className="campaign-switcher"
-          onClick={onCampagnes}
-          type="button"
-        >
-          <span>{campagne.nomCampagne}</span>
-          <ChevronDown aria-hidden="true" />
-        </button>
-      </div>
-      <div className="topbar-actions">
-        <span
-          aria-live="polite"
-          className={`save-state ${etatSauvegarde}`}
-          role={etatSauvegarde === 'erreur' ? 'alert' : undefined}
-          title={erreurSauvegarde ?? undefined}
-        >
-          {libelles[etatSauvegarde]}
-          {erreurSauvegarde && (
-            <span className="sr-only"> : {erreurSauvegarde}</span>
-          )}
-        </span>
-        <button
-          aria-expanded={rechercheOuverte}
-          aria-haspopup="dialog"
-          aria-keyshortcuts="Control+K Meta+K"
-          aria-label="Ouvrir la recherche globale"
-          className="search-button"
-          onClick={onRecherche}
-          type="button"
-        >
-          <Search aria-hidden="true" />
-          <span>Rechercher</span>
-          <kbd aria-hidden="true">Ctrl K</kbd>
-        </button>
-        <div className="avatar" aria-label="Profil de Troma">
-          TR
-        </div>
-      </div>
-    </header>
-  );
-}
-
-type ResumeCampagne = {
-  id: string;
-  nomCampagne: string;
-  nomBande: string;
-  revision: number;
-  miseAJour: string | null;
-};
+type ResumeCampagne = ResumeCampagneLocale;
 
 function CampaignManagerDialog({
   campagneCourante,
@@ -681,7 +729,7 @@ function CampaignManagerDialog({
   const fichierImport = useRef<HTMLInputElement>(null);
 
   const campagnes = useMemo(() => {
-    const locales = listerCopiesLocales();
+    const locales = listerCopiesLocales(window.localStorage);
     const courante: ResumeCampagne = {
       id: idCourant,
       nomCampagne: campagneCourante.nomCampagne,
@@ -715,6 +763,9 @@ function CampaignManagerDialog({
     if (!fichier) return;
     setErreurImport(null);
     try {
+      if (fichier.size > TAILLE_MAX_PAYLOAD_CAMPAGNE + 4096) {
+        throw new Error('Le fichier dépasse la limite de 512 Ko.');
+      }
       onImport(await fichier.text());
     } catch (erreur) {
       setErreurImport(
@@ -767,22 +818,18 @@ function CampaignManagerDialog({
             <Button onClick={onExport} type="button" variant="outline">
               <Download /> Exporter
             </Button>
-            <Button
-              onClick={() => fichierImport.current?.click()}
-              type="button"
-              variant="outline"
-            >
+            <label className={buttonVariants({ variant: 'outline' })}>
               <Upload /> Importer
-            </Button>
-            <input
-              accept="application/json,.json"
-              className="sr-only"
-              onChange={(event) =>
-                void lireFichierImporte(event.target.files?.[0])
-              }
-              ref={fichierImport}
-              type="file"
-            />
+              <input
+                accept="application/json,.json"
+                className="sr-only"
+                onChange={(event) =>
+                  void lireFichierImporte(event.target.files?.[0])
+                }
+                ref={fichierImport}
+                type="file"
+              />
+            </label>
           </div>
           {erreurImport && (
             <p className="campaign-import-error" role="alert">
@@ -1528,11 +1575,12 @@ function WarbandView({
                     {combattant.chef ? ' · Chef' : ''}
                   </span>
                 </div>
-                <div
-                  className="xp-control"
-                  aria-label={`Expérience de ${combattant.nom}`}
-                >
+                <fieldset className="xp-control">
+                  <legend className="sr-only">
+                    Expérience de {combattant.nom}
+                  </legend>
                   <Button
+                    aria-label={`Retirer 1 point d’expérience à ${combattant.nom}`}
                     size="icon-xs"
                     variant="outline"
                     onClick={() =>
@@ -1543,10 +1591,11 @@ function WarbandView({
                   >
                     <Minus />
                   </Button>
-                  <span>
+                  <output aria-live="polite">
                     <strong>{combattant.experience}</strong> XP
-                  </span>
+                  </output>
                   <Button
+                    aria-label={`Ajouter 1 point d’expérience à ${combattant.nom}`}
                     size="icon-xs"
                     variant="outline"
                     onClick={() =>
@@ -1557,7 +1606,7 @@ function WarbandView({
                   >
                     <Plus />
                   </Button>
-                </div>
+                </fieldset>
                 <NativeSelect
                   aria-label={`Statut de ${combattant.nom}`}
                   value={combattant.statut}
@@ -2071,7 +2120,8 @@ function CampaignView({
               </p>
             </div>
             <a href={`${SOURCE_GLM}/campagne`} target="_blank" rel="noreferrer">
-              Consulter <ExternalLink />
+              Consulter <ExternalLink aria-hidden="true" />
+              <IndicationNouvelOnglet />
             </a>
           </section>
           <section className="resource-counter inventory-summary">
@@ -2117,14 +2167,24 @@ function ResourceCounter({
         <p>{label}</p>
       </div>
       <div className="counter-control">
-        <Button size="icon" variant="outline" onClick={() => onChange(-1)}>
+        <Button
+          aria-label={`Diminuer ${label} de 1 ${unit}`}
+          size="icon"
+          variant="outline"
+          onClick={() => onChange(-1)}
+        >
           <Minus />
         </Button>
-        <div>
+        <output aria-live="polite">
           <strong>{value}</strong>
           <span>{unit}</span>
-        </div>
-        <Button size="icon" variant="outline" onClick={() => onChange(1)}>
+        </output>
+        <Button
+          aria-label={`Augmenter ${label} de 1 ${unit}`}
+          size="icon"
+          variant="outline"
+          onClick={() => onChange(1)}
+        >
           <Plus />
         </Button>
       </div>
@@ -2215,6 +2275,7 @@ function SettingsView({
             rel="noreferrer"
           >
             FreePNGimg
+            <IndicationNouvelOnglet />
           </a>{' '}
           sous{' '}
           <a
@@ -2223,9 +2284,23 @@ function SettingsView({
             rel="noreferrer license"
           >
             CC BY-NC 4.0
+            <IndicationNouvelOnglet />
           </a>
           , avec teinte adaptée. Cette ressource ne permet pas un usage
           commercial.
+        </p>
+        <p>
+          <strong>Confidentialité.</strong> Les campagnes restent dans le
+          stockage local du navigateur. Trackheim ne crée aucun compte,
+          n’utilise aucun cookie publicitaire, n’intègre aucun outil d’analyse
+          d’audience et ne transmet pas les données de campagne. L’export JSON
+          reste sous le contrôle de l’utilisateur.
+        </p>
+        <p>
+          <strong>Conditions d’utilisation.</strong> L’application est fournie
+          gratuitement et en l’état. Les joueurs restent responsables de leurs
+          sauvegardes et doivent se référer aux publications officielles en cas
+          de doute sur une règle.
         </p>
       </section>
     </section>
@@ -2263,7 +2338,8 @@ function LibraryView({
             target="_blank"
             rel="noreferrer"
           >
-            Voir la GLM <ExternalLink />
+            Voir la GLM <ExternalLink aria-hidden="true" />
+            <IndicationNouvelOnglet />
           </a>
         }
       />
@@ -2279,6 +2355,7 @@ function LibraryView({
           />
         </div>
         <NativeSelect
+          aria-label="Filtrer les bandes par grade"
           value={grade}
           onChange={(event) => onGradeChange(event.target.value as FiltreGrade)}
         >
@@ -2329,11 +2406,13 @@ function LibraryView({
                 target="_blank"
                 rel="noreferrer"
               >
-                Fiche GLM <ExternalLink />
+                Fiche GLM <ExternalLink aria-hidden="true" />
+                <IndicationNouvelOnglet />
               </a>
               {bande.pdfUrl && (
                 <a href={bande.pdfUrl} target="_blank" rel="noreferrer">
-                  <FileText /> PDF
+                  <FileText aria-hidden="true" /> PDF
+                  <IndicationNouvelOnglet />
                 </a>
               )}
             </div>
@@ -2401,6 +2480,7 @@ function LibraryView({
                   rel="noreferrer"
                 >
                   Ouvrir la fiche GLM <ExternalLink aria-hidden="true" />
+                  <IndicationNouvelOnglet />
                 </a>
                 {bandeSelectionnee.pdfUrl ? (
                   <a
@@ -2410,6 +2490,7 @@ function LibraryView({
                     rel="noreferrer"
                   >
                     Lire le PDF <FileText aria-hidden="true" />
+                    <IndicationNouvelOnglet />
                   </a>
                 ) : null}
               </DialogFooter>
@@ -3034,16 +3115,15 @@ function coutEquipement(equipement: Equipement, campagne: EtatCampagne) {
 }
 
 function profilParId(id: string) {
-  return (
-    profilsReiklanders.find((profil) => profil.id === id) ??
-    profilsReiklanders[0]
-  );
+  const profil = profilsReiklanders.find((candidat) => candidat.id === id);
+  if (!profil) throw new Error(`Profil inconnu : ${id}`);
+  return profil;
 }
 
 function equipementParId(id: string) {
-  return (
-    equipements.find((equipement) => equipement.id === id) ?? equipements[0]
-  );
+  const equipement = equipements.find((candidat) => candidat.id === id);
+  if (!equipement) throw new Error(`Équipement inconnu : ${id}`);
+  return equipement;
 }
 
 function equipementsPourProfil(
@@ -3083,83 +3163,21 @@ function formaterDate(date: string) {
   }).format(valeur);
 }
 
-function cleCopieLocale(idCampagne: string) {
-  return `trackheim:campagne:${idCampagne}`;
-}
-
-function estIdentifiantCampagneClientValide(valeur: string) {
-  return /^[a-z0-9](?:[a-z0-9_-]{0,62}[a-z0-9])?$/.test(valeur);
-}
-
-function lireCampagneActive() {
-  try {
-    const memorisee = window.localStorage.getItem(CLE_CAMPAGNE_ACTIVE);
-    return memorisee && estIdentifiantCampagneClientValide(memorisee)
-      ? memorisee
-      : null;
-  } catch {
-    return null;
-  }
-}
-
-function lireCopieLocale(idCampagne: string): CopieLocale | null {
-  try {
-    const valeur = window.localStorage.getItem(cleCopieLocale(idCampagne));
-    if (!valeur) return null;
-    const copie = JSON.parse(valeur) as Partial<CopieLocale>;
-    if (!copie.campagne) return null;
-    return {
-      campagne: normaliserCampagne(copie.campagne),
-      date: copie.date ?? '',
-    };
-  } catch {
-    return null;
-  }
-}
-
-function listerCopiesLocales(): ResumeCampagne[] {
-  const prefixe = 'trackheim:campagne:';
-  const resultats: ResumeCampagne[] = [];
-  try {
-    for (let index = 0; index < window.localStorage.length; index += 1) {
-      const cle = window.localStorage.key(index);
-      if (!cle?.startsWith(prefixe)) continue;
-      const id = cle.slice(prefixe.length);
-      if (!estIdentifiantCampagneClientValide(id)) continue;
-      const copie = lireCopieLocale(id);
-      if (!copie) continue;
-      resultats.push({
-        id,
-        nomCampagne: copie.campagne.nomCampagne,
-        nomBande: copie.campagne.nomBande,
-        revision: copie.campagne.revision,
-        miseAJour: copie.date || null,
-      });
-    }
-  } catch {
-    // Le catalogue reste vide si le navigateur bloque son stockage local.
-  }
-  return resultats.sort((a, b) =>
-    (b.miseAJour ?? '').localeCompare(a.miseAJour ?? ''),
-  );
-}
-
-function ecrireCopieLocale(idCampagne: string, campagne: EtatCampagne) {
-  const copie: CopieLocale = {
-    campagne,
-    date: new Date().toISOString(),
-  };
-  window.localStorage.setItem(
-    cleCopieLocale(idCampagne),
-    JSON.stringify(copie),
-  );
-}
-
 function normaliser(texte: string) {
   return texte
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase();
+}
+
+function telechargerTexte(contenu: string, nomFichier: string) {
+  const blob = new Blob([contenu], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const lien = document.createElement('a');
+  lien.href = url;
+  lien.download = nomFichier;
+  lien.click();
+  URL.revokeObjectURL(url);
 }
 
 /**

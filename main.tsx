@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { MordheimApp } from '@/app/mordheim-app';
+import { AppErrorBoundary } from '@/components/app-error-boundary';
 import '@/app/globals.css';
 
 const racine = document.getElementById('root');
@@ -12,6 +13,8 @@ if (!racine) {
 
 createRoot(racine).render(
   <StrictMode>
-    <MordheimApp />
+    <AppErrorBoundary>
+      <MordheimApp />
+    </AppErrorBoundary>
   </StrictMode>,
 );

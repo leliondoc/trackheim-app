@@ -1,0 +1,485 @@
+/* Les grands titres reprennent les bandeaux noirs irréguliers du livre de règles. */
+.warband-heading,
+.page-header {
+  position: relative;
+  isolation: isolate;
+  padding: 14px 0 24px;
+}
+
+.warband-heading > *,
+.page-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.warband-heading h1,
+.page-header h1 {
+  display: inline-block;
+  max-width: 100%;
+  background: linear-gradient(101deg, #171412 0%, #29211b 53%, #151210 100%);
+  clip-path: polygon(1% 7%, 98% 0, 100% 78%, 96% 94%, 2% 100%, 0 22%);
+  color: #f5ead0;
+  font-family: var(--font-pirata), var(--font-fell), serif;
+  font-size: clamp(42px, 3vw, 62px);
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 0.88;
+  padding: 0.18em 0.62em 0.23em 0.42em;
+  text-shadow: 2px 3px 0 #000;
+}
+
+.warband-heading > div > p,
+.page-header > div > p:last-child {
+  max-width: 780px;
+  color: #56493c;
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.grade-badge,
+.rating-chip,
+.source-chip,
+.grade,
+.homebrew-badge,
+.layer-status {
+  border: 1px solid #5e4a32;
+  border-radius: 0;
+  background: #dfcda9;
+  color: #4e3926;
+  box-shadow: 2px 2px 0 rgb(73 47 24 / 16%);
+  font-family: var(--font-fell), serif;
+  letter-spacing: 0.075em;
+  transform: rotate(-0.7deg);
+}
+
+.primary-action,
+.continue-button {
+  border: 1px solid #351310;
+  border-radius: 0;
+  background: linear-gradient(180deg, #913a31, #67251f);
+  color: #fff0d0;
+  box-shadow:
+    3px 4px 0 #351915,
+    inset 0 1px rgb(255 255 255 / 14%);
+  font-family: var(--font-fell), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  text-shadow: 1px 1px #38120f;
+}
+
+.primary-action:hover,
+.continue-button:hover {
+  background: linear-gradient(180deg, #a6483c, #722821);
+}
+
+.source-button {
+  border: 1px solid #59452f;
+  border-radius: 0;
+  background: #2b241e;
+  color: #f2dfbb;
+  box-shadow: 3px 3px 0 rgb(56 35 17 / 24%);
+  font-family: var(--font-fell), Georgia, serif;
+}
+
+/* Cartouches chiffrés, comme des encadrés de référence rapide. */
+.metrics-grid {
+  gap: 18px;
+}
+
+.metric-card {
+  border: 1px solid var(--frame-red);
+  border-radius: 0;
+  background:
+    linear-gradient(96deg, rgb(255 255 255 / 22%), transparent 44%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 27px,
+      rgb(89 61 32 / 5%) 27px 28px
+    ),
+    #eadcbe;
+  box-shadow:
+    4px 5px 0 rgb(69 45 24 / 14%),
+    inset 0 0 0 2px rgb(255 249 227 / 42%);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 9px) 0,
+    100% 9px,
+    100% 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+}
+
+.metric-card::after {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--oxblood) 0 56px,
+    transparent 56px 62px
+  );
+  opacity: 0.88;
+}
+
+.metric-icon {
+  border: 1px solid #64492e;
+  border-radius: 0;
+  background: #2a241e;
+  color: #d8b97d;
+  box-shadow: 2px 3px 0 rgb(60 39 20 / 20%);
+  transform: rotate(-2deg);
+}
+
+.metric-icon svg {
+  transform: rotate(2deg);
+}
+.metric-card p {
+  color: #604d3a;
+  font-family: var(--font-fell), serif;
+  letter-spacing: 0.08em;
+}
+.metric-card strong {
+  color: #211b16;
+  font-family: var(--font-pirata), serif;
+  font-size: 34px;
+}
+.metric-card p,
+.metric-card small {
+  font-size: 13px;
+}
+.metric-card small,
+.metric-note {
+  color: #675645;
+}
+.metric-note {
+  font-size: 12px;
+}
+.metric-note.positive {
+  color: #4d5b3b;
+}
+
+/* Un filet rouge continu encadre les feuillets, sans barre latérale décorative. */
+.roster-panel,
+.after-battle-card,
+.management-panel,
+.sequence-panel,
+.price-panel,
+.resource-counter,
+.rule-note,
+.library-toolbar,
+.library-card,
+.profile-card,
+.constructeur-bande-resume,
+.homebrew-toggle,
+.overlay-node,
+.rule-set-card,
+.custom-rules-panel,
+.profile-preview {
+  border: 1px solid var(--frame-red);
+  border-radius: 0;
+  background:
+    linear-gradient(103deg, rgb(255 255 255 / 18%), transparent 36%),
+    repeating-linear-gradient(
+      1deg,
+      transparent 0 35px,
+      rgb(83 55 29 / 3.4%) 35px 36px
+    ),
+    rgb(238 225 196 / 94%);
+  box-shadow:
+    4px 5px 0 rgb(70 45 23 / 12%),
+    inset 0 0 0 2px rgb(255 250 231 / 38%);
+}
+
+.panel-header {
+  position: relative;
+  border-bottom: 1px solid var(--frame-red);
+  background: linear-gradient(90deg, rgb(255 255 255 / 22%), transparent 58%);
+}
+
+.panel-header h2 {
+  display: inline-block;
+  margin-left: -20px;
+  background: #24201b;
+  clip-path: polygon(0 6%, 98% 0, 100% 83%, 95% 100%, 0 94%);
+  color: #f2e3c5;
+  font-family: var(--font-pirata), var(--font-fell), serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 0.9;
+  padding: 7px 28px 9px 20px;
+  text-shadow: 1px 2px #000;
+}
+
+.panel-header .eyebrow {
+  color: var(--oxblood);
+}
+
+.fighter-list,
+.management-list,
+.campaign-sequence,
+.price-list,
+.custom-rule-list {
+  background: rgb(255 249 231 / 17%);
+}
+
+.fighter-row,
+.management-row,
+.campaign-step,
+.price-row,
+.custom-rule {
+  border-bottom: 1px solid rgb(64 44 27 / 24%);
+}
+
+.fighter-row:nth-child(even),
+.management-row:nth-child(even),
+.campaign-step:nth-child(even),
+.price-row:nth-child(even),
+.custom-rule:nth-child(even) {
+  background: rgb(119 87 49 / 5%);
+}
+
+.fighter-row:hover,
+.management-row:hover,
+.price-row:hover {
+  background: rgb(116 42 35 / 5%);
+}
+
+.fighter-avatar,
+.battle-crest,
+.resource-heading > span {
+  border-color: #6d5535;
+  background: #2b251f;
+  color: #e2c486;
+  box-shadow:
+    inset 0 0 0 2px #17130f,
+    inset 0 0 0 3px #806640,
+    2px 2px 0 rgb(62 39 18 / 22%);
+}
+
+.fighter-name-line h3,
+.management-identity strong,
+.profile-card h3,
+.library-card h3,
+.campaign-step strong,
+.section-title-row h3,
+.homebrew-toggle strong,
+.custom-rule-title strong,
+.overlay-node strong,
+.empty-state strong {
+  color: #241d17;
+  font-family: var(--font-fell), Georgia, serif;
+  font-weight: 700;
+}
+
+.stat-line {
+  color: #493e33;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.035em;
+}
+
+.fighter-name-line p,
+.management-identity span,
+.fighter-foot,
+.profile-card-footer,
+.campaign-step p,
+.rule-note p,
+.library-card-main > p,
+.homebrew-toggle p,
+.price-row small,
+.custom-rule p {
+  font-size: 13px;
+}
+
+.status,
+.status.wounded {
+  border-radius: 0;
+  box-shadow: 1px 2px 0 rgb(65 43 24 / 13%);
+  font-family: var(--font-fell), serif;
+  font-weight: 700;
+  transform: rotate(-1deg);
+}
+
+.status {
+  border-color: #68704e;
+  background: #d8ddc4;
+  color: #455035;
+}
+.status.wounded {
+  border-color: #8b4138;
+  background: #e6c7ba;
+  color: #6d2b26;
+}
+
+.xp-pill {
+  border-radius: 0;
+  background: #2c251f;
+  color: #e6c98d;
+  font-family: var(--font-fell), serif;
+  transform: rotate(-1deg);
+}
+
+.campaign-progress [data-slot='progress-track'] {
+  border: 1px solid #7d694b;
+  border-radius: 0;
+  background: #cdb993;
+}
+
+.campaign-progress [data-slot='progress-indicator'] {
+  background: var(--oxblood);
+}
+
+.step-number,
+.campaign-step > button {
+  border-radius: 0;
+  background: rgb(255 248 226 / 35%);
+  font-family: var(--font-fell), serif;
+  transform: rotate(-2deg);
+}
+
+.step-item.current {
+  border: 1px solid #8d3b33;
+  border-radius: 0;
+  background: rgb(125 44 37 / 9%);
+  box-shadow: 0 4px 12px rgb(75 30 24 / 8%);
+  color: #4b211d;
+}
+
+.step-item.current .step-number,
+.campaign-step.completed > button {
+  background: var(--oxblood);
+  color: #f5e7c9;
+}
+
+.last-battle-card {
+  border: 1px solid #17120f;
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgb(172 125 64 / 10%), transparent 22%),
+    linear-gradient(112deg, #352b23, #171411);
+  box-shadow:
+    4px 5px 0 rgb(65 40 19 / 16%),
+    inset 0 0 28px rgb(0 0 0 / 24%);
+  clip-path: polygon(0 0, 98% 0, 100% 18%, 100% 100%, 2% 100%, 0 82%);
+}
+
+.last-battle-card h3 {
+  font-family: var(--font-pirata), var(--font-fell), serif;
+  font-size: 21px;
+}
+
+.victory-badge {
+  border-radius: 0;
+  font-family: var(--font-fell), serif;
+  transform: rotate(-1deg);
+}
+
+.constructeur-bande-resume strong,
+.counter-control strong,
+.dialog-total strong {
+  font-family: var(--font-pirata), var(--font-fell), serif;
+}
+
+.budget-track {
+  height: 8px;
+  border: 1px solid #796448;
+  border-radius: 0;
+  background: #cbb58b;
+}
+
+.budget-track span {
+  border-radius: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    #67251f 0 22px,
+    #8c392f 22px 26px
+  );
+}
+
+.profile-card,
+.library-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-card:hover {
+  border-color: #53241f;
+  box-shadow:
+    5px 7px 0 rgb(70 45 23 / 15%),
+    inset 0 0 0 2px rgb(255 250 231 / 42%);
+  transform: translateY(-2px) rotate(-0.15deg);
+}
+
+.library-card:has(.library-card-main:hover) {
+  border-color: #53241f;
+  box-shadow:
+    5px 7px 0 rgb(70 45 23 / 15%),
+    inset 0 0 0 2px rgb(255 250 231 / 42%);
+  transform: translateY(-2px) rotate(-0.1deg);
+}
+
+.profile-card-footer,
+.library-card-actions {
+  border-top-color: rgb(65 44 25 / 24%);
+}
+
+.library-card-actions a,
+.rule-note a {
+  color: #712b25;
+  text-decoration-color: rgb(113 43 37 / 38%);
+  text-underline-offset: 3px;
+}
+
+.homebrew-toggle {
+  border-color: #6f312b;
+  background:
+    linear-gradient(96deg, rgb(116 42 35 / 15%), transparent 58%), #ead9b7;
+  box-shadow: 4px 5px 0 rgb(70 45 23 / 12%);
+}
+
+.overlay-node.homebrew-layer {
+  border-color: #7f342e;
+  background-color: #e4ccb0;
+}
+.overlay-node.effective-layer {
+  border-color: #66704f;
+  background-color: #d9d6b7;
+}
+.overlay-operator {
+  color: var(--oxblood);
+  font-family: var(--font-pirata), serif;
+  font-size: 31px;
+}
+
+.layer-status.active {
+  border-color: #596344;
+  background: #d2d8b8;
+  color: #465035;
+}
+.custom-rule.active {
+  background: rgb(119 41 34 / 7%);
+  box-shadow: inset 0 0 0 1px rgb(119 41 34 / 24%);
+}
+
+.recruit-dialog,
+.homebrew-rule-dialog {
+  border: 2px solid #57442e;
+  border-radius: 0;
+  background:
+    repeating-linear-gradient(
+      2deg,
+      transparent 0 34px,
+      rgb(78 52 27 / 3%) 34px 35px
+    ),
+    #efe0c1;
+  box-shadow:
+    8px 10px 0 rgb(43 27 14 / 24%),
+    0 24px 70px rgb(25 16 10 / 34%);
+}
+
+.recruit-dialog [data-slot='dialog-title'],
+.homebrew-rule-dialog [data-slot='dialog-title'] {
+  font-family: var(--font-pirata), var(--font-fell), serif;
+  font-size: 32px;
+}

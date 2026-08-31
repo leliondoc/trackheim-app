@@ -69,6 +69,27 @@ describe('contrat persistant des campagnes', () => {
     assert.equal(validerCampagneV3(campagne).ok, false);
   });
 
+  it('refuse les références métier inconnues', () => {
+    const profilInconnu = structuredClone(etatInitial);
+    profilInconnu.combattants[0].profilId = 'profil-inconnu';
+    assert.equal(validerCampagneV3(profilInconnu).ok, false);
+
+    const equipementInconnu = structuredClone(etatInitial);
+    equipementInconnu.combattants[0].equipementIds.push('objet-inconnu');
+    assert.equal(validerCampagneV3(equipementInconnu).ok, false);
+  });
+
+  it('accepte les champs structurés du workflow', () => {
+    const campagne = structuredClone(etatInitial);
+    campagne.batailleEnCours = batailleMinimale();
+    campagne.batailleEnCours.personnel = {
+      version: 1,
+      aucun: true,
+      entrees: [],
+    };
+    assert.equal(validerCampagneV3(campagne).ok, true);
+  });
+
   it('refuse une date impossible avant qu’elle atteigne le rendu', () => {
     const campagne = structuredClone(etatInitial);
     campagne.parties[0].date = '2026-02-31';

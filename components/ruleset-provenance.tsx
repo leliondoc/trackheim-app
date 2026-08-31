@@ -182,7 +182,7 @@ function ManifesteInconnu({
       data-ruleset-id={rulesetId}
     >
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle as="h2" className="flex items-center gap-2">
           <CircleAlert aria-hidden="true" className="size-4 text-destructive" />
           Manifeste de règles introuvable
         </CardTitle>
@@ -344,7 +344,7 @@ function VersionDetaillee({
       <CardHeader className="border-b">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle as="h3" className="flex items-center gap-2">
               <ShieldCheck aria-hidden="true" className="size-4 text-primary" />
               Manifeste de règles effectif
             </CardTitle>

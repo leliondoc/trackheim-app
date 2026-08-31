@@ -1,0 +1,218 @@
+/* Bibliothèque */
+.library-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgb(104 72 41 / 18%);
+  border-radius: 5px;
+  background: rgb(252 248 236 / 62%);
+  padding: 10px 12px;
+}
+.library-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.library-search > svg {
+  position: absolute;
+  left: 9px;
+  z-index: 1;
+  width: 14px;
+  color: #8a7b6c;
+}
+.library-search input {
+  padding-left: 31px;
+}
+.library-toolbar > span {
+  color: #857669;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.library-card {
+  display: grid;
+  min-height: 170px;
+  align-content: start;
+  border: 1px solid rgb(104 72 41 / 20%);
+  border-radius: 5px;
+  background: rgb(252 248 236 / 67%);
+  padding: 14px;
+}
+.library-card-main {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.library-card-main:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 0;
+  box-shadow:
+    inset 0 0 0 2px #a7503e,
+    0 0 14px rgb(118 43 37 / 22%);
+}
+.library-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.library-card-top > svg {
+  width: 18px;
+  color: #9a8262;
+  opacity: 0.7;
+}
+.grade {
+  border: 1px solid #a78b62;
+  border-radius: 3px;
+  color: #7b6241;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.grade-1a {
+  border-color: #8a6b3d;
+  background: rgb(171 128 61 / 10%);
+}
+.grade-1b {
+  border-color: #727f89;
+  color: #586873;
+}
+.grade-1c {
+  border-color: #7d6b91;
+  color: #675575;
+}
+.grade-2 {
+  border-color: #758669;
+  color: #5c704e;
+}
+.library-card h3 {
+  margin: 17px 0 5px;
+  font-family: var(--font-fell), serif;
+  font-size: 18px;
+  line-height: 1.05;
+}
+.library-card-main > p {
+  margin: 0;
+  color: #88796b;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.library-card-hint {
+  display: inline-block;
+  margin-top: 12px;
+  color: #7d362f;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.library-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+.library-card-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #7d362f;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.library-card-actions svg {
+  width: 11px;
+}
+
+.band-details-dialog {
+  width: min(760px, calc(100vw - 40px));
+  max-width: none;
+  border: 1px solid #5f4930;
+  border-top: 1px solid var(--frame-red);
+  border-radius: 0;
+  background:
+    repeating-linear-gradient(
+      1deg,
+      transparent 0 35px,
+      rgb(83 55 29 / 3.4%) 35px 36px
+    ),
+    #efe0bd;
+  color: #2e241a;
+  box-shadow: 8px 10px 0 rgb(29 20 13 / 28%);
+}
+.band-details-dialog [data-slot='dialog-title'] {
+  font-family: var(--font-pirata), var(--font-fell), serif;
+  font-size: 34px;
+  font-weight: 400;
+}
+.band-details-dialog [data-slot='dialog-description'] {
+  color: #655441;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.band-details-grade {
+  width: fit-content;
+}
+.band-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-block: 1px solid var(--frame-red);
+}
+.band-details-grid > div {
+  min-width: 0;
+  padding: 16px;
+}
+.band-details-grid > div + div {
+  border-left: 1px solid rgb(79 57 34 / 38%);
+}
+.band-details-grid dt {
+  color: #78634a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.band-details-grid dd {
+  margin-top: 5px;
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+.band-support-state {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  border: 1px solid #8c7350;
+  background: rgb(255 248 226 / 38%);
+  padding: 16px;
+}
+.band-support-state > svg {
+  width: 22px;
+  color: var(--oxblood);
+}
+.band-support-state strong {
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 18px;
+}
+.band-support-state p {
+  margin: 4px 0 0;
+  color: #655441;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.band-details-actions {
+  justify-content: flex-start;
+}

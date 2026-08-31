@@ -79,11 +79,20 @@ export type SuiviCombattantBataille = {
   jetsBlessure: number[];
   blessureResolue: boolean;
   blessureNote: string;
+  resolutionBlessure?: {
+    version: 1;
+    jetSecondaire: number | null;
+    note: string;
+  };
   ennemisHorsCombat: number;
   experienceScenario: number;
   experienceManuelle: number;
   experienceAppliquee: boolean;
   progressionsNote: string;
+  progressions?: {
+    version: 1;
+    saisies: Array<{ jet: number | null; decision: string; note: string }>;
+  };
 };
 
 export type JetRarete = {
@@ -130,6 +139,21 @@ export type BatailleEnCours = {
   };
   jetsRarete: JetRarete[];
   personnagesSpeciaux: string;
+  personnel?: {
+    version: 1;
+    aucun: boolean;
+    entrees: Array<{
+      id: string;
+      type: 'Franc-tireur' | 'Dramatis Personae' | 'Autre';
+      nom: string;
+      decision: 'Engagé' | 'Refusé' | 'Indisponible' | 'Autre';
+      heroId: string;
+      jetInitiative: number | null;
+      cout: number;
+      coutApplique: boolean;
+      note: string;
+    }>;
+  };
   notes: string;
 };
 

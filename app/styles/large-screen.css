@@ -1,0 +1,736 @@
+/*
+ * Échelle grand écran
+ * À partir d’un bureau 2K, l’interface exploite réellement la surface disponible
+ * au lieu de conserver la densité d’un portable. Les tailles mobiles restent
+ * indépendantes de ce palier.
+ */
+/*
+ * Lisibilité des bureaux à forte mise à l’échelle
+ * Un écran 2K réglé à 150–200 % expose souvent seulement 1180 à 1700 pixels
+ * CSS. Ce palier augmente uniquement la typographie, sans dilater l’agencement.
+ */
+@media (min-width: 1180px) and (max-width: 1799px) {
+  body {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .brand-kicker,
+  .sidebar-label,
+  .eyebrow,
+  .campaign-label,
+  .save-state {
+    font-size: 12px;
+  }
+
+  .navigation-item {
+    font-size: 16px;
+  }
+
+  .new-badge,
+  .sidebar-source {
+    font-size: 12px;
+  }
+
+  .campaign-switcher {
+    font-size: 19px;
+  }
+
+  .search-button {
+    font-size: 15px;
+  }
+
+  .warband-heading > div > p,
+  .page-header > div > p:last-child {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .grade-badge,
+  .rating-chip,
+  .source-chip,
+  .grade,
+  .homebrew-badge,
+  .layer-status {
+    font-size: 13px;
+  }
+
+  [data-slot='button'],
+  .primary-action,
+  .continue-button,
+  .source-button {
+    font-size: 16px;
+  }
+
+  .metric-card p,
+  .metric-card small,
+  .constructeur-bande-resume > span,
+  .library-toolbar > span {
+    font-size: 14px;
+  }
+
+  .metric-card strong {
+    font-size: 34px;
+  }
+
+  .metric-note {
+    font-size: 13px;
+  }
+
+  .fighter-name-line h3,
+  .management-identity strong {
+    font-size: 19px;
+  }
+
+  .fighter-name-line p,
+  .management-identity span,
+  .fighter-foot,
+  .profile-card-footer,
+  .stat-line,
+  .campaign-step p,
+  .rule-note p,
+  .library-card-main > p,
+  .homebrew-toggle p,
+  .price-row small,
+  .custom-rule p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .status,
+  .campaign-progress [data-slot='progress-label'],
+  .campaign-progress [data-slot='progress-value'],
+  .victory-badge {
+    font-size: 13px;
+  }
+
+  .step-item {
+    font-size: 15px;
+  }
+
+  .profile-card h3,
+  .library-card h3 {
+    font-size: 23px;
+  }
+
+  .profile-card-header span,
+  .profile-card-header strong,
+  .xp-control > output,
+  .dialog-total span,
+  .resource-heading p,
+  .overlay-node small,
+  .overlay-node b,
+  .price-row b,
+  .asset-license-note {
+    font-size: 14px;
+  }
+
+  .library-card-hint,
+  .library-card-actions a {
+    font-size: 14px;
+  }
+
+  .section-title-row h3,
+  .homebrew-toggle strong,
+  .empty-state strong {
+    font-size: 21px;
+  }
+
+  .campaign-step strong,
+  .xp-control strong {
+    font-size: 18px;
+  }
+
+  .field-group {
+    font-size: 14px;
+  }
+
+  [data-slot='input'],
+  [data-slot='native-select'],
+  [data-slot='textarea'] {
+    font-size: 16px;
+  }
+
+  .ruleset-selector > legend {
+    font-size: 17px;
+  }
+
+  .ruleset-option strong {
+    font-size: 23px;
+  }
+
+  .ruleset-option small {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .ruleset-option > b {
+    font-size: 15px;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-title'],
+  .settings-view .ruleset-provenance h3,
+  .settings-view .ruleset-provenance .text-sm {
+    font-size: 19px;
+    line-height: 1.4;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-description'],
+  .settings-view .ruleset-provenance .text-xs {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='badge'] {
+    min-height: 29px;
+    padding: 4px 9px;
+    font-size: 14px;
+  }
+
+  .recruit-dialog {
+    font-size: 16px;
+  }
+
+  .recruit-dialog [data-slot='dialog-description'],
+  .recruit-dialog .profile-preview span,
+  .recruit-dialog .profile-preview code,
+  .recruit-dialog .profile-preview p,
+  .recruit-dialog .equipment-option strong,
+  .recruit-dialog .form-alert {
+    font-size: 15px;
+  }
+
+  .recruit-dialog .equipment-option small,
+  .recruit-dialog .equipment-option b {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1800px) {
+  html {
+    font-size: 18px;
+  }
+
+  body {
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .application-layout {
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+
+  .sidebar {
+    padding: 32px 22px 24px;
+  }
+
+  .brand-block {
+    min-height: 102px;
+    gap: 15px;
+    padding-bottom: 38px;
+  }
+
+  .brand-mark {
+    width: 68px;
+    height: 84px;
+  }
+
+  .brand-title {
+    font-size: 43px;
+  }
+
+  .brand-kicker,
+  .sidebar-label,
+  .eyebrow,
+  .save-state {
+    font-size: 13px;
+  }
+
+  .navigation-item {
+    min-height: 54px;
+    font-size: 17px;
+  }
+
+  .navigation-item svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .new-badge,
+  .sidebar-source {
+    font-size: 13px;
+  }
+
+  .raven-credit {
+    font-size: 12px;
+  }
+
+  .topbar {
+    min-height: 96px;
+    padding: 16px 52px;
+  }
+
+  .campaign-switcher {
+    font-size: 22px;
+  }
+
+  .search-button {
+    width: min(320px, 28vw);
+    height: 46px;
+    font-size: 15px;
+  }
+
+  .avatar {
+    width: 42px;
+    height: 42px;
+    font-size: 14px;
+  }
+
+  .content-wrap {
+    max-width: 1960px;
+    padding: 44px 52px 76px;
+  }
+
+  .warband-heading,
+  .page-header {
+    padding: 20px 0 32px;
+  }
+
+  .warband-heading h1,
+  .page-header h1 {
+    font-size: clamp(52px, 3vw, 72px);
+  }
+
+  .warband-heading > div > p,
+  .page-header > div > p:last-child {
+    max-width: 920px;
+    font-size: 18px;
+  }
+
+  .grade-badge,
+  .rating-chip,
+  .source-chip,
+  .grade,
+  .homebrew-badge,
+  .layer-status {
+    font-size: 14px;
+  }
+
+  .primary-action,
+  .continue-button,
+  .source-button {
+    min-height: 50px;
+    padding-inline: 18px;
+    font-size: 16px;
+  }
+
+  .metrics-grid {
+    gap: 22px;
+    margin-top: 38px;
+  }
+
+  .metric-card {
+    min-height: 142px;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 16px;
+    padding: 21px 20px 18px;
+  }
+
+  .metric-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .metric-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .metric-card p,
+  .metric-card small,
+  .constructeur-bande-resume > span,
+  .library-toolbar > span {
+    font-size: 15px;
+  }
+
+  .metric-card strong {
+    font-size: 38px;
+  }
+
+  .metric-note {
+    font-size: 14px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1.5fr) minmax(440px, 0.72fr);
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .panel-header {
+    min-height: 90px;
+    padding: 18px 24px;
+  }
+
+  .panel-header h2 {
+    font-size: 33px;
+  }
+
+  .fighter-list {
+    padding-inline: 22px;
+  }
+
+  .fighter-row {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 16px;
+    padding-block: 20px;
+  }
+
+  .fighter-avatar {
+    width: 46px;
+    height: 46px;
+    font-size: 14px;
+  }
+
+  .fighter-name-line h3,
+  .management-identity strong {
+    font-size: 20px;
+  }
+
+  .fighter-name-line p,
+  .management-identity span,
+  .fighter-foot,
+  .profile-card-footer,
+  .stat-line,
+  .campaign-step p,
+  .rule-note p,
+  .library-card-main > p,
+  .homebrew-toggle p,
+  .price-row small,
+  .custom-rule p {
+    font-size: 14px;
+  }
+
+  .status,
+  .campaign-progress [data-slot='progress-label'],
+  .campaign-progress [data-slot='progress-value'],
+  .victory-badge {
+    font-size: 13px;
+  }
+
+  .step-item {
+    min-height: 42px;
+    font-size: 15px;
+  }
+
+  .step-number {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+  }
+
+  .constructeur-bande-resume {
+    min-height: 82px;
+    padding: 16px 20px;
+  }
+
+  .constructeur-bande-resume strong {
+    font-size: 32px;
+  }
+
+  .recruitment-grid,
+  .library-grid {
+    gap: 18px;
+  }
+
+  .profile-card,
+  .library-card {
+    min-height: 235px;
+    padding: 20px;
+  }
+
+  .profile-card h3,
+  .library-card h3 {
+    font-size: 24px;
+  }
+
+  .library-card-main > p,
+  .library-card-hint,
+  .library-card-actions a {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .profile-card-header span,
+  .profile-card-header strong {
+    font-size: 14px;
+  }
+
+  .management-row {
+    min-height: 88px;
+    padding: 16px 21px;
+  }
+
+  .xp-control > output,
+  .dialog-total span,
+  .resource-heading p,
+  .overlay-node small,
+  .overlay-node b,
+  .price-row b,
+  .asset-license-note {
+    font-size: 14px;
+  }
+
+  .xp-control strong {
+    font-size: 17px;
+  }
+
+  .section-title-row h3,
+  .homebrew-toggle strong,
+  .empty-state strong {
+    font-size: 22px;
+  }
+
+  .campaign-step {
+    min-height: 76px;
+  }
+
+  .campaign-step > button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .campaign-step strong {
+    font-size: 19px;
+  }
+
+  .resource-counter,
+  .rule-note {
+    padding: 21px;
+  }
+
+  .homebrew-toggle {
+    min-height: 90px;
+  }
+
+  .price-row {
+    min-height: 66px;
+  }
+
+  .field-group {
+    gap: 7px;
+    font-size: 14px;
+  }
+
+  [data-slot='input'],
+  [data-slot='native-select'] {
+    height: 44px;
+    font-size: 16px;
+  }
+
+  [data-slot='textarea'] {
+    font-size: 16px;
+  }
+
+  .recruit-dialog {
+    width: min(clamp(52rem, 42vw, 62rem), calc(100vw - 96px));
+    max-width: none;
+    max-height: min(90dvh, 1000px);
+    gap: 20px;
+    padding: 28px;
+    font-size: 16px;
+  }
+
+  .recruit-dialog > [data-slot='dialog-close'] {
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .recruit-dialog [data-slot='dialog-title'] {
+    padding-right: 48px;
+    font-size: 40px;
+  }
+
+  .recruit-dialog [data-slot='dialog-description'] {
+    max-width: 72ch;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .recruit-dialog .form-grid {
+    gap: 16px;
+  }
+
+  .recruit-dialog .profile-preview {
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .recruit-dialog .profile-preview strong {
+    font-size: 24px;
+  }
+
+  .recruit-dialog .profile-preview span,
+  .recruit-dialog .profile-preview code,
+  .recruit-dialog .profile-preview p {
+    font-size: 14px;
+  }
+
+  .recruit-dialog .section-title-row h3 {
+    font-size: 23px;
+  }
+
+  .recruit-dialog .section-title-row span {
+    font-size: 14px;
+  }
+
+  .recruit-dialog .equipment-options {
+    max-height: min(390px, 32dvh);
+    gap: 8px;
+    padding-right: 8px;
+  }
+
+  .recruit-dialog .equipment-option {
+    min-height: 58px;
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .recruit-dialog [data-slot='checkbox'] {
+    width: 20px;
+    height: 20px;
+  }
+
+  .recruit-dialog .equipment-option strong {
+    font-size: 15px;
+  }
+
+  .recruit-dialog .equipment-option small,
+  .recruit-dialog .equipment-option b {
+    font-size: 13px;
+  }
+
+  .recruit-dialog .form-alert {
+    padding: 11px 13px;
+    font-size: 14px;
+  }
+
+  .recruit-dialog [data-slot='dialog-footer'] {
+    margin-right: -28px;
+    margin-bottom: -28px;
+    margin-left: -28px;
+    padding: 20px 28px;
+  }
+
+  .recruit-dialog .dialog-total strong {
+    font-size: 27px;
+  }
+
+  .recruit-dialog [data-slot='dialog-footer'] [data-slot='button'] {
+    min-height: 44px;
+    padding-inline: 16px;
+    font-size: 15px;
+  }
+
+  .global-search-dialog {
+    width: min(880px, calc(100vw - 64px));
+    max-height: min(820px, calc(100dvh - 130px));
+  }
+
+  .global-search-command [data-slot='command-input'] {
+    font-size: 17px;
+  }
+
+  .global-search-command [data-slot='command-item'] {
+    min-height: 64px;
+  }
+
+  .global-search-command [cmdk-group-heading] {
+    font-size: 13px;
+  }
+
+  .search-result-copy strong {
+    font-size: 18px;
+  }
+
+  .search-result-copy small,
+  .global-search-footer {
+    font-size: 13px;
+  }
+
+  .overlay-node strong,
+  .ruleset-option strong {
+    font-size: 25px;
+  }
+
+  .ruleset-option small {
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .ruleset-selector > legend {
+    font-size: 18px;
+  }
+
+  .ruleset-option > b {
+    font-size: 16px;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-header'] {
+    padding: 24px 26px;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-content'] {
+    padding: 26px;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-title'],
+  .settings-view .ruleset-provenance h3,
+  .settings-view .ruleset-provenance .text-sm {
+    font-size: 20px;
+    line-height: 1.35;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-description'],
+  .settings-view .ruleset-provenance .text-xs {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='badge'] {
+    min-height: 31px;
+    padding: 5px 10px;
+    font-size: 15px;
+  }
+
+  .settings-view .ruleset-provenance li {
+    padding: 18px;
+  }
+
+  .band-details-dialog {
+    width: min(920px, calc(100vw - 96px));
+    gap: 22px;
+    padding: 30px;
+  }
+
+  .band-details-dialog [data-slot='dialog-title'] {
+    font-size: 46px;
+  }
+
+  .band-details-dialog [data-slot='dialog-description'],
+  .band-support-state p {
+    font-size: 18px;
+  }
+
+  .band-details-grid dt {
+    font-size: 14px;
+  }
+
+  .band-details-grid dd,
+  .band-support-state strong {
+    font-size: 21px;
+  }
+}

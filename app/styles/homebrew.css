@@ -1,0 +1,164 @@
+/* Atelier homebrew */
+.homebrew-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 1px solid #a37468;
+  border-radius: 5px;
+  background: linear-gradient(
+    90deg,
+    rgb(132 54 45 / 10%),
+    rgb(252 248 236 / 58%)
+  );
+  padding: 14px 16px;
+}
+.homebrew-toggle > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.homebrew-toggle > div > svg {
+  width: 22px;
+  color: #7e342d;
+}
+.homebrew-toggle strong {
+  font-family: var(--font-fell), serif;
+  font-size: 16px;
+}
+.homebrew-toggle p {
+  margin: 2px 0 0;
+  color: #817366;
+  font-size: 12px;
+}
+.homebrew-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.65fr) minmax(340px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.price-list {
+  display: grid;
+  max-height: 610px;
+  overflow-y: auto;
+}
+.price-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 70px 20px;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 1px solid rgb(104 72 41 / 12%);
+  padding: 8px 13px;
+}
+.price-row:last-child {
+  border-bottom: 0;
+}
+.price-row > span {
+  display: grid;
+}
+.price-row strong {
+  font-size: 12px;
+}
+.price-row small {
+  color: #8b7b6e;
+  font-size: 12px;
+}
+.price-row input {
+  height: 29px;
+  text-align: right;
+}
+.price-row b {
+  color: #7e6d5f;
+  font-size: 12px;
+}
+.empty-state {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  padding: 38px 15px;
+  color: #87796c;
+  text-align: center;
+}
+.empty-state svg {
+  width: 24px;
+}
+.empty-state strong {
+  font-family: var(--font-fell), serif;
+  font-size: 16px;
+}
+.empty-state p {
+  margin: 0;
+  font-size: 12px;
+}
+
+@media (max-width: 980px) {
+  .recruitment-grid,
+  .library-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .campaign-layout,
+  .homebrew-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .save-state {
+    display: none;
+  }
+  .page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .page-header > :last-child {
+    align-self: flex-start;
+  }
+  .page-header-actions {
+    flex-wrap: wrap;
+  }
+  .constructeur-bande-resume {
+    grid-template-columns: auto 1fr;
+  }
+  .budget-track {
+    grid-column: 1 / -1;
+  }
+  .management-row {
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+  }
+  .management-row .xp-control {
+    grid-column: 2;
+  }
+  .management-row [data-slot='native-select-wrapper'] {
+    grid-column: 2;
+    width: 100%;
+  }
+  .management-row > button {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .library-toolbar {
+    grid-template-columns: 1fr;
+  }
+  .equipment-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .recruitment-grid,
+  .library-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .campaign-step {
+    grid-template-columns: 32px 1fr;
+  }
+  .campaign-step > span {
+    grid-column: 2;
+  }
+  .price-row {
+    grid-template-columns: minmax(0, 1fr) 60px 18px;
+  }
+}

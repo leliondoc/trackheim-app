@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   AlertTriangle,
@@ -447,6 +445,7 @@ export function PostBattleWorkflow({
       jetsBlessure: suivi.jetsBlessure.slice(0, horsCombat),
       blessureResolue: false,
       blessureNote: '',
+      resolutionBlessure: undefined,
     });
   }
 
@@ -463,6 +462,7 @@ export function PostBattleWorkflow({
       blessureResolue: false,
       /* Un nouveau D66 invalide toujours la résolution secondaire précédente. */
       blessureNote: '',
+      resolutionBlessure: undefined,
     });
   }
 
@@ -471,13 +471,17 @@ export function PostBattleWorkflow({
     modification: Partial<ResolutionBlessureStructuree>,
   ) {
     const suivi = bataille.participants[combattantId];
-    const resolution = lireResolutionBlessure(suivi.blessureNote);
+    const resolution = lireResolutionBlessure(
+      suivi.blessureNote,
+      suivi.resolutionBlessure,
+    );
     modifierParticipant(combattantId, {
       blessureResolue: false,
-      blessureNote: serialiserResolutionBlessure({
+      resolutionBlessure: {
         ...resolution,
         ...modification,
-      }),
+      },
+      blessureNote: modification.note ?? resolution.note,
     });
   }
 
@@ -534,11 +538,7 @@ export function PostBattleWorkflow({
       }
 
       const resultat = trouverBlessureHero(suivi.jetsBlessure[0]);
-      const resolution = appliquerResultatHero(
-        combattant,
-        resultat.id,
-        suivi.blessureNote,
-      );
+      const resolution = appliquerResultatHero(combattant, resultat.id, suivi);
       participants[combattant.id] = {
         ...suivi,
         blessureResolue: true,
@@ -634,12 +634,17 @@ export function PostBattleWorkflow({
   ) {
     const suivi = bataille.participants[combattant.id];
     const nombre = bilanExperience(combattant).progressions;
-    const dossier = lireProgressions(suivi.progressionsNote, nombre);
+    const dossier = lireProgressions(
+      suivi.progressionsNote,
+      nombre,
+      suivi.progressions,
+    );
     const saisies = dossier.saisies.map((saisie, position) =>
       position === index ? { ...saisie, ...modification } : saisie,
     );
     modifierParticipant(combattant.id, {
-      progressionsNote: serialiserProgressions({ version: 1, saisies }),
+      progressions: { version: 1, saisies },
+      progressionsNote: '',
     });
   }
 
@@ -653,6 +658,7 @@ export function PostBattleWorkflow({
       const dossier = lireProgressions(
         suivi.progressionsNote,
         bilan.progressions,
+        suivi.progressions,
       );
       const erreurProgression = validerProgressions(
         combattant,
@@ -838,7 +844,10 @@ export function PostBattleWorkflow({
       return;
     }
     if (
-      lirePersonnel(bataille.personnagesSpeciaux).entrees.some(
+      lirePersonnel(
+        bataille.personnagesSpeciaux,
+        bataille.personnel,
+      ).entrees.some(
         (entree) =>
           entree.type === 'Dramatis Personae' && entree.heroId === hero.id,
       )
@@ -903,7 +912,10 @@ export function PostBattleWorkflow({
       setErreur('Donnez un nom au personnage spécial.');
       return;
     }
-    const dossier = lirePersonnel(bataille.personnagesSpeciaux);
+    const dossier = lirePersonnel(
+      bataille.personnagesSpeciaux,
+      bataille.personnel,
+    );
     let heroRecherche: Combattant | undefined;
     let jetInitiative: number | null = null;
     if (personnel.type === 'Dramatis Personae') {
@@ -986,11 +998,12 @@ export function PostBattleWorkflow({
     publierBataille(
       (courante) => ({
         ...courante,
-        personnagesSpeciaux: serialiserPersonnel({
+        personnel: {
           version: 1,
           aucun: false,
           entrees: [...dossier.entrees, entree],
-        }),
+        },
+        personnagesSpeciaux: '',
       }),
       coutApplique ? { couronnes: campagne.couronnes - entree.cout } : {},
     );
@@ -1007,7 +1020,10 @@ export function PostBattleWorkflow({
   }
 
   function aucunPersonnel() {
-    const dossier = lirePersonnel(bataille.personnagesSpeciaux);
+    const dossier = lirePersonnel(
+      bataille.personnagesSpeciaux,
+      bataille.personnel,
+    );
     const remboursement = dossier.entrees.reduce(
       (total, entree) => total + (entree.coutApplique ? entree.cout : 0),
       0,
@@ -1015,11 +1031,12 @@ export function PostBattleWorkflow({
     publierBataille(
       (courante) => ({
         ...courante,
-        personnagesSpeciaux: serialiserPersonnel({
+        personnel: {
           version: 1,
           aucun: true,
           entrees: [],
-        }),
+        },
+        personnagesSpeciaux: '',
       }),
       remboursement > 0
         ? { couronnes: campagne.couronnes + remboursement }
@@ -1028,16 +1045,20 @@ export function PostBattleWorkflow({
   }
 
   function supprimerPersonnel(id: string) {
-    const dossier = lirePersonnel(bataille.personnagesSpeciaux);
+    const dossier = lirePersonnel(
+      bataille.personnagesSpeciaux,
+      bataille.personnel,
+    );
     const entreeSupprimee = dossier.entrees.find((entree) => entree.id === id);
     publierBataille(
       (courante) => ({
         ...courante,
-        personnagesSpeciaux: serialiserPersonnel({
+        personnel: {
           version: 1,
           aucun: false,
           entrees: dossier.entrees.filter((entree) => entree.id !== id),
-        }),
+        },
+        personnagesSpeciaux: '',
       }),
       entreeSupprimee?.coutApplique
         ? { couronnes: campagne.couronnes + entreeSupprimee.cout }
@@ -1173,7 +1194,10 @@ export function PostBattleWorkflow({
   const resultatExploration = resoudreExplorationSure(
     bataille.exploration.desConserves,
   );
-  const dossierPersonnel = lirePersonnel(bataille.personnagesSpeciaux);
+  const dossierPersonnel = lirePersonnel(
+    bataille.personnagesSpeciaux,
+    bataille.personnel,
+  );
   const personnelRenseigne =
     dossierPersonnel.aucun || dossierPersonnel.entrees.length > 0;
 
@@ -1181,7 +1205,7 @@ export function PostBattleWorkflow({
     <section className="grid gap-4" aria-label="Assistant d’après-bataille">
       <Card className="border-stone-500/30 bg-[rgba(252,248,236,.78)] shadow-sm">
         <CardHeader className="border-b border-stone-500/20">
-          <CardTitle className="flex items-center gap-2 text-xl">
+          <CardTitle as="h2" className="flex items-center gap-2 text-xl">
             <Swords className="size-5 text-red-900" />
             Bataille {bataille.numero} — {bataille.scenario}
           </CardTitle>
@@ -1215,6 +1239,14 @@ export function PostBattleWorkflow({
                   tabIndex={-1}
                 >
                   <Button
+                    aria-current={index === etapeActive ? 'step' : undefined}
+                    aria-label={`${index + 1}. ${etape.titre} — ${
+                      etapes[index]
+                        ? 'étape terminée'
+                        : accessible
+                          ? 'étape disponible'
+                          : 'étape verrouillée'
+                    }`}
                     className="h-auto min-h-14 w-full justify-start whitespace-normal px-3 py-2 text-left"
                     variant={
                       index === etapeActive
@@ -1227,7 +1259,11 @@ export function PostBattleWorkflow({
                     onClick={() => allerEtape(index)}
                   >
                     <span className="grid size-6 shrink-0 place-items-center rounded-full border border-current text-xs">
-                      {etapes[index] ? <Check className="size-3" /> : index + 1}
+                      {etapes[index] ? (
+                        <Check aria-hidden="true" className="size-3" />
+                      ) : (
+                        index + 1
+                      )}
                     </span>
                     <span className="text-xs leading-tight">{etape.titre}</span>
                   </Button>
@@ -1239,7 +1275,7 @@ export function PostBattleWorkflow({
       </Card>
 
       {erreur && (
-        <Alert variant="destructive">
+        <Alert role="alert" variant="destructive">
           <AlertTriangle />
           <AlertTitle>Vérification nécessaire</AlertTitle>
           <AlertDescription>{erreur}</AlertDescription>
@@ -1431,7 +1467,7 @@ function CreationBataille({
   return (
     <Card className="border-stone-500/30 bg-[rgba(252,248,236,.78)] shadow-sm">
       <CardHeader className="border-b border-stone-500/20">
-        <CardTitle className="flex items-center gap-2 text-xl">
+        <CardTitle as="h2" className="flex items-center gap-2 text-xl">
           <Swords className="size-5 text-red-900" /> Nouvelle bataille
         </CardTitle>
         <CardDescription>
@@ -1440,7 +1476,7 @@ function CreationBataille({
       </CardHeader>
       <CardContent className="grid gap-5 pt-5">
         {erreur && (
-          <Alert variant="destructive">
+          <Alert role="alert" variant="destructive">
             <AlertTriangle />
             <AlertTitle>Informations incomplètes</AlertTitle>
             <AlertDescription>{erreur}</AlertDescription>
@@ -1618,7 +1654,10 @@ function EtapeBlessures({
           const complexe = apercu && apercu.application !== 'automatique';
           const absenceStructuree =
             apercu && ['bras', 'jambe-ecrasee', 'profonde'].includes(apercu.id);
-          const resolution = lireResolutionBlessure(suivi.blessureNote);
+          const resolution = lireResolutionBlessure(
+            suivi.blessureNote,
+            suivi.resolutionBlessure,
+          );
           return (
             <article
               className="grid gap-3 rounded-md border border-stone-500/20 p-3"
@@ -1760,7 +1799,10 @@ function EtapeBlessures({
               )}
               {suivi.blessureResolue && suivi.blessureNote && (
                 <p className="rounded bg-stone-500/10 px-3 py-2 text-sm">
-                  {decrireResolutionBlessure(suivi.blessureNote)}
+                  {decrireResolutionBlessure(
+                    suivi.blessureNote,
+                    suivi.resolutionBlessure,
+                  )}
                 </p>
               )}
             </article>
@@ -1795,7 +1837,7 @@ function EtapeBlessures({
         </Alert>
       )}
       {blessuresResolues && !chefPresent && candidatsChef.length === 0 && (
-        <Alert variant="destructive">
+        <Alert role="alert" variant="destructive">
           <AlertTriangle />
           <AlertTitle>Aucun successeur éligible</AlertTitle>
           <AlertDescription>
@@ -1869,6 +1911,7 @@ function EtapeExperience({
           const saisies = lireProgressions(
             suivi.progressionsNote,
             bilan.progressions,
+            suivi.progressions,
           ).saisies;
           const verrouille = suivi.experienceAppliquee;
           return (
@@ -2275,7 +2318,7 @@ function EtapeVente({
         />
       </Champ>
       {bataille.vente.appliquee && (
-        <Alert>
+        <Alert aria-live="polite">
           <Check />
           <AlertTitle>Vente enregistrée</AlertTitle>
           <AlertDescription>
@@ -2377,7 +2420,7 @@ function EtapeRarete({
   onContinue: () => void;
 }) {
   const heroesDramatis = new Set(
-    lirePersonnel(bataille.personnagesSpeciaux)
+    lirePersonnel(bataille.personnagesSpeciaux, bataille.personnel)
       .entrees.filter((entree) => entree.type === 'Dramatis Personae')
       .map((entree) => entree.heroId),
   );
@@ -2922,7 +2965,7 @@ function EtapeFinalisation({
           placeholder="Décisions de table, objectif, récompense spéciale…"
         />
       </Champ>
-      <Alert>
+      <Alert aria-live="polite">
         <Check />
         <AlertTitle>Prêt à archiver</AlertTitle>
         <AlertDescription>
@@ -2952,7 +2995,7 @@ function CarteEtape({
   return (
     <Card className="border-stone-500/30 bg-[rgba(252,248,236,.78)] shadow-sm">
       <CardHeader className="border-b border-stone-500/20">
-        <CardTitle className="flex items-center gap-2 text-xl">
+        <CardTitle as="h2" className="flex items-center gap-2 text-xl">
           <span className="grid size-8 place-items-center rounded-full border border-red-950/30 text-red-950 [&>svg]:size-4">
             {icone}
           </span>
@@ -3031,7 +3074,11 @@ function categorieCombattant(
   return profilsParId.get(combattant.profilId)?.categorie ?? 'Hommes de main';
 }
 
-function lireResolutionBlessure(texte: string): ResolutionBlessureStructuree {
+function lireResolutionBlessure(
+  texte: string,
+  structure?: ResolutionBlessureStructuree,
+): ResolutionBlessureStructuree {
+  if (structure?.version === 1) return structure;
   if (!texte.startsWith(MARQUEUR_BLESSURE)) {
     return { version: 1, jetSecondaire: null, note: texte };
   }
@@ -3052,14 +3099,11 @@ function lireResolutionBlessure(texte: string): ResolutionBlessureStructuree {
   }
 }
 
-function serialiserResolutionBlessure(
-  resolution: ResolutionBlessureStructuree,
+function decrireResolutionBlessure(
+  texte: string,
+  structure?: ResolutionBlessureStructuree,
 ) {
-  return `${MARQUEUR_BLESSURE}${JSON.stringify(resolution)}`;
-}
-
-function decrireResolutionBlessure(texte: string) {
-  const resolution = lireResolutionBlessure(texte);
+  const resolution = lireResolutionBlessure(texte, structure);
   return [
     resolution.jetSecondaire !== null
       ? `Jet secondaire : ${resolution.jetSecondaire}.`
@@ -3107,7 +3151,10 @@ function validerBlessures(
         if (!blessure)
           return `${combattant.nom} : le D66 doit avoir deux chiffres compris entre 1 et 6.`;
         if (['bras', 'jambe-ecrasee', 'profonde'].includes(blessure.id)) {
-          const resolution = lireResolutionBlessure(suivi.blessureNote);
+          const resolution = lireResolutionBlessure(
+            suivi.blessureNote,
+            suivi.resolutionBlessure,
+          );
           const maximum = blessure.id === 'profonde' ? 3 : 6;
           if (
             resolution.jetSecondaire === null ||
@@ -3149,14 +3196,17 @@ function blessureHeroSure(d66: number) {
 function appliquerResultatHero(
   combattant: Combattant,
   resultatId: string,
-  note: string,
+  suivi: SuiviCombattantBataille,
 ) {
   const statistiques = { ...combattant.statistiques };
   const blessures = [...combattant.blessures];
   const competences = [...combattant.competences];
   let equipementIds = [...combattant.equipementIds];
   let partiesManquees = combattant.partiesManquees;
-  const resolution = lireResolutionBlessure(note);
+  const resolution = lireResolutionBlessure(
+    suivi.blessureNote,
+    suivi.resolutionBlessure,
+  );
 
   if (resultatId === 'mort') return null;
   if (resultatId === 'jambe')
@@ -3198,7 +3248,10 @@ function appliquerResultatHero(
     const libelle =
       resultat.application === 'automatique'
         ? resultat.titre
-        : `${resultat.titre} — ${decrireResolutionBlessure(note)}`;
+        : `${resultat.titre} — ${decrireResolutionBlessure(
+            suivi.blessureNote,
+            suivi.resolutionBlessure,
+          )}`;
     blessures.push(libelle);
   }
 
@@ -3247,9 +3300,15 @@ function candidatsSuccession(
   return meilleursCd.filter((hero) => hero.experience === experience);
 }
 
-function lireProgressions(texte: string, nombre: number): DossierProgressions {
+function lireProgressions(
+  texte: string,
+  nombre: number,
+  structure?: DossierProgressions,
+): DossierProgressions {
   let saisies: SaisieProgression[] = [];
-  if (texte.startsWith(MARQUEUR_PROGRESSIONS)) {
+  if (structure?.version === 1 && Array.isArray(structure.saisies)) {
+    saisies = structure.saisies;
+  } else if (texte.startsWith(MARQUEUR_PROGRESSIONS)) {
     try {
       const donnees = JSON.parse(
         texte.slice(MARQUEUR_PROGRESSIONS.length),
@@ -3268,10 +3327,6 @@ function lireProgressions(texte: string, nombre: number): DossierProgressions {
   while (saisies.length < nombre)
     saisies.push({ jet: null, decision: '', note: '' });
   return { version: 1, saisies: saisies.slice(0, nombre) };
-}
-
-function serialiserProgressions(dossier: DossierProgressions) {
-  return `${MARQUEUR_PROGRESSIONS}${JSON.stringify(dossier)}`;
 }
 
 function progressionSure(
@@ -3495,7 +3550,13 @@ function prixCommerce(equipement: Equipement, campagne: EtatCampagne) {
   return equipement.coutCommerce ?? equipement.cout;
 }
 
-function lirePersonnel(texte: string): DossierPersonnel {
+function lirePersonnel(
+  texte: string,
+  structure?: DossierPersonnel,
+): DossierPersonnel {
+  if (structure?.version === 1 && Array.isArray(structure.entrees)) {
+    return structure;
+  }
   if (!texte) return { version: 1, aucun: false, entrees: [] };
   if (texte.startsWith(MARQUEUR_PERSONNEL)) {
     try {
@@ -3537,10 +3598,6 @@ function lirePersonnel(texte: string): DossierPersonnel {
   };
 }
 
-function serialiserPersonnel(dossier: DossierPersonnel) {
-  return `${MARQUEUR_PERSONNEL}${JSON.stringify(dossier)}`;
-}
-
 function peutRecevoirEquipement(
   combattant: Combattant,
   equipement: Equipement,
@@ -3556,7 +3613,10 @@ function peutRecevoirEquipement(
 }
 
 function construireNotesPartie(bataille: BatailleEnCours) {
-  const personnel = lirePersonnel(bataille.personnagesSpeciaux);
+  const personnel = lirePersonnel(
+    bataille.personnagesSpeciaux,
+    bataille.personnel,
+  );
   const lignesPersonnel = personnel.aucun
     ? ['Personnel spécial : aucun.']
     : personnel.entrees.map(

@@ -1,4 +1,9 @@
-import type { EtatCampagne } from '@/lib/mordheim-data';
+import {
+  equipements,
+  profilsReiklanders,
+  type EtatCampagne,
+} from './mordheim-data.ts';
+import { rulesetGlmStrict, rulesetOfficiel } from './mordheim-rules.ts';
 
 export const TAILLE_MAX_PAYLOAD_CAMPAGNE = 512 * 1024;
 
@@ -7,6 +12,9 @@ const IDENTIFIANT_TECHNIQUE = /^[a-z0-9](?:[a-z0-9._-]{0,126}[a-z0-9])?$/;
 const DATE_ISO = /^(\d{4})-(\d{2})-(\d{2})$/;
 const PROFONDEUR_JSON_MAXIMALE = 24;
 const NOEUDS_JSON_MAXIMUM = 50_000;
+const IDS_PROFILS = new Set(profilsReiklanders.map((profil) => profil.id));
+const IDS_EQUIPEMENTS = new Set(equipements.map((equipement) => equipement.id));
+const IDS_RULESETS = new Set([rulesetOfficiel.id, rulesetGlmStrict.id]);
 
 type ValidationCampagne =
   | { ok: true; campagne: EtatCampagne }
@@ -41,8 +49,11 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
       'La révision de la campagne doit être un entier positif ou nul.',
     );
   }
-  if (!estIdentifiantTechnique(valeur.rulesetId)) {
-    return echec("L'identifiant du jeu de règles est invalide.");
+  if (
+    typeof valeur.rulesetId !== 'string' ||
+    !IDS_RULESETS.has(valeur.rulesetId)
+  ) {
+    return echec("Le jeu de règles de la campagne n'est pas pris en charge.");
   }
   if (!estTexte(valeur.nomCampagne, 1, 160)) {
     return echec('Le nom de la campagne est invalide.');
@@ -77,11 +88,23 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
 
   const erreurCombattants = validerCombattants(valeur.combattants);
   if (erreurCombattants) return echec(erreurCombattants);
+  const idsCombattants = new Set(
+    (valeur.combattants as ObjetJson[]).map((combattant) =>
+      String(combattant.id),
+    ),
+  );
 
-  const erreurInventaire = validerCompteur(valeur.inventaire, 'inventaire');
+  const erreurInventaire = validerCompteur(
+    valeur.inventaire,
+    'inventaire',
+    IDS_EQUIPEMENTS,
+  );
   if (erreurInventaire) return echec(erreurInventaire);
 
-  const erreurBataille = validerBataille(valeur.batailleEnCours);
+  const erreurBataille = validerBataille(
+    valeur.batailleEnCours,
+    idsCombattants,
+  );
   if (erreurBataille) return echec(erreurBataille);
 
   const erreurParties = validerParties(valeur.parties);
@@ -112,8 +135,11 @@ function validerCombattants(valeur: unknown) {
     identifiants.add(combattant.id);
 
     if (!estTexte(combattant.nom, 1, 160)) return `${chemin}.nom est invalide.`;
-    if (!estIdentifiantTechnique(combattant.profilId)) {
-      return `${chemin}.profilId est invalide.`;
+    if (
+      !estIdentifiantTechnique(combattant.profilId) ||
+      !IDS_PROFILS.has(combattant.profilId)
+    ) {
+      return `${chemin}.profilId ne correspond à aucun profil connu.`;
     }
     if (!estEntierNaturel(combattant.experience)) {
       return `${chemin}.experience est invalide.`;
@@ -136,6 +162,13 @@ function validerCombattants(valeur: unknown) {
       true,
     );
     if (erreurEquipement) return erreurEquipement;
+    if (
+      !(combattant.equipementIds as string[]).every((id) =>
+        IDS_EQUIPEMENTS.has(id),
+      )
+    ) {
+      return `${chemin}.equipementIds contient un équipement inconnu.`;
+    }
     if (!estTexte(combattant.notes, 0, 10_000)) {
       return `${chemin}.notes est invalide.`;
     }
@@ -227,7 +260,7 @@ function validerParties(valeur: unknown) {
   return null;
 }
 
-function validerBataille(valeur: unknown) {
+function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
   if (valeur === null) return null;
   if (!estObjet(valeur))
     return 'La bataille en cours doit être un objet ou null.';
@@ -252,7 +285,8 @@ function validerBataille(valeur: unknown) {
   }
   if (
     valeur.successeurChefId !== null &&
-    !estIdentifiantTechnique(valeur.successeurChefId)
+    (!estIdentifiantTechnique(valeur.successeurChefId) ||
+      !idsCombattants.has(valeur.successeurChefId))
   ) {
     return 'batailleEnCours.successeurChefId est invalide.';
   }
@@ -267,7 +301,11 @@ function validerBataille(valeur: unknown) {
   }
   for (const [combattantId, suivi] of Object.entries(valeur.participants)) {
     const chemin = `batailleEnCours.participants.${combattantId}`;
-    if (!estIdentifiantTechnique(combattantId) || !estObjet(suivi)) {
+    if (
+      !estIdentifiantTechnique(combattantId) ||
+      !idsCombattants.has(combattantId) ||
+      !estObjet(suivi)
+    ) {
       return `${chemin} est invalide.`;
     }
     if (suivi.combattantId !== combattantId) {
@@ -294,11 +332,44 @@ function validerBataille(valeur: unknown) {
     if (!estTexte(suivi.blessureNote, 0, 10_000)) {
       return `${chemin}.blessureNote est invalide.`;
     }
+    if (suivi.resolutionBlessure !== undefined) {
+      if (!estObjet(suivi.resolutionBlessure)) {
+        return `${chemin}.resolutionBlessure est invalide.`;
+      }
+      if (
+        suivi.resolutionBlessure.version !== 1 ||
+        (suivi.resolutionBlessure.jetSecondaire !== null &&
+          !estEntierNaturel(suivi.resolutionBlessure.jetSecondaire)) ||
+        !estTexte(suivi.resolutionBlessure.note, 0, 10_000)
+      ) {
+        return `${chemin}.resolutionBlessure est invalide.`;
+      }
+    }
     if (typeof suivi.experienceAppliquee !== 'boolean') {
       return `${chemin}.experienceAppliquee est invalide.`;
     }
     if (!estTexte(suivi.progressionsNote, 0, 10_000)) {
       return `${chemin}.progressionsNote est invalide.`;
+    }
+    if (suivi.progressions !== undefined) {
+      if (
+        !estObjet(suivi.progressions) ||
+        suivi.progressions.version !== 1 ||
+        !Array.isArray(suivi.progressions.saisies) ||
+        suivi.progressions.saisies.length > 100
+      ) {
+        return `${chemin}.progressions est invalide.`;
+      }
+      for (const saisie of suivi.progressions.saisies) {
+        if (
+          !estObjet(saisie) ||
+          (saisie.jet !== null && !estEntierNaturel(saisie.jet)) ||
+          !estTexte(saisie.decision, 0, 500) ||
+          !estTexte(saisie.note, 0, 10_000)
+        ) {
+          return `${chemin}.progressions contient une saisie invalide.`;
+        }
+      }
     }
   }
 
@@ -369,10 +440,13 @@ function validerBataille(valeur: unknown) {
     if (idsJets.has(jet.id))
       return `L'identifiant de jet « ${jet.id} » est dupliqué.`;
     idsJets.add(jet.id);
-    if (!estIdentifiantTechnique(jet.heroId))
-      return `${chemin}.heroId est invalide.`;
-    if (!estIdentifiantTechnique(jet.equipementId)) {
-      return `${chemin}.equipementId est invalide.`;
+    if (!estIdentifiantTechnique(jet.heroId) || !idsCombattants.has(jet.heroId))
+      return `${chemin}.heroId ne correspond à aucun combattant.`;
+    if (
+      !estIdentifiantTechnique(jet.equipementId) ||
+      !IDS_EQUIPEMENTS.has(jet.equipementId)
+    ) {
+      return `${chemin}.equipementId ne correspond à aucun équipement connu.`;
     }
     if (!estDe(jet.de1) || !estDe(jet.de2))
       return `${chemin}.dés sont invalides.`;
@@ -385,8 +459,62 @@ function validerBataille(valeur: unknown) {
   if (!estTexte(valeur.personnagesSpeciaux, 0, 10_000)) {
     return 'batailleEnCours.personnagesSpeciaux est invalide.';
   }
+  const erreurPersonnel = validerPersonnel(valeur.personnel, idsCombattants);
+  if (erreurPersonnel) return erreurPersonnel;
   if (!estTexte(valeur.notes, 0, 10_000))
     return 'batailleEnCours.notes est invalide.';
+  return null;
+}
+
+function validerPersonnel(valeur: unknown, idsCombattants: Set<string>) {
+  if (valeur === undefined) return null;
+  if (
+    !estObjet(valeur) ||
+    valeur.version !== 1 ||
+    typeof valeur.aucun !== 'boolean' ||
+    !Array.isArray(valeur.entrees) ||
+    valeur.entrees.length > 200
+  ) {
+    return 'batailleEnCours.personnel est invalide.';
+  }
+  for (let index = 0; index < valeur.entrees.length; index += 1) {
+    const entree = valeur.entrees[index];
+    const chemin = `batailleEnCours.personnel.entrees[${index}]`;
+    if (!estObjet(entree) || !estIdentifiantTechnique(entree.id)) {
+      return `${chemin} est invalide.`;
+    }
+    if (
+      !['Franc-tireur', 'Dramatis Personae', 'Autre'].includes(
+        String(entree.type),
+      ) ||
+      !['Engagé', 'Refusé', 'Indisponible', 'Autre'].includes(
+        String(entree.decision),
+      )
+    ) {
+      return `${chemin}.type ou décision est invalide.`;
+    }
+    if (
+      !estTexte(entree.nom, 1, 300) ||
+      !estTexte(entree.note, 0, 10_000) ||
+      !estEntierNaturel(entree.cout) ||
+      typeof entree.coutApplique !== 'boolean'
+    ) {
+      return `${chemin} contient une valeur invalide.`;
+    }
+    if (
+      entree.heroId !== '' &&
+      (!estIdentifiantTechnique(entree.heroId) ||
+        !idsCombattants.has(entree.heroId))
+    ) {
+      return `${chemin}.heroId ne correspond à aucun combattant.`;
+    }
+    if (
+      entree.jetInitiative !== null &&
+      (!estEntierNaturel(entree.jetInitiative) || entree.jetInitiative > 6)
+    ) {
+      return `${chemin}.jetInitiative est invalide.`;
+    }
+  }
   return null;
 }
 
@@ -401,11 +529,13 @@ function validerHomebrew(valeur: unknown) {
   const erreurRecrues = validerCompteur(
     valeur.coutsRecrues,
     'homebrew.coutsRecrues',
+    IDS_PROFILS,
   );
   if (erreurRecrues) return erreurRecrues;
   const erreurEquipements = validerCompteur(
     valeur.coutsEquipements,
     'homebrew.coutsEquipements',
+    IDS_EQUIPEMENTS,
   );
   if (erreurEquipements) return erreurEquipements;
   if (!Array.isArray(valeur.regles) || valeur.regles.length > 500) {
@@ -433,12 +563,20 @@ function validerHomebrew(valeur: unknown) {
   return null;
 }
 
-function validerCompteur(valeur: unknown, chemin: string) {
+function validerCompteur(
+  valeur: unknown,
+  chemin: string,
+  identifiantsConnus?: Set<string>,
+) {
   if (!estObjet(valeur) || Object.keys(valeur).length > 2_000) {
     return `${chemin} doit être un objet de compteurs.`;
   }
   for (const [cle, contenu] of Object.entries(valeur)) {
-    if (!estIdentifiantTechnique(cle) || !estEntierNaturel(contenu)) {
+    if (
+      !estIdentifiantTechnique(cle) ||
+      !estEntierNaturel(contenu) ||
+      (identifiantsConnus && !identifiantsConnus.has(cle))
+    ) {
       return `${chemin}.${cle} est invalide.`;
     }
   }
