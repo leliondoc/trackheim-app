@@ -98,6 +98,10 @@
 
 /* Palette globale : parchemin froid, fer noirci et rouge sang séché. */
 :root {
+  --font-geist-sans: 'Geist', Arial, sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
+  --font-fell: 'IM Fell English', Georgia, serif;
+  --font-pirata: 'Pirata One', 'IM Fell English', Georgia, serif;
   --background: oklch(0.953 0.019 78);
   --foreground: oklch(0.205 0.018 55);
   --card: oklch(0.979 0.014 78);
@@ -3450,8 +3454,7 @@ body {
 .global-search-command [data-slot='command-input-wrapper'] {
   border-bottom: 0;
   background:
-    linear-gradient(102deg, rgb(255 255 255 / 3%), transparent 38%),
-    #1d1813;
+    linear-gradient(102deg, rgb(255 255 255 / 3%), transparent 38%), #1d1813;
   padding: 13px 66px 13px 14px;
 }
 
@@ -3489,8 +3492,9 @@ body {
   scrollbar-width: thin;
 }
 
-.global-search-command [data-slot='command-group'] +
-  [data-slot='command-group'] {
+.global-search-command
+  [data-slot='command-group']
+  + [data-slot='command-group'] {
   margin-top: 8px;
 }
 
@@ -3524,16 +3528,16 @@ body {
 
 .global-search-command
   [data-slot='command-item'][data-selected='true']
-  .search-result-copy strong,
+  .search-result-copy
+  strong,
 .global-search-command
   [data-slot='command-item'][data-selected='true']
-  .search-result-copy small,
+  .search-result-copy
+  small,
 .global-search-command
   [data-slot='command-item'][data-selected='true']
   [data-slot='command-shortcut'],
-.global-search-command
-  [data-slot='command-item'][data-selected='true']
-  > svg {
+.global-search-command [data-slot='command-item'][data-selected='true'] > svg {
   color: #f2dfb8;
 }
 
@@ -3996,43 +4000,6 @@ select,
   }
 }
 
-.save-conflict-dialog {
-  border: 1px solid #7b6242;
-  border-top: 4px double #694a2f;
-  border-radius: 0;
-  background: #f5e7c5;
-}
-
-.save-conflict-options {
-  display: grid;
-  gap: 9px;
-}
-
-.save-conflict-options button {
-  border: 1px solid #9b815d;
-  background: rgb(255 248 227 / 65%);
-  color: #30251b;
-  padding: 13px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.save-conflict-options button:hover {
-  background: #ead7ad;
-}
-.save-conflict-options strong {
-  display: block;
-  font-family: var(--font-fell), Georgia, serif;
-  font-size: 17px;
-}
-.save-conflict-options span {
-  display: block;
-  margin-top: 3px;
-  color: #6a5843;
-  font-size: 12px;
-  line-height: 1.4;
-}
-
 .campaign-manager-dialog {
   border: 2px solid #604a31;
   border-top: 4px double #6d5032;
@@ -4101,6 +4068,43 @@ select,
   font-family: var(--font-fell), Georgia, serif;
   font-size: 12px;
   text-transform: uppercase;
+}
+
+.campaign-transfer-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px 16px;
+  border-block: 1px solid rgb(108 79 46 / 35%);
+  background: rgb(255 248 227 / 38%);
+  padding: 12px;
+}
+
+.campaign-transfer-panel h3,
+.campaign-transfer-panel p {
+  margin: 0;
+}
+
+.campaign-transfer-panel h3 {
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 17px;
+}
+
+.campaign-transfer-panel p {
+  color: #6f5c46;
+  font-size: 11px;
+}
+
+.campaign-transfer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.campaign-import-error {
+  grid-column: 1 / -1;
+  color: #7b2922 !important;
+  font-weight: 700;
 }
 
 .campaign-create-form {
@@ -4262,6 +4266,9 @@ select,
   }
 
   .campaign-create-form {
+    grid-template-columns: 1fr;
+  }
+  .campaign-transfer-panel {
     grid-template-columns: 1fr;
   }
   .campaign-create-form h3 {

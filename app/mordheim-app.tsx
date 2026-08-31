@@ -6,6 +6,7 @@ import {
   ChevronDown,
   CircleAlert,
   Coins,
+  Download,
   ExternalLink,
   FileText,
   FlaskConical,
@@ -21,6 +22,7 @@ import {
   Sparkles,
   Swords,
   Trash2,
+  Upload,
   Users,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -76,6 +78,11 @@ import {
   surcoutVeteran,
 } from '@/lib/mordheim-rules';
 import { RulesetProvenance } from '@/components/ruleset-provenance';
+import {
+  importerCampagneDepuisJson,
+  nomFichierCampagne,
+  serialiserCampagne,
+} from '@/lib/campaign-transfer';
 
 const PostBattleWorkflow = lazy(() =>
   import('@/components/post-battle-workflow').then((module) => ({
@@ -90,13 +97,7 @@ type Vue =
   | 'library'
   | 'homebrew'
   | 'settings';
-type EtatSauvegarde =
-  | 'chargement'
-  | 'sauvegarde'
-  | 'sauvegarde-ok'
-  | 'hors-ligne'
-  | 'conflit'
-  | 'erreur';
+type EtatSauvegarde = 'chargement' | 'sauvegarde' | 'sauvegarde-ok' | 'erreur';
 type FiltreGrade = 'tous' | BandeBibliotheque['grade'];
 
 const ID_CAMPAGNE = 'campagne-principale';
@@ -104,15 +105,7 @@ const CLE_CAMPAGNE_ACTIVE = 'trackheim:campagne-active';
 
 type CopieLocale = {
   campagne: EtatCampagne;
-  revisionServeur: number;
-  modifiee: boolean;
   date: string;
-};
-
-type ConflitSauvegarde = {
-  idCampagne: string;
-  campagne: EtatCampagne | null;
-  revision: number;
 };
 
 const navigation: Array<{
@@ -183,361 +176,94 @@ export function MordheimApp() {
     useState<EtatSauvegarde>('chargement');
   const [erreurSauvegarde, setErreurSauvegarde] = useState<string | null>(null);
   const [hydratationTerminee, setHydratationTerminee] = useState(false);
-  const [erreurChargement, setErreurChargement] = useState(false);
-  const [tentativeChargement, setTentativeChargement] = useState(0);
-  const [conflitSauvegarde, setConflitSauvegarde] =
-    useState<ConflitSauvegarde | null>(null);
-  const [dialogueConflitOuvert, setDialogueConflitOuvert] = useState(false);
   const [gestionCampagnesOuverte, setGestionCampagnesOuverte] = useState(false);
-  const revisionsServeur = useRef<Record<string, number>>({});
   const campagneActiveInitialisee = useRef(false);
-  const premiereSauvegarde = useRef(true);
-  const synchroniserApresHydratation = useRef(false);
-  const generationsLocales = useRef<Record<string, number>>({});
   const idCampagneCourant = useRef(idCampagne);
-  const idCampagneCharge = useRef(ID_CAMPAGNE);
-  const campagnesEnConflit = useRef<Set<string>>(new Set());
-  const minuteursSauvegarde = useRef<Record<string, number>>({});
-  const minuteursCopiesLocales = useRef<Record<string, number>>({});
-  const copiesLocalesEnAttente = useRef<
-    Record<string, { campagne: EtatCampagne; revisionServeur: number }>
-  >({});
-  const fileSauvegarde = useRef<Promise<void>>(Promise.resolve());
+  const campagneCourante = useRef(campagne);
 
   useEffect(() => {
     idCampagneCourant.current = idCampagne;
-  }, [idCampagne]);
-
-  useEffect(
-    () => () => {
-      for (const minuteur of Object.values(minuteursSauvegarde.current)) {
-        window.clearTimeout(minuteur);
-      }
-      for (const [id, minuteur] of Object.entries(
-        minuteursCopiesLocales.current,
-      )) {
-        window.clearTimeout(minuteur);
-        const copie = copiesLocalesEnAttente.current[id];
-        if (copie) {
-          ecrireCopieLocale(id, copie.campagne, copie.revisionServeur, true);
-        }
-      }
-    },
-    [],
-  );
+    campagneCourante.current = campagne;
+  }, [campagne, idCampagne]);
 
   useEffect(() => {
-    function viderCopiesLocales() {
-      for (const [id, copie] of Object.entries(
-        copiesLocalesEnAttente.current,
-      )) {
-        ecrireCopieLocale(id, copie.campagne, copie.revisionServeur, true);
+    function sauvegarderAvantFermeture() {
+      try {
+        ecrireCopieLocale(idCampagneCourant.current, campagneCourante.current);
+      } catch {
+        // Le navigateur peut bloquer le stockage pendant sa fermeture.
       }
     }
-    window.addEventListener('beforeunload', viderCopiesLocales);
-    return () => window.removeEventListener('beforeunload', viderCopiesLocales);
+    window.addEventListener('beforeunload', sauvegarderAvantFermeture);
+    return () =>
+      window.removeEventListener('beforeunload', sauvegarderAvantFermeture);
   }, []);
 
-  /* D1 reste la source partagée ; la copie locale protège le travail hors ligne. */
+  /* Le navigateur est la source de vérité : aucun compte ni serveur requis. */
   useEffect(() => {
     let annule = false;
-
-    async function chargerCampagne() {
+    queueMicrotask(() => {
+      if (annule) return;
       if (!campagneActiveInitialisee.current) {
         campagneActiveInitialisee.current = true;
-        const memorisee = window.localStorage.getItem(CLE_CAMPAGNE_ACTIVE);
-        if (
-          memorisee &&
-          estIdentifiantCampagneClientValide(memorisee) &&
-          memorisee !== idCampagne
-        ) {
+        const memorisee = lireCampagneActive();
+        if (memorisee && memorisee !== idCampagne) {
           setIdCampagne(memorisee);
           return;
         }
       }
 
       setHydratationTerminee(false);
-      setErreurChargement(false);
-      premiereSauvegarde.current = true;
-      synchroniserApresHydratation.current = false;
-      setConflitSauvegarde(null);
-      let conflitDetecte = false;
-      let campagneChargee = false;
+      setEtatSauvegarde('chargement');
+      setErreurSauvegarde(null);
+
       const copieLocale = lireCopieLocale(idCampagne);
-      if (copieLocale && !annule) {
-        revisionsServeur.current[idCampagne] = copieLocale.revisionServeur;
-        setCampagne(normaliserCampagne(copieLocale.campagne));
-        campagneChargee = true;
-      }
+      const campagneChargee = normaliserCampagne(
+        copieLocale?.campagne ?? etatInitial,
+      );
+      setCampagne(campagneChargee);
 
       try {
-        const reponse = await fetch(
-          `/api/campaign?id=${encodeURIComponent(idCampagne)}`,
-        );
-        if (!reponse.ok) throw new Error('Chargement impossible');
-        const donnees = (await reponse.json()) as {
-          campagne: EtatCampagne | null;
-          revision?: number;
-        };
-        if (annule) return;
-
-        const revisionDistante =
-          donnees.revision ?? donnees.campagne?.revision ?? 0;
-        revisionsServeur.current[idCampagne] = revisionDistante;
-        if (
-          copieLocale?.modifiee &&
-          copieLocale.revisionServeur === revisionDistante
-        ) {
-          synchroniserApresHydratation.current = true;
-          setCampagne(normaliserCampagne(copieLocale.campagne));
-        } else if (
-          copieLocale?.modifiee &&
-          copieLocale.revisionServeur !== revisionDistante &&
-          donnees.campagne
-        ) {
-          const distante = normaliserCampagne(donnees.campagne);
-          conflitDetecte = true;
-          campagnesEnConflit.current.add(idCampagne);
-          setConflitSauvegarde({
-            idCampagne,
-            campagne: distante,
-            revision: revisionDistante,
-          });
-          setDialogueConflitOuvert(true);
-          setEtatSauvegarde('conflit');
-        } else if (donnees.campagne) {
-          const distante = normaliserCampagne(donnees.campagne);
-          setCampagne(distante);
-          ecrireCopieLocale(idCampagne, distante, revisionDistante, false);
-          campagneChargee = true;
-        } else if (!copieLocale) {
-          const initiale = normaliserCampagne(etatInitial);
-          setCampagne(initiale);
-          ecrireCopieLocale(idCampagne, initiale, 0, false);
-          campagneChargee = true;
-        }
-        idCampagneCharge.current = idCampagne;
-        if (!conflitDetecte) setEtatSauvegarde('sauvegarde-ok');
+        if (!copieLocale) ecrireCopieLocale(idCampagne, campagneChargee);
+        window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, idCampagne);
+        setEtatSauvegarde('sauvegarde-ok');
       } catch {
-        if (!annule) {
-          setEtatSauvegarde('hors-ligne');
-          if (copieLocale) {
-            idCampagneCharge.current = idCampagne;
-          } else if (idCampagne !== idCampagneCharge.current) {
-            const idRepli = idCampagneCharge.current;
-            window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, idRepli);
-            setIdCampagne(idRepli);
-          } else {
-            // Sans cache, l’existence de l’état distant est inconnue : ne jamais
-            // fabriquer une copie locale susceptible de l’écraser plus tard.
-            setErreurChargement(true);
-          }
-        }
-      } finally {
-        if (!annule && (campagneChargee || copieLocale)) {
-          setHydratationTerminee(true);
-        }
+        setErreurSauvegarde(
+          'Le navigateur refuse le stockage local. Exportez votre campagne avant de fermer la page.',
+        );
+        setEtatSauvegarde('erreur');
       }
-    }
-
-    void chargerCampagne();
+      setHydratationTerminee(true);
+    });
     return () => {
       annule = true;
     };
-  }, [idCampagne, tentativeChargement]);
+  }, [idCampagne]);
 
-  /*
-   * Les écritures sont sérialisées : deux frappes rapides ne peuvent plus
-   * s'écraser avec la même révision serveur.
-   */
   useEffect(() => {
     if (!hydratationTerminee) return;
-    if (premiereSauvegarde.current) {
-      premiereSauvegarde.current = false;
-      if (!synchroniserApresHydratation.current) return;
-    }
-
-    const generation = (generationsLocales.current[idCampagne] ?? 0) + 1;
-    generationsLocales.current[idCampagne] = generation;
-    const instantane = campagne;
-    const idInstantane = idCampagne;
-    const revisionLocale = revisionsServeur.current[idInstantane] ?? 0;
-    copiesLocalesEnAttente.current[idInstantane] = {
-      campagne: instantane,
-      revisionServeur: revisionLocale,
-    };
-    const minuteurCopie = minuteursCopiesLocales.current[idInstantane];
-    if (minuteurCopie) window.clearTimeout(minuteurCopie);
-    minuteursCopiesLocales.current[idInstantane] = window.setTimeout(() => {
-      delete minuteursCopiesLocales.current[idInstantane];
-      const copie = copiesLocalesEnAttente.current[idInstantane];
-      if (!copie) return;
-      delete copiesLocalesEnAttente.current[idInstantane];
-      ecrireCopieLocale(
-        idInstantane,
-        copie.campagne,
-        copie.revisionServeur,
-        true,
-      );
-    }, 180);
-
-    const minuteurPrecedent = minuteursSauvegarde.current[idInstantane];
-    if (minuteurPrecedent) window.clearTimeout(minuteurPrecedent);
-    minuteursSauvegarde.current[idInstantane] = window.setTimeout(() => {
-      delete minuteursSauvegarde.current[idInstantane];
-      fileSauvegarde.current = fileSauvegarde.current.then(async () => {
-        if (
-          campagnesEnConflit.current.has(idInstantane) ||
-          generation !== generationsLocales.current[idInstantane]
-        ) {
-          return;
-        }
-        const revisionAttendue = revisionsServeur.current[idInstantane] ?? 0;
-        if (idCampagneCourant.current === idInstantane) {
-          setEtatSauvegarde('sauvegarde');
-          setErreurSauvegarde(null);
-        }
-        try {
-          const reponse = await fetch('/api/campaign', {
-            method: 'PUT',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-              id: idInstantane,
-              campagne: { ...instantane, revision: revisionAttendue },
-              expectedRevision: revisionAttendue,
-            }),
-          });
-          const donnees = (await reponse.json()) as {
-            campagne?: EtatCampagne | null;
-            revision?: number;
-            erreur?: string;
-          };
-          if (reponse.status === 409 && donnees.revision !== undefined) {
-            const distante = donnees.campagne
-              ? normaliserCampagne(donnees.campagne)
-              : null;
-            const copieRecente = lireCopieLocale(idInstantane);
-            campagnesEnConflit.current.add(idInstantane);
-            ecrireCopieLocale(
-              idInstantane,
-              copieRecente?.campagne ?? instantane,
-              revisionAttendue,
-              true,
-            );
-            if (idCampagneCourant.current === idInstantane) {
-              setConflitSauvegarde({
-                idCampagne: idInstantane,
-                campagne: distante,
-                revision: donnees.revision,
-              });
-              setDialogueConflitOuvert(true);
-              setEtatSauvegarde('conflit');
-            }
-            return;
-          }
-          if (!reponse.ok || donnees.revision === undefined) {
-            const copieRecente = lireCopieLocale(idInstantane);
-            ecrireCopieLocale(
-              idInstantane,
-              copieRecente?.campagne ?? instantane,
-              revisionAttendue,
-              true,
-            );
-            if (idCampagneCourant.current === idInstantane) {
-              setErreurSauvegarde(
-                donnees.erreur ?? 'La sauvegarde a été refusée par le serveur.',
-              );
-              setEtatSauvegarde(
-                reponse.status >= 500 ? 'hors-ligne' : 'erreur',
-              );
-            }
-            return;
-          }
-
-          revisionsServeur.current[idInstantane] = donnees.revision;
-          if (generation === generationsLocales.current[idInstantane]) {
-            ecrireCopieLocale(
-              idInstantane,
-              instantane,
-              donnees.revision,
-              false,
-            );
-            if (idCampagneCourant.current === idInstantane) {
-              setErreurSauvegarde(null);
-              setEtatSauvegarde('sauvegarde-ok');
-            }
-          } else {
-            const copieRecente = lireCopieLocale(idInstantane);
-            ecrireCopieLocale(
-              idInstantane,
-              copieRecente?.campagne ?? instantane,
-              donnees.revision,
-              true,
-            );
-          }
-        } catch {
-          const copieRecente = lireCopieLocale(idInstantane);
-          ecrireCopieLocale(
-            idInstantane,
-            copieRecente?.campagne ?? instantane,
-            revisionsServeur.current[idInstantane] ?? revisionAttendue,
-            true,
-          );
-          if (idCampagneCourant.current === idInstantane) {
-            setErreurSauvegarde(
-              'La sauvegarde distante est momentanément indisponible.',
-            );
-            setEtatSauvegarde('hors-ligne');
-          }
-        }
-      });
-    }, 650);
+    const minuteur = window.setTimeout(() => {
+      setEtatSauvegarde('sauvegarde');
+      setErreurSauvegarde(null);
+      try {
+        ecrireCopieLocale(idCampagne, campagne);
+        setEtatSauvegarde('sauvegarde-ok');
+      } catch {
+        setErreurSauvegarde(
+          'La campagne n’a pas pu être enregistrée dans ce navigateur. Exportez-la en JSON pour ne rien perdre.',
+        );
+        setEtatSauvegarde('erreur');
+      }
+    }, 250);
+    return () => window.clearTimeout(minuteur);
   }, [campagne, hydratationTerminee, idCampagne]);
-
-  function chargerVersionServeur() {
-    if (
-      !conflitSauvegarde?.campagne ||
-      conflitSauvegarde.idCampagne !== idCampagne
-    )
-      return;
-    generationsLocales.current[idCampagne] =
-      (generationsLocales.current[idCampagne] ?? 0) + 1;
-    campagnesEnConflit.current.delete(idCampagne);
-    revisionsServeur.current[idCampagne] = conflitSauvegarde.revision;
-    premiereSauvegarde.current = true;
-    synchroniserApresHydratation.current = false;
-    setCampagne(conflitSauvegarde.campagne);
-    ecrireCopieLocale(
-      idCampagne,
-      conflitSauvegarde.campagne,
-      conflitSauvegarde.revision,
-      false,
-    );
-    setConflitSauvegarde(null);
-    setDialogueConflitOuvert(false);
-    setEtatSauvegarde('sauvegarde-ok');
-  }
-
-  function garderVersionLocale() {
-    if (!conflitSauvegarde || conflitSauvegarde.idCampagne !== idCampagne)
-      return;
-    generationsLocales.current[idCampagne] =
-      (generationsLocales.current[idCampagne] ?? 0) + 1;
-    campagnesEnConflit.current.delete(idCampagne);
-    revisionsServeur.current[idCampagne] = conflitSauvegarde.revision;
-    setConflitSauvegarde(null);
-    setDialogueConflitOuvert(false);
-    setCampagne((courante) => ({
-      ...courante,
-      revision: conflitSauvegarde.revision,
-    }));
-  }
 
   function choisirCampagne(id: string) {
     if (id === idCampagne) {
       setGestionCampagnesOuverte(false);
       return;
     }
+    ecrireCampagneCouranteSansErreur();
     window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, id);
     setHydratationTerminee(false);
     setEtatSauvegarde('chargement');
@@ -548,13 +274,45 @@ export function MordheimApp() {
   function creerCampagne(nomCampagne: string, nomBande: string) {
     const id = `campagne-${Date.now().toString(36)}-${crypto.randomUUID().slice(0, 8)}`;
     const nouvelle = creerEtatCampagne(nomCampagne, nomBande);
-    ecrireCopieLocale(id, nouvelle, 0, true);
+    ecrireCopieLocale(id, nouvelle);
     window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, id);
     setHydratationTerminee(false);
     setEtatSauvegarde('chargement');
     setGestionCampagnesOuverte(false);
     setCampagne(nouvelle);
     setIdCampagne(id);
+  }
+
+  function exporterCampagne() {
+    const blob = new Blob([serialiserCampagne(campagne)], {
+      type: 'application/json;charset=utf-8',
+    });
+    const url = URL.createObjectURL(blob);
+    const lien = document.createElement('a');
+    lien.href = url;
+    lien.download = nomFichierCampagne(campagne);
+    lien.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importerCampagne(texte: string) {
+    const importee = normaliserCampagne(importerCampagneDepuisJson(texte));
+    const id = `campagne-${Date.now().toString(36)}-${crypto.randomUUID().slice(0, 8)}`;
+    ecrireCopieLocale(id, importee);
+    window.localStorage.setItem(CLE_CAMPAGNE_ACTIVE, id);
+    setHydratationTerminee(false);
+    setEtatSauvegarde('chargement');
+    setCampagne(importee);
+    setIdCampagne(id);
+    setGestionCampagnesOuverte(false);
+  }
+
+  function ecrireCampagneCouranteSansErreur() {
+    try {
+      ecrireCopieLocale(idCampagne, campagne);
+    } catch {
+      // Le statut de sauvegarde courant explique déjà l’échec à l’utilisateur.
+    }
   }
 
   /* Le même raccourci fonctionne sur Windows, Linux et macOS. */
@@ -622,7 +380,6 @@ export function MordheimApp() {
             etatSauvegarde={etatSauvegarde}
             rechercheOuverte={rechercheOuverte}
             onCampagnes={() => setGestionCampagnesOuverte(true)}
-            onConflit={() => setDialogueConflitOuvert(true)}
             onRecherche={() => {
               if (!document.querySelector('[role="dialog"]')) {
                 setRechercheOuverte(true);
@@ -631,27 +388,7 @@ export function MordheimApp() {
           />
 
           <div className="content-wrap" key={idCampagne}>
-            {erreurChargement ? (
-              <section className="campaign-load-error" role="alert">
-                <CircleAlert aria-hidden="true" />
-                <div>
-                  <p className="eyebrow">Registre indisponible</p>
-                  <h1>Impossible de vérifier la campagne</h1>
-                  <p>
-                    Aucune copie hors ligne fiable n’existe sur cet appareil.
-                    Trackheim n’inventera pas un registre susceptible d’écraser
-                    la sauvegarde distante.
-                  </p>
-                  <Button
-                    onClick={() =>
-                      setTentativeChargement((valeur) => valeur + 1)
-                    }
-                  >
-                    Réessayer le chargement
-                  </Button>
-                </div>
-              </section>
-            ) : !hydratationTerminee ? (
+            {!hydratationTerminee ? (
               <section className="campaign-loading" aria-live="polite">
                 <div className="campaign-loading-banner">
                   <span className="campaign-loading-seal" aria-hidden="true">
@@ -671,8 +408,7 @@ export function MordheimApp() {
                     <span />
                   </div>
                   <small>
-                    Le registre reste protégé jusqu’à la fin de la
-                    synchronisation.
+                    Le registre est ouvert depuis la sauvegarde de cet appareil.
                   </small>
                 </div>
               </section>
@@ -736,59 +472,13 @@ export function MordheimApp() {
         />
       )}
 
-      <Dialog
-        open={dialogueConflitOuvert}
-        onOpenChange={setDialogueConflitOuvert}
-      >
-        <DialogContent className="save-conflict-dialog sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Deux versions de la campagne existent</DialogTitle>
-            <DialogDescription>
-              {conflitSauvegarde?.campagne
-                ? 'Une autre fenêtre a enregistré une version plus récente. Votre copie locale est conservée tant que vous n’avez pas choisi.'
-                : 'Le registre distant n’existe plus. Votre copie locale est conservée et peut recréer le registre.'}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="save-conflict-options">
-            <button
-              type="button"
-              onClick={() => setDialogueConflitOuvert(false)}
-            >
-              <strong>Décider plus tard</strong>
-              <span>
-                Ferme ce message sans modifier aucune des deux versions.
-              </span>
-            </button>
-            {conflitSauvegarde?.campagne && (
-              <button type="button" onClick={chargerVersionServeur}>
-                <strong>Charger la version serveur</strong>
-                <span>
-                  Remplace cette copie locale par la dernière sauvegarde
-                  partagée.
-                </span>
-              </button>
-            )}
-            <button type="button" onClick={garderVersionLocale}>
-              <strong>
-                {conflitSauvegarde?.campagne
-                  ? 'Garder ma version locale'
-                  : 'Recréer depuis ma copie locale'}
-              </strong>
-              <span>
-                {conflitSauvegarde?.campagne
-                  ? 'Réenregistre votre travail par-dessus la version serveur.'
-                  : 'Restaure ce registre dans la base partagée.'}
-              </span>
-            </button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
       {gestionCampagnesOuverte && (
         <CampaignManagerDialog
           campagneCourante={campagne}
           idCourant={idCampagne}
           onCreate={creerCampagne}
+          onExport={exporterCampagne}
+          onImport={importerCampagne}
           onOpenChange={setGestionCampagnesOuverte}
           onSelect={choisirCampagne}
           open
@@ -891,7 +581,6 @@ function Topbar({
   etatSauvegarde,
   rechercheOuverte,
   onCampagnes,
-  onConflit,
   onRecherche,
 }: {
   campagne: EtatCampagne;
@@ -899,16 +588,13 @@ function Topbar({
   etatSauvegarde: EtatSauvegarde;
   rechercheOuverte: boolean;
   onCampagnes: () => void;
-  onConflit: () => void;
   onRecherche: () => void;
 }) {
   const libelles: Record<EtatSauvegarde, string> = {
     chargement: 'Chargement…',
     sauvegarde: 'Sauvegarde…',
-    'sauvegarde-ok': 'Sauvegardé',
-    'hors-ligne': 'Mode local',
-    conflit: 'Conflit à résoudre',
-    erreur: 'Sauvegarde refusée',
+    'sauvegarde-ok': 'Enregistré sur cet appareil',
+    erreur: 'Sauvegarde locale impossible',
   };
 
   return (
@@ -925,27 +611,17 @@ function Topbar({
         </button>
       </div>
       <div className="topbar-actions">
-        {etatSauvegarde === 'conflit' ? (
-          <button
-            className="save-state conflit"
-            onClick={onConflit}
-            type="button"
-          >
-            {libelles[etatSauvegarde]}
-          </button>
-        ) : (
-          <span
-            aria-live="polite"
-            className={`save-state ${etatSauvegarde}`}
-            role={etatSauvegarde === 'erreur' ? 'alert' : undefined}
-            title={erreurSauvegarde ?? undefined}
-          >
-            {libelles[etatSauvegarde]}
-            {erreurSauvegarde && (
-              <span className="sr-only"> : {erreurSauvegarde}</span>
-            )}
-          </span>
-        )}
+        <span
+          aria-live="polite"
+          className={`save-state ${etatSauvegarde}`}
+          role={etatSauvegarde === 'erreur' ? 'alert' : undefined}
+          title={erreurSauvegarde ?? undefined}
+        >
+          {libelles[etatSauvegarde]}
+          {erreurSauvegarde && (
+            <span className="sr-only"> : {erreurSauvegarde}</span>
+          )}
+        </span>
         <button
           aria-expanded={rechercheOuverte}
           aria-haspopup="dialog"
@@ -982,6 +658,8 @@ function CampaignManagerDialog({
   onOpenChange,
   onSelect,
   onCreate,
+  onExport,
+  onImport,
 }: {
   campagneCourante: EtatCampagne;
   idCourant: string;
@@ -989,15 +667,15 @@ function CampaignManagerDialog({
   onOpenChange: (open: boolean) => void;
   onSelect: (id: string) => void;
   onCreate: (nomCampagne: string, nomBande: string) => void;
+  onExport: () => void;
+  onImport: (texte: string) => void;
 }) {
-  const [campagnes, setCampagnes] = useState<ResumeCampagne[]>([]);
-  const [chargement, setChargement] = useState(true);
   const [nomCampagne, setNomCampagne] = useState('');
   const [nomBande, setNomBande] = useState('');
+  const [erreurImport, setErreurImport] = useState<string | null>(null);
+  const fichierImport = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    let annule = false;
+  const campagnes = useMemo(() => {
     const locales = listerCopiesLocales();
     const courante: ResumeCampagne = {
       id: idCourant,
@@ -1006,46 +684,19 @@ function CampaignManagerDialog({
       revision: campagneCourante.revision,
       miseAJour: null,
     };
-
-    function publierCatalogue(distantes: ResumeCampagne[]) {
-      const fusion = new Map<string, ResumeCampagne>();
-      for (const resume of distantes) fusion.set(resume.id, resume);
-      // Une copie locale sale doit rester retrouvable, même avant son premier PUT.
-      for (const resume of locales) fusion.set(resume.id, resume);
-      fusion.set(idCourant, courante);
-      setCampagnes([
-        courante,
-        ...Array.from(fusion.values()).filter(
-          (resume) => resume.id !== idCourant,
-        ),
-      ]);
-    }
-
-    publierCatalogue([]);
-    fetch('/api/campaign?liste=1')
-      .then(async (reponse) => {
-        if (!reponse.ok) throw new Error('Catalogue indisponible');
-        return reponse.json() as Promise<{ campagnes?: ResumeCampagne[] }>;
-      })
-      .then((donnees) => {
-        if (annule) return;
-        publierCatalogue(donnees.campagnes ?? []);
-      })
-      .catch(() => {
-        if (!annule) publierCatalogue([]);
-      })
-      .finally(() => {
-        if (!annule) setChargement(false);
-      });
-    return () => {
-      annule = true;
-    };
+    const fusion = new Map(locales.map((resume) => [resume.id, resume]));
+    fusion.set(idCourant, courante);
+    return [
+      courante,
+      ...Array.from(fusion.values()).filter(
+        (resume) => resume.id !== idCourant,
+      ),
+    ];
   }, [
     campagneCourante.nomBande,
     campagneCourante.nomCampagne,
     campagneCourante.revision,
     idCourant,
-    open,
   ]);
 
   function creer() {
@@ -1055,6 +706,22 @@ function CampaignManagerDialog({
     setNomBande('');
   }
 
+  async function lireFichierImporte(fichier: File | undefined) {
+    if (!fichier) return;
+    setErreurImport(null);
+    try {
+      onImport(await fichier.text());
+    } catch (erreur) {
+      setErreurImport(
+        erreur instanceof Error
+          ? erreur.message
+          : 'La sauvegarde JSON n’a pas pu être importée.',
+      );
+    } finally {
+      if (fichierImport.current) fichierImport.current.value = '';
+    }
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="campaign-manager-dialog sm:max-w-xl">
@@ -1062,13 +729,13 @@ function CampaignManagerDialog({
           <DialogTitle>Bandes et campagnes Trackheim</DialogTitle>
           <DialogDescription>
             Changez de bande en ouvrant son registre, ou créez-en un nouveau.
-            Chaque registre possède sa propre sauvegarde. Les règles de
-            composition actuellement indexées concernent les Mercenaires
-            Reiklanders.
+            Chaque registre est sauvegardé uniquement dans ce navigateur.
+            Exportez-le en JSON pour l’archiver ou le transférer sur un autre
+            appareil.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="campaign-manager-list" aria-busy={chargement}>
+        <div className="campaign-manager-list">
           {campagnes.map((resume) => (
             <button
               aria-pressed={resume.id === idCourant}
@@ -1084,6 +751,39 @@ function CampaignManagerDialog({
               <b>{resume.id === idCourant ? 'Active' : 'Ouvrir'}</b>
             </button>
           ))}
+        </div>
+
+        <div className="campaign-transfer-panel">
+          <div>
+            <h3>Sauvegarde portable</h3>
+            <p>Le fichier JSON contient toute la campagne active.</p>
+          </div>
+          <div className="campaign-transfer-actions">
+            <Button onClick={onExport} type="button" variant="outline">
+              <Download /> Exporter
+            </Button>
+            <Button
+              onClick={() => fichierImport.current?.click()}
+              type="button"
+              variant="outline"
+            >
+              <Upload /> Importer
+            </Button>
+            <input
+              accept="application/json,.json"
+              className="sr-only"
+              onChange={(event) =>
+                void lireFichierImporte(event.target.files?.[0])
+              }
+              ref={fichierImport}
+              type="file"
+            />
+          </div>
+          {erreurImport && (
+            <p className="campaign-import-error" role="alert">
+              {erreurImport}
+            </p>
+          )}
         </div>
 
         <form
@@ -2635,9 +2335,9 @@ function LibraryView({
                 </span>
                 <DialogTitle>{bandeSelectionnee.nom}</DialogTitle>
                 <DialogDescription>
-                  {texteGrade(bandeSelectionnee.grade)} Cette fiche distingue les
-                  références disponibles des règles réellement intégrées dans
-                  Trackheim.
+                  {texteGrade(bandeSelectionnee.grade)} Cette fiche distingue
+                  les références disponibles des règles réellement intégrées
+                  dans Trackheim.
                 </DialogDescription>
               </DialogHeader>
 
@@ -2652,7 +2352,9 @@ function LibraryView({
                 </div>
                 <div>
                   <dt>PDF indexé</dt>
-                  <dd>{bandeSelectionnee.pdfUrl ? 'Disponible' : 'Non disponible'}</dd>
+                  <dd>
+                    {bandeSelectionnee.pdfUrl ? 'Disponible' : 'Non disponible'}
+                  </dd>
                 </div>
               </dl>
 
@@ -3366,22 +3068,25 @@ function estIdentifiantCampagneClientValide(valeur: string) {
   return /^[a-z0-9](?:[a-z0-9_-]{0,62}[a-z0-9])?$/.test(valeur);
 }
 
+function lireCampagneActive() {
+  try {
+    const memorisee = window.localStorage.getItem(CLE_CAMPAGNE_ACTIVE);
+    return memorisee && estIdentifiantCampagneClientValide(memorisee)
+      ? memorisee
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 function lireCopieLocale(idCampagne: string): CopieLocale | null {
   try {
     const valeur = window.localStorage.getItem(cleCopieLocale(idCampagne));
     if (!valeur) return null;
     const copie = JSON.parse(valeur) as Partial<CopieLocale>;
-    if (
-      !copie.campagne ||
-      !Number.isSafeInteger(copie.revisionServeur) ||
-      typeof copie.modifiee !== 'boolean'
-    ) {
-      return null;
-    }
+    if (!copie.campagne) return null;
     return {
       campagne: normaliserCampagne(copie.campagne),
-      revisionServeur: Math.max(0, copie.revisionServeur ?? 0),
-      modifiee: copie.modifiee,
       date: copie.date ?? '',
     };
   } catch {
@@ -3404,38 +3109,27 @@ function listerCopiesLocales(): ResumeCampagne[] {
         id,
         nomCampagne: copie.campagne.nomCampagne,
         nomBande: copie.campagne.nomBande,
-        revision: copie.revisionServeur,
+        revision: copie.campagne.revision,
         miseAJour: copie.date || null,
       });
     }
   } catch {
-    // Le catalogue distant reste utilisable si le stockage local est bloqué.
+    // Le catalogue reste vide si le navigateur bloque son stockage local.
   }
   return resultats.sort((a, b) =>
     (b.miseAJour ?? '').localeCompare(a.miseAJour ?? ''),
   );
 }
 
-function ecrireCopieLocale(
-  idCampagne: string,
-  campagne: EtatCampagne,
-  revisionServeur: number,
-  modifiee: boolean,
-) {
-  try {
-    const copie: CopieLocale = {
-      campagne,
-      revisionServeur,
-      modifiee,
-      date: new Date().toISOString(),
-    };
-    window.localStorage.setItem(
-      cleCopieLocale(idCampagne),
-      JSON.stringify(copie),
-    );
-  } catch {
-    // D1 reste disponible si le navigateur refuse ou sature son stockage local.
-  }
+function ecrireCopieLocale(idCampagne: string, campagne: EtatCampagne) {
+  const copie: CopieLocale = {
+    campagne,
+    date: new Date().toISOString(),
+  };
+  window.localStorage.setItem(
+    cleCopieLocale(idCampagne),
+    JSON.stringify(copie),
+  );
 }
 
 function normaliser(texte: string) {
