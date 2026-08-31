@@ -52,7 +52,7 @@ body {
   background-image:
     radial-gradient(circle at 25% 10%, rgb(255 252 238 / 58%), transparent 35%),
     repeating-linear-gradient(
-      95deg,
+      90deg,
       rgb(88 61 32 / 2.6%) 0,
       rgb(88 61 32 / 2.6%) 1px,
       transparent 1px,

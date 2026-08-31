@@ -145,7 +145,7 @@
   border-radius: 0;
   background:
     repeating-linear-gradient(
-      1deg,
+      0deg,
       transparent 0 35px,
       rgb(83 55 29 / 3.4%) 35px 36px
     ),

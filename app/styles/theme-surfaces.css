@@ -180,7 +180,7 @@
   background:
     linear-gradient(103deg, rgb(255 255 255 / 18%), transparent 36%),
     repeating-linear-gradient(
-      1deg,
+      0deg,
       transparent 0 35px,
       rgb(83 55 29 / 3.4%) 35px 36px
     ),
@@ -468,7 +468,7 @@
   border-radius: 0;
   background:
     repeating-linear-gradient(
-      2deg,
+      0deg,
       transparent 0 34px,
       rgb(78 52 27 / 3%) 34px 35px
     ),
