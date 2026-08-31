@@ -129,10 +129,7 @@
 
 @media (max-width: 780px) {
   .sidebar .navigation-item span:not(.new-badge) {
-    min-width: 0;
-    font-size: 12px;
-    line-height: 1.15;
-    overflow-wrap: anywhere;
+    display: none;
   }
 
   .site-disclaimer {
@@ -152,17 +149,6 @@
 }
 
 @media (max-width: 380px) {
-  .sidebar .navigation-item span:not(.new-badge) {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
   .sidebar .navigation-item {
     min-height: 52px;
     padding-inline: 4px;

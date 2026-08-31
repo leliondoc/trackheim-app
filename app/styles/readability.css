@@ -271,8 +271,8 @@ body {
 
 /*
  * Tablettes et téléphones
- * La navigation devient une barre basse compacte, avec libellés visibles
- * et zones tactiles conformes aux usages mobiles.
+ * La navigation devient une barre basse compacte avec de larges zones tactiles.
+ * Les liens conservent leur nom accessible même quand seul le pictogramme reste visible.
  */
 @media (max-width: 1080px) {
   .application-layout {
@@ -340,20 +340,18 @@ body {
     display: flex;
     min-width: 0;
     min-height: 60px;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    gap: 4px;
+    gap: 0;
     padding: 4px 2px;
-    font-size: 12px;
-    line-height: 1.05;
     text-align: center;
   }
   .sidebar .navigation-item span:not(.new-badge) {
-    display: block;
+    display: none;
   }
   .sidebar .navigation-item svg {
-    width: 21px;
-    height: 21px;
+    width: 24px;
+    height: 24px;
   }
   .sidebar .navigation-item .new-badge {
     display: none;

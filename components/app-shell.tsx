@@ -5,10 +5,10 @@ import {
   Home,
   Search,
   Settings2,
-  Shield,
   Skull,
   Stamp,
   Swords,
+  Users,
 } from 'lucide-react';
 import { Fragment } from 'react';
 
@@ -27,7 +27,7 @@ const navigation: Array<{
   icone: typeof Home;
 }> = [
   { id: 'overview', libelle: 'Vue d’ensemble', icone: Home },
-  { id: 'warband', libelle: 'Ma bande', icone: Shield },
+  { id: 'warband', libelle: 'Ma bande', icone: Users },
   { id: 'campaign', libelle: 'Campagne', icone: Swords },
   { id: 'library', libelle: 'Bibliothèque', icone: BookOpen },
 ];

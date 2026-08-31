@@ -128,7 +128,7 @@ const pagesRecherche: Array<{
     id: 'warband',
     libelle: 'Ma bande',
     description: 'Recrues, équipement et progression',
-    icone: Shield,
+    icone: Users,
   },
   {
     id: 'campaign',
