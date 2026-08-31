@@ -337,7 +337,7 @@ function VersionDetaillee({
 
   return (
     <Card
-      className={className}
+      className={cn('ruleset-provenance', className)}
       aria-label={`Provenance du ruleset ${manifeste.nom}`}
       data-ruleset-id={manifeste.id}
     >

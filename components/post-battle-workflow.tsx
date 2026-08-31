@@ -2735,7 +2735,7 @@ function EtapeRecrutement({
     <CarteEtape
       numero={8}
       titre="Recrues et objets communs"
-      description="Utilisez le builder de recrutement fourni par l’application, puis validez cette étape."
+      description="Utilisez l’outil de recrutement fourni par l’application, puis validez cette étape."
       icone={<Users />}
       action={
         <Button onClick={onContinue}>

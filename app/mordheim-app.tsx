@@ -675,6 +675,7 @@ export function MordheimApp() {
                     campagne={campagne}
                     synthese={synthese}
                     onCampagneChange={setCampagne}
+                    onChangerBande={() => setGestionCampagnesOuverte(true)}
                   />
                 )}
                 {vue === 'campaign' && (
@@ -1042,10 +1043,12 @@ function CampaignManagerDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="campaign-manager-dialog sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle>Campagnes Trackheim</DialogTitle>
+          <DialogTitle>Bandes et campagnes Trackheim</DialogTitle>
           <DialogDescription>
-            Passez d’une campagne à l’autre ou ouvrez un registre vierge. Chaque
-            registre possède sa propre révision et sa copie hors ligne.
+            Changez de bande en ouvrant son registre, ou créez-en un nouveau.
+            Chaque registre possède sa propre sauvegarde. Les règles de
+            composition actuellement indexées concernent les Mercenaires
+            Reiklanders.
           </DialogDescription>
         </DialogHeader>
 
@@ -1074,7 +1077,7 @@ function CampaignManagerDialog({
             creer();
           }}
         >
-          <h3>Nouveau registre</h3>
+          <h3>Nouvelle bande</h3>
           <Input
             aria-label="Nom de la nouvelle campagne"
             maxLength={160}
@@ -1679,10 +1682,12 @@ function WarbandView({
   campagne,
   synthese,
   onCampagneChange,
+  onChangerBande,
 }: {
   campagne: EtatCampagne;
   synthese: Synthese;
   onCampagneChange: (campagne: EtatCampagne) => void;
+  onChangerBande: () => void;
 }) {
   function modifierCombattant(id: string, modification: Partial<Combattant>) {
     onCampagneChange({
@@ -1707,18 +1712,23 @@ function WarbandView({
   return (
     <section className="product-view">
       <PageHeader
-        eyebrow="Builder de bande"
+        eyebrow="Constructeur de bande"
         title="Ma bande"
         description="Recrutez, équipez et faites progresser chaque combattant. Les limites Reiklanders sont contrôlées automatiquement."
         action={
-          <RecruitDialog
-            campagne={campagne}
-            onCampagneChange={onCampagneChange}
-          />
+          <div className="page-header-actions">
+            <Button onClick={onChangerBande} variant="outline">
+              <Users aria-hidden="true" /> Changer de bande
+            </Button>
+            <RecruitDialog
+              campagne={campagne}
+              onCampagneChange={onCampagneChange}
+            />
+          </div>
         }
       />
 
-      <div className="builder-summary">
+      <div className="constructeur-bande-resume">
         <strong>{synthese.coutBande} CO</strong>
         <span>coût historique d’acquisition · budget initial 500 CO</span>
         <div className="budget-track">
@@ -2490,6 +2500,8 @@ function LibraryView({
   onRechercheChange: (recherche: string) => void;
   onGradeChange: (grade: FiltreGrade) => void;
 }) {
+  const [bandeSelectionnee, setBandeSelectionnee] =
+    useState<BandeBibliotheque | null>(null);
   const resultats = bandesBibliotheque.filter((bande) => {
     const nomCorrespond = normaliser(bande.nom).includes(normaliser(recherche));
     return nomCorrespond && (grade === 'tous' || bande.grade === grade);
@@ -2552,14 +2564,22 @@ function LibraryView({
             key={`${bande.grade}-${bande.slug}`}
             tabIndex={-1}
           >
-            <div className="library-card-top">
-              <span className={`grade grade-${bande.grade}`}>
-                Grade {bande.grade}
+            <button
+              className="library-card-main"
+              type="button"
+              onClick={() => setBandeSelectionnee(bande)}
+              aria-label={`Consulter les informations de ${bande.nom}`}
+            >
+              <span className="library-card-top">
+                <span className={`grade grade-${bande.grade}`}>
+                  Grade {bande.grade}
+                </span>
+                <Shield aria-hidden="true" />
               </span>
-              <Shield />
-            </div>
-            <h3>{bande.nom}</h3>
-            <p>{texteGrade(bande.grade)}</p>
+              <h3>{bande.nom}</h3>
+              <p>{texteGrade(bande.grade)}</p>
+              <span className="library-card-hint">Consulter la fiche</span>
+            </button>
             <div className="library-card-actions">
               <a
                 href={`${SOURCE_GLM}/bandes/${bande.slug}`}
@@ -2577,6 +2597,81 @@ function LibraryView({
           </article>
         ))}
       </div>
+
+      <Dialog
+        open={Boolean(bandeSelectionnee)}
+        onOpenChange={(ouverte) => {
+          if (!ouverte) setBandeSelectionnee(null);
+        }}
+      >
+        <DialogContent className="band-details-dialog">
+          {bandeSelectionnee ? (
+            <>
+              <DialogHeader>
+                <span
+                  className={`grade grade-${bandeSelectionnee.grade} band-details-grade`}
+                >
+                  Grade {bandeSelectionnee.grade}
+                </span>
+                <DialogTitle>{bandeSelectionnee.nom}</DialogTitle>
+                <DialogDescription>
+                  {texteGrade(bandeSelectionnee.grade)} Cette fiche distingue les
+                  références disponibles des règles réellement intégrées dans
+                  Trackheim.
+                </DialogDescription>
+              </DialogHeader>
+
+              <dl className="band-details-grid">
+                <div>
+                  <dt>Référence</dt>
+                  <dd>Grande Librairie de Mordheim</dd>
+                </div>
+                <div>
+                  <dt>Fiche GLM</dt>
+                  <dd>Disponible en ligne</dd>
+                </div>
+                <div>
+                  <dt>PDF indexé</dt>
+                  <dd>{bandeSelectionnee.pdfUrl ? 'Disponible' : 'Non disponible'}</dd>
+                </div>
+              </dl>
+
+              <div className="band-support-state">
+                <Shield aria-hidden="true" />
+                <div>
+                  <strong>Prise en charge Trackheim</strong>
+                  <p>
+                    {bandeSelectionnee.slug === 'mercenaires-reiklanders'
+                      ? 'Règles de composition et recrutement intégrées au constructeur de bande.'
+                      : 'Référence consultable. Les profils de recrutement de cette bande ne sont pas encore indexés dans l’application.'}
+                  </p>
+                </div>
+              </div>
+
+              <DialogFooter className="band-details-actions">
+                <a
+                  className="source-button"
+                  href={`${SOURCE_GLM}/bandes/${bandeSelectionnee.slug}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Ouvrir la fiche GLM <ExternalLink aria-hidden="true" />
+                </a>
+                {bandeSelectionnee.pdfUrl ? (
+                  <a
+                    className="source-button"
+                    href={bandeSelectionnee.pdfUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Lire le PDF <FileText aria-hidden="true" />
+                  </a>
+                ) : null}
+              </DialogFooter>
+            </>
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

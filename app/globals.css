@@ -933,6 +933,13 @@ button {
   font-size: 12px;
   line-height: 1.55;
 }
+
+.page-header-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+}
 .source-button {
   display: inline-flex;
   min-height: 36px;
@@ -951,8 +958,8 @@ button {
   width: 13px;
 }
 
-/* Builder de bande */
-.builder-summary {
+/* Constructeur de bande */
+.constructeur-bande-resume {
   display: grid;
   grid-template-columns: auto auto minmax(160px, 1fr) auto;
   align-items: center;
@@ -962,12 +969,12 @@ button {
   background: rgb(252 248 236 / 66%);
   padding: 12px 16px;
 }
-.builder-summary strong {
+.constructeur-bande-resume strong {
   color: #713129;
   font-family: var(--font-fell), serif;
   font-size: 22px;
 }
-.builder-summary > span {
+.constructeur-bande-resume > span {
   color: #786b5f;
   font-size: 10px;
 }
@@ -1452,6 +1459,20 @@ button {
   background: rgb(252 248 236 / 67%);
   padding: 14px;
 }
+.library-card-main {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.library-card-main:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 6px;
+}
 .library-card-top {
   display: flex;
   align-items: center;
@@ -1493,11 +1514,20 @@ button {
   font-size: 18px;
   line-height: 1.05;
 }
-.library-card > p {
+.library-card-main > p {
   margin: 0;
   color: #88796b;
   font-size: 9px;
   line-height: 1.45;
+}
+.library-card-hint {
+  display: inline-block;
+  margin-top: 12px;
+  color: #7d362f;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 .library-card-actions {
   display: flex;
@@ -1517,6 +1547,86 @@ button {
 }
 .library-card-actions svg {
   width: 11px;
+}
+
+.band-details-dialog {
+  width: min(760px, calc(100vw - 40px));
+  max-width: none;
+  border: 1px solid #5f4930;
+  border-top: 4px double #5f4930;
+  border-radius: 0;
+  background:
+    repeating-linear-gradient(
+      1deg,
+      transparent 0 35px,
+      rgb(83 55 29 / 3.4%) 35px 36px
+    ),
+    #efe0bd;
+  color: #2e241a;
+  box-shadow: 8px 10px 0 rgb(29 20 13 / 28%);
+}
+.band-details-dialog [data-slot='dialog-title'] {
+  font-family: var(--font-pirata), var(--font-fell), serif;
+  font-size: 34px;
+  font-weight: 400;
+}
+.band-details-dialog [data-slot='dialog-description'] {
+  color: #655441;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.band-details-grade {
+  width: fit-content;
+}
+.band-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-block: 3px double #7a6243;
+}
+.band-details-grid > div {
+  min-width: 0;
+  padding: 16px;
+}
+.band-details-grid > div + div {
+  border-left: 1px solid rgb(79 57 34 / 38%);
+}
+.band-details-grid dt {
+  color: #78634a;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.band-details-grid dd {
+  margin-top: 5px;
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+.band-support-state {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  border: 1px solid #8c7350;
+  background: rgb(255 248 226 / 38%);
+  padding: 16px;
+}
+.band-support-state > svg {
+  width: 22px;
+  color: var(--oxblood);
+}
+.band-support-state strong {
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 18px;
+}
+.band-support-state p {
+  margin: 4px 0 0;
+  color: #655441;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.band-details-actions {
+  justify-content: flex-start;
 }
 
 /* Atelier homebrew */
@@ -1634,7 +1744,10 @@ button {
   .page-header > :last-child {
     align-self: flex-start;
   }
-  .builder-summary {
+  .page-header-actions {
+    flex-wrap: wrap;
+  }
+  .constructeur-bande-resume {
     grid-template-columns: auto 1fr;
   }
   .budget-track {
@@ -1776,7 +1889,7 @@ body {
   width: 20px;
 }
 .metric-card p,
-.builder-summary > span,
+.constructeur-bande-resume > span,
 .library-toolbar > span {
   font-size: 12px;
 }
@@ -1861,10 +1974,10 @@ body {
   min-height: 42px;
   font-size: 13px;
 }
-.builder-summary {
+.constructeur-bande-resume {
   min-height: 70px;
 }
-.builder-summary strong {
+.constructeur-bande-resume strong {
   font-size: 26px;
 }
 .profile-card {
@@ -1890,7 +2003,7 @@ body {
 .dialog-total span,
 .campaign-step p,
 .rule-note p,
-.library-card > p,
+.library-card-main > p,
 .homebrew-toggle p,
 .price-row small,
 .empty-state p {
@@ -2100,7 +2213,7 @@ body {
   .profile-card-footer,
   .campaign-step p,
   .rule-note p,
-  .library-card > p,
+  .library-card-main > p,
   .homebrew-toggle p,
   .price-row small {
     font-size: 13px;
@@ -2170,7 +2283,7 @@ body {
   .library-grid {
     grid-template-columns: 1fr;
   }
-  .builder-summary {
+  .constructeur-bande-resume {
     grid-template-columns: auto 1fr;
   }
   .budget-track {
@@ -2976,7 +3089,7 @@ body {
 .library-toolbar,
 .library-card,
 .profile-card,
-.builder-summary,
+.constructeur-bande-resume,
 .homebrew-toggle,
 .overlay-node,
 .rule-set-card,
@@ -3092,7 +3205,7 @@ body {
 .profile-card-footer,
 .campaign-step p,
 .rule-note p,
-.library-card > p,
+.library-card-main > p,
 .homebrew-toggle p,
 .price-row small,
 .custom-rule p {
@@ -3182,7 +3295,7 @@ body {
   transform: rotate(-1deg);
 }
 
-.builder-summary strong,
+.constructeur-bande-resume strong,
 .counter-control strong,
 .dialog-total strong {
   font-family: var(--font-pirata), var(--font-fell), serif;
@@ -3216,6 +3329,14 @@ body {
     5px 7px 0 rgb(70 45 23 / 15%),
     inset 0 0 0 2px rgb(255 250 231 / 42%);
   transform: translateY(-2px) rotate(-0.15deg);
+}
+
+.library-card:has(.library-card-main:hover) {
+  border-color: #53241f;
+  box-shadow:
+    5px 7px 0 rgb(70 45 23 / 15%),
+    inset 0 0 0 2px rgb(255 250 231 / 42%);
+  transform: translateY(-2px) rotate(-0.1deg);
 }
 
 .profile-card-footer,
@@ -3954,7 +4075,7 @@ select,
   .library-toolbar,
   .library-card,
   .profile-card,
-  .builder-summary,
+  .constructeur-bande-resume,
   .homebrew-toggle,
   .overlay-node,
   .rule-set-card,
@@ -4190,7 +4311,7 @@ select,
 
   .metric-card p,
   .metric-card small,
-  .builder-summary > span,
+  .constructeur-bande-resume > span,
   .library-toolbar > span {
     font-size: 15px;
   }
@@ -4246,7 +4367,7 @@ select,
   .stat-line,
   .campaign-step p,
   .rule-note p,
-  .library-card > p,
+  .library-card-main > p,
   .homebrew-toggle p,
   .price-row small,
   .custom-rule p {
@@ -4271,12 +4392,12 @@ select,
     font-size: 12px;
   }
 
-  .builder-summary {
+  .constructeur-bande-resume {
     min-height: 82px;
     padding: 16px 20px;
   }
 
-  .builder-summary strong {
+  .constructeur-bande-resume strong {
     font-size: 32px;
   }
 
@@ -4294,6 +4415,13 @@ select,
   .profile-card h3,
   .library-card h3 {
     font-size: 24px;
+  }
+
+  .library-card-main > p,
+  .library-card-hint,
+  .library-card-actions a {
+    font-size: 16px;
+    line-height: 1.5;
   }
 
   .profile-card-header span,
@@ -4498,15 +4626,96 @@ select,
 
   .overlay-node strong,
   .ruleset-option strong {
-    font-size: 21px;
+    font-size: 25px;
   }
 
   .ruleset-option small {
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .ruleset-selector > legend {
+    font-size: 18px;
+  }
+
+  .ruleset-option > b {
+    font-size: 16px;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-header'] {
+    padding: 24px 26px;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-content'] {
+    padding: 26px;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-title'],
+  .settings-view .ruleset-provenance h3,
+  .settings-view .ruleset-provenance .text-sm {
+    font-size: 20px;
+    line-height: 1.35;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-description'],
+  .settings-view .ruleset-provenance .text-xs {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='badge'] {
+    min-height: 31px;
+    padding: 5px 10px;
     font-size: 15px;
+  }
+
+  .settings-view .ruleset-provenance li {
+    padding: 18px;
+  }
+
+  .band-details-dialog {
+    width: min(920px, calc(100vw - 96px));
+    gap: 22px;
+    padding: 30px;
+  }
+
+  .band-details-dialog [data-slot='dialog-title'] {
+    font-size: 46px;
+  }
+
+  .band-details-dialog [data-slot='dialog-description'],
+  .band-support-state p {
+    font-size: 18px;
+  }
+
+  .band-details-grid dt {
+    font-size: 14px;
+  }
+
+  .band-details-grid dd,
+  .band-support-state strong {
+    font-size: 21px;
   }
 }
 
 @media (max-width: 780px) {
+  .band-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .band-details-grid > div + div {
+    border-top: 1px solid rgb(79 57 34 / 38%);
+    border-left: 0;
+  }
+
+  .band-details-actions {
+    align-items: stretch;
+  }
+
+  .band-details-actions .source-button {
+    justify-content: center;
+  }
+
   .recruit-dialog [data-slot='input'],
   .recruit-dialog [data-slot='native-select'] {
     height: 44px;
