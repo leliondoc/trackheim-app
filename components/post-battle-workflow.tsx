@@ -7,6 +7,7 @@ import {
   Coins,
   Dices,
   Gem,
+  Minus,
   PackageOpen,
   Plus,
   ShoppingCart,
@@ -100,6 +101,8 @@ type ResolutionBlessureStructuree = {
   version: 1;
   jetSecondaire: number | null;
   note: string;
+  decision?: string;
+  montant?: number | null;
 };
 
 type EntreePersonnel = {
@@ -490,6 +493,7 @@ export function PostBattleWorkflow({
       combattantsParticipants,
       bataille,
       profilsParId,
+      campagne.couronnes,
     );
     if (validation) {
       setErreur(validation);
@@ -498,6 +502,7 @@ export function PostBattleWorkflow({
 
     const participants = { ...bataille.participants };
     let chefMort = false;
+    let couronnesApresBlessures = campagne.couronnes;
     const combattantsApresBlessures: Combattant[] = [];
 
     for (const combattant of campagne.combattants) {
@@ -538,12 +543,33 @@ export function PostBattleWorkflow({
       }
 
       const resultat = trouverBlessureHero(suivi.jetsBlessure[0]);
+      const resolutionBlessure = lireResolutionBlessure(
+        suivi.blessureNote,
+        suivi.resolutionBlessure,
+      );
+      if (
+        resultat.id === 'capture' &&
+        resolutionBlessure.decision === 'rancon'
+      ) {
+        couronnesApresBlessures -= resolutionBlessure.montant ?? 0;
+      }
+      if (
+        resultat.id === 'arenes' &&
+        resolutionBlessure.decision === 'victoire'
+      ) {
+        couronnesApresBlessures += 50;
+      }
       const resolution = appliquerResultatHero(combattant, resultat.id, suivi);
       participants[combattant.id] = {
         ...suivi,
         blessureResolue: true,
         experienceManuelle:
-          suivi.experienceManuelle + (resultat.id === 'miracle' ? 1 : 0),
+          suivi.experienceManuelle +
+          (resultat.id === 'miracle' ? 1 : 0) +
+          (resultat.id === 'arenes' &&
+          resolutionBlessure.decision === 'victoire'
+            ? 2
+            : 0),
       };
       if (!resolution) {
         chefMort ||= combattant.chef;
@@ -570,6 +596,7 @@ export function PostBattleWorkflow({
     onCampagneChange({
       ...campagne,
       revision: campagne.revision + 1,
+      couronnes: couronnesApresBlessures,
       combattants: combattantsFinalises,
       batailleEnCours: {
         ...bataille,
@@ -1274,6 +1301,15 @@ export function PostBattleWorkflow({
         </CardContent>
       </Card>
 
+      {!experiencesAppliquees && (
+        <TrackerBataille
+          bataille={bataille}
+          combattants={combattantsParticipants}
+          profilsParId={profilsParId}
+          onParticipantChange={modifierParticipant}
+        />
+      )}
+
       {erreur && (
         <Alert role="alert" variant="destructive">
           <AlertTriangle />
@@ -1590,6 +1626,112 @@ function CreationBataille({
   );
 }
 
+function TrackerBataille({
+  bataille,
+  combattants,
+  profilsParId,
+  onParticipantChange,
+}: {
+  bataille: BatailleEnCours;
+  combattants: Combattant[];
+  profilsParId: Map<string, (typeof profilsReiklanders)[number]>;
+  onParticipantChange: (
+    id: string,
+    modification: Partial<SuiviCombattantBataille>,
+  ) => void;
+}) {
+  return (
+    <Card className="battle-tracker-card">
+      <CardHeader>
+        <CardTitle as="h2">
+          <Swords aria-hidden="true" /> Tracker de bataille
+        </CardTitle>
+        <CardDescription>
+          Notez les ennemis mis hors de combat et l’XP d’objectifs pendant la
+          partie. Ces valeurs seront reprises automatiquement à l’étape
+          Expérience.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="battle-tracker-list">
+        {combattants.map((combattant) => {
+          const suivi = bataille.participants[combattant.id];
+          const hero =
+            categorieCombattant(combattant, profilsParId) === 'Héros';
+          return (
+            <div className="battle-tracker-row" key={combattant.id}>
+              <div>
+                <strong>{combattant.nom}</strong>
+                <small>{hero ? 'Héros' : 'Hommes de main'}</small>
+              </div>
+              <fieldset className="battle-tracker-counter">
+                <legend>Ennemis HdC</legend>
+                {hero ? (
+                  <div>
+                    <Button
+                      aria-label={`Retirer un ennemi hors de combat à ${combattant.nom}`}
+                      disabled={suivi.ennemisHorsCombat === 0}
+                      onClick={() =>
+                        onParticipantChange(combattant.id, {
+                          ennemisHorsCombat: Math.max(
+                            0,
+                            suivi.ennemisHorsCombat - 1,
+                          ),
+                        })
+                      }
+                      size="icon-xs"
+                      type="button"
+                      variant="outline"
+                    >
+                      <Minus aria-hidden="true" />
+                    </Button>
+                    <output aria-live="polite">
+                      {suivi.ennemisHorsCombat}
+                    </output>
+                    <Button
+                      aria-label={`Ajouter un ennemi hors de combat à ${combattant.nom}`}
+                      onClick={() =>
+                        onParticipantChange(combattant.id, {
+                          ennemisHorsCombat: suivi.ennemisHorsCombat + 1,
+                        })
+                      }
+                      size="icon-xs"
+                      type="button"
+                      variant="outline"
+                    >
+                      <Plus aria-hidden="true" />
+                    </Button>
+                  </div>
+                ) : (
+                  <span>—</span>
+                )}
+              </fieldset>
+              <Champ
+                libelle="XP d’objectif"
+                htmlFor={`battle-objective-xp-${combattant.id}`}
+              >
+                <Input
+                  id={`battle-objective-xp-${combattant.id}`}
+                  type="number"
+                  min={0}
+                  value={suivi.experienceScenario}
+                  onChange={(event) =>
+                    onParticipantChange(combattant.id, {
+                      experienceScenario: Math.max(
+                        0,
+                        entierDepuisTexte(event.target.value),
+                      ),
+                    })
+                  }
+                />
+              </Champ>
+            </div>
+          );
+        })}
+      </CardContent>
+    </Card>
+  );
+}
+
 function EtapeBlessures({
   bataille,
   combattants,
@@ -1652,12 +1794,22 @@ function EtapeBlessures({
               ? blessureHeroSure(suivi.jetsBlessure[0])
               : null;
           const complexe = apercu && apercu.application !== 'automatique';
+          const brancheCapture = apercu?.id === 'capture';
+          const brancheArenes = apercu?.id === 'arenes';
           const absenceStructuree =
             apercu && ['bras', 'jambe-ecrasee', 'profonde'].includes(apercu.id);
           const resolution = lireResolutionBlessure(
             suivi.blessureNote,
             suivi.resolutionBlessure,
           );
+          const blessureArene =
+            brancheArenes &&
+            resolution.decision === 'defaite' &&
+            resolution.jetSecondaire !== null &&
+            resolution.jetSecondaire >= 11 &&
+            resolution.jetSecondaire <= 35
+              ? blessureHeroSure(resolution.jetSecondaire)
+              : null;
           return (
             <article
               className="grid gap-3 rounded-md border border-stone-500/20 p-3"
@@ -1729,9 +1881,11 @@ function EtapeBlessures({
                       <p className="text-sm">
                         Résultat : <strong>{apercu.titre}</strong>
                         {complexe &&
-                          (absenceStructuree
-                            ? ' — jet secondaire requis'
-                            : ' — résolution manuelle requise')}
+                          (brancheCapture || brancheArenes
+                            ? ' — choisissez l’issue ci-dessous'
+                            : absenceStructuree
+                              ? ' — jet secondaire requis'
+                              : ' — résolution manuelle requise')}
                       </p>
                     )}
                   </div>
@@ -1780,23 +1934,183 @@ function EtapeBlessures({
                   </div>
                 </div>
               )}
-              {complexe && !absenceStructuree && (
-                <Champ
-                  libelle="Résolution de la branche complexe"
-                  htmlFor={`injury-note-${combattant.id}`}
-                >
+              {brancheCapture && (
+                <div className="injury-decision-panel">
+                  <Champ
+                    libelle="Issue du captif"
+                    htmlFor={`injury-capture-${combattant.id}`}
+                  >
+                    <NativeSelect
+                      id={`injury-capture-${combattant.id}`}
+                      disabled={suivi.blessureResolue}
+                      value={resolution.decision ?? ''}
+                      onChange={(event) =>
+                        onResolutionChange(combattant.id, {
+                          decision: event.target.value,
+                          montant: null,
+                        })
+                      }
+                    >
+                      <NativeSelectOption value="">
+                        Choisir une issue…
+                      </NativeSelectOption>
+                      <NativeSelectOption value="rancon">
+                        Rançonné — revient avec son équipement
+                      </NativeSelectOption>
+                      <NativeSelectOption value="echange">
+                        Échangé — revient avec son équipement
+                      </NativeSelectOption>
+                      <NativeSelectOption value="captif">
+                        Reste captif — indisponible
+                      </NativeSelectOption>
+                      <NativeSelectOption value="perdu">
+                        Vendu, tué, sacrifié ou transformé
+                      </NativeSelectOption>
+                    </NativeSelect>
+                  </Champ>
+                  {resolution.decision === 'rancon' && (
+                    <Champ
+                      libelle="Rançon payée"
+                      htmlFor={`injury-ransom-${combattant.id}`}
+                    >
+                      <div className="injury-amount-field">
+                        <Input
+                          id={`injury-ransom-${combattant.id}`}
+                          type="number"
+                          min={0}
+                          max={9999}
+                          disabled={suivi.blessureResolue}
+                          value={resolution.montant ?? ''}
+                          onChange={(event) =>
+                            onResolutionChange(combattant.id, {
+                              montant: event.target.value
+                                ? entierDepuisTexte(event.target.value)
+                                : null,
+                            })
+                          }
+                        />
+                        <span>CO</span>
+                      </div>
+                    </Champ>
+                  )}
                   <Textarea
-                    id={`injury-note-${combattant.id}`}
+                    aria-label={`Note de capture de ${combattant.nom}`}
                     maxLength={10000}
                     disabled={suivi.blessureResolue}
-                    value={suivi.blessureNote}
+                    value={resolution.note}
                     onChange={(event) =>
-                      onNoteChange(combattant.id, event.target.value)
+                      onResolutionChange(combattant.id, {
+                        note: event.target.value,
+                      })
                     }
-                    placeholder="Jets secondaires, conséquences et durée éventuelle…"
+                    placeholder="Adversaire, conditions de l’échange ou décision de table…"
                   />
-                </Champ>
+                </div>
               )}
+              {brancheArenes && (
+                <div className="injury-decision-panel">
+                  <Champ
+                    libelle="Résultat du combat d’arène"
+                    htmlFor={`injury-arena-${combattant.id}`}
+                  >
+                    <NativeSelect
+                      id={`injury-arena-${combattant.id}`}
+                      disabled={suivi.blessureResolue}
+                      value={resolution.decision ?? ''}
+                      onChange={(event) =>
+                        onResolutionChange(combattant.id, {
+                          decision: event.target.value,
+                          jetSecondaire: null,
+                          note: '',
+                        })
+                      }
+                    >
+                      <NativeSelectOption value="">
+                        Choisir le résultat…
+                      </NativeSelectOption>
+                      <NativeSelectOption value="victoire">
+                        Victoire — +50 CO et +2 XP
+                      </NativeSelectOption>
+                      <NativeSelectOption value="defaite">
+                        Défaite — relancer sur 11–35
+                      </NativeSelectOption>
+                    </NativeSelect>
+                  </Champ>
+                  {resolution.decision === 'defaite' && (
+                    <>
+                      <Champ
+                        libelle="Nouveau jet D66"
+                        htmlFor={`injury-arena-roll-${combattant.id}`}
+                      >
+                        <Input
+                          id={`injury-arena-roll-${combattant.id}`}
+                          type="number"
+                          min={11}
+                          max={35}
+                          disabled={suivi.blessureResolue}
+                          value={resolution.jetSecondaire ?? ''}
+                          onChange={(event) =>
+                            onResolutionChange(combattant.id, {
+                              jetSecondaire: event.target.value
+                                ? entierDepuisTexte(event.target.value)
+                                : null,
+                            })
+                          }
+                        />
+                      </Champ>
+                      {blessureArene && (
+                        <output className="injury-final-outcome">
+                          <strong>Issue finale :</strong>{' '}
+                          {resolution.jetSecondaire! <= 15
+                            ? 'le Héros meurt.'
+                            : `le Héros survit, perd ses armes et son armure, puis subit « ${blessureArene.titre} ».`}
+                        </output>
+                      )}
+                      {blessureArene &&
+                        resolution.jetSecondaire! >= 16 &&
+                        blessureArene.application !== 'automatique' && (
+                          <Textarea
+                            aria-label={`Résolution finale de la blessure d’arène de ${combattant.nom}`}
+                            maxLength={10000}
+                            disabled={suivi.blessureResolue}
+                            value={resolution.note}
+                            onChange={(event) =>
+                              onResolutionChange(combattant.id, {
+                                note: event.target.value,
+                              })
+                            }
+                            placeholder="Indiquez les jets et conséquences supplémentaires de cette blessure…"
+                          />
+                        )}
+                    </>
+                  )}
+                  <p className="injury-rule-reminder">
+                    En cas de victoire, le Héros revient avec tout son
+                    équipement. Après une défaite non mortelle, il revient sans
+                    armes ni armure.
+                  </p>
+                </div>
+              )}
+              {complexe &&
+                !absenceStructuree &&
+                !brancheCapture &&
+                !brancheArenes && (
+                  <Champ
+                    libelle="Résolution de la branche complexe"
+                    htmlFor={`injury-note-${combattant.id}`}
+                  >
+                    <Textarea
+                      id={`injury-note-${combattant.id}`}
+                      maxLength={10000}
+                      disabled={suivi.blessureResolue}
+                      value={suivi.blessureNote}
+                      onChange={(event) =>
+                        onNoteChange(combattant.id, event.target.value)
+                      }
+                      placeholder="Jets secondaires, conséquences et durée éventuelle…"
+                    />
+                  </Champ>
+                )}
               {suivi.blessureResolue && suivi.blessureNote && (
                 <p className="rounded bg-stone-500/10 px-3 py-2 text-sm">
                   {decrireResolutionBlessure(
@@ -1988,7 +2302,7 @@ function EtapeExperience({
                   />
                 </Champ>
                 <Champ
-                  libelle="Manuels, miracle ou autre"
+                  libelle="Ajustement manuel d’XP"
                   htmlFor={`manual-xp-${combattant.id}`}
                 >
                   <Input
@@ -3080,7 +3394,13 @@ function lireResolutionBlessure(
 ): ResolutionBlessureStructuree {
   if (structure?.version === 1) return structure;
   if (!texte.startsWith(MARQUEUR_BLESSURE)) {
-    return { version: 1, jetSecondaire: null, note: texte };
+    return {
+      version: 1,
+      jetSecondaire: null,
+      note: texte,
+      decision: undefined,
+      montant: null,
+    };
   }
   try {
     const donnees = JSON.parse(
@@ -3093,9 +3413,18 @@ function lireResolutionBlessure(
           ? donnees.jetSecondaire
           : null,
       note: typeof donnees.note === 'string' ? donnees.note : '',
+      decision:
+        typeof donnees.decision === 'string' ? donnees.decision : undefined,
+      montant: typeof donnees.montant === 'number' ? donnees.montant : null,
     };
   } catch {
-    return { version: 1, jetSecondaire: null, note: '' };
+    return {
+      version: 1,
+      jetSecondaire: null,
+      note: '',
+      decision: undefined,
+      montant: null,
+    };
   }
 }
 
@@ -3104,7 +3433,21 @@ function decrireResolutionBlessure(
   structure?: ResolutionBlessureStructuree,
 ) {
   const resolution = lireResolutionBlessure(texte, structure);
+  const libellesDecision: Record<string, string> = {
+    rancon: 'Rançonné',
+    echange: 'Échangé',
+    captif: 'Reste captif',
+    perdu: 'Perdu définitivement',
+    victoire: 'Victoire dans les arènes',
+    defaite: 'Défaite dans les arènes',
+  };
   return [
+    resolution.decision
+      ? `Décision : ${libellesDecision[resolution.decision] ?? resolution.decision}.`
+      : '',
+    resolution.montant !== null && resolution.montant !== undefined
+      ? `Montant : ${resolution.montant} CO.`
+      : '',
     resolution.jetSecondaire !== null
       ? `Jet secondaire : ${resolution.jetSecondaire}.`
       : '',
@@ -3137,7 +3480,9 @@ function validerBlessures(
   combattants: Combattant[],
   bataille: BatailleEnCours,
   profilsParId: Map<string, (typeof profilsReiklanders)[number]>,
+  couronnesDisponibles: number,
 ) {
+  let totalRancons = 0;
   for (const combattant of combattants) {
     const suivi = bataille.participants[combattant.id];
     if (suivi.blessureResolue) continue;
@@ -3150,6 +3495,63 @@ function validerBlessures(
         const blessure = blessureHeroSure(jet);
         if (!blessure)
           return `${combattant.nom} : le D66 doit avoir deux chiffres compris entre 1 et 6.`;
+        if (blessure.id === 'capture') {
+          const resolution = lireResolutionBlessure(
+            suivi.blessureNote,
+            suivi.resolutionBlessure,
+          );
+          if (
+            !['rancon', 'echange', 'captif', 'perdu'].includes(
+              resolution.decision ?? '',
+            )
+          ) {
+            return `${combattant.nom} : choisissez l’issue de la capture.`;
+          }
+          if (resolution.decision === 'rancon') {
+            if (
+              resolution.montant === null ||
+              resolution.montant === undefined ||
+              !Number.isSafeInteger(resolution.montant) ||
+              resolution.montant < 0
+            ) {
+              return `${combattant.nom} : saisissez le montant de la rançon.`;
+            }
+            totalRancons += resolution.montant;
+            if (totalRancons > couronnesDisponibles) {
+              return 'Le total des rançons dépasse les couronnes disponibles.';
+            }
+          }
+          continue;
+        }
+        if (blessure.id === 'arenes') {
+          const resolution = lireResolutionBlessure(
+            suivi.blessureNote,
+            suivi.resolutionBlessure,
+          );
+          if (!['victoire', 'defaite'].includes(resolution.decision ?? '')) {
+            return `${combattant.nom} : choisissez le résultat du combat d’arène.`;
+          }
+          if (resolution.decision === 'defaite') {
+            if (
+              resolution.jetSecondaire === null ||
+              !Number.isInteger(resolution.jetSecondaire) ||
+              resolution.jetSecondaire < 11 ||
+              resolution.jetSecondaire > 35 ||
+              !blessureHeroSure(resolution.jetSecondaire)
+            ) {
+              return `${combattant.nom} : après la défaite dans l’arène, saisissez un D66 valide entre 11 et 35.`;
+            }
+            const blessureArene = trouverBlessureHero(resolution.jetSecondaire);
+            if (
+              resolution.jetSecondaire >= 16 &&
+              blessureArene.application !== 'automatique' &&
+              !resolution.note.trim()
+            ) {
+              return `${combattant.nom} : précisez la résolution finale de « ${blessureArene.titre} ».`;
+            }
+          }
+          continue;
+        }
         if (['bras', 'jambe-ecrasee', 'profonde'].includes(blessure.id)) {
           const resolution = lireResolutionBlessure(
             suivi.blessureNote,
@@ -3197,7 +3599,7 @@ function appliquerResultatHero(
   combattant: Combattant,
   resultatId: string,
   suivi: SuiviCombattantBataille,
-) {
+): Combattant | null {
   const statistiques = { ...combattant.statistiques };
   const blessures = [...combattant.blessures];
   const competences = [...combattant.competences];
@@ -3209,6 +3611,49 @@ function appliquerResultatHero(
   );
 
   if (resultatId === 'mort') return null;
+  if (resultatId === 'capture') {
+    if (resolution.decision === 'perdu') return null;
+    if (resolution.decision === 'captif') {
+      blessures.push(
+        `Capturé — reste détenu${resolution.note.trim() ? ` · ${resolution.note.trim()}` : ''}`,
+      );
+      return {
+        ...combattant,
+        blessures,
+        statut: 'Absent' as const,
+      };
+    }
+    return {
+      ...combattant,
+      statut: 'Prêt' as const,
+    };
+  }
+  if (resultatId === 'arenes') {
+    if (resolution.decision === 'victoire') {
+      return {
+        ...combattant,
+        statut: 'Prêt' as const,
+      };
+    }
+    const jetFinal = resolution.jetSecondaire ?? 0;
+    if (jetFinal >= 11 && jetFinal <= 15) return null;
+    const blessureFinale = blessureHeroSure(jetFinal);
+    if (!blessureFinale) return combattant;
+    const apresBlessure = appliquerResultatHero(combattant, blessureFinale.id, {
+      ...suivi,
+      blessureNote: resolution.note,
+      resolutionBlessure: undefined,
+    });
+    if (!apresBlessure) return null;
+    return {
+      ...apresBlessure,
+      equipementIds: [],
+      blessures: [
+        ...apresBlessure.blessures,
+        'Défaite dans les arènes — armes et armure perdues',
+      ],
+    };
+  }
   if (resultatId === 'jambe')
     statistiques.mouvement = Math.max(1, statistiques.mouvement - 1);
   if (resultatId === 'torse')

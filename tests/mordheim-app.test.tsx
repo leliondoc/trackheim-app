@@ -49,6 +49,63 @@ describe('navigation principale', () => {
     ).toBeInTheDocument();
   });
 
+  it('permet de choisir une faction sans appliquer de mauvaises règles', async () => {
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    await utilisateur.click(
+      await screen.findByRole('button', { name: /Les Cendres de Sigmar/i }),
+    );
+    await utilisateur.selectOptions(
+      screen.getByRole('combobox', { name: 'Faction' }),
+      'skavens-du-clan-eshin',
+    );
+
+    expect(
+      screen.getByText(/ses profils ne sont pas encore indexés/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Créer la bande/i }),
+    ).toBeDisabled();
+  });
+
+  it('sépare la construction de bande du démarrage de campagne', async () => {
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    await utilisateur.click(
+      await screen.findByRole('button', { name: /Les Cendres de Sigmar/i }),
+    );
+    await utilisateur.type(
+      screen.getByRole('textbox', { name: 'Nom de la nouvelle bande' }),
+      'Les Veilleurs',
+    );
+    await utilisateur.click(
+      screen.getByRole('button', { name: /Créer la bande/i }),
+    );
+
+    await utilisateur.click(
+      await screen.findByRole('link', { name: /^Campagne$/ }),
+    );
+    expect(
+      await screen.findByRole('heading', { name: 'Entrer dans la chronique' }),
+    ).toBeInTheDocument();
+
+    await utilisateur.type(
+      screen.getByRole('textbox', {
+        name: 'Nom de la campagne à démarrer',
+      }),
+      'Les Ruines de l’Est',
+    );
+    await utilisateur.click(
+      screen.getByRole('button', { name: /Démarrer la campagne/i }),
+    );
+
+    expect(
+      await screen.findByRole('heading', { name: 'Après la poussière' }),
+    ).toBeInTheDocument();
+  });
+
   it('synchronise un autre onglet sans alerte quand la copie locale est propre', async () => {
     render(<MordheimApp />);
 

@@ -237,37 +237,6 @@
   text-transform: uppercase;
 }
 
-.campaign-transfer-panel {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 10px 16px;
-  border-block: 1px solid rgb(108 79 46 / 35%);
-  background: rgb(255 248 227 / 38%);
-  padding: 12px;
-}
-
-.campaign-transfer-panel h3,
-.campaign-transfer-panel p {
-  margin: 0;
-}
-
-.campaign-transfer-panel h3 {
-  font-family: var(--font-fell), Georgia, serif;
-  font-size: 17px;
-}
-
-.campaign-transfer-panel p {
-  color: #6f5c46;
-  font-size: 12px;
-}
-
-.campaign-transfer-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-
 .campaign-import-error {
   grid-column: 1 / -1;
   color: #7b2922;
@@ -276,7 +245,7 @@
 
 .campaign-create-form {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 9px;
   border-top: 1px solid var(--frame-red);
   padding-top: 15px;
@@ -287,6 +256,54 @@
   margin: 0 0 2px;
   font-family: var(--font-fell), Georgia, serif;
   font-size: 18px;
+}
+
+.campaign-faction-field {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 6px;
+  color: #594733;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.campaign-faction-field [data-slot='native-select-wrapper'] {
+  width: 100%;
+}
+
+.campaign-faction-field [data-slot='native-select'] {
+  min-height: 44px;
+  border-color: #9b815d;
+  border-radius: 0;
+  background: rgb(255 248 227 / 66%);
+  font-size: 15px;
+}
+
+.campaign-faction-status {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 0;
+  background: rgb(129 49 41 / 8%);
+  color: #60443a;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.campaign-faction-status svg {
+  width: 18px;
+  flex: 0 0 18px;
+  margin-top: 1px;
+  color: var(--oxblood);
+}
+
+.campaign-faction-status a {
+  color: var(--oxblood);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 @media (max-width: 1080px) {
@@ -432,9 +449,6 @@
   }
 
   .campaign-create-form {
-    grid-template-columns: 1fr;
-  }
-  .campaign-transfer-panel {
     grid-template-columns: 1fr;
   }
   .campaign-create-form h3 {

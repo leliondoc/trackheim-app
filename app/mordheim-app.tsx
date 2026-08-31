@@ -400,9 +400,9 @@ export function MordheimApp() {
     setIdCampagne(id);
   }
 
-  function creerCampagne(nomCampagne: string, nomBande: string) {
+  function creerBande(nomBande: string) {
     const id = `campagne-${Date.now().toString(36)}-${crypto.randomUUID().slice(0, 8)}`;
-    const nouvelle = creerEtatCampagne(nomCampagne, nomBande);
+    const nouvelle = creerEtatCampagne(nomBande);
     const copie = ecrireCopieLocale(window.localStorage, id, nouvelle, {
       auteur: ID_SESSION,
       versionAttendue: 0,
@@ -684,6 +684,8 @@ export function MordheimApp() {
                   <CampaignView
                     campagne={campagne}
                     onCampagneChange={setCampagne}
+                    onExport={exporterCampagne}
+                    onImport={importerCampagne}
                   />
                 )}
                 {vue === 'library' && (
@@ -730,9 +732,7 @@ export function MordheimApp() {
         <CampaignManagerDialog
           campagneCourante={campagne}
           idCourant={idCampagne}
-          onCreate={creerCampagne}
-          onExport={exporterCampagne}
-          onImport={importerCampagne}
+          onCreate={creerBande}
           onOpenChange={setGestionCampagnesOuverte}
           onSelect={choisirCampagne}
           open
@@ -751,22 +751,23 @@ function CampaignManagerDialog({
   onOpenChange,
   onSelect,
   onCreate,
-  onExport,
-  onImport,
 }: {
   campagneCourante: EtatCampagne;
   idCourant: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSelect: (id: string) => void;
-  onCreate: (nomCampagne: string, nomBande: string) => void;
-  onExport: () => void;
-  onImport: (texte: string) => void;
+  onCreate: (nomBande: string) => void;
 }) {
-  const [nomCampagne, setNomCampagne] = useState('');
   const [nomBande, setNomBande] = useState('');
-  const [erreurImport, setErreurImport] = useState<string | null>(null);
-  const fichierImport = useRef<HTMLInputElement>(null);
+  const [factionSelectionnee, setFactionSelectionnee] = useState(
+    'mercenaires-reiklanders',
+  );
+  const bandeSelectionnee = bandesBibliotheque.find(
+    (bande) => bande.slug === factionSelectionnee,
+  );
+  const factionPriseEnCharge =
+    factionSelectionnee === 'mercenaires-reiklanders';
 
   const campagnes = useMemo(() => {
     const locales = listerCopiesLocales(window.localStorage);
@@ -774,6 +775,7 @@ function CampaignManagerDialog({
       id: idCourant,
       nomCampagne: campagneCourante.nomCampagne,
       nomBande: campagneCourante.nomBande,
+      campagneActive: campagneCourante.campagneActive !== false,
       revision: campagneCourante.revision,
       miseAJour: null,
     };
@@ -788,46 +790,28 @@ function CampaignManagerDialog({
   }, [
     campagneCourante.nomBande,
     campagneCourante.nomCampagne,
+    campagneCourante.campagneActive,
     campagneCourante.revision,
     idCourant,
   ]);
 
   function creer() {
-    if (!nomCampagne.trim() || !nomBande.trim()) return;
-    onCreate(nomCampagne.trim(), nomBande.trim());
-    setNomCampagne('');
-    setNomBande('');
-  }
-
-  async function lireFichierImporte(fichier: File | undefined) {
-    if (!fichier) return;
-    setErreurImport(null);
-    try {
-      if (fichier.size > TAILLE_MAX_PAYLOAD_CAMPAGNE + 4096) {
-        throw new Error('Le fichier dépasse la limite de 512 Ko.');
-      }
-      onImport(await fichier.text());
-    } catch (erreur) {
-      setErreurImport(
-        erreur instanceof Error
-          ? erreur.message
-          : 'La sauvegarde JSON n’a pas pu être importée.',
-      );
-    } finally {
-      if (fichierImport.current) fichierImport.current.value = '';
+    if (!factionPriseEnCharge || !nomBande.trim()) {
+      return;
     }
+    onCreate(nomBande.trim());
+    setNomBande('');
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="campaign-manager-dialog sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle>Bandes et campagnes Trackheim</DialogTitle>
+          <DialogTitle>Mes bandes</DialogTitle>
           <DialogDescription>
-            Changez de bande en ouvrant son registre, ou créez-en un nouveau.
-            Chaque registre est sauvegardé uniquement dans ce navigateur.
-            Exportez-le en JSON pour l’archiver ou le transférer sur un autre
-            appareil.
+            Construisez plusieurs bandes et ouvrez celle que vous souhaitez
+            utiliser. L’inscription dans une campagne se fait ensuite depuis
+            l’espace Campagne.
           </DialogDescription>
         </DialogHeader>
 
@@ -841,41 +825,16 @@ function CampaignManagerDialog({
               type="button"
             >
               <span>
-                <strong>{resume.nomCampagne}</strong>
-                <small>{resume.nomBande}</small>
+                <strong>{resume.nomBande}</strong>
+                <small>
+                  {resume.campagneActive
+                    ? `Campagne · ${resume.nomCampagne}`
+                    : 'Hors campagne'}
+                </small>
               </span>
               <b>{resume.id === idCourant ? 'Active' : 'Ouvrir'}</b>
             </button>
           ))}
-        </div>
-
-        <div className="campaign-transfer-panel">
-          <div>
-            <h3>Sauvegarde portable</h3>
-            <p>Le fichier JSON contient toute la campagne active.</p>
-          </div>
-          <div className="campaign-transfer-actions">
-            <Button onClick={onExport} type="button" variant="outline">
-              <Download /> Exporter
-            </Button>
-            <label className={buttonVariants({ variant: 'outline' })}>
-              <Upload /> Importer
-              <input
-                accept="application/json,.json"
-                className="sr-only"
-                onChange={(event) =>
-                  void lireFichierImporte(event.target.files?.[0])
-                }
-                ref={fichierImport}
-                type="file"
-              />
-            </label>
-          </div>
-          {erreurImport && (
-            <p className="campaign-import-error" role="alert">
-              {erreurImport}
-            </p>
-          )}
         </div>
 
         <form
@@ -886,13 +845,48 @@ function CampaignManagerDialog({
           }}
         >
           <h3>Nouvelle bande</h3>
-          <Input
-            aria-label="Nom de la nouvelle campagne"
-            maxLength={160}
-            placeholder="Nom de la campagne"
-            value={nomCampagne}
-            onChange={(event) => setNomCampagne(event.target.value)}
-          />
+          <label className="campaign-faction-field">
+            <span>Faction</span>
+            <NativeSelect
+              aria-describedby={
+                factionPriseEnCharge ? undefined : 'campaign-faction-status'
+              }
+              aria-invalid={!factionPriseEnCharge}
+              value={factionSelectionnee}
+              onChange={(event) => setFactionSelectionnee(event.target.value)}
+            >
+              {bandesBibliotheque.map((bande) => (
+                <NativeSelectOption key={bande.slug} value={bande.slug}>
+                  {bande.nom} · grade {bande.grade}
+                  {bande.slug === 'mercenaires-reiklanders'
+                    ? ' · constructeur disponible'
+                    : ''}
+                </NativeSelectOption>
+              ))}
+            </NativeSelect>
+          </label>
+          {!factionPriseEnCharge && bandeSelectionnee && (
+            <output
+              className="campaign-faction-status"
+              id="campaign-faction-status"
+            >
+              <CircleAlert aria-hidden="true" />
+              <span>
+                <strong>{bandeSelectionnee.nom}</strong> est consultable dans la
+                bibliothèque, mais ses profils ne sont pas encore indexés. La
+                création reste bloquée pour éviter d’appliquer les règles des
+                Reiklanders par erreur.{' '}
+                <a
+                  href={`${SOURCE_GLM}/bandes/${bandeSelectionnee.slug}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Consulter sa fiche
+                  <IndicationNouvelOnglet />
+                </a>
+              </span>
+            </output>
+          )}
           <Input
             aria-label="Nom de la nouvelle bande"
             maxLength={160}
@@ -901,10 +895,10 @@ function CampaignManagerDialog({
             onChange={(event) => setNomBande(event.target.value)}
           />
           <Button
-            disabled={!nomCampagne.trim() || !nomBande.trim()}
+            disabled={!factionPriseEnCharge || !nomBande.trim()}
             type="submit"
           >
-            <Plus /> Créer la campagne
+            <Plus /> Créer la bande
           </Button>
         </form>
       </DialogContent>
@@ -2088,11 +2082,48 @@ function RecruitDialog({
 function CampaignView({
   campagne,
   onCampagneChange,
+  onExport,
+  onImport,
 }: {
   campagne: EtatCampagne;
   onCampagneChange: (campagne: EtatCampagne) => void;
+  onExport: () => void;
+  onImport: (texte: string) => void;
 }) {
   const synthese = calculerSynthese(campagne);
+  const [nomNouvelleCampagne, setNomNouvelleCampagne] = useState('');
+  const [erreurImport, setErreurImport] = useState<string | null>(null);
+  const fichierImport = useRef<HTMLInputElement>(null);
+
+  function demarrerCampagne() {
+    const nom = nomNouvelleCampagne.trim();
+    if (!nom) return;
+    onCampagneChange({
+      ...campagne,
+      campagneActive: true,
+      nomCampagne: nom,
+    });
+    setNomNouvelleCampagne('');
+  }
+
+  async function rejoindreCampagne(fichier: File | undefined) {
+    if (!fichier) return;
+    setErreurImport(null);
+    try {
+      if (fichier.size > TAILLE_MAX_PAYLOAD_CAMPAGNE + 4096) {
+        throw new Error('Le fichier dépasse la limite de 512 Ko.');
+      }
+      onImport(await fichier.text());
+    } catch (erreur) {
+      setErreurImport(
+        erreur instanceof Error
+          ? erreur.message
+          : 'La campagne n’a pas pu être importée.',
+      );
+    } finally {
+      if (fichierImport.current) fichierImport.current.value = '';
+    }
+  }
 
   function modifierRessource(
     cle: 'couronnes' | 'fragments',
@@ -2104,12 +2135,89 @@ function CampaignView({
     });
   }
 
+  if (campagne.campagneActive === false) {
+    return (
+      <section className="product-view">
+        <PageHeader
+          eyebrow="Mode campagne"
+          title="Entrer dans la chronique"
+          description="Votre bande reste indépendante tant que vous ne l’inscrivez pas dans une campagne."
+        />
+
+        <div className="campaign-onboarding-grid">
+          <section className="campaign-mode-card primary-mode">
+            <span className="campaign-mode-icon" aria-hidden="true">
+              <Swords />
+            </span>
+            <p className="eyebrow">Nouvelle campagne</p>
+            <h2>Démarrer avec {campagne.nomBande}</h2>
+            <p>
+              La bande, son équipement et son trésor deviennent le point de
+              départ de la nouvelle chronique.
+            </p>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                demarrerCampagne();
+              }}
+            >
+              <Input
+                aria-label="Nom de la campagne à démarrer"
+                maxLength={160}
+                placeholder="Nom de la campagne"
+                value={nomNouvelleCampagne}
+                onChange={(event) => setNomNouvelleCampagne(event.target.value)}
+              />
+              <Button disabled={!nomNouvelleCampagne.trim()} type="submit">
+                <Swords aria-hidden="true" /> Démarrer la campagne
+              </Button>
+            </form>
+          </section>
+
+          <section className="campaign-mode-card">
+            <span className="campaign-mode-icon" aria-hidden="true">
+              <Upload />
+            </span>
+            <p className="eyebrow">Campagne existante</p>
+            <h2>Rejoindre depuis un registre</h2>
+            <p>
+              Importez le fichier JSON partagé par l’organisateur. Il sera
+              conservé comme un registre distinct sur cet appareil.
+            </p>
+            <label className={buttonVariants({ variant: 'outline' })}>
+              <Upload aria-hidden="true" /> Choisir un fichier JSON
+              <input
+                accept="application/json,.json"
+                className="sr-only"
+                onChange={(event) =>
+                  void rejoindreCampagne(event.target.files?.[0])
+                }
+                ref={fichierImport}
+                type="file"
+              />
+            </label>
+            {erreurImport && (
+              <p className="campaign-import-error" role="alert">
+                {erreurImport}
+              </p>
+            )}
+          </section>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="product-view">
       <PageHeader
-        eyebrow="Suivi de campagne"
+        eyebrow={`Campagne · ${campagne.nomCampagne}`}
         title="Après la poussière"
         description="Faites les trois premières étapes devant votre adversaire, puis reprenez les achats quand vous le souhaitez."
+        action={
+          <Button onClick={onExport} type="button" variant="outline">
+            <Download aria-hidden="true" /> Exporter la campagne
+          </Button>
+        }
       />
 
       <RulesetProvenance
@@ -2438,7 +2546,7 @@ function LibraryView({
                 <span className={`grade grade-${bande.grade}`}>
                   Grade {bande.grade}
                 </span>
-                <Shield aria-hidden="true" />
+                <Users aria-hidden="true" />
               </span>
               <h3>{bande.nom}</h3>
               <p>{texteGrade(bande.grade)}</p>
@@ -3047,16 +3155,14 @@ function coutProfil(profil: ProfilRecrue, campagne: EtatCampagne) {
   return campagne.homebrew.coutsRecrues[profil.id] ?? profil.cout;
 }
 
-/** Un registre neuf commence avec les 500 CO de création et aucune recrue imposée. */
-function creerEtatCampagne(
-  nomCampagne: string,
-  nomBande: string,
-): EtatCampagne {
+/** Une bande neuve commence avec 500 CO et n’entre en campagne qu’ensuite. */
+function creerEtatCampagne(nomBande: string): EtatCampagne {
   return {
     ...etatInitial,
     revision: 0,
-    nomCampagne,
+    nomCampagne: 'Hors campagne',
     nomBande,
+    campagneActive: false,
     couronnes: 500,
     fragments: 0,
     numeroBataille: 0,
@@ -3067,7 +3173,7 @@ function creerEtatCampagne(
     parties: [],
     homebrew: {
       actifs: false,
-      nomSet: `Règles de ${nomCampagne}`.slice(0, 160),
+      nomSet: `Règles de ${nomBande}`.slice(0, 160),
       description: 'Ajustements appliqués au-dessus du socle officiel.',
       coutsRecrues: {},
       coutsEquipements: {},
@@ -3125,6 +3231,7 @@ function normaliserCampagne(campagne: EtatCampagne): EtatCampagne {
     ...campagne,
     version: 3,
     revision: campagne.revision ?? 0,
+    campagneActive: campagne.campagneActive ?? true,
     rulesetId: campagne.rulesetId ?? ID_RULESET,
     combattants,
     inventaire: campagne.inventaire ?? {},

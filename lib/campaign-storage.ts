@@ -24,6 +24,7 @@ export type ResumeCampagneLocale = {
   id: string;
   nomCampagne: string;
   nomBande: string;
+  campagneActive: boolean;
   revision: number;
   miseAJour: string | null;
 };
@@ -184,6 +185,7 @@ export function listerCopiesLocales(stockage: Storage): ResumeCampagneLocale[] {
         id,
         nomCampagne: lecture.copie.campagne.nomCampagne,
         nomBande: lecture.copie.campagne.nomBande,
+        campagneActive: lecture.copie.campagne.campagneActive !== false,
         revision: lecture.copie.campagne.revision,
         miseAJour: lecture.copie.date || null,
       });

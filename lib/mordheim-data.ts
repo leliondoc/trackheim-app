@@ -83,6 +83,8 @@ export type SuiviCombattantBataille = {
     version: 1;
     jetSecondaire: number | null;
     note: string;
+    decision?: string;
+    montant?: number | null;
   };
   ennemisHorsCombat: number;
   experienceScenario: number;
@@ -180,6 +182,8 @@ export type EtatCampagne = {
   rulesetId: string;
   nomCampagne: string;
   nomBande: string;
+  /** Absent sur les anciennes sauvegardes, qui sont considérées en campagne. */
+  campagneActive?: boolean;
   factionId: 'mercenaires-reiklanders';
   grade: '1a';
   couronnes: number;
@@ -569,6 +573,7 @@ export const etatInitial: EtatCampagne = {
   rulesetId: 'mordheim-1999-rules-review-2005-reiklanders',
   nomCampagne: 'Les Cendres de Sigmar',
   nomBande: 'Les Corbeaux de Reikland',
+  campagneActive: true,
   factionId: 'mercenaires-reiklanders',
   grade: '1a',
   couronnes: 72,

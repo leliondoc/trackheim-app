@@ -61,6 +61,12 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
   if (!estTexte(valeur.nomBande, 1, 160)) {
     return echec('Le nom de la bande est invalide.');
   }
+  if (
+    valeur.campagneActive !== undefined &&
+    typeof valeur.campagneActive !== 'boolean'
+  ) {
+    return echec('L’état du mode campagne est invalide.');
+  }
   if (valeur.factionId !== 'mercenaires-reiklanders') {
     return echec("La faction de la campagne v3 n'est pas prise en charge.");
   }
@@ -340,7 +346,12 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
         suivi.resolutionBlessure.version !== 1 ||
         (suivi.resolutionBlessure.jetSecondaire !== null &&
           !estEntierNaturel(suivi.resolutionBlessure.jetSecondaire)) ||
-        !estTexte(suivi.resolutionBlessure.note, 0, 10_000)
+        !estTexte(suivi.resolutionBlessure.note, 0, 10_000) ||
+        (suivi.resolutionBlessure.decision !== undefined &&
+          !estTexte(suivi.resolutionBlessure.decision, 1, 80)) ||
+        (suivi.resolutionBlessure.montant !== undefined &&
+          suivi.resolutionBlessure.montant !== null &&
+          !estEntierNaturel(suivi.resolutionBlessure.montant))
       ) {
         return `${chemin}.resolutionBlessure est invalide.`;
       }

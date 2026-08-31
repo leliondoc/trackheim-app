@@ -238,6 +238,108 @@
   background: var(--oxblood);
 }
 
+/* Le tracker reste dense : il doit pouvoir être utilisé entre deux jets de dés. */
+.battle-tracker-card [data-slot='card-title'] {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.battle-tracker-card [data-slot='card-title'] svg {
+  width: 20px;
+  color: var(--oxblood);
+}
+
+.battle-tracker-list {
+  display: grid;
+  gap: 6px;
+}
+
+.battle-tracker-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) 170px 150px;
+  align-items: end;
+  gap: 12px;
+  background: rgb(255 248 227 / 38%);
+  padding: 9px 11px;
+}
+
+.battle-tracker-row > div:first-child {
+  display: grid;
+  gap: 2px;
+  align-self: center;
+}
+
+.battle-tracker-row small,
+.battle-tracker-counter legend {
+  color: #76634d;
+  font-size: 12px;
+}
+
+.battle-tracker-counter {
+  display: grid;
+  gap: 4px;
+}
+
+.battle-tracker-counter > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.battle-tracker-counter output {
+  min-width: 24px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.injury-decision-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  background: rgb(112 69 39 / 8%);
+  padding: 14px;
+}
+
+.injury-decision-panel > textarea,
+.injury-rule-reminder,
+.injury-final-outcome {
+  grid-column: 1 / -1;
+}
+
+.injury-amount-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.injury-rule-reminder,
+.injury-final-outcome {
+  margin: 0;
+  color: #674f3a;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.injury-final-outcome {
+  background: rgb(255 248 227 / 62%);
+  padding: 10px 12px;
+}
+
+@media (max-width: 780px) {
+  .battle-tracker-row,
+  .injury-decision-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .injury-decision-panel > textarea,
+  .injury-rule-reminder,
+  .injury-final-outcome {
+    grid-column: auto;
+  }
+}
+
 .inventory-summary {
   display: grid;
   grid-template-columns: 1fr auto;

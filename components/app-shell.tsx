@@ -147,13 +147,21 @@ export function Topbar({
   return (
     <header className="topbar">
       <div>
-        <p className="eyebrow">Campagne active</p>
+        <p className="eyebrow">
+          {campagne.campagneActive === false
+            ? 'Bande active'
+            : 'Campagne active'}
+        </p>
         <button
           className="campaign-switcher"
           onClick={onCampagnes}
           type="button"
         >
-          <span>{campagne.nomCampagne}</span>
+          <span>
+            {campagne.campagneActive === false
+              ? campagne.nomBande
+              : campagne.nomCampagne}
+          </span>
           <ChevronDown aria-hidden="true" />
         </button>
       </div>
