@@ -459,6 +459,10 @@ export function MordheimApp() {
               </>
             )}
           </div>
+          <footer className="site-disclaimer">
+            Trackheim est un projet fan non officiel, sans affiliation ni
+            approbation de Games Workshop Limited.
+          </footer>
         </section>
       </div>
 
@@ -560,6 +564,7 @@ function Sidebar({
       <div className="sidebar-source">
         <Sparkles aria-hidden="true" />
         <div>
+          <strong className="unofficial-label">Projet fan non officiel</strong>
           <p>Données indexées depuis la Grande Librairie de Mordheim.</p>
           <a
             className="raven-credit"
@@ -2184,27 +2189,45 @@ function SettingsView({
 
       <RulesetProvenance rulesetId={campagne.rulesetId} variant="detailed" />
 
-      <p className="asset-license-note">
-        Le corbeau actuellement testé dans le logo est attribué à Brett Croft
-        via{' '}
-        <a
-          href="https://freepngimg.com/png/108894-pic-bird-raven-download-hq"
-          target="_blank"
-          rel="noreferrer"
-        >
-          FreePNGimg
-        </a>{' '}
-        sous{' '}
-        <a
-          href="https://creativecommons.org/licenses/by-nc/4.0/"
-          target="_blank"
-          rel="noreferrer license"
-        >
-          CC BY-NC 4.0
-        </a>
-        . Sa teinte a été adaptée pour le fond sombre ; ce test n’est pas validé
-        pour un usage commercial.
-      </p>
+      <section className="project-legal-notice" aria-labelledby="legal-title">
+        <div className="project-legal-heading">
+          <Shield aria-hidden="true" />
+          <div>
+            <p className="eyebrow">Mentions et crédits</p>
+            <h2 id="legal-title">Projet fan non officiel</h2>
+          </div>
+        </div>
+        <p>
+          Trackheim est une application communautaire gratuite, sans publicité,
+          sans affiliation ni approbation de Games Workshop Limited. Mordheim et
+          les noms associés restent la propriété de leurs titulaires respectifs.
+        </p>
+        <p>
+          Le code propre à Trackheim est distribué sous licence MIT. Cette
+          licence ne s’étend ni aux marques, ni aux règles et données de jeu, ni
+          aux ressources appartenant à des tiers.
+        </p>
+        <p className="asset-license-note">
+          Corbeau par Brett Croft via{' '}
+          <a
+            href="https://freepngimg.com/png/108894-pic-bird-raven-download-hq"
+            target="_blank"
+            rel="noreferrer"
+          >
+            FreePNGimg
+          </a>{' '}
+          sous{' '}
+          <a
+            href="https://creativecommons.org/licenses/by-nc/4.0/"
+            target="_blank"
+            rel="noreferrer license"
+          >
+            CC BY-NC 4.0
+          </a>
+          , avec teinte adaptée. Cette ressource ne permet pas un usage
+          commercial.
+        </p>
+      </section>
     </section>
   );
 }

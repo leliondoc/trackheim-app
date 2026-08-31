@@ -308,6 +308,15 @@ button {
   margin: 0;
 }
 
+.unofficial-label {
+  display: block;
+  margin-bottom: 3px;
+  color: #c5a776;
+  font-size: 0.92em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 /* Barre supérieure et zone de travail */
 .workspace {
   min-width: 0;
@@ -3748,8 +3757,48 @@ select,
   padding-block: 3px;
 }
 
+.project-legal-notice {
+  margin-top: 24px;
+  border: 1px solid #8f7655;
+  border-top: 3px double #725839;
+  background: rgb(245 231 198 / 72%);
+  box-shadow: 4px 5px 0 rgb(67 44 24 / 10%);
+  color: #584734;
+  padding: 18px 20px;
+}
+
+.project-legal-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.project-legal-heading > svg {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  color: #71372f;
+}
+
+.project-legal-heading .eyebrow {
+  margin: 0 0 2px;
+}
+
+.project-legal-heading h2 {
+  margin: 0;
+  color: #35291e;
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 22px;
+}
+
+.project-legal-notice > p {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
 .asset-license-note {
-  margin: 18px 0 0;
   color: #6b5945;
   font-size: 12px;
   line-height: 1.55;
@@ -3759,6 +3808,22 @@ select,
   color: #70342d;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+.site-disclaimer {
+  border-top: 1px solid rgb(112 85 54 / 28%);
+  color: #6d5c49;
+  padding: 16px 28px 20px;
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+@media (max-width: 780px) {
+  .site-disclaimer {
+    padding: 14px 18px 82px;
+    font-size: 10px;
+  }
 }
 
 .recruit-identity-grid {
