@@ -12,6 +12,7 @@ import {
   Minus,
   PackageOpen,
   Plus,
+  Repeat2,
   Search,
   Settings2,
   Shield,
@@ -20,6 +21,7 @@ import {
   Swords,
   Trash2,
   Upload,
+  UserPlus,
   Users,
 } from 'lucide-react';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -177,6 +179,7 @@ export function MordheimApp() {
   const idCampagneCourant = useRef(idCampagne);
   const campagneCourante = useRef(campagne);
   const versionStockage = useRef(0);
+  const derniereCampagneSauvegardee = useRef('');
   const contenuPrincipal = useRef<HTMLElement>(null);
   const navigationInitialisee = useRef(false);
 
@@ -266,6 +269,7 @@ export function MordheimApp() {
       const campagneChargee = normaliserCampagne(
         lecture.statut === 'valide' ? lecture.copie.campagne : etatInitial,
       );
+      derniereCampagneSauvegardee.current = JSON.stringify(campagneChargee);
       setCampagne(campagneChargee);
 
       try {
@@ -298,6 +302,11 @@ export function MordheimApp() {
   useEffect(() => {
     if (!hydratationTerminee || sauvegardeCorrompue || conflitSauvegarde)
       return;
+    const campagneSerialisee = JSON.stringify(campagne);
+    if (campagneSerialisee === derniereCampagneSauvegardee.current) {
+      setEtatSauvegarde('sauvegarde-ok');
+      return;
+    }
     const minuteur = window.setTimeout(() => {
       setEtatSauvegarde('sauvegarde');
       setErreurSauvegarde(null);
@@ -309,6 +318,7 @@ export function MordheimApp() {
           { auteur: ID_SESSION, versionAttendue: versionStockage.current },
         );
         versionStockage.current = copie.versionStockage;
+        derniereCampagneSauvegardee.current = campagneSerialisee;
         setEtatSauvegarde('sauvegarde-ok');
       } catch (erreur) {
         if (erreur instanceof ConflitSauvegardeLocale) {
@@ -342,17 +352,40 @@ export function MordheimApp() {
         lecture.copie.auteur !== ID_SESSION &&
         lecture.copie.versionStockage !== versionStockage.current
       ) {
+        const campagneDistante = normaliserCampagne(lecture.copie.campagne);
+        const distanteSerialisee = JSON.stringify(campagneDistante);
+        const localeSerialisee = JSON.stringify(campagneCourante.current);
+
+        if (distanteSerialisee === localeSerialisee) {
+          versionStockage.current = lecture.copie.versionStockage;
+          derniereCampagneSauvegardee.current = distanteSerialisee;
+          setEtatSauvegarde('sauvegarde-ok');
+          return;
+        }
+
+        if (
+          localeSerialisee === derniereCampagneSauvegardee.current &&
+          !conflitSauvegarde
+        ) {
+          versionStockage.current = lecture.copie.versionStockage;
+          derniereCampagneSauvegardee.current = distanteSerialisee;
+          setCampagne(campagneDistante);
+          setErreurSauvegarde(null);
+          setEtatSauvegarde('sauvegarde-ok');
+          return;
+        }
+
         setConflitSauvegarde(true);
         setEtatSauvegarde('erreur');
         setErreurSauvegarde(
-          'Cette campagne a changé dans un autre onglet. Choisissez la version à conserver.',
+          'Cette campagne a changé dans un autre onglet pendant vos modifications. Choisissez la version à conserver.',
         );
       }
     }
     window.addEventListener('storage', detecterModificationExterne);
     return () =>
       window.removeEventListener('storage', detecterModificationExterne);
-  }, [idCampagne]);
+  }, [conflitSauvegarde, idCampagne]);
 
   function choisirCampagne(id: string) {
     if (id === idCampagne) {
@@ -375,6 +408,7 @@ export function MordheimApp() {
       versionAttendue: 0,
     });
     versionStockage.current = copie.versionStockage;
+    derniereCampagneSauvegardee.current = JSON.stringify(nouvelle);
     memoriserCampagneActive(window.localStorage, id);
     setHydratationTerminee(false);
     setEtatSauvegarde('chargement');
@@ -398,6 +432,7 @@ export function MordheimApp() {
       versionAttendue: 0,
     });
     versionStockage.current = copie.versionStockage;
+    derniereCampagneSauvegardee.current = JSON.stringify(importee);
     memoriserCampagneActive(window.localStorage, id);
     setHydratationTerminee(false);
     setEtatSauvegarde('chargement');
@@ -416,6 +451,7 @@ export function MordheimApp() {
         { auteur: ID_SESSION, versionAttendue: versionStockage.current },
       );
       versionStockage.current = copie.versionStockage;
+      derniereCampagneSauvegardee.current = JSON.stringify(campagne);
     } catch {
       // Le statut de sauvegarde courant explique déjà l’échec à l’utilisateur.
     }
@@ -437,6 +473,7 @@ export function MordheimApp() {
       { auteur: ID_SESSION, forcer: true },
     );
     versionStockage.current = copie.versionStockage;
+    derniereCampagneSauvegardee.current = JSON.stringify(etatInitial);
     setCampagne(etatInitial);
     setSauvegardeCorrompue(null);
     setErreurSauvegarde(null);
@@ -447,7 +484,9 @@ export function MordheimApp() {
     const lecture = lireCopieLocale(window.localStorage, idCampagne);
     if (lecture.statut !== 'valide') return;
     versionStockage.current = lecture.copie.versionStockage;
-    setCampagne(normaliserCampagne(lecture.copie.campagne));
+    const campagneDistante = normaliserCampagne(lecture.copie.campagne);
+    derniereCampagneSauvegardee.current = JSON.stringify(campagneDistante);
+    setCampagne(campagneDistante);
     setConflitSauvegarde(false);
     setErreurSauvegarde(null);
     setEtatSauvegarde('sauvegarde-ok');
@@ -459,6 +498,7 @@ export function MordheimApp() {
       forcer: true,
     });
     versionStockage.current = copie.versionStockage;
+    derniereCampagneSauvegardee.current = JSON.stringify(campagne);
     setConflitSauvegarde(false);
     setErreurSauvegarde(null);
     setEtatSauvegarde('sauvegarde-ok');
@@ -1141,8 +1181,11 @@ function OverviewView({
               <p className="eyebrow">Effectif</p>
               <h2>Combattants</h2>
             </div>
-            <Button variant="outline" onClick={() => onVueChange('warband')}>
-              Gérer la bande
+            <Button
+              className="primary-action"
+              onClick={() => onVueChange('warband')}
+            >
+              <Users aria-hidden="true" /> Gérer la bande
             </Button>
           </div>
           <div className="fighter-list">
@@ -1417,6 +1460,7 @@ function AfterBattleCard({
         onClick={onOpenCampaign}
         variant="secondary"
       >
+        <Swords aria-hidden="true" />
         {campagne.batailleEnCours
           ? 'Continuer la séquence'
           : 'Enregistrer une bataille'}
@@ -1490,7 +1534,7 @@ function WarbandView({
               onClick={onChangerBande}
               size="lg"
             >
-              <Users aria-hidden="true" /> Changer de bande
+              <Repeat2 aria-hidden="true" /> Changer de bande
             </Button>
             <RecruitDialog
               campagne={campagne}
@@ -1832,7 +1876,7 @@ function RecruitDialog({
   return (
     <Dialog open={ouvert} onOpenChange={changerOuverture}>
       <DialogTrigger render={<Button className="primary-action" size="lg" />}>
-        <Plus data-icon="inline-start" />
+        <UserPlus data-icon="inline-start" />
         Ajouter un combattant
       </DialogTrigger>
       <DialogContent className="recruit-dialog sm:max-w-2xl">
@@ -2594,6 +2638,7 @@ function HomebrewView({
               mettreAJourHomebrew({ coutsRecrues: {}, coutsEquipements: {} })
             }
           >
+            <Trash2 aria-hidden="true" />
             Retirer les overrides de prix
           </Button>
         }

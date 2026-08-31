@@ -169,14 +169,12 @@
 .band-details-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-block: 1px solid var(--frame-red);
+  gap: clamp(18px, 4vw, 38px);
+  padding-block: 8px;
 }
 .band-details-grid > div {
   min-width: 0;
-  padding: 16px;
-}
-.band-details-grid > div + div {
-  border-left: 1px solid rgb(79 57 34 / 38%);
+  padding: 8px 0;
 }
 .band-details-grid dt {
   color: #78634a;
@@ -195,9 +193,8 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 12px;
-  border: 1px solid #8c7350;
-  background: rgb(255 248 226 / 38%);
-  padding: 16px;
+  background: rgb(118 43 37 / 5%);
+  padding: 16px 18px;
 }
 .band-support-state > svg {
   width: 22px;

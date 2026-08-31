@@ -211,10 +211,7 @@ function VersionCompacte({
 
   return (
     <section
-      className={cn(
-        'rounded-xl border bg-card p-3 text-sm text-card-foreground shadow-sm',
-        className,
-      )}
+      className={cn('bg-card/55 p-3 text-sm text-card-foreground', className)}
       aria-label={`Provenance du ruleset ${manifeste.nom}`}
       data-ruleset-id={manifeste.id}
     >
@@ -248,7 +245,7 @@ function VersionCompacte({
         ))}
       </div>
 
-      <p className="mt-3 border-t pt-2 text-xs text-muted-foreground">
+      <p className="mt-3 pt-2 text-xs text-muted-foreground">
         <span className="font-medium text-foreground">Résolution active :</span>{' '}
         succession magique —{' '}
         {libelleResolution(manifeste, 'succession-chef-lanceur-sort')} ; rapière
@@ -260,7 +257,7 @@ function VersionCompacte({
 
 function SourceDetaillee({ entree }: { entree: EntreeSource }) {
   return (
-    <li className="rounded-lg border bg-background/60 p-3">
+    <li className="bg-background/45 p-3">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
@@ -285,11 +282,11 @@ function SourceDetaillee({ entree }: { entree: EntreeSource }) {
 
 function ComparaisonPresets({ actifId }: { actifId: string }) {
   return (
-    <div className="overflow-x-auto rounded-lg border">
+    <div className="overflow-x-auto bg-muted/20">
       <div className="min-w-[42rem]">
         <div className="grid grid-cols-[minmax(9rem,1.1fr)_minmax(10rem,1fr)_minmax(10rem,1fr)] bg-muted/60 text-xs font-semibold">
           <div className="p-2.5">Point de règle</div>
-          <div className="border-l p-2.5">
+          <div className="p-2.5">
             Preset officiel
             {actifId === rulesetOfficiel.id ? (
               <Badge className="ml-2" variant="secondary">
@@ -297,7 +294,7 @@ function ComparaisonPresets({ actifId }: { actifId: string }) {
               </Badge>
             ) : null}
           </div>
-          <div className="border-l p-2.5">
+          <div className="p-2.5">
             GLM strict
             {actifId === rulesetGlmStrict.id ? (
               <Badge className="ml-2" variant="secondary">
@@ -309,13 +306,13 @@ function ComparaisonPresets({ actifId }: { actifId: string }) {
         {conflits.map((conflit) => (
           <div
             key={conflit.id}
-            className="grid grid-cols-[minmax(9rem,1.1fr)_minmax(10rem,1fr)_minmax(10rem,1fr)] border-t text-xs leading-relaxed"
+            className="grid grid-cols-[minmax(9rem,1.1fr)_minmax(10rem,1fr)_minmax(10rem,1fr)] text-xs leading-relaxed odd:bg-background/30"
           >
             <div className="p-2.5 font-medium">{conflit.titre}</div>
-            <div className="border-l p-2.5 text-muted-foreground">
+            <div className="p-2.5 text-muted-foreground">
               {libelleResolution(rulesetOfficiel, conflit.id)}
             </div>
-            <div className="border-l p-2.5 text-muted-foreground">
+            <div className="p-2.5 text-muted-foreground">
               {libelleResolution(rulesetGlmStrict, conflit.id)}
             </div>
           </div>
@@ -341,7 +338,7 @@ function VersionDetaillee({
       aria-label={`Provenance du ruleset ${manifeste.nom}`}
       data-ruleset-id={manifeste.id}
     >
-      <CardHeader className="border-b">
+      <CardHeader>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <CardTitle as="h3" className="flex items-center gap-2">
@@ -381,7 +378,7 @@ function VersionDetaillee({
         </section>
 
         <section
-          className="rounded-lg border border-dashed bg-muted/30 p-3"
+          className="bg-muted/30 p-3"
           aria-labelledby={`modules-${manifeste.id}`}
         >
           <div className="flex flex-wrap items-start justify-between gap-2">

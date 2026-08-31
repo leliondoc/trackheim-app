@@ -1,0 +1,122 @@
+/*
+ * Hiérarchie des surfaces
+ *
+ * Les contours complets sont réservés aux contrôles et aux cartes que l’on
+ * manipule. Les blocs structurels reposent sur l’espace, la matière et le
+ * contraste afin d’éviter l’effet « grille de cases ».
+ */
+
+:where(button:not(:disabled), [role='button']:not([aria-disabled='true'])) {
+  cursor: pointer;
+}
+
+:where(button:disabled, [role='button'][aria-disabled='true']) {
+  cursor: not-allowed;
+}
+
+:is(
+  .roster-panel,
+  .after-battle-card,
+  .management-panel,
+  .sequence-panel,
+  .price-panel,
+  .library-toolbar,
+  .rule-note,
+  .constructeur-bande-resume,
+  .custom-rules-panel,
+  .rule-set-card,
+  .profile-preview,
+  .campaign-ruleset-summary,
+  .project-legal-notice,
+  .settings-view [data-slot='card'],
+  .workflow-layout [data-slot='card']
+) {
+  border: 0;
+  box-shadow: none;
+}
+
+:is(
+  .roster-panel,
+  .after-battle-card,
+  .management-panel,
+  .sequence-panel,
+  .price-panel,
+  .custom-rules-panel,
+  .rule-set-card,
+  .profile-preview,
+  .campaign-ruleset-summary,
+  .settings-view [data-slot='card'],
+  .workflow-layout [data-slot='card']
+) {
+  background-color: rgb(248 237 211 / 46%);
+}
+
+:is(
+  .panel-header,
+  .fighter-row,
+  .management-row,
+  .campaign-step,
+  .price-row,
+  .custom-rule,
+  .profile-card-footer,
+  .library-card-actions,
+  [data-slot='card-header'],
+  [data-slot='card-footer'],
+  [data-slot='dialog-footer']
+) {
+  border-block: 0;
+}
+
+.fighter-list,
+.management-list,
+.campaign-sequence,
+.price-list,
+.custom-rules-list {
+  gap: 4px;
+}
+
+.ruleset-selector {
+  gap: 4px;
+}
+
+.ruleset-option {
+  border: 0;
+  background: rgb(248 235 204 / 48%);
+  box-shadow: none;
+}
+
+.ruleset-option:hover {
+  background: rgb(118 43 37 / 5%);
+}
+
+.ruleset-option.active {
+  border: 0;
+  background: rgb(118 43 37 / 8%);
+  box-shadow: none;
+}
+
+.project-legal-notice {
+  background: rgb(118 43 37 / 4%);
+}
+
+.settings-view [data-slot='card'],
+.campaign-ruleset-summary,
+.workflow-layout [data-slot='card'] {
+  background: rgb(249 238 211 / 50%);
+}
+
+.step-item.current {
+  border: 0;
+  background: rgb(118 43 37 / 8%);
+  box-shadow: none;
+}
+
+.sidebar-source {
+  border: 0;
+}
+
+@media (max-width: 700px) {
+  .band-details-grid > div + div {
+    border-top: 0;
+  }
+}
