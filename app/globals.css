@@ -2702,9 +2702,31 @@ body {
   font-family: var(--font-fell), serif;
 }
 
-/* Le motif personnel reste cantonné à la barre supérieure. */
+/* La gravure du squelette revient en filigrane dans l’angle du registre. */
 .workspace {
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
+}
+
+.workspace::after {
+  position: fixed;
+  z-index: 0;
+  right: -4vw;
+  bottom: -4vh;
+  width: clamp(420px, 34vw, 760px);
+  height: min(76vh, 920px);
+  background: url('/img/ui-skel.png') right bottom / contain no-repeat;
+  content: '';
+  filter: grayscale(1) sepia(0.12) contrast(1.12);
+  mix-blend-mode: multiply;
+  opacity: 0.09;
+  pointer-events: none;
+}
+
+.workspace > * {
+  position: relative;
+  z-index: 1;
 }
 
 .topbar {
@@ -3870,6 +3892,11 @@ select,
 }
 
 @media (max-width: 1080px) {
+  .workspace::after {
+    width: 480px;
+    opacity: 0.055;
+  }
+
   .brand-mark {
     width: 58px;
   }
@@ -3883,6 +3910,7 @@ select,
     background: linear-gradient(180deg, #28211c, #14110f);
   }
 
+  .workspace::after,
   .topbar::before {
     display: none;
   }
