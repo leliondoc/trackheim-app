@@ -653,12 +653,28 @@ export function MordheimApp() {
               </section>
             ) : !hydratationTerminee ? (
               <section className="campaign-loading" aria-live="polite">
-                <p className="eyebrow">Ouverture du registre</p>
-                <h1>Chargement de la campagne…</h1>
-                <p>
-                  La bande reste verrouillée jusqu’à la fin de la
-                  synchronisation.
-                </p>
+                <div className="campaign-loading-banner">
+                  <span className="campaign-loading-seal" aria-hidden="true">
+                    <Skull />
+                  </span>
+                  <div>
+                    <p className="eyebrow">Ouverture du registre</p>
+                    <h1>Les chroniques se dévoilent…</h1>
+                  </div>
+                </div>
+                <div className="campaign-loading-body">
+                  <p>
+                    Trackheim rassemble la bande, son trésor et les dernières
+                    traces de la campagne.
+                  </p>
+                  <div className="campaign-loading-track" aria-hidden="true">
+                    <span />
+                  </div>
+                  <small>
+                    Le registre reste protégé jusqu’à la fin de la
+                    synchronisation.
+                  </small>
+                </div>
               </section>
             ) : (
               <>
@@ -1717,7 +1733,11 @@ function WarbandView({
         description="Recrutez, équipez et faites progresser chaque combattant. Les limites Reiklanders sont contrôlées automatiquement."
         action={
           <div className="page-header-actions">
-            <Button onClick={onChangerBande} variant="outline">
+            <Button
+              className="primary-action"
+              onClick={onChangerBande}
+              size="lg"
+            >
               <Users aria-hidden="true" /> Changer de bande
             </Button>
             <RecruitDialog

@@ -3873,21 +3873,127 @@ select,
 }
 
 .campaign-loading {
-  max-width: 760px;
-  border-block: 3px double #765535;
-  background: rgb(245 229 196 / 72%);
-  padding: clamp(24px, 4vw, 42px);
+  position: relative;
+  width: min(900px, 100%);
+  overflow: hidden;
+  border: 1px solid #4f3a25;
+  border-top: 4px double #4f3a25;
+  background:
+    repeating-linear-gradient(
+      1deg,
+      transparent 0 35px,
+      rgb(83 55 29 / 3.4%) 35px 36px
+    ),
+    #efe0bd;
+  box-shadow:
+    7px 9px 0 rgb(54 35 19 / 18%),
+    inset 0 0 0 2px rgb(255 250 231 / 42%);
 }
 
-.campaign-loading h1 {
-  margin: 0 0 8px;
-  font-family: var(--font-fell), Georgia, serif;
-  font-size: clamp(28px, 4vw, 42px);
+.campaign-loading-banner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 28px);
+  background:
+    radial-gradient(circle at 16% 40%, rgb(150 54 43 / 23%), transparent 31%),
+    linear-gradient(105deg, #2f2720, #171310);
+  color: #f2e3c5;
+  padding: clamp(22px, 3vw, 34px) clamp(24px, 4vw, 46px);
+  box-shadow: inset 0 -1px #8b6b3d;
 }
 
-.campaign-loading p:last-child {
+.campaign-loading-seal {
+  display: grid;
+  width: clamp(58px, 6vw, 76px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid #a3804b;
+  background: #191512;
+  color: #d8b46d;
+  box-shadow:
+    inset 0 0 0 3px #31271e,
+    3px 4px 0 rgb(0 0 0 / 30%);
+  transform: rotate(-2deg);
+}
+
+.campaign-loading-seal svg {
+  width: 46%;
+  height: 46%;
+}
+
+.campaign-loading-banner .eyebrow {
+  margin-bottom: 6px;
+  color: #c9a66b;
+}
+
+.campaign-loading-banner h1 {
   margin: 0;
-  color: #6d5943;
+  font-family: var(--font-pirata), var(--font-fell), Georgia, serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 0.95;
+  text-shadow: 1px 2px #000;
+}
+
+.campaign-loading-body {
+  padding: clamp(22px, 3vw, 34px) clamp(24px, 4vw, 46px)
+    clamp(25px, 3.4vw, 40px);
+}
+
+.campaign-loading-body > p {
+  max-width: 65ch;
+  margin: 0 0 19px;
+  color: #493b2d;
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.campaign-loading-track {
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid #725b3c;
+  background: #cbb58b;
+  box-shadow: inset 2px 2px 0 rgb(72 47 26 / 13%);
+}
+
+.campaign-loading-track span {
+  display: block;
+  width: 42%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    #6b2822 0 25px,
+    #913a31 25px 30px
+  );
+  animation: campaign-loading-progress 1.35s ease-in-out infinite alternate;
+}
+
+.campaign-loading-body small {
+  display: block;
+  margin-top: 11px;
+  color: #695641;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+@keyframes campaign-loading-progress {
+  from {
+    transform: translateX(-12%);
+  }
+  to {
+    transform: translateX(150%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campaign-loading-track span {
+    width: 68%;
+    animation: none;
+    transform: none;
+  }
 }
 
 .save-conflict-dialog {
@@ -4169,6 +4275,208 @@ select,
  * au lieu de conserver la densité d’un portable. Les tailles mobiles restent
  * indépendantes de ce palier.
  */
+/*
+ * Lisibilité des bureaux à forte mise à l’échelle
+ * Un écran 2K réglé à 150–200 % expose souvent seulement 1180 à 1700 pixels
+ * CSS. Ce palier augmente uniquement la typographie, sans dilater l’agencement.
+ */
+@media (min-width: 1180px) and (max-width: 1799px) {
+  body {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .brand-kicker,
+  .sidebar-label,
+  .eyebrow,
+  .campaign-label,
+  .save-state {
+    font-size: 12px;
+  }
+
+  .navigation-item {
+    font-size: 16px;
+  }
+
+  .new-badge,
+  .sidebar-source {
+    font-size: 12px;
+  }
+
+  .campaign-switcher {
+    font-size: 19px;
+  }
+
+  .search-button {
+    font-size: 15px;
+  }
+
+  .warband-heading > div > p,
+  .page-header > div > p:last-child {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .grade-badge,
+  .rating-chip,
+  .source-chip,
+  .grade,
+  .homebrew-badge,
+  .layer-status {
+    font-size: 13px;
+  }
+
+  [data-slot='button'],
+  .primary-action,
+  .continue-button,
+  .source-button {
+    font-size: 16px;
+  }
+
+  .metric-card p,
+  .metric-card small,
+  .constructeur-bande-resume > span,
+  .library-toolbar > span {
+    font-size: 14px;
+  }
+
+  .metric-card strong {
+    font-size: 34px;
+  }
+
+  .metric-note {
+    font-size: 13px;
+  }
+
+  .fighter-name-line h3,
+  .management-identity strong {
+    font-size: 19px;
+  }
+
+  .fighter-name-line p,
+  .management-identity span,
+  .fighter-foot,
+  .profile-card-footer,
+  .stat-line,
+  .campaign-step p,
+  .rule-note p,
+  .library-card-main > p,
+  .homebrew-toggle p,
+  .price-row small,
+  .custom-rule p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .status,
+  .campaign-progress [data-slot='progress-label'],
+  .campaign-progress [data-slot='progress-value'],
+  .victory-badge {
+    font-size: 13px;
+  }
+
+  .step-item {
+    font-size: 15px;
+  }
+
+  .profile-card h3,
+  .library-card h3 {
+    font-size: 23px;
+  }
+
+  .profile-card-header span,
+  .profile-card-header strong,
+  .xp-control > span,
+  .dialog-total span,
+  .resource-heading p,
+  .overlay-node small,
+  .overlay-node b,
+  .price-row b,
+  .asset-license-note {
+    font-size: 14px;
+  }
+
+  .library-card-hint,
+  .library-card-actions a {
+    font-size: 14px;
+  }
+
+  .section-title-row h3,
+  .homebrew-toggle strong,
+  .empty-state strong {
+    font-size: 21px;
+  }
+
+  .campaign-step strong,
+  .xp-control strong {
+    font-size: 18px;
+  }
+
+  .field-group {
+    font-size: 14px;
+  }
+
+  [data-slot='input'],
+  [data-slot='native-select'],
+  [data-slot='textarea'] {
+    font-size: 16px;
+  }
+
+  .ruleset-selector > legend {
+    font-size: 17px;
+  }
+
+  .ruleset-option strong {
+    font-size: 23px;
+  }
+
+  .ruleset-option small {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .ruleset-option > b {
+    font-size: 15px;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-title'],
+  .settings-view .ruleset-provenance h3,
+  .settings-view .ruleset-provenance .text-sm {
+    font-size: 19px;
+    line-height: 1.4;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='card-description'],
+  .settings-view .ruleset-provenance .text-xs {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .settings-view .ruleset-provenance [data-slot='badge'] {
+    min-height: 29px;
+    padding: 4px 9px;
+    font-size: 14px;
+  }
+
+  .recruit-dialog {
+    font-size: 16px;
+  }
+
+  .recruit-dialog [data-slot='dialog-description'],
+  .recruit-dialog .profile-preview span,
+  .recruit-dialog .profile-preview code,
+  .recruit-dialog .profile-preview p,
+  .recruit-dialog .equipment-option strong,
+  .recruit-dialog .form-alert {
+    font-size: 15px;
+  }
+
+  .recruit-dialog .equipment-option small,
+  .recruit-dialog .equipment-option b {
+    font-size: 14px;
+  }
+}
+
 @media (min-width: 1800px) {
   html {
     font-size: 18px;
