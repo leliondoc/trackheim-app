@@ -780,6 +780,7 @@ export function MordheimApp() {
                 onCreate={creerBande}
                 onGradeChange={setGradeBibliotheque}
                 onRechercheChange={setRechercheBibliotheque}
+                onVueChange={naviguerVers}
               />
             )}
           </main>
@@ -1253,6 +1254,7 @@ function EmptyApplicationContent({
   onCreate,
   onRechercheChange,
   onGradeChange,
+  onVueChange,
 }: {
   vue: Vue;
   recherche: string;
@@ -1260,6 +1262,7 @@ function EmptyApplicationContent({
   onCreate: (nomBande: string, factionId: FactionId) => void;
   onRechercheChange: (recherche: string) => void;
   onGradeChange: (grade: FiltreGrade) => void;
+  onVueChange: (vue: Vue) => void;
 }) {
   const [nomBande, setNomBande] = useState('');
   const [factionSelectionnee, setFactionSelectionnee] = useState('');
@@ -1348,6 +1351,61 @@ function EmptyApplicationContent({
             <Plus aria-hidden="true" /> Créer la bande
           </Button>
         </form>
+      </section>
+    );
+  }
+
+  if (vue === 'overview') {
+    return (
+      <section className="product-view empty-app-view">
+        <PageHeader
+          eyebrow="Vue d’ensemble"
+          title="Vue d’ensemble"
+          description="Votre espace de jeu est prêt. Aucune donnée ne sera créée sans votre accord."
+        />
+
+        <section
+          className="empty-overview"
+          aria-labelledby="empty-overview-title"
+        >
+          <div className="empty-overview-copy">
+            <p className="eyebrow">Premier registre</p>
+            <h2 id="empty-overview-title">Votre bande commence ici</h2>
+            <p>
+              Choisissez une faction officielle, recrutez vos combattants puis
+              suivez leur progression au fil des batailles.
+            </p>
+            <div className="empty-overview-actions">
+              <Button
+                className="primary-action"
+                onClick={() => onVueChange('warband')}
+                type="button"
+              >
+                <Users aria-hidden="true" /> Créer ma bande
+              </Button>
+              <Button
+                className="empty-overview-library"
+                onClick={() => onVueChange('library')}
+                type="button"
+                variant="ghost"
+              >
+                <BookOpen aria-hidden="true" /> Voir les bandes officielles
+              </Button>
+            </div>
+          </div>
+
+          <aside className="empty-overview-rules">
+            <img alt="" aria-hidden="true" src="./img/trackheim-raven.png" />
+            <div>
+              <p className="eyebrow">Prêt pour la table</p>
+              <h3>Les règles sont déjà en place</h3>
+              <p>
+                Profils officiels, valeur de bande, expérience, blessures et
+                séquence d’après-bataille sont réunis dans le même registre.
+              </p>
+            </div>
+          </aside>
+        </section>
       </section>
     );
   }

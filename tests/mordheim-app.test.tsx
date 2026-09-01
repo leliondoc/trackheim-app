@@ -37,6 +37,9 @@ describe('navigation principale', () => {
     ).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(
+      screen.getByRole('button', { name: 'Créer ma bande' }),
+    ).toBeInTheDocument();
+    expect(
       screen.queryByText(/Bande de vérification/i),
     ).not.toBeInTheDocument();
     expect(
