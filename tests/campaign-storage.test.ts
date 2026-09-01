@@ -48,6 +48,19 @@ test('une sauvegarde illisible reste disponible pour récupération', () => {
   assert.equal(stockage.getItem(cle), '{incomplet');
 });
 
+test('une sauvegarde sans métadonnées du format actuel est refusée', () => {
+  const stockage = new StockageMemoire();
+  stockage.setItem(
+    cleCopieLocale('campagne-principale'),
+    JSON.stringify({ campagne: etatInitial }),
+  );
+
+  assert.equal(
+    lireCopieLocale(stockage, 'campagne-principale').statut,
+    'invalide',
+  );
+});
+
 test('une écriture concurrente est refusée sans écrasement', () => {
   const stockage = new StockageMemoire();
   const premiere = ecrireCopieLocale(
@@ -68,7 +81,7 @@ test('une écriture concurrente est refusée sans écrasement', () => {
       ecrireCopieLocale(
         stockage,
         'campagne-principale',
-        { ...structuredClone(etatInitial), nomCampagne: 'Version ancienne' },
+        { ...structuredClone(etatInitial), nomCampagne: 'Version onglet A' },
         { auteur: 'onglet-a', versionAttendue: premiere.versionStockage },
       ),
     ConflitSauvegardeLocale,

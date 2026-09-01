@@ -1,3 +1,8 @@
+import {
+  definitionsBandesCore,
+  equipementsBandesCore,
+} from './core-warbandes.ts';
+
 export type Statistiques = {
   mouvement: number;
   capaciteCombat: number;
@@ -10,6 +15,39 @@ export type Statistiques = {
   commandement: number;
 };
 
+export type FactionId =
+  | 'mercenaires-reiklanders'
+  | 'mercenaires-middenheimers'
+  | 'mercenaires-marienburgers'
+  | 'culte-des-possedes'
+  | 'repurgateurs'
+  | 'soeurs-de-sigmar'
+  | 'morts-vivants'
+  | 'skavens-du-clan-eshin';
+
+export type ListeEquipementId =
+  | 'mercenaires'
+  | 'tireurs'
+  | 'possedes'
+  | 'ames-sombres'
+  | 'mutations'
+  | 'repurgateurs'
+  | 'zelotes'
+  | 'flagellants'
+  | 'soeurs'
+  | 'augure'
+  | 'morts-vivants'
+  | 'skavens-heros'
+  | 'skavens-hommes-main';
+
+export type CategorieCompetence =
+  | 'Combat'
+  | 'Tir'
+  | 'Érudition'
+  | 'Force'
+  | 'Vitesse'
+  | 'Spécial';
+
 export type ProfilRecrue = {
   id: string;
   nom: string;
@@ -19,21 +57,34 @@ export type ProfilRecrue = {
   maximum: number | null;
   experienceInitiale: number;
   statistiques: Statistiques;
-  listeEquipement: 'mercenaires' | 'tireurs';
+  /** Plafonds raciaux utilisés pour les progressions ; humain par défaut. */
+  maximums?: Statistiques;
+  competencesDisponibles?: CategorieCompetence[];
+  listesEquipement: ListeEquipementId[];
+  chef?: boolean;
+  gagneExperience?: boolean;
+  minimumMutations?: number;
   regleSpeciale?: string;
 };
 
 export type Equipement = {
   id: string;
   nom: string;
-  categorie: 'Corps à corps' | 'Tir' | 'Armure';
+  categorie: 'Corps à corps' | 'Tir' | 'Armure' | 'Divers' | 'Mutation';
   cout: number;
+  listesEquipement: ListeEquipementId[];
+  /** Nombre d’exemplaires portables par combattant (une paire vaut deux). */
+  quantiteMax?: number;
+  quantitesMaxParProfil?: Record<string, number>;
+  /** Certains livres de bande fixent un prix de recrutement différent. */
+  coutsParListe?: Partial<Record<ListeEquipementId, number>>;
   reserveAuxHeros?: boolean;
-  listeMercenaires?: boolean;
-  listeTireurs?: boolean;
+  regleSpeciale?: string;
   /** Disponibilité au comptoir après la création, distincte de la liste de bande. */
   rareteCommerce?: number;
   coutCommerce?: number;
+  /** Formule à lancer à la table, puis saisir dans le workflow de commerce. */
+  coutCommerceFormule?: string;
   /** Ajout éditorial GLM, inactif dans le preset officiel strict. */
   patchGlm?: boolean;
 };
@@ -52,7 +103,7 @@ export type Combattant = {
   chef: boolean;
   coutAcquisition: number;
   /** Coût historique total du groupe, utile quand des recrues vétéranes le rejoignent. */
-  coutAcquisitionTotal?: number;
+  coutAcquisitionTotal: number;
   competences: string[];
   blessures: string[];
   progressions: string[];
@@ -90,8 +141,7 @@ export type SuiviCombattantBataille = {
   experienceScenario: number;
   experienceManuelle: number;
   experienceAppliquee: boolean;
-  progressionsNote: string;
-  progressions?: {
+  progressions: {
     version: 1;
     saisies: Array<{ jet: number | null; decision: string; note: string }>;
   };
@@ -137,11 +187,10 @@ export type BatailleEnCours = {
     de2: number | null;
     disponibilite: number | null;
     /** XP cumulé des recrues déjà ajoutées aux groupes pendant cette séquence. */
-    experienceDepensee?: number;
+    experienceDepensee: number;
   };
   jetsRarete: JetRarete[];
-  personnagesSpeciaux: string;
-  personnel?: {
+  personnel: {
     version: 1;
     aucun: boolean;
     entrees: Array<{
@@ -182,9 +231,8 @@ export type EtatCampagne = {
   rulesetId: string;
   nomCampagne: string;
   nomBande: string;
-  /** Absent sur les anciennes sauvegardes, qui sont considérées en campagne. */
-  campagneActive?: boolean;
-  factionId: 'mercenaires-reiklanders';
+  campagneActive: boolean;
+  factionId: FactionId;
   grade: '1a';
   couronnes: number;
   fragments: number;
@@ -197,6 +245,18 @@ export type EtatCampagne = {
   homebrew: ReglagesHomebrew;
 };
 
+export type DefinitionBande = {
+  id: FactionId;
+  nom: string;
+  slug: string;
+  budgetInitial: number;
+  effectifMinimum: number;
+  effectifMaximum: number;
+  profils: ProfilRecrue[];
+  regles: Array<{ titre: string; description: string }>;
+  source: string;
+};
+
 export type BandeBibliotheque = {
   nom: string;
   slug: string;
@@ -206,6 +266,20 @@ export type BandeBibliotheque = {
 
 export const SOURCE_GLM =
   'https://sites.google.com/view/grande-librairie-de-mordheim';
+
+const toutesListesArmees: ListeEquipementId[] = [
+  'mercenaires',
+  'tireurs',
+  'possedes',
+  'ames-sombres',
+  'repurgateurs',
+  'zelotes',
+  'soeurs',
+  'augure',
+  'morts-vivants',
+  'skavens-heros',
+  'skavens-hommes-main',
+];
 
 export const profilsReiklanders: ProfilRecrue[] = [
   {
@@ -217,7 +291,9 @@ export const profilsReiklanders: ProfilRecrue[] = [
     maximum: 1,
     experienceInitiale: 20,
     statistiques: stats(4, 4, 4, 3, 3, 1, 4, 1, 8),
-    listeEquipement: 'mercenaires',
+    listesEquipement: ['mercenaires'],
+    competencesDisponibles: ['Combat', 'Tir', 'Érudition', 'Force', 'Vitesse'],
+    chef: true,
     regleSpeciale: 'Chef : commandement utilisable à 12 ps.',
   },
   {
@@ -229,7 +305,8 @@ export const profilsReiklanders: ProfilRecrue[] = [
     maximum: 2,
     experienceInitiale: 8,
     statistiques: stats(4, 4, 3, 3, 3, 1, 3, 1, 7),
-    listeEquipement: 'mercenaires',
+    listesEquipement: ['mercenaires'],
+    competencesDisponibles: ['Combat', 'Tir', 'Force'],
   },
   {
     id: 'recrue',
@@ -240,7 +317,8 @@ export const profilsReiklanders: ProfilRecrue[] = [
     maximum: 2,
     experienceInitiale: 0,
     statistiques: stats(4, 2, 2, 3, 3, 1, 3, 1, 6),
-    listeEquipement: 'mercenaires',
+    listesEquipement: ['mercenaires'],
+    competencesDisponibles: ['Combat', 'Tir', 'Vitesse'],
   },
   {
     id: 'guerrier',
@@ -251,7 +329,7 @@ export const profilsReiklanders: ProfilRecrue[] = [
     maximum: null,
     experienceInitiale: 0,
     statistiques: stats(4, 3, 3, 3, 3, 1, 3, 1, 7),
-    listeEquipement: 'mercenaires',
+    listesEquipement: ['mercenaires'],
   },
   {
     id: 'tireur',
@@ -262,7 +340,7 @@ export const profilsReiklanders: ProfilRecrue[] = [
     maximum: 7,
     experienceInitiale: 0,
     statistiques: stats(4, 3, 4, 3, 3, 1, 3, 1, 7),
-    listeEquipement: 'tireurs',
+    listesEquipement: ['tireurs'],
   },
   {
     id: 'bretteur',
@@ -273,10 +351,71 @@ export const profilsReiklanders: ProfilRecrue[] = [
     maximum: 5,
     experienceInitiale: 0,
     statistiques: stats(4, 4, 3, 3, 3, 1, 3, 1, 7),
-    listeEquipement: 'mercenaires',
+    listesEquipement: ['mercenaires'],
     regleSpeciale: 'Expert à l’épée : relance les touches ratées en charge.',
   },
 ];
+
+function varianteMercenaire(
+  prefixe: string,
+  transformer: (profil: ProfilRecrue) => ProfilRecrue,
+) {
+  return profilsReiklanders.map((source) => {
+    const profil = transformer({
+      ...source,
+      statistiques: { ...source.statistiques },
+      listesEquipement: [...source.listesEquipement],
+    });
+
+    return { ...profil, id: `${prefixe}-${source.id}` };
+  });
+}
+
+export const profilsMiddenheimers = varianteMercenaire(
+  'middenheim',
+  (profil) => ({
+    ...profil,
+    regleSpeciale:
+      profil.id === 'capitaine'
+        ? 'Chef : commandement utilisable à 6 ps.'
+        : profil.regleSpeciale,
+    competencesDisponibles:
+      profil.id === 'capitaine'
+        ? ['Combat', 'Tir', 'Érudition', 'Force', 'Vitesse']
+        : profil.id === 'champion' || profil.id === 'recrue'
+          ? ['Combat', 'Force', 'Vitesse']
+          : profil.competencesDisponibles,
+    statistiques: {
+      ...profil.statistiques,
+      force:
+        profil.id === 'capitaine' || profil.id === 'champion'
+          ? 4
+          : profil.statistiques.force,
+      capaciteTir: profil.id === 'tireur' ? 3 : profil.statistiques.capaciteTir,
+    },
+  }),
+);
+
+export const profilsMarienburgers = varianteMercenaire(
+  'marienburg',
+  (profil) => ({
+    ...profil,
+    regleSpeciale:
+      profil.id === 'capitaine'
+        ? 'Chef : commandement utilisable à 6 ps.'
+        : profil.regleSpeciale,
+    competencesDisponibles:
+      profil.id === 'capitaine'
+        ? ['Combat', 'Tir', 'Érudition', 'Force', 'Vitesse']
+        : profil.id === 'champion' || profil.id === 'recrue'
+          ? ['Combat', 'Tir', 'Vitesse']
+          : profil.competencesDisponibles,
+    statistiques: {
+      ...profil.statistiques,
+      capaciteTir: profil.id === 'tireur' ? 3 : profil.statistiques.capaciteTir,
+    },
+  }),
+);
 
 export const equipements: Equipement[] = [
   {
@@ -284,61 +423,102 @@ export const equipements: Equipement[] = [
     nom: 'Dague supplémentaire',
     categorie: 'Corps à corps',
     cout: 2,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: toutesListesArmees,
   },
   {
     id: 'masse',
     nom: 'Masse',
     categorie: 'Corps à corps',
     cout: 3,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: [
+      'mercenaires',
+      'tireurs',
+      'possedes',
+      'ames-sombres',
+      'repurgateurs',
+      'zelotes',
+      'soeurs',
+      'augure',
+      'morts-vivants',
+      'skavens-hommes-main',
+    ],
   },
   {
     id: 'marteau',
     nom: 'Marteau',
     categorie: 'Corps à corps',
     cout: 3,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: [
+      'mercenaires',
+      'tireurs',
+      'possedes',
+      'ames-sombres',
+      'repurgateurs',
+      'zelotes',
+      'soeurs',
+      'augure',
+      'morts-vivants',
+    ],
   },
   {
     id: 'hache',
     nom: 'Hache',
     categorie: 'Corps à corps',
     cout: 5,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: [
+      'mercenaires',
+      'tireurs',
+      'possedes',
+      'ames-sombres',
+      'repurgateurs',
+      'zelotes',
+      'morts-vivants',
+    ],
   },
   {
     id: 'epee',
     nom: 'Épée',
     categorie: 'Corps à corps',
     cout: 10,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: [
+      'mercenaires',
+      'tireurs',
+      'possedes',
+      'ames-sombres',
+      'repurgateurs',
+      'zelotes',
+      'morts-vivants',
+      'skavens-heros',
+      'skavens-hommes-main',
+    ],
   },
   {
     id: 'hallebarde',
     nom: 'Hallebarde',
     categorie: 'Corps à corps',
     cout: 10,
-    listeMercenaires: true,
+    listesEquipement: ['mercenaires', 'morts-vivants', 'skavens-heros'],
   },
   {
     id: 'lance',
     nom: 'Lance',
     categorie: 'Corps à corps',
     cout: 10,
-    listeMercenaires: true,
+    listesEquipement: [
+      'mercenaires',
+      'possedes',
+      'zelotes',
+      'morts-vivants',
+      'skavens-heros',
+      'skavens-hommes-main',
+    ],
   },
   {
     id: 'morgenstern',
     nom: 'Morgenstern',
     categorie: 'Corps à corps',
     cout: 15,
-    listeMercenaires: true,
+    listesEquipement: ['mercenaires', 'ames-sombres', 'flagellants'],
   },
   {
     id: 'rapiere',
@@ -346,7 +526,7 @@ export const equipements: Equipement[] = [
     categorie: 'Corps à corps',
     cout: 15,
     reserveAuxHeros: true,
-    listeMercenaires: true,
+    listesEquipement: ['mercenaires'],
     patchGlm: true,
   },
   {
@@ -354,39 +534,54 @@ export const equipements: Equipement[] = [
     nom: 'Arme à deux mains',
     categorie: 'Corps à corps',
     cout: 15,
-    listeMercenaires: true,
+    listesEquipement: [
+      'mercenaires',
+      'possedes',
+      'ames-sombres',
+      'repurgateurs',
+      'zelotes',
+      'flagellants',
+      'soeurs',
+      'augure',
+      'morts-vivants',
+    ],
   },
   {
     id: 'arc',
     nom: 'Arc',
     categorie: 'Tir',
     cout: 10,
-    listeMercenaires: true,
-    listeTireurs: true,
+    coutsParListe: { possedes: 15 },
+    listesEquipement: [
+      'mercenaires',
+      'tireurs',
+      'possedes',
+      'zelotes',
+      'morts-vivants',
+    ],
   },
   {
     id: 'arc-long',
     nom: 'Arc long',
     categorie: 'Tir',
     cout: 15,
-    listeTireurs: true,
+    listesEquipement: ['tireurs'],
   },
   {
     id: 'arbalete',
     nom: 'Arbalète',
     categorie: 'Tir',
     cout: 25,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: ['mercenaires', 'tireurs', 'repurgateurs'],
   },
   {
     id: 'pistolet',
     nom: 'Pistolet',
     categorie: 'Tir',
     cout: 15,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: ['mercenaires', 'tireurs', 'repurgateurs'],
     rareteCommerce: 8,
+    quantiteMax: 2,
   },
   {
     id: 'pistolet-duel',
@@ -395,14 +590,15 @@ export const equipements: Equipement[] = [
     cout: 25,
     coutCommerce: 30,
     rareteCommerce: 10,
-    listeMercenaires: true,
+    quantiteMax: 2,
+    listesEquipement: ['mercenaires'],
   },
   {
     id: 'tromblon',
     nom: 'Tromblon',
     categorie: 'Tir',
     cout: 30,
-    listeTireurs: true,
+    listesEquipement: ['tireurs'],
     rareteCommerce: 9,
   },
   {
@@ -410,7 +606,7 @@ export const equipements: Equipement[] = [
     nom: 'Arquebuse',
     categorie: 'Tir',
     cout: 35,
-    listeTireurs: true,
+    listesEquipement: ['tireurs'],
     rareteCommerce: 8,
   },
   {
@@ -418,7 +614,7 @@ export const equipements: Equipement[] = [
     nom: 'Long fusil d’Hochland',
     categorie: 'Tir',
     cout: 200,
-    listeTireurs: true,
+    listesEquipement: ['tireurs'],
     rareteCommerce: 11,
   },
   {
@@ -426,40 +622,193 @@ export const equipements: Equipement[] = [
     nom: 'Armure légère',
     categorie: 'Armure',
     cout: 20,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: [
+      'mercenaires',
+      'tireurs',
+      'possedes',
+      'ames-sombres',
+      'repurgateurs',
+      'zelotes',
+      'soeurs',
+      'morts-vivants',
+      'skavens-heros',
+      'skavens-hommes-main',
+    ],
   },
   {
     id: 'armure-lourde',
     nom: 'Armure lourde',
     categorie: 'Armure',
     cout: 50,
-    listeMercenaires: true,
+    listesEquipement: [
+      'mercenaires',
+      'possedes',
+      'ames-sombres',
+      'repurgateurs',
+      'soeurs',
+      'morts-vivants',
+    ],
   },
   {
     id: 'casque',
     nom: 'Casque',
     categorie: 'Armure',
     cout: 10,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: [
+      'mercenaires',
+      'tireurs',
+      'possedes',
+      'ames-sombres',
+      'repurgateurs',
+      'zelotes',
+      'soeurs',
+      'morts-vivants',
+      'skavens-heros',
+      'skavens-hommes-main',
+    ],
   },
   {
     id: 'bouclier',
     nom: 'Bouclier',
     categorie: 'Armure',
     cout: 5,
-    listeMercenaires: true,
-    listeTireurs: true,
+    listesEquipement: [
+      'mercenaires',
+      'tireurs',
+      'possedes',
+      'ames-sombres',
+      'repurgateurs',
+      'zelotes',
+      'soeurs',
+      'morts-vivants',
+      'skavens-hommes-main',
+    ],
   },
   {
     id: 'rondache',
     nom: 'Rondache',
     categorie: 'Armure',
     cout: 5,
-    listeMercenaires: true,
+    listesEquipement: [
+      'mercenaires',
+      'repurgateurs',
+      'soeurs',
+      'skavens-heros',
+    ],
   },
+  ...equipementsBandesCore,
 ];
+
+export const definitionsBandes: DefinitionBande[] = [
+  {
+    id: 'mercenaires-reiklanders',
+    nom: 'Mercenaires Reiklanders',
+    slug: 'mercenaires-reiklanders',
+    budgetInitial: 500,
+    effectifMinimum: 3,
+    effectifMaximum: 15,
+    profils: profilsReiklanders,
+    regles: [
+      {
+        titre: 'Discipline militaire',
+        description:
+          'Les guerriers peuvent utiliser le Commandement du Capitaine à 12 ps au lieu de 6 ps.',
+      },
+      {
+        titre: 'Excellents tireurs',
+        description:
+          'Tous les Tireurs gagnent +1 en Capacité de Tir, y compris ceux recrutés plus tard.',
+      },
+    ],
+    source: 'Livre des bandes, pp. 5–8',
+  },
+  {
+    id: 'mercenaires-middenheimers',
+    nom: 'Mercenaires Middenheimers',
+    slug: 'mercenaires-middenheimers',
+    budgetInitial: 500,
+    effectifMinimum: 3,
+    effectifMaximum: 15,
+    profils: profilsMiddenheimers,
+    regles: [
+      {
+        titre: 'Force du Nord',
+        description:
+          'Le Capitaine et les Champions commencent avec une Force de 4 au lieu de 3.',
+      },
+    ],
+    source: 'Livre des bandes, pp. 5–8',
+  },
+  {
+    id: 'mercenaires-marienburgers',
+    nom: 'Mercenaires Marienburgers',
+    slug: 'mercenaires-marienburgers',
+    budgetInitial: 600,
+    effectifMinimum: 3,
+    effectifMaximum: 15,
+    profils: profilsMarienburgers,
+    regles: [
+      {
+        titre: 'Cité de l’Or',
+        description:
+          'La bande commence une campagne avec 600 CO au lieu de 500 CO.',
+      },
+      {
+        titre: 'Réseau marchand',
+        description: 'La bande reçoit +1 lorsqu’elle cherche des objets rares.',
+      },
+    ],
+    source: 'Livre des bandes, pp. 5–8',
+  },
+  ...definitionsBandesCore,
+];
+
+export const profils = definitionsBandes.flatMap(
+  (definition) => definition.profils,
+);
+
+export function obtenirDefinitionBande(factionId: FactionId) {
+  const definition = definitionsBandes.find((item) => item.id === factionId);
+  if (!definition) throw new Error(`Faction inconnue : ${factionId}`);
+  return definition;
+}
+
+export function obtenirProfil(profilId: string) {
+  const profil = profils.find((item) => item.id === profilId);
+  if (!profil) throw new Error(`Profil inconnu : ${profilId}`);
+  return profil;
+}
+
+export function equipementAutorise(
+  profil: ProfilRecrue,
+  equipement: Equipement,
+) {
+  if (equipement.patchGlm) return false;
+  if (equipement.reserveAuxHeros && profil.categorie !== 'Héros') return false;
+  return profil.listesEquipement.some((liste) =>
+    equipement.listesEquipement.includes(liste),
+  );
+}
+
+export function coutEquipementPourProfil(
+  equipement: Equipement,
+  profil: ProfilRecrue,
+) {
+  for (const liste of profil.listesEquipement) {
+    const cout = equipement.coutsParListe?.[liste];
+    if (cout !== undefined) return cout;
+  }
+  return equipement.cout;
+}
+
+export function quantiteMaxEquipement(
+  equipement: Equipement,
+  profil: ProfilRecrue,
+) {
+  return (
+    equipement.quantitesMaxParProfil?.[profil.id] ?? equipement.quantiteMax ?? 1
+  );
+}
 
 /** Catalogue éditorial issu des grades publiés par la Grande Librairie. */
 export const bandesBibliotheque: BandeBibliotheque[] = [
@@ -570,7 +919,7 @@ export const etapesApresBataille = [
 export const etatInitial: EtatCampagne = {
   version: 3,
   revision: 0,
-  rulesetId: 'mordheim-1999-rules-review-2005-reiklanders',
+  rulesetId: 'mordheim-1999-rules-review-2005-bandes-core',
   nomCampagne: 'Les Cendres de Sigmar',
   nomBande: 'Les Corbeaux de Reikland',
   campagneActive: true,

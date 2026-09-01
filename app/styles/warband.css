@@ -120,6 +120,28 @@
   color: #9a3f35;
   font-weight: 800;
 }
+.warband-rules-summary {
+  background: rgb(120 76 39 / 6%);
+  padding: 10px 14px;
+}
+.warband-rules-summary summary {
+  color: #6f3029;
+  cursor: pointer;
+  font-family: var(--font-fell), serif;
+  font-weight: 700;
+}
+.warband-rules-summary > div {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+}
+.warband-rules-summary p,
+.profile-skills {
+  margin: 0;
+  color: #76685b;
+  font-size: 12px;
+  line-height: 1.45;
+}
 .recruitment-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -328,7 +350,7 @@
 }
 .equipment-option {
   display: grid;
-  grid-template-columns: 18px 1fr auto;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 8px;
   border: 1px solid rgb(104 72 41 / 14%);
@@ -336,6 +358,15 @@
   background: rgb(255 255 255 / 25%);
   padding: 7px 8px;
   cursor: pointer;
+}
+.equipment-quantity {
+  display: grid;
+  grid-template-columns: auto 1.5rem auto;
+  align-items: center;
+}
+.equipment-quantity output {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 .equipment-option > span {
   display: grid;

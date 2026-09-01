@@ -1,7 +1,9 @@
 import {
+  definitionsBandes,
   equipements,
-  profilsReiklanders,
+  profils,
   type EtatCampagne,
+  type FactionId,
 } from './mordheim-data.ts';
 import { rulesetGlmStrict, rulesetOfficiel } from './mordheim-rules.ts';
 
@@ -12,7 +14,10 @@ const IDENTIFIANT_TECHNIQUE = /^[a-z0-9](?:[a-z0-9._-]{0,126}[a-z0-9])?$/;
 const DATE_ISO = /^(\d{4})-(\d{2})-(\d{2})$/;
 const PROFONDEUR_JSON_MAXIMALE = 24;
 const NOEUDS_JSON_MAXIMUM = 50_000;
-const IDS_PROFILS = new Set(profilsReiklanders.map((profil) => profil.id));
+const IDS_PROFILS = new Set(profils.map((profil) => profil.id));
+const IDS_FACTIONS = new Set(
+  definitionsBandes.map((definition) => definition.id),
+);
 const IDS_EQUIPEMENTS = new Set(equipements.map((equipement) => equipement.id));
 const IDS_RULESETS = new Set([rulesetOfficiel.id, rulesetGlmStrict.id]);
 
@@ -33,9 +38,8 @@ export function estRevisionValide(valeur: unknown): valeur is number {
 }
 
 /**
- * Vérifie la forme persistée de la campagne v3 sans réinterpréter les règles du
- * jeu. Les clés supplémentaires restent admises pour préserver les données lors
- * d'une évolution compatible du client.
+ * Vérifie strictement la forme persistée de la campagne v3 sans réinterpréter
+ * les règles du jeu.
  */
 export function validerCampagneV3(valeur: unknown): ValidationCampagne {
   const erreurComplexite = validerComplexiteJson(valeur);
@@ -61,13 +65,13 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
   if (!estTexte(valeur.nomBande, 1, 160)) {
     return echec('Le nom de la bande est invalide.');
   }
-  if (
-    valeur.campagneActive !== undefined &&
-    typeof valeur.campagneActive !== 'boolean'
-  ) {
+  if (typeof valeur.campagneActive !== 'boolean') {
     return echec('L’état du mode campagne est invalide.');
   }
-  if (valeur.factionId !== 'mercenaires-reiklanders') {
+  if (
+    typeof valeur.factionId !== 'string' ||
+    !IDS_FACTIONS.has(valeur.factionId as FactionId)
+  ) {
     return echec("La faction de la campagne v3 n'est pas prise en charge.");
   }
   if (valeur.grade !== '1a') {
@@ -92,7 +96,13 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
     return echec("L'état des dix étapes d'après-bataille est invalide.");
   }
 
-  const erreurCombattants = validerCombattants(valeur.combattants);
+  const definition = definitionsBandes.find(
+    (item) => item.id === valeur.factionId,
+  )!;
+  const erreurCombattants = validerCombattants(
+    valeur.combattants,
+    new Set(definition.profils.map((profil) => profil.id)),
+  );
   if (erreurCombattants) return echec(erreurCombattants);
   const idsCombattants = new Set(
     (valeur.combattants as ObjetJson[]).map((combattant) =>
@@ -122,7 +132,7 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
   return { ok: true, campagne: valeur as unknown as EtatCampagne };
 }
 
-function validerCombattants(valeur: unknown) {
+function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
   if (!Array.isArray(valeur) || valeur.length > 200) {
     return 'La liste des combattants est invalide.';
   }
@@ -143,7 +153,7 @@ function validerCombattants(valeur: unknown) {
     if (!estTexte(combattant.nom, 1, 160)) return `${chemin}.nom est invalide.`;
     if (
       !estIdentifiantTechnique(combattant.profilId) ||
-      !IDS_PROFILS.has(combattant.profilId)
+      !idsProfilsAutorises.has(combattant.profilId)
     ) {
       return `${chemin}.profilId ne correspond à aucun profil connu.`;
     }
@@ -186,10 +196,7 @@ function validerCombattants(valeur: unknown) {
     if (!estEntierNaturel(combattant.coutAcquisition)) {
       return `${chemin}.coutAcquisition est invalide.`;
     }
-    if (
-      combattant.coutAcquisitionTotal !== undefined &&
-      !estEntierNaturel(combattant.coutAcquisitionTotal)
-    ) {
+    if (!estEntierNaturel(combattant.coutAcquisitionTotal)) {
       return `${chemin}.coutAcquisitionTotal est invalide.`;
     }
 
@@ -359,27 +366,22 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
     if (typeof suivi.experienceAppliquee !== 'boolean') {
       return `${chemin}.experienceAppliquee est invalide.`;
     }
-    if (!estTexte(suivi.progressionsNote, 0, 10_000)) {
-      return `${chemin}.progressionsNote est invalide.`;
+    if (
+      !estObjet(suivi.progressions) ||
+      suivi.progressions.version !== 1 ||
+      !Array.isArray(suivi.progressions.saisies) ||
+      suivi.progressions.saisies.length > 100
+    ) {
+      return `${chemin}.progressions est invalide.`;
     }
-    if (suivi.progressions !== undefined) {
+    for (const saisie of suivi.progressions.saisies) {
       if (
-        !estObjet(suivi.progressions) ||
-        suivi.progressions.version !== 1 ||
-        !Array.isArray(suivi.progressions.saisies) ||
-        suivi.progressions.saisies.length > 100
+        !estObjet(saisie) ||
+        (saisie.jet !== null && !estEntierNaturel(saisie.jet)) ||
+        !estTexte(saisie.decision, 0, 500) ||
+        !estTexte(saisie.note, 0, 10_000)
       ) {
-        return `${chemin}.progressions est invalide.`;
-      }
-      for (const saisie of suivi.progressions.saisies) {
-        if (
-          !estObjet(saisie) ||
-          (saisie.jet !== null && !estEntierNaturel(saisie.jet)) ||
-          !estTexte(saisie.decision, 0, 500) ||
-          !estTexte(saisie.note, 0, 10_000)
-        ) {
-          return `${chemin}.progressions contient une saisie invalide.`;
-        }
+        return `${chemin}.progressions contient une saisie invalide.`;
       }
     }
   }
@@ -432,10 +434,7 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
   ) {
     return 'batailleEnCours.veterans.disponibilite est invalide.';
   }
-  if (
-    valeur.veterans.experienceDepensee !== undefined &&
-    !estEntierNaturel(valeur.veterans.experienceDepensee)
-  ) {
+  if (!estEntierNaturel(valeur.veterans.experienceDepensee)) {
     return 'batailleEnCours.veterans.experienceDepensee est invalide.';
   }
 
@@ -467,9 +466,6 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
       return `${chemin}.achete est invalide.`;
     if (!estEntierNaturel(jet.prix)) return `${chemin}.prix est invalide.`;
   }
-  if (!estTexte(valeur.personnagesSpeciaux, 0, 10_000)) {
-    return 'batailleEnCours.personnagesSpeciaux est invalide.';
-  }
   const erreurPersonnel = validerPersonnel(valeur.personnel, idsCombattants);
   if (erreurPersonnel) return erreurPersonnel;
   if (!estTexte(valeur.notes, 0, 10_000))
@@ -478,7 +474,6 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
 }
 
 function validerPersonnel(valeur: unknown, idsCombattants: Set<string>) {
-  if (valeur === undefined) return null;
   if (
     !estObjet(valeur) ||
     valeur.version !== 1 ||

@@ -99,10 +99,18 @@ export function lireCopieLocale(
       contenuBrut,
     };
   }
-  if (!estObjet(valeur) || !('campagne' in valeur)) {
+  if (
+    !estObjet(valeur) ||
+    !('campagne' in valeur) ||
+    typeof valeur.date !== 'string' ||
+    !estEntierNaturel(valeur.versionStockage) ||
+    typeof valeur.auteur !== 'string' ||
+    valeur.auteur.length === 0
+  ) {
     return {
       statut: 'invalide',
-      erreur: 'La sauvegarde locale ne contient aucune campagne.',
+      erreur:
+        'La sauvegarde locale ne respecte pas le format Trackheim actuel.',
       contenuBrut,
     };
   }
@@ -119,11 +127,9 @@ export function lireCopieLocale(
     statut: 'valide',
     copie: {
       campagne: validation.campagne,
-      date: typeof valeur.date === 'string' ? valeur.date : '',
-      versionStockage: estEntierNaturel(valeur.versionStockage)
-        ? valeur.versionStockage
-        : 0,
-      auteur: typeof valeur.auteur === 'string' ? valeur.auteur : '',
+      date: valeur.date,
+      versionStockage: valeur.versionStockage,
+      auteur: valeur.auteur,
     },
   };
 }

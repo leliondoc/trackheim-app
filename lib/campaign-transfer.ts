@@ -39,20 +39,18 @@ export function importerCampagneDepuisJson(texte: string) {
     throw new Error('Le fichier ne contient pas un JSON valide.');
   }
 
-  let campagneCandidate = valeur;
-  if (estObjet(valeur) && 'format' in valeur) {
-    if (valeur.format !== FORMAT_EXPORT || valeur.version !== VERSION_EXPORT) {
-      throw new Error(
-        'Ce format de sauvegarde Trackheim n’est pas pris en charge.',
-      );
-    }
-    campagneCandidate = valeur.campagne;
-  } else if (estObjet(valeur) && 'campagne' in valeur) {
-    // Accepte aussi une enveloppe simple pour faciliter les migrations futures.
-    campagneCandidate = valeur.campagne;
+  if (
+    !estObjet(valeur) ||
+    valeur.format !== FORMAT_EXPORT ||
+    valeur.version !== VERSION_EXPORT ||
+    !('campagne' in valeur)
+  ) {
+    throw new Error(
+      'Ce format de sauvegarde Trackheim n’est pas pris en charge.',
+    );
   }
 
-  const validation = validerCampagneV3(campagneCandidate);
+  const validation = validerCampagneV3(valeur.campagne);
   if (!validation.ok) {
     throw new Error(`La campagne importée est invalide : ${validation.erreur}`);
   }

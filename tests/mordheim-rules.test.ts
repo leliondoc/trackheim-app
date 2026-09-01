@@ -82,7 +82,7 @@ describe('exploration et revenus', () => {
       des: [5, 5, 5, 3],
       total: 18,
       fragments: 4,
-      combinaison: { valeur: 5, occurrences: 3 },
+      combinaison: { valeur: 5, occurrences: 3, lieu: 'Halles' },
     });
   });
 
@@ -90,7 +90,16 @@ describe('exploration et revenus', () => {
     assert.deepEqual(resoudreExploration([2, 2, 6, 6]).combinaison, {
       valeur: 6,
       occurrences: 2,
+      lieu: 'Masures en ruine',
     });
+  });
+
+  it('identifie automatiquement les lieux des combinaisons extrêmes', () => {
+    assert.equal(resoudreExploration([1, 1]).combinaison?.lieu, 'Puits');
+    assert.equal(
+      resoudreExploration([6, 6, 6, 6, 6, 6]).combinaison?.lieu,
+      'Villa d’un noble',
+    );
   });
 
   it('applique la table de vente à quatre fragments et sept membres', () => {

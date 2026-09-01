@@ -49,7 +49,7 @@ describe('navigation principale', () => {
     ).toBeInTheDocument();
   });
 
-  it('permet de choisir une faction sans appliquer de mauvaises règles', async () => {
+  it('crée une bande skaven avec ses propres profils', async () => {
     const utilisateur = userEvent.setup();
     render(<MordheimApp />);
 
@@ -60,13 +60,21 @@ describe('navigation principale', () => {
       screen.getByRole('combobox', { name: 'Faction' }),
       'skavens-du-clan-eshin',
     );
+    await utilisateur.type(
+      screen.getByRole('textbox', { name: 'Nom de la nouvelle bande' }),
+      'Les Crocs de l’ombre',
+    );
+    await utilisateur.click(
+      screen.getByRole('button', { name: /Créer la bande/i }),
+    );
 
     expect(
-      screen.getByText(/ses profils ne sont pas encore indexés/i),
+      await screen.findByText(/Skavens du Clan Eshin/i),
     ).toBeInTheDocument();
+    await utilisateur.click(screen.getByRole('link', { name: /^Ma bande$/ }));
     expect(
-      screen.getByRole('button', { name: /Créer la bande/i }),
-    ).toBeDisabled();
+      await screen.findByRole('heading', { name: 'Adepte assassin' }),
+    ).toBeInTheDocument();
   });
 
   it('sépare la construction de bande du démarrage de campagne', async () => {

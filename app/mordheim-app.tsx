@@ -55,22 +55,27 @@ import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import {
   bandesBibliotheque,
+  definitionsBandes,
+  coutEquipementPourProfil,
   equipements,
+  equipementAutorise,
   etapesApresBataille,
   etatInitial,
-  profilsReiklanders,
+  obtenirDefinitionBande,
+  obtenirProfil,
+  quantiteMaxEquipement,
   SOURCE_GLM,
   type BandeBibliotheque,
   type Combattant,
   type Equipement,
   type EtatCampagne,
+  type FactionId,
   type ProfilRecrue,
   type RegleHomebrew,
   type ReglagesHomebrew,
   type Statistiques,
 } from '@/lib/mordheim-data';
 import {
-  ID_RULESET,
   calculerValeurBande,
   rulesetGlmStrict,
   rulesetOfficiel,
@@ -266,9 +271,8 @@ export function MordheimApp() {
         setHydratationTerminee(true);
         return;
       }
-      const campagneChargee = normaliserCampagne(
-        lecture.statut === 'valide' ? lecture.copie.campagne : etatInitial,
-      );
+      const campagneChargee =
+        lecture.statut === 'valide' ? lecture.copie.campagne : etatInitial;
       derniereCampagneSauvegardee.current = JSON.stringify(campagneChargee);
       setCampagne(campagneChargee);
 
@@ -352,7 +356,7 @@ export function MordheimApp() {
         lecture.copie.auteur !== ID_SESSION &&
         lecture.copie.versionStockage !== versionStockage.current
       ) {
-        const campagneDistante = normaliserCampagne(lecture.copie.campagne);
+        const campagneDistante = lecture.copie.campagne;
         const distanteSerialisee = JSON.stringify(campagneDistante);
         const localeSerialisee = JSON.stringify(campagneCourante.current);
 
@@ -400,9 +404,9 @@ export function MordheimApp() {
     setIdCampagne(id);
   }
 
-  function creerBande(nomBande: string) {
+  function creerBande(nomBande: string, factionId: FactionId) {
     const id = `campagne-${Date.now().toString(36)}-${crypto.randomUUID().slice(0, 8)}`;
-    const nouvelle = creerEtatCampagne(nomBande);
+    const nouvelle = creerEtatCampagne(nomBande, factionId);
     const copie = ecrireCopieLocale(window.localStorage, id, nouvelle, {
       auteur: ID_SESSION,
       versionAttendue: 0,
@@ -425,7 +429,7 @@ export function MordheimApp() {
   }
 
   function importerCampagne(texte: string) {
-    const importee = normaliserCampagne(importerCampagneDepuisJson(texte));
+    const importee = importerCampagneDepuisJson(texte);
     const id = `campagne-${Date.now().toString(36)}-${crypto.randomUUID().slice(0, 8)}`;
     const copie = ecrireCopieLocale(window.localStorage, id, importee, {
       auteur: ID_SESSION,
@@ -484,7 +488,7 @@ export function MordheimApp() {
     const lecture = lireCopieLocale(window.localStorage, idCampagne);
     if (lecture.statut !== 'valide') return;
     versionStockage.current = lecture.copie.versionStockage;
-    const campagneDistante = normaliserCampagne(lecture.copie.campagne);
+    const campagneDistante = lecture.copie.campagne;
     derniereCampagneSauvegardee.current = JSON.stringify(campagneDistante);
     setCampagne(campagneDistante);
     setConflitSauvegarde(false);
@@ -757,7 +761,7 @@ function CampaignManagerDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSelect: (id: string) => void;
-  onCreate: (nomBande: string) => void;
+  onCreate: (nomBande: string, factionId: FactionId) => void;
 }) {
   const [nomBande, setNomBande] = useState('');
   const [factionSelectionnee, setFactionSelectionnee] = useState(
@@ -766,8 +770,9 @@ function CampaignManagerDialog({
   const bandeSelectionnee = bandesBibliotheque.find(
     (bande) => bande.slug === factionSelectionnee,
   );
-  const factionPriseEnCharge =
-    factionSelectionnee === 'mercenaires-reiklanders';
+  const factionPriseEnCharge = definitionsBandes.some(
+    (definition) => definition.id === factionSelectionnee,
+  );
 
   const campagnes = useMemo(() => {
     const locales = listerCopiesLocales(window.localStorage);
@@ -799,7 +804,7 @@ function CampaignManagerDialog({
     if (!factionPriseEnCharge || !nomBande.trim()) {
       return;
     }
-    onCreate(nomBande.trim());
+    onCreate(nomBande.trim(), factionSelectionnee as FactionId);
     setNomBande('');
   }
 
@@ -858,7 +863,9 @@ function CampaignManagerDialog({
               {bandesBibliotheque.map((bande) => (
                 <NativeSelectOption key={bande.slug} value={bande.slug}>
                   {bande.nom} · grade {bande.grade}
-                  {bande.slug === 'mercenaires-reiklanders'
+                  {definitionsBandes.some(
+                    (definition) => definition.id === bande.slug,
+                  )
                     ? ' · constructeur disponible'
                     : ''}
                 </NativeSelectOption>
@@ -874,8 +881,8 @@ function CampaignManagerDialog({
               <span>
                 <strong>{bandeSelectionnee.nom}</strong> est consultable dans la
                 bibliothèque, mais ses profils ne sont pas encore indexés. La
-                création reste bloquée pour éviter d’appliquer les règles des
-                Reiklanders par erreur.{' '}
+                création reste bloquée tant que ses profils officiels ne sont
+                pas indexés.{' '}
                 <a
                   href={`${SOURCE_GLM}/bandes/${bandeSelectionnee.slug}`}
                   target="_blank"
@@ -1015,31 +1022,33 @@ function GlobalSearch({
 
           {rechercheDetaillee && (
             <CommandGroup heading="Profils de recrue">
-              {profilsReiklanders.map((profil) => (
-                <CommandItem
-                  key={profil.id}
-                  keywords={[
-                    profil.nom,
-                    profil.categorie,
-                    profil.regleSpeciale ?? '',
-                    `${profil.cout} couronnes`,
-                  ]}
-                  onSelect={() =>
-                    selectionner(() =>
-                      onNavigate('warband', `profil-${profil.id}`),
-                    )
-                  }
-                  value={`profil-${profil.id} ${profil.nom} ${profil.categorie} ${profil.regleSpeciale ?? ''}`}
-                >
-                  <Shield aria-hidden="true" />
-                  <span className="search-result-copy">
-                    <strong>{profil.nom}</strong>
-                    <small>
-                      {profil.categorie} · {profil.cout} CO
-                    </small>
-                  </span>
-                </CommandItem>
-              ))}
+              {obtenirDefinitionBande(campagne.factionId).profils.map(
+                (profil) => (
+                  <CommandItem
+                    key={profil.id}
+                    keywords={[
+                      profil.nom,
+                      profil.categorie,
+                      profil.regleSpeciale ?? '',
+                      `${profil.cout} couronnes`,
+                    ]}
+                    onSelect={() =>
+                      selectionner(() =>
+                        onNavigate('warband', `profil-${profil.id}`),
+                      )
+                    }
+                    value={`profil-${profil.id} ${profil.nom} ${profil.categorie} ${profil.regleSpeciale ?? ''}`}
+                  >
+                    <Shield aria-hidden="true" />
+                    <span className="search-result-copy">
+                      <strong>{profil.nom}</strong>
+                      <small>
+                        {profil.categorie} · {profil.cout} CO
+                      </small>
+                    </span>
+                  </CommandItem>
+                ),
+              )}
             </CommandGroup>
           )}
 
@@ -1215,6 +1224,7 @@ function WarbandHeading({
   campagne: EtatCampagne;
   onCampagneChange: (campagne: EtatCampagne) => void;
 }) {
+  const definition = obtenirDefinitionBande(campagne.factionId);
   return (
     <section className="warband-heading">
       <div>
@@ -1226,7 +1236,7 @@ function WarbandHeading({
           )}
         </div>
         <p>
-          Mercenaires Reiklanders ·{' '}
+          {definition.nom} ·{' '}
           {campagne.numeroBataille === 0
             ? 'aucune bataille jouée'
             : campagne.numeroBataille === 1
@@ -1238,7 +1248,11 @@ function WarbandHeading({
             : ' règles officielles Games Workshop'}
         </p>
       </div>
-      <RecruitDialog campagne={campagne} onCampagneChange={onCampagneChange} />
+      <RecruitDialog
+        campagne={campagne}
+        key={campagne.factionId}
+        onCampagneChange={onCampagneChange}
+      />
     </section>
   );
 }
@@ -1250,13 +1264,14 @@ function Metrics({
   campagne: EtatCampagne;
   synthese: Synthese;
 }) {
+  const definition = obtenirDefinitionBande(campagne.factionId);
   return (
     <section className="metrics-grid" aria-label="Résumé de la bande">
       <MetricCard
         icon={Users}
         label="Combattants"
         value={`${synthese.effectif}`}
-        unit="/ 15"
+        unit={`/ ${definition.effectifMaximum}`}
         note={`${synthese.heros} héros · ${synthese.hommesDeMain} hommes de main`}
       />
       <MetricCard
@@ -1305,8 +1320,7 @@ function calculerSynthese(campagne: EtatCampagne): Synthese {
     effectif += quantite;
     if (profil.categorie === 'Héros') heros += quantite;
     else hommesDeMain += quantite;
-    coutBande +=
-      combattant.coutAcquisitionTotal ?? combattant.coutAcquisition * quantite;
+    coutBande += combattant.coutAcquisitionTotal;
   }
 
   const experienceTotale = campagne.combattants.reduce(
@@ -1501,6 +1515,7 @@ function WarbandView({
   onCampagneChange: (campagne: EtatCampagne) => void;
   onChangerBande: () => void;
 }) {
+  const definition = obtenirDefinitionBande(campagne.factionId);
   function modifierCombattant(id: string, modification: Partial<Combattant>) {
     onCampagneChange({
       ...campagne,
@@ -1526,7 +1541,7 @@ function WarbandView({
       <PageHeader
         eyebrow="Constructeur de bande"
         title="Ma bande"
-        description="Recrutez, équipez et faites progresser chaque combattant. Les limites Reiklanders sont contrôlées automatiquement."
+        description={`Recrutez, équipez et faites progresser chaque combattant. Les limites ${definition.nom} sont contrôlées automatiquement.`}
         action={
           <div className="page-header-actions">
             <Button
@@ -1538,6 +1553,7 @@ function WarbandView({
             </Button>
             <RecruitDialog
               campagne={campagne}
+              key={campagne.factionId}
               onCampagneChange={onCampagneChange}
             />
           </div>
@@ -1546,19 +1562,40 @@ function WarbandView({
 
       <div className="constructeur-bande-resume">
         <strong>{synthese.coutBande} CO</strong>
-        <span>coût historique d’acquisition · budget initial 500 CO</span>
+        <span>
+          coût historique d’acquisition · budget initial{' '}
+          {definition.budgetInitial} CO
+        </span>
         <div className="budget-track">
           <span
-            style={{ width: `${Math.min(100, synthese.coutBande / 5)}%` }}
+            style={{
+              width: `${Math.min(100, (synthese.coutBande / definition.budgetInitial) * 100)}%`,
+            }}
           />
         </div>
-        <span className={synthese.coutBande > 500 ? 'budget-alert' : ''}>
-          {500 - synthese.coutBande} CO restantes
+        <span
+          className={
+            synthese.coutBande > definition.budgetInitial ? 'budget-alert' : ''
+          }
+        >
+          {definition.budgetInitial - synthese.coutBande} CO restantes
         </span>
       </div>
 
+      <details className="warband-rules-summary">
+        <summary>Règles propres à la bande</summary>
+        <div>
+          {definition.regles.map((regle) => (
+            <p key={regle.titre}>
+              <strong>{regle.titre}.</strong> {regle.description}
+            </p>
+          ))}
+          <small>Source : {definition.source}</small>
+        </div>
+      </details>
+
       <div className="recruitment-grid">
-        {profilsReiklanders.map((profil) => {
+        {definition.profils.map((profil) => {
           const nombre = campagne.combattants
             .filter((item) => item.profilId === profil.id)
             .reduce((total, item) => total + item.quantite, 0);
@@ -1575,6 +1612,11 @@ function WarbandView({
               </div>
               <h3>{profil.nom}</h3>
               <p className="stat-line">{formaterStats(profil.statistiques)}</p>
+              {profil.competencesDisponibles && (
+                <p className="profile-skills">
+                  Compétences : {profil.competencesDisponibles.join(', ')}
+                </p>
+              )}
               <div className="profile-card-footer">
                 <span>
                   {nombre} recruté{nombre > 1 ? 's' : ''}
@@ -1694,12 +1736,17 @@ function RecruitDialog({
   campagne: EtatCampagne;
   onCampagneChange: (campagne: EtatCampagne) => void;
 }) {
+  const definition = obtenirDefinitionBande(campagne.factionId);
+  const profilInitial =
+    definition.profils.find((item) => !item.chef)?.id ??
+    definition.profils[0]!.id;
   const [ouvert, setOuvert] = useState(false);
-  const [profilId, setProfilId] = useState('guerrier');
+  const [profilId, setProfilId] = useState(profilInitial);
   const [groupeId, setGroupeId] = useState('');
   const [nom, setNom] = useState('');
   const [quantite, setQuantite] = useState(1);
   const [selectionEquipement, setSelectionEquipement] = useState<string[]>([]);
+
   const groupeCible = campagne.combattants.find((item) => item.id === groupeId);
   const profil = profilParId(groupeCible?.profilId ?? profilId);
   const creationDeBande =
@@ -1719,14 +1766,36 @@ function RecruitDialog({
   const stockRareInsuffisant = Object.entries(besoinsRares).some(
     ([id, besoin]) => (campagne.inventaire[id] ?? 0) < besoin,
   );
-  const coutUnitaire =
-    coutProfil(profil, campagne) +
-    equipementRecrue.reduce((total, id) => {
+  const nombreMutations = equipementRecrue.filter(
+    (id) => equipementParId(id).categorie === 'Mutation',
+  ).length;
+  const mutationsInsuffisantes =
+    nombreMutations < (profil.minimumMutations ?? 0);
+  const coutEquipementsSelectionnes = equipementRecrue.reduce(
+    (accumulateur, id) => {
       const equipement = equipementParId(id);
       // Un objet rare a déjà été payé au comptoir et provient donc du magot.
-      if (groupeCible && equipement.rareteCommerce !== undefined) return total;
-      return total + coutEquipement(equipement, campagne);
-    }, 0) +
+      if (groupeCible && equipement.rareteCommerce !== undefined) {
+        return accumulateur;
+      }
+      const multiplicateur =
+        equipement.categorie === 'Mutation' && accumulateur.mutations > 0
+          ? 2
+          : 1;
+      return {
+        total:
+          accumulateur.total +
+          coutEquipement(equipement, campagne, profil) * multiplicateur,
+        mutations:
+          accumulateur.mutations +
+          (equipement.categorie === 'Mutation' ? 1 : 0),
+      };
+    },
+    { total: 0, mutations: 0 },
+  ).total;
+  const coutUnitaire =
+    coutProfil(profil, campagne) +
+    coutEquipementsSelectionnes +
     (groupeCible ? surcoutVeteran(groupeCible.experience) : 0);
   const cout = coutUnitaire * quantiteDemandee;
   const valeurRaresAlloues = Object.entries(besoinsRares).reduce(
@@ -1747,10 +1816,11 @@ function RecruitDialog({
   const limiteAtteinte =
     profil.maximum !== null && nombreProfil + quantiteDemandee > profil.maximum;
   const bandePleine =
-    calculerSynthese(campagne).effectif + quantiteDemandee > 15;
+    calculerSynthese(campagne).effectif + quantiteDemandee >
+    definition.effectifMaximum;
   const fondsInsuffisants = cout > campagne.couronnes;
   const chefDejaRecrute =
-    profil.id === 'capitaine' && campagne.combattants.some((item) => item.chef);
+    Boolean(profil.chef) && campagne.combattants.some((item) => item.chef);
   const disponibiliteVeterans =
     campagne.batailleEnCours?.veterans.disponibilite ?? null;
   const experienceVeteransDepensee =
@@ -1775,7 +1845,7 @@ function RecruitDialog({
   );
 
   function reinitialiserBrouillon() {
-    setProfilId('guerrier');
+    setProfilId(profilInitial);
     setGroupeId('');
     setNom('');
     setQuantite(1);
@@ -1796,7 +1866,8 @@ function RecruitDialog({
       chefDejaRecrute ||
       veteranIndisponible ||
       groupeDepasse ||
-      stockRareInsuffisant
+      stockRareInsuffisant ||
+      mutationsInsuffisantes
     )
       return;
 
@@ -1817,10 +1888,7 @@ function RecruitDialog({
                 ...combattant,
                 quantite: combattant.quantite + quantiteDemandee,
                 coutAcquisitionTotal:
-                  (combattant.coutAcquisitionTotal ??
-                    combattant.coutAcquisition * combattant.quantite) +
-                  cout +
-                  valeurRaresAlloues,
+                  combattant.coutAcquisitionTotal + cout + valeurRaresAlloues,
               }
             : combattant,
         ),
@@ -1849,7 +1917,7 @@ function RecruitDialog({
       equipementIds: selectionEquipement,
       notes: '',
       quantite: quantiteDemandee,
-      chef: profil.id === 'capitaine',
+      chef: Boolean(profil.chef),
       coutAcquisition: coutUnitaire,
       coutAcquisitionTotal: cout,
       competences: [],
@@ -1873,6 +1941,18 @@ function RecruitDialog({
     );
   }
 
+  function modifierQuantiteEquipement(id: string, variation: number) {
+    const maximum = quantiteMaxEquipement(equipementParId(id), profil);
+    setSelectionEquipement((courante) => {
+      const quantite = courante.filter((item) => item === id).length;
+      const suivante = Math.max(0, Math.min(maximum, quantite + variation));
+      return [
+        ...courante.filter((item) => item !== id),
+        ...Array.from({ length: suivante }, () => id),
+      ];
+    });
+  }
+
   return (
     <Dialog open={ouvert} onOpenChange={changerOuverture}>
       <DialogTrigger render={<Button className="primary-action" size="lg" />}>
@@ -1890,7 +1970,7 @@ function RecruitDialog({
           <DialogHeader>
             <DialogTitle>Recruter un combattant</DialogTitle>
             <DialogDescription>
-              Profils Reiklanders V2bFr, appliqués selon le manifeste de règles
+              Profils {definition.nom}, appliqués selon le manifeste de règles
               de la campagne.
             </DialogDescription>
           </DialogHeader>
@@ -1944,7 +2024,7 @@ function RecruitDialog({
                   setSelectionEquipement([]);
                 }}
               >
-                {profilsReiklanders.map((item) => (
+                {definition.profils.map((item) => (
                   <NativeSelectOption key={item.id} value={item.id}>
                     {item.nom} — {coutProfil(item, campagne)} CO
                   </NativeSelectOption>
@@ -1991,6 +2071,12 @@ function RecruitDialog({
             </div>
             <code>{formaterStats(profil.statistiques)}</code>
             {profil.regleSpeciale && <p>{profil.regleSpeciale}</p>}
+            {profil.competencesDisponibles && (
+              <p>
+                Tables de compétences :{' '}
+                {profil.competencesDisponibles.join(', ')}.
+              </p>
+            )}
           </div>
 
           <div className="equipment-picker">
@@ -2006,29 +2092,66 @@ function RecruitDialog({
               {(groupeCible
                 ? groupeCible.equipementIds.map(equipementParId)
                 : disponibles
-              ).map((item) => (
-                <div className="equipment-option" key={item.id}>
-                  <Checkbox
-                    aria-label={`Ajouter ${item.nom}`}
-                    checked={
-                      groupeCible ? true : selectionEquipement.includes(item.id)
-                    }
-                    disabled={Boolean(groupeCible)}
-                    onCheckedChange={(checked) =>
-                      basculerEquipement(item.id, checked === true)
-                    }
-                  />
-                  <span>
-                    <strong>{item.nom}</strong>
-                    <small>{item.categorie}</small>
-                  </span>
-                  <b>
-                    {groupeCible && item.rareteCommerce !== undefined
-                      ? 'Magot'
-                      : `${coutEquipement(item, campagne)} CO`}
-                  </b>
-                </div>
-              ))}
+              ).map((item) => {
+                const maximum = quantiteMaxEquipement(item, profil);
+                const nombre = equipementRecrue.filter(
+                  (id) => id === item.id,
+                ).length;
+                return (
+                  <div className="equipment-option" key={item.id}>
+                    {maximum === 1 ? (
+                      <Checkbox
+                        aria-label={`Ajouter ${item.nom}`}
+                        checked={groupeCible ? true : nombre === 1}
+                        disabled={Boolean(groupeCible)}
+                        onCheckedChange={(checked) =>
+                          basculerEquipement(item.id, checked === true)
+                        }
+                      />
+                    ) : (
+                      <div className="equipment-quantity">
+                        <Button
+                          aria-label={`Retirer un exemplaire de ${item.nom}`}
+                          disabled={Boolean(groupeCible) || nombre === 0}
+                          onClick={() =>
+                            modifierQuantiteEquipement(item.id, -1)
+                          }
+                          size="icon-sm"
+                          type="button"
+                          variant="ghost"
+                        >
+                          <Minus />
+                        </Button>
+                        <output aria-label={`Quantité de ${item.nom}`}>
+                          {nombre}
+                        </output>
+                        <Button
+                          aria-label={`Ajouter un exemplaire de ${item.nom}`}
+                          disabled={Boolean(groupeCible) || nombre >= maximum}
+                          onClick={() => modifierQuantiteEquipement(item.id, 1)}
+                          size="icon-sm"
+                          type="button"
+                          variant="ghost"
+                        >
+                          <Plus />
+                        </Button>
+                      </div>
+                    )}
+                    <span>
+                      <strong>{item.nom}</strong>
+                      <small>{item.categorie}</small>
+                      {item.regleSpeciale && (
+                        <small>{item.regleSpeciale}</small>
+                      )}
+                    </span>
+                    <b>
+                      {groupeCible && item.rareteCommerce !== undefined
+                        ? 'Magot'
+                        : `${coutEquipement(item, campagne, profil)} CO`}
+                    </b>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -2038,20 +2161,23 @@ function RecruitDialog({
             chefDejaRecrute ||
             veteranIndisponible ||
             groupeDepasse ||
-            stockRareInsuffisant) && (
+            stockRareInsuffisant ||
+            mutationsInsuffisantes) && (
             <div className="form-alert" role="alert">
               <CircleAlert />{' '}
               {fondsInsuffisants
                 ? `Trésor insuffisant : il manque ${cout - campagne.couronnes} CO.`
-                : stockRareInsuffisant
-                  ? 'Le magot ne contient pas assez d’exemplaires des objets rares portés par ce groupe.'
-                  : veteranIndisponible
-                    ? `Réserve vétéran insuffisante : ${experienceVeteransDemandee} XP requis, ${Math.max(0, (disponibiliteVeterans ?? 0) - experienceVeteransDepensee)} encore disponible.`
-                    : groupeDepasse
-                      ? 'Un groupe d’hommes de main ne peut pas dépasser cinq membres.'
-                      : chefDejaRecrute
-                        ? 'Une bande ne peut pas recruter un second Chef.'
-                        : 'La limite de ce profil ou de la bande est atteinte.'}
+                : mutationsInsuffisantes
+                  ? `${profil.nom} doit recevoir au moins ${profil.minimumMutations} mutation à la création.`
+                  : stockRareInsuffisant
+                    ? 'Le magot ne contient pas assez d’exemplaires des objets rares portés par ce groupe.'
+                    : veteranIndisponible
+                      ? `Réserve vétéran insuffisante : ${experienceVeteransDemandee} XP requis, ${Math.max(0, (disponibiliteVeterans ?? 0) - experienceVeteransDepensee)} encore disponible.`
+                      : groupeDepasse
+                        ? 'Un groupe d’hommes de main ne peut pas dépasser cinq membres.'
+                        : chefDejaRecrute
+                          ? 'Une bande ne peut pas recruter un second Chef.'
+                          : 'La limite de ce profil ou de la bande est atteinte.'}
             </div>
           )}
 
@@ -2073,7 +2199,8 @@ function RecruitDialog({
                 chefDejaRecrute ||
                 veteranIndisponible ||
                 groupeDepasse ||
-                stockRareInsuffisant
+                stockRareInsuffisant ||
+                mutationsInsuffisantes
               }
             >
               {groupeCible ? 'Renforcer le groupe' : 'Recruter'}
@@ -2247,6 +2374,7 @@ function CampaignView({
             recrutement={
               <RecruitDialog
                 campagne={campagne}
+                key={campagne.factionId}
                 onCampagneChange={onCampagneChange}
               />
             }
@@ -2623,7 +2751,9 @@ function LibraryView({
                 <div>
                   <strong>Prise en charge Trackheim</strong>
                   <p>
-                    {bandeSelectionnee.slug === 'mercenaires-reiklanders'
+                    {definitionsBandes.some(
+                      (definition) => definition.id === bandeSelectionnee.slug,
+                    )
                       ? 'Règles de composition et recrutement intégrées au constructeur de bande.'
                       : 'Référence consultable. Les profils de recrutement de cette bande ne sont pas encore indexés dans l’application.'}
                   </p>
@@ -2910,12 +3040,14 @@ function HomebrewView({
       <div className="homebrew-grid">
         <PriceTable
           title="Recrues"
-          items={profilsReiklanders.map((profil) => ({
-            id: profil.id,
-            nom: profil.nom,
-            officiel: profil.cout,
-            valeur: campagne.homebrew.coutsRecrues[profil.id],
-          }))}
+          items={obtenirDefinitionBande(campagne.factionId).profils.map(
+            (profil) => ({
+              id: profil.id,
+              nom: profil.nom,
+              officiel: profil.cout,
+              valeur: campagne.homebrew.coutsRecrues[profil.id],
+            }),
+          )}
           onChange={mettreAJourRecrue}
           onToggle={basculerSurchargeRecrue}
         />
@@ -3161,15 +3293,20 @@ function coutProfil(profil: ProfilRecrue, campagne: EtatCampagne) {
   return campagne.homebrew.coutsRecrues[profil.id] ?? profil.cout;
 }
 
-/** Une bande neuve commence avec 500 CO et n’entre en campagne qu’ensuite. */
-function creerEtatCampagne(nomBande: string): EtatCampagne {
+/** Une bande neuve reçoit le budget officiel de sa faction. */
+function creerEtatCampagne(
+  nomBande: string,
+  factionId: FactionId = 'mercenaires-reiklanders',
+): EtatCampagne {
+  const definition = obtenirDefinitionBande(factionId);
   return {
     ...etatInitial,
     revision: 0,
     nomCampagne: 'Hors campagne',
     nomBande,
+    factionId,
     campagneActive: false,
-    couronnes: 500,
+    couronnes: definition.budgetInitial,
     fragments: 0,
     numeroBataille: 0,
     etapesApresBataille: etapesApresBataille.map(() => false),
@@ -3188,94 +3325,20 @@ function creerEtatCampagne(nomBande: string): EtatCampagne {
   };
 }
 
-/**
- * Les campagnes enregistrées avant l’atelier de règles ne contiennent que les
- * overrides de prix. Cette normalisation les enrichit sans perdre leurs choix.
- */
-function normaliserCampagne(campagne: EtatCampagne): EtatCampagne {
-  const homebrew = (campagne.homebrew ?? {}) as Partial<ReglagesHomebrew>;
-  const combattants = (campagne.combattants ?? []).map((combattant) => {
-    const profil = profilParId(combattant.profilId);
-    const equipementIds = combattant.equipementIds ?? [];
-    const coutHistorique = coutProfil(profil, {
-      ...etatInitial,
-      homebrew: { ...etatInitial.homebrew, actifs: false },
-    });
-    return {
-      ...combattant,
-      quantite: Math.max(1, combattant.quantite ?? 1),
-      chef: combattant.chef ?? false,
-      coutAcquisition:
-        combattant.coutAcquisition ??
-        coutHistorique +
-          equipementIds.reduce(
-            (total, id) => total + equipementParId(id).cout,
-            0,
-          ),
-      coutAcquisitionTotal:
-        combattant.coutAcquisitionTotal ??
-        (combattant.coutAcquisition ??
-          coutHistorique +
-            equipementIds.reduce(
-              (total, id) => total + equipementParId(id).cout,
-              0,
-            )) * Math.max(1, combattant.quantite ?? 1),
-      competences: combattant.competences ?? [],
-      blessures: combattant.blessures ?? [],
-      progressions: combattant.progressions ?? [],
-      partiesManquees: Math.max(0, combattant.partiesManquees ?? 0),
-    };
-  });
-  if (!combattants.some((combattant) => combattant.chef)) {
-    const capitaine = combattants.find(
-      (combattant) => combattant.profilId === 'capitaine',
-    );
-    if (capitaine) capitaine.chef = true;
-  }
-
-  return {
-    ...campagne,
-    version: 3,
-    revision: campagne.revision ?? 0,
-    campagneActive: campagne.campagneActive ?? true,
-    rulesetId: campagne.rulesetId ?? ID_RULESET,
-    combattants,
-    inventaire: campagne.inventaire ?? {},
-    batailleEnCours: campagne.batailleEnCours
-      ? {
-          ...campagne.batailleEnCours,
-          veterans: {
-            ...campagne.batailleEnCours.veterans,
-            experienceDepensee: Math.max(
-              0,
-              Number.isSafeInteger(
-                campagne.batailleEnCours.veterans.experienceDepensee,
-              )
-                ? (campagne.batailleEnCours.veterans.experienceDepensee ?? 0)
-                : 0,
-            ),
-          },
-        }
-      : null,
-    homebrew: {
-      ...etatInitial.homebrew,
-      ...homebrew,
-      coutsRecrues: homebrew.coutsRecrues ?? {},
-      coutsEquipements: homebrew.coutsEquipements ?? {},
-      regles: homebrew.regles ?? [],
-    },
-  };
-}
-
-function coutEquipement(equipement: Equipement, campagne: EtatCampagne) {
-  if (!campagne.homebrew.actifs) return equipement.cout;
-  return campagne.homebrew.coutsEquipements[equipement.id] ?? equipement.cout;
+function coutEquipement(
+  equipement: Equipement,
+  campagne: EtatCampagne,
+  profil?: ProfilRecrue,
+) {
+  const coutOfficiel = profil
+    ? coutEquipementPourProfil(equipement, profil)
+    : equipement.cout;
+  if (!campagne.homebrew.actifs) return coutOfficiel;
+  return campagne.homebrew.coutsEquipements[equipement.id] ?? coutOfficiel;
 }
 
 function profilParId(id: string) {
-  const profil = profilsReiklanders.find((candidat) => candidat.id === id);
-  if (!profil) throw new Error(`Profil inconnu : ${id}`);
-  return profil;
+  return obtenirProfil(id);
 }
 
 function equipementParId(id: string) {
@@ -3290,12 +3353,9 @@ function equipementsPourProfil(
   creationDeBande: boolean,
 ) {
   return equipements.filter((item) => {
-    if (item.patchGlm) return false;
     if (!creationDeBande && item.rareteCommerce !== undefined) return false;
-    if (profil.listeEquipement === 'tireurs') return item.listeTireurs;
-    if (!item.listeMercenaires) return false;
-    if (item.reserveAuxHeros) return profil.categorie === 'Héros';
-    return true;
+    if (!creationDeBande && item.categorie === 'Mutation') return false;
+    return equipementAutorise(profil, item);
   });
 }
 

@@ -134,8 +134,8 @@ function construireSources(manifeste: ManifesteRuleset): EntreeSource[] {
       ? {
           role: 'Bande active',
           source: versionBande,
-          certification: referencesRegles.reiklanders.certification,
-          note: 'Version française des Reiklanders utilisée par ce manifeste.',
+          certification: referencesRegles.bandesCore.certification,
+          note: 'Profils et listes des six bandes du livre de règles officiel.',
         }
       : undefined,
   ];
@@ -219,7 +219,7 @@ function VersionCompacte({
         <div>
           <p className="font-heading font-semibold">{manifeste.nom}</p>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            1999 · Rules Review 2005 · VF GLM V1.2fFr · Reiklanders V2bFr
+            1999 · Rules Review 2005 · six bandes officielles de base
           </p>
         </div>
         <div className="flex flex-wrap gap-1.5">

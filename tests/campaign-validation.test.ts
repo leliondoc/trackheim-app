@@ -36,7 +36,7 @@ function batailleMinimale(): BatailleEnCours {
       experienceDepensee: 3,
     },
     jetsRarete: [],
-    personnagesSpeciaux: '',
+    personnel: { version: 1, aucun: false, entrees: [] },
     notes: '',
   };
 }

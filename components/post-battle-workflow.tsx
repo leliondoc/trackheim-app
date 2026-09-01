@@ -43,15 +43,19 @@ import {
   ProgressValue,
 } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
+import { competencesPourProfil } from '@/lib/competences-data';
 import {
   equipements,
-  profilsReiklanders,
+  equipementAutorise,
+  obtenirDefinitionBande,
   type BatailleEnCours,
   type Combattant,
   type Equipement,
   type EtatCampagne,
+  type FactionId,
   type JetRarete,
   type Partie,
+  type ProfilRecrue,
   type Statistiques,
   type SuiviCombattantBataille,
 } from '@/lib/mordheim-data';
@@ -128,11 +132,9 @@ type BrouillonRarete = {
   equipementId: string;
   de1: string;
   de2: string;
+  prix: string;
 };
 
-const MARQUEUR_PROGRESSIONS = 'TRACKHEIM_PROGRESSIONS_V1:';
-const MARQUEUR_BLESSURE = 'TRACKHEIM_BLESSURE_V1:';
-const MARQUEUR_PERSONNEL = 'TRACKHEIM_PERSONNEL_V1:';
 const CHOIX_AUTRE = '__autre__';
 
 function creerBrouillonBataille(): BrouillonBataille {
@@ -187,6 +189,7 @@ export function PostBattleWorkflow({
     equipementId: '',
     de1: '',
     de2: '',
+    prix: '',
   });
   const [personnel, setPersonnel] = useState<Omit<EntreePersonnel, 'id'>>({
     type: 'Franc-tireur',
@@ -231,10 +234,11 @@ export function PostBattleWorkflow({
 
   /* Les actions du workflow ne sont rendues que lorsqu'une bataille existe. */
   const bataille = campagne.batailleEnCours as BatailleEnCours;
+  const definition = obtenirDefinitionBande(campagne.factionId);
 
   const profilsParId = useMemo(
-    () => new Map(profilsReiklanders.map((profil) => [profil.id, profil])),
-    [],
+    () => new Map(definition.profils.map((profil) => [profil.id, profil])),
+    [definition.profils],
   );
   const equipementsParId = useMemo(
     () => new Map(equipements.map((equipement) => [equipement.id, equipement])),
@@ -272,7 +276,7 @@ export function PostBattleWorkflow({
 
   function creerBataille() {
     const valeurAdverse = entierDepuisTexte(creation.valeurAdverse);
-    const profilsSousMinimum = profilsReiklanders.filter((profil) => {
+    const profilsSousMinimum = definition.profils.filter((profil) => {
       const recrutes = campagne.combattants
         .filter((combattant) => combattant.profilId === profil.id)
         .reduce((total, combattant) => total + combattant.quantite, 0);
@@ -281,6 +285,16 @@ export function PostBattleWorkflow({
     if (profilsSousMinimum.length > 0) {
       setErreur(
         `Composition invalide : recrutez au moins ${profilsSousMinimum.map((profil) => profil.nom).join(', ')} avant la première bataille.`,
+      );
+      return;
+    }
+    const effectif = campagne.combattants.reduce(
+      (total, combattant) => total + combattant.quantite,
+      0,
+    );
+    if (effectif < definition.effectifMinimum) {
+      setErreur(
+        `Composition invalide : la bande doit compter au moins ${definition.effectifMinimum} combattants avant la première bataille.`,
       );
       return;
     }
@@ -350,12 +364,12 @@ export function PostBattleWorkflow({
         experienceDepensee: 0,
       },
       jetsRarete: [],
-      personnagesSpeciaux: '',
+      personnel: { version: 1, aucun: false, entrees: [] },
       notes: '',
     };
 
     setLancersExploration('');
-    setRarete({ heroId: '', equipementId: '', de1: '', de2: '' });
+    setRarete({ heroId: '', equipementId: '', de1: '', de2: '', prix: '' });
     setAllocation({ equipementId: '', combattantId: '' });
     setErreur(null);
     onCampagneChange({
@@ -425,13 +439,24 @@ export function PostBattleWorkflow({
   const bonusChallenger = calculerBonusChallenger(
     bataille.valeurAdverse - bataille.valeurAvant,
   );
+  const augurePresente = combattantsParticipants.some(
+    (combattant) =>
+      combattant.profilId === 'soeurs-augure' &&
+      bataille.participants[combattant.id]?.horsCombat === 0,
+  );
   const desExplorationDeBase =
     combattantsParticipants.filter(
       (combattant) =>
         categorieCombattant(combattant, profilsParId) === 'Héros' &&
         bataille.participants[combattant.id]?.horsCombat === 0,
-    ).length + (bataille.resultat === 'Victoire' ? 1 : 0);
-  const candidatsChef = candidatsSuccession(campagne.combattants, profilsParId);
+    ).length +
+    (bataille.resultat === 'Victoire' ? 1 : 0) +
+    (augurePresente ? 1 : 0);
+  const candidatsChef = candidatsSuccession(
+    campagne.combattants,
+    profilsParId,
+    campagne.factionId,
+  );
   const chefPresent = campagne.combattants.some(
     (combattant) => combattant.chef,
   );
@@ -584,6 +609,7 @@ export function PostBattleWorkflow({
       const candidats = candidatsSuccession(
         combattantsApresBlessures,
         profilsParId,
+        campagne.factionId,
       );
       successeurChefId = candidats.length === 1 ? candidats[0].id : null;
       combattantsFinalises = combattantsApresBlessures.map((combattant) => ({
@@ -622,7 +648,18 @@ export function PostBattleWorkflow({
 
   function bilanExperience(combattant: Combattant) {
     const suivi = bataille.participants[combattant.id];
+    const profil = profilsParId.get(combattant.profilId);
     const categorie = categorieCombattant(combattant, profilsParId);
+    if (profil?.gagneExperience === false) {
+      return {
+        survie: 0,
+        chefVainqueur: 0,
+        ennemisHorsCombat: 0,
+        total: 0,
+        progressions: 0,
+        categorie,
+      };
+    }
     const survie = 1;
     const chefVainqueur =
       bataille.resultat === 'Victoire' &&
@@ -661,17 +698,12 @@ export function PostBattleWorkflow({
   ) {
     const suivi = bataille.participants[combattant.id];
     const nombre = bilanExperience(combattant).progressions;
-    const dossier = lireProgressions(
-      suivi.progressionsNote,
-      nombre,
-      suivi.progressions,
-    );
+    const dossier = lireProgressions(nombre, suivi.progressions);
     const saisies = dossier.saisies.map((saisie, position) =>
       position === index ? { ...saisie, ...modification } : saisie,
     );
     modifierParticipant(combattant.id, {
       progressions: { version: 1, saisies },
-      progressionsNote: '',
     });
   }
 
@@ -682,17 +714,25 @@ export function PostBattleWorkflow({
       const suivi = participants[combattant.id];
       if (!suivi || suivi.experienceAppliquee) return combattant;
       const bilan = bilanExperience(combattant);
-      const dossier = lireProgressions(
-        suivi.progressionsNote,
-        bilan.progressions,
-        suivi.progressions,
+      const dossier = lireProgressions(bilan.progressions, suivi.progressions);
+      const profil = profilsParId.get(combattant.profilId);
+      const statistiquesInitiales =
+        profil?.statistiques ?? combattant.statistiques;
+      const maximums = profil?.maximums ?? maximumsHumains;
+      const competencesAutorisees = new Set(
+        profil
+          ? competencesPourProfil(profil, campagne.factionId).map(
+              (competence) => competence.nom,
+            )
+          : [],
       );
       const erreurProgression = validerProgressions(
         combattant,
         dossier.saisies,
         bilan.categorie,
-        profilsParId.get(combattant.profilId)?.statistiques ??
-          combattant.statistiques,
+        statistiquesInitiales,
+        maximums,
+        competencesAutorisees,
       );
       if (erreurProgression) {
         erreurs.push(`${combattant.nom} : ${erreurProgression}`);
@@ -704,8 +744,8 @@ export function PostBattleWorkflow({
         { ...combattant, experience: combattant.experience + bilan.total },
         dossier.saisies,
         bilan.categorie,
-        profilsParId.get(combattant.profilId)?.statistiques ??
-          combattant.statistiques,
+        statistiquesInitiales,
+        maximums,
       );
     });
 
@@ -766,7 +806,7 @@ export function PostBattleWorkflow({
     try {
       if (bataille.exploration.lancers.length < desExplorationDeBase) {
         setErreur(
-          `Il faut au moins ${desExplorationDeBase} dés : un par Héros survivant non hors de combat${bataille.resultat === 'Victoire' ? ' et un pour la victoire' : ''}.`,
+          `Il faut au moins ${desExplorationDeBase} dés : un par Héros survivant non hors de combat${bataille.resultat === 'Victoire' ? ', un pour la victoire' : ''}${augurePresente ? ' et le dé supplémentaire de l’Augure' : ''}.`,
         );
         return;
       }
@@ -775,12 +815,14 @@ export function PostBattleWorkflow({
         setErreur('Conservez au moins un dé d’exploration.');
         return;
       }
-      if (resultat.combinaison && !bataille.exploration.noteResultat.trim()) {
-        setErreur(
-          'Consignez la résolution du lieu spécial trouvé par la combinaison.',
-        );
-        return;
-      }
+      const noteLieu = resultat.combinaison
+        ? [
+            `Lieu spécial : ${resultat.combinaison.lieu}.`,
+            bataille.exploration.noteResultat.trim(),
+          ]
+            .filter(Boolean)
+            .join(' ')
+        : bataille.exploration.noteResultat.trim();
       setErreur(null);
       onCampagneChange({
         ...campagne,
@@ -791,6 +833,7 @@ export function PostBattleWorkflow({
           exploration: {
             ...bataille.exploration,
             fragmentsTrouves: resultat.fragments,
+            noteResultat: noteLieu,
             appliquee: true,
           },
         },
@@ -871,10 +914,7 @@ export function PostBattleWorkflow({
       return;
     }
     if (
-      lirePersonnel(
-        bataille.personnagesSpeciaux,
-        bataille.personnel,
-      ).entrees.some(
+      lirePersonnel(bataille.personnel).entrees.some(
         (entree) =>
           entree.type === 'Dramatis Personae' && entree.heroId === hero.id,
       )
@@ -885,7 +925,20 @@ export function PostBattleWorkflow({
       return;
     }
     try {
-      const reussi = jetRareteReussi(de1, de2, equipement.rareteCommerce);
+      const prixSaisi = entierDepuisTexte(rarete.prix);
+      if (equipement.coutCommerceFormule && prixSaisi <= 0) {
+        setErreur(
+          `Lancez la formule « ${equipement.coutCommerceFormule} » et saisissez le prix obtenu.`,
+        );
+        return;
+      }
+      const bonusMarienburg =
+        campagne.factionId === 'mercenaires-marienburgers' ? 1 : 0;
+      const reussi = jetRareteReussi(
+        de1 + bonusMarienburg,
+        de2,
+        equipement.rareteCommerce,
+      );
       const jet: JetRarete = {
         id: crypto.randomUUID(),
         heroId: hero.id,
@@ -894,14 +947,16 @@ export function PostBattleWorkflow({
         de2,
         reussi,
         achete: false,
-        prix: prixCommerce(equipement, campagne),
+        prix: equipement.coutCommerceFormule
+          ? prixSaisi
+          : prixCommerce(equipement, campagne),
       };
       setErreur(null);
       publierBataille((courante) => ({
         ...courante,
         jetsRarete: [...courante.jetsRarete, jet],
       }));
-      setRarete({ heroId: '', equipementId: '', de1: '', de2: '' });
+      setRarete({ heroId: '', equipementId: '', de1: '', de2: '', prix: '' });
     } catch (cause) {
       setErreur(
         cause instanceof Error ? cause.message : 'Jet de rareté invalide.',
@@ -939,10 +994,7 @@ export function PostBattleWorkflow({
       setErreur('Donnez un nom au personnage spécial.');
       return;
     }
-    const dossier = lirePersonnel(
-      bataille.personnagesSpeciaux,
-      bataille.personnel,
-    );
+    const dossier = lirePersonnel(bataille.personnel);
     let heroRecherche: Combattant | undefined;
     let jetInitiative: number | null = null;
     if (personnel.type === 'Dramatis Personae') {
@@ -1030,7 +1082,6 @@ export function PostBattleWorkflow({
           aucun: false,
           entrees: [...dossier.entrees, entree],
         },
-        personnagesSpeciaux: '',
       }),
       coutApplique ? { couronnes: campagne.couronnes - entree.cout } : {},
     );
@@ -1047,10 +1098,7 @@ export function PostBattleWorkflow({
   }
 
   function aucunPersonnel() {
-    const dossier = lirePersonnel(
-      bataille.personnagesSpeciaux,
-      bataille.personnel,
-    );
+    const dossier = lirePersonnel(bataille.personnel);
     const remboursement = dossier.entrees.reduce(
       (total, entree) => total + (entree.coutApplique ? entree.cout : 0),
       0,
@@ -1063,7 +1111,6 @@ export function PostBattleWorkflow({
           aucun: true,
           entrees: [],
         },
-        personnagesSpeciaux: '',
       }),
       remboursement > 0
         ? { couronnes: campagne.couronnes + remboursement }
@@ -1072,10 +1119,7 @@ export function PostBattleWorkflow({
   }
 
   function supprimerPersonnel(id: string) {
-    const dossier = lirePersonnel(
-      bataille.personnagesSpeciaux,
-      bataille.personnel,
-    );
+    const dossier = lirePersonnel(bataille.personnel);
     const entreeSupprimee = dossier.entrees.find((entree) => entree.id === id);
     publierBataille(
       (courante) => ({
@@ -1085,7 +1129,6 @@ export function PostBattleWorkflow({
           aucun: false,
           entrees: dossier.entrees.filter((entree) => entree.id !== id),
         },
-        personnagesSpeciaux: '',
       }),
       entreeSupprimee?.coutApplique
         ? { couronnes: campagne.couronnes + entreeSupprimee.cout }
@@ -1221,10 +1264,7 @@ export function PostBattleWorkflow({
   const resultatExploration = resoudreExplorationSure(
     bataille.exploration.desConserves,
   );
-  const dossierPersonnel = lirePersonnel(
-    bataille.personnagesSpeciaux,
-    bataille.personnel,
-  );
+  const dossierPersonnel = lirePersonnel(bataille.personnel);
   const personnelRenseigne =
     dossierPersonnel.aucun || dossierPersonnel.entrees.length > 0;
 
@@ -1343,6 +1383,22 @@ export function PostBattleWorkflow({
         <EtapeExperience
           bataille={bataille}
           combattants={combattantsParticipants}
+          factionId={campagne.factionId}
+          differenceValeur={Math.max(
+            0,
+            bataille.valeurAdverse - bataille.valeurAvant,
+          )}
+          reglesChallengerHomebrew={
+            campagne.homebrew.actifs
+              ? campagne.homebrew.regles.filter(
+                  (regle) =>
+                    regle.active &&
+                    `${regle.titre} ${regle.description}`
+                      .toLocaleLowerCase('fr')
+                      .includes('challenger'),
+                )
+              : []
+          }
           bonusChallenger={bonusChallenger}
           profilsParId={profilsParId}
           experiencesAppliquees={experiencesAppliquees}
@@ -1358,6 +1414,7 @@ export function PostBattleWorkflow({
         <EtapeExploration
           bataille={bataille}
           desExplorationDeBase={desExplorationDeBase}
+          augurePresente={augurePresente}
           saisieLancers={
             lancersExploration || bataille.exploration.lancers.join(', ')
           }
@@ -1634,7 +1691,7 @@ function TrackerBataille({
 }: {
   bataille: BatailleEnCours;
   combattants: Combattant[];
-  profilsParId: Map<string, (typeof profilsReiklanders)[number]>;
+  profilsParId: Map<string, ProfilRecrue>;
   onParticipantChange: (
     id: string,
     modification: Partial<SuiviCombattantBataille>,
@@ -1750,7 +1807,7 @@ function EtapeBlessures({
 }: {
   bataille: BatailleEnCours;
   combattants: Combattant[];
-  profilsParId: Map<string, (typeof profilsReiklanders)[number]>;
+  profilsParId: Map<string, ProfilRecrue>;
   blessuresResolues: boolean;
   chefPresent: boolean;
   candidatsChef: Combattant[];
@@ -2166,6 +2223,9 @@ function EtapeBlessures({
 function EtapeExperience({
   bataille,
   combattants,
+  factionId,
+  differenceValeur,
+  reglesChallengerHomebrew,
   bonusChallenger,
   profilsParId,
   experiencesAppliquees,
@@ -2177,8 +2237,11 @@ function EtapeExperience({
 }: {
   bataille: BatailleEnCours;
   combattants: Combattant[];
+  factionId: FactionId;
+  differenceValeur: number;
+  reglesChallengerHomebrew: Array<{ titre: string; description: string }>;
   bonusChallenger: number;
-  profilsParId: Map<string, (typeof profilsReiklanders)[number]>;
+  profilsParId: Map<string, ProfilRecrue>;
   experiencesAppliquees: boolean;
   bilanExperience: (combattant: Combattant) => {
     survie: number;
@@ -2204,7 +2267,7 @@ function EtapeExperience({
     <CarteEtape
       numero={2}
       titre="Expérience et progressions"
-      description={`Le bonus de challenger calculé pour cette bataille est de +${bonusChallenger} XP.`}
+      description={`Écart de valeur : ${differenceValeur} points. Bonus challenger officiel : +${bonusChallenger} XP par combattant admissible.`}
       icone={<Sparkles />}
       action={
         experiencesAppliquees ? (
@@ -2218,12 +2281,33 @@ function EtapeExperience({
         )
       }
     >
+      {reglesChallengerHomebrew.length > 0 && (
+        <Alert>
+          <Sparkles />
+          <AlertTitle>Règle challenger homebrew active</AlertTitle>
+          <AlertDescription>
+            {reglesChallengerHomebrew.map((regle) => (
+              <span className="block" key={regle.titre}>
+                <strong>{regle.titre}</strong> — {regle.description} Utilisez «
+                XP manuel » pour appliquer son écart sans modifier la table
+                officielle.
+              </span>
+            ))}
+          </AlertDescription>
+        </Alert>
+      )}
       <div className="grid gap-3">
         {combattants.map((combattant) => {
           const suivi = bataille.participants[combattant.id];
           const bilan = bilanExperience(combattant);
+          const profil = profilsParId.get(combattant.profilId);
+          const choixCompetences = profil
+            ? competencesPourProfil(profil, factionId).filter(
+                (competence) =>
+                  !combattant.competences.includes(competence.nom),
+              )
+            : [];
           const saisies = lireProgressions(
-            suivi.progressionsNote,
             bilan.progressions,
             suivi.progressions,
           ).saisies;
@@ -2343,9 +2427,7 @@ function EtapeExperience({
                     const choix = resultat
                       ? choixProgression(resultat, bilan.categorie)
                       : [];
-                    const exigeTexte =
-                      resultat?.id === 'competence' ||
-                      resultat?.id === 'gars-doue';
+                    const exigeTexte = resultat?.id === 'gars-doue';
                     return (
                       <div
                         className="grid gap-3 rounded-md border border-stone-500/20 bg-background/40 p-3 md:grid-cols-[110px_1fr]"
@@ -2403,22 +2485,52 @@ function EtapeExperience({
                               </NativeSelectOption>
                             </NativeSelect>
                           )}
+                          {resultat?.id === 'competence' && (
+                            <div className="grid gap-1">
+                              <NativeSelect
+                                aria-label={`Compétence choisie pour ${combattant.nom}`}
+                                disabled={verrouille}
+                                value={saisie.decision}
+                                onChange={(event) =>
+                                  onProgressionChange(combattant, index, {
+                                    decision: event.target.value,
+                                  })
+                                }
+                              >
+                                <NativeSelectOption value="">
+                                  Choisir une compétence autorisée
+                                </NativeSelectOption>
+                                {choixCompetences.map((competence) => (
+                                  <NativeSelectOption
+                                    key={`${competence.categorie}-${competence.nom}`}
+                                    value={competence.nom}
+                                  >
+                                    {competence.categorie} — {competence.nom}
+                                  </NativeSelectOption>
+                                ))}
+                              </NativeSelect>
+                              {choixCompetences.length === 0 && (
+                                <small className="text-muted-foreground">
+                                  Aucune nouvelle compétence disponible dans les
+                                  tables autorisées.
+                                </small>
+                              )}
+                            </div>
+                          )}
                           {exigeTexte && (
-                            <Input
-                              aria-label={`Décision de progression ${index + 1} pour ${combattant.nom}`}
-                              disabled={verrouille}
-                              value={saisie.decision}
-                              onChange={(event) =>
-                                onProgressionChange(combattant, index, {
-                                  decision: event.target.value,
-                                })
-                              }
-                              placeholder={
-                                resultat?.id === 'competence'
-                                  ? 'Nom de la compétence ou du sort'
-                                  : 'Nom du promu et résolution du groupe'
-                              }
-                            />
+                            <div className="grid gap-1">
+                              <Input
+                                aria-label={`Décision de progression ${index + 1} pour ${combattant.nom}`}
+                                disabled={verrouille}
+                                value={saisie.decision}
+                                onChange={(event) =>
+                                  onProgressionChange(combattant, index, {
+                                    decision: event.target.value,
+                                  })
+                                }
+                                placeholder="Nom du promu et résolution du groupe"
+                              />
+                            </div>
                           )}
                           {(saisie.decision === CHOIX_AUTRE ||
                             resultat?.id === 'gars-doue') && (
@@ -2451,6 +2563,7 @@ function EtapeExperience({
 function EtapeExploration({
   bataille,
   desExplorationDeBase,
+  augurePresente,
   saisieLancers,
   resultat,
   onLancersChange,
@@ -2461,6 +2574,7 @@ function EtapeExploration({
 }: {
   bataille: BatailleEnCours;
   desExplorationDeBase: number;
+  augurePresente: boolean;
   saisieLancers: string;
   resultat: ReturnType<typeof resoudreExploration> | null;
   onLancersChange: (texte: string) => void;
@@ -2498,6 +2612,8 @@ function EtapeExploration({
           Ajoutez ensuite les éventuels dés de compétences ou d’objets. Vous
           choisissez au maximum six dés à conserver ; le moteur ne privilégie
           pas automatiquement la somme.
+          {augurePresente &&
+            ' Le total inclut le second dé de l’Augure : ne conservez qu’un seul de ses deux résultats.'}
         </AlertDescription>
       </Alert>
       <Champ
@@ -2541,7 +2657,7 @@ function EtapeExploration({
         </div>
       )}
       {resultat && (
-        <div className="grid gap-3 rounded-md bg-stone-500/10 p-4 sm:grid-cols-3">
+        <div className="grid gap-3 rounded-md bg-stone-500/10 p-4 sm:grid-cols-2 xl:grid-cols-4">
           <MiniValeur libelle="Total" valeur={resultat.total} />
           <MiniValeur libelle="Fragments" valeur={resultat.fragments} />
           <MiniValeur
@@ -2552,17 +2668,24 @@ function EtapeExploration({
                 : 'Aucune'
             }
           />
+          <MiniValeur
+            libelle="Lieu spécial"
+            valeur={resultat.combinaison?.lieu ?? 'Aucun'}
+          />
         </div>
       )}
       {resultat?.combinaison && (
-        <Champ libelle="Résolution du lieu spécial" htmlFor="exploration-note">
+        <Champ
+          libelle={`Conséquences de « ${resultat.combinaison.lieu} »`}
+          htmlFor="exploration-note"
+        >
           <Textarea
             id="exploration-note"
             maxLength={10000}
             disabled={bataille.exploration.appliquee}
             value={bataille.exploration.noteResultat}
             onChange={(event) => onNoteChange(event.target.value)}
-            placeholder="Lieu obtenu, cible choisie et conséquences…"
+            placeholder="Cible choisie, jets complémentaires et conséquences…"
           />
         </Champ>
       )}
@@ -2655,7 +2778,7 @@ function EtapeVeterans({
   onContinue: () => void;
 }) {
   const disponibilite = bataille.veterans.disponibilite;
-  const experienceDepensee = bataille.veterans.experienceDepensee ?? 0;
+  const experienceDepensee = bataille.veterans.experienceDepensee;
   const experienceRestante = Math.max(
     0,
     (disponibilite ?? 0) - experienceDepensee,
@@ -2726,7 +2849,7 @@ function EtapeRarete({
   campagne: EtatCampagne;
   bataille: BatailleEnCours;
   brouillon: BrouillonRarete;
-  profilsParId: Map<string, (typeof profilsReiklanders)[number]>;
+  profilsParId: Map<string, ProfilRecrue>;
   equipementsParId: Map<string, Equipement>;
   onBrouillonChange: (modification: Partial<BrouillonRarete>) => void;
   onAdd: () => void;
@@ -2734,7 +2857,7 @@ function EtapeRarete({
   onContinue: () => void;
 }) {
   const heroesDramatis = new Set(
-    lirePersonnel(bataille.personnagesSpeciaux, bataille.personnel)
+    lirePersonnel(bataille.personnel)
       .entrees.filter((entree) => entree.type === 'Dramatis Personae')
       .map((entree) => entree.heroId),
   );
@@ -2744,7 +2867,14 @@ function EtapeRarete({
       bataille.participants[combattant.id]?.horsCombat === 0 &&
       !heroesDramatis.has(combattant.id),
   );
-  const rares = equipements.filter((equipement) => equipement.rareteCommerce);
+  const rares = equipements.filter(
+    (equipement) =>
+      equipement.rareteCommerce &&
+      Array.from(profilsParId.values()).some((profil) =>
+        equipementAutorise(profil, equipement),
+      ),
+  );
+  const equipementSelectionne = equipementsParId.get(brouillon.equipementId);
   return (
     <CarteEtape
       numero={6}
@@ -2785,7 +2915,7 @@ function EtapeRarete({
             id="rarity-item"
             value={brouillon.equipementId}
             onChange={(event) =>
-              onBrouillonChange({ equipementId: event.target.value })
+              onBrouillonChange({ equipementId: event.target.value, prix: '' })
             }
           >
             <NativeSelectOption value="">Choisir</NativeSelectOption>
@@ -2816,6 +2946,20 @@ function EtapeRarete({
             onChange={(event) => onBrouillonChange({ de2: event.target.value })}
           />
         </Champ>
+        {equipementSelectionne?.coutCommerceFormule && (
+          <Champ libelle="Prix obtenu" htmlFor="rarity-price">
+            <Input
+              id="rarity-price"
+              type="number"
+              min={1}
+              value={brouillon.prix}
+              onChange={(event) =>
+                onBrouillonChange({ prix: event.target.value })
+              }
+              placeholder={equipementSelectionne.coutCommerceFormule}
+            />
+          </Champ>
+        )}
         <div className="flex items-end">
           <Button className="w-full" variant="secondary" onClick={onAdd}>
             <Plus /> Ajouter
@@ -2886,7 +3030,7 @@ function EtapePersonnel({
 }: {
   campagne: EtatCampagne;
   bataille: BatailleEnCours;
-  profilsParId: Map<string, (typeof profilsReiklanders)[number]>;
+  profilsParId: Map<string, ProfilRecrue>;
   dossier: DossierPersonnel;
   brouillon: Omit<EntreePersonnel, 'id'>;
   onBrouillonChange: (
@@ -3368,12 +3512,12 @@ function creerSuiviCombattant(combattantId: string): SuiviCombattantBataille {
     experienceScenario: 0,
     experienceManuelle: 0,
     experienceAppliquee: false,
-    progressionsNote: '',
+    progressions: { version: 1, saisies: [] },
   };
 }
 
 function normaliserEtapes(etapes: boolean[]) {
-  return Array.from({ length: 10 }, (_, index) => etapes[index] ?? false);
+  return [...etapes];
 }
 
 function entierDepuisTexte(valeur: string) {
@@ -3383,7 +3527,7 @@ function entierDepuisTexte(valeur: string) {
 
 function categorieCombattant(
   combattant: Combattant,
-  profilsParId: Map<string, (typeof profilsReiklanders)[number]>,
+  profilsParId: Map<string, ProfilRecrue>,
 ) {
   return profilsParId.get(combattant.profilId)?.categorie ?? 'Hommes de main';
 }
@@ -3393,39 +3537,13 @@ function lireResolutionBlessure(
   structure?: ResolutionBlessureStructuree,
 ): ResolutionBlessureStructuree {
   if (structure?.version === 1) return structure;
-  if (!texte.startsWith(MARQUEUR_BLESSURE)) {
-    return {
-      version: 1,
-      jetSecondaire: null,
-      note: texte,
-      decision: undefined,
-      montant: null,
-    };
-  }
-  try {
-    const donnees = JSON.parse(
-      texte.slice(MARQUEUR_BLESSURE.length),
-    ) as Partial<ResolutionBlessureStructuree>;
-    return {
-      version: 1,
-      jetSecondaire:
-        typeof donnees.jetSecondaire === 'number'
-          ? donnees.jetSecondaire
-          : null,
-      note: typeof donnees.note === 'string' ? donnees.note : '',
-      decision:
-        typeof donnees.decision === 'string' ? donnees.decision : undefined,
-      montant: typeof donnees.montant === 'number' ? donnees.montant : null,
-    };
-  } catch {
-    return {
-      version: 1,
-      jetSecondaire: null,
-      note: '',
-      decision: undefined,
-      montant: null,
-    };
-  }
+  return {
+    version: 1,
+    jetSecondaire: null,
+    note: texte,
+    decision: undefined,
+    montant: null,
+  };
 }
 
 function decrireResolutionBlessure(
@@ -3479,7 +3597,7 @@ function descriptionJetBlessure(
 function validerBlessures(
   combattants: Combattant[],
   bataille: BatailleEnCours,
-  profilsParId: Map<string, (typeof profilsReiklanders)[number]>,
+  profilsParId: Map<string, ProfilRecrue>,
   couronnesDisponibles: number,
 ) {
   let totalRancons = 0;
@@ -3729,11 +3847,19 @@ function blessureParId(id: string) {
 
 function candidatsSuccession(
   combattants: Combattant[],
-  profilsParId: Map<string, (typeof profilsReiklanders)[number]>,
+  profilsParId: Map<string, ProfilRecrue>,
+  factionId: EtatCampagne['factionId'],
 ) {
-  const heroes = combattants.filter(
+  let heroes = combattants.filter(
     (combattant) => categorieCombattant(combattant, profilsParId) === 'Héros',
   );
+  // Sans Vampire, seule la présence d'un Nécromancien maintient une bande
+  // de Morts-Vivants ; un Paria ne peut pas reprendre le commandement.
+  if (factionId === 'morts-vivants') {
+    heroes = heroes.filter(
+      (combattant) => combattant.profilId === 'morts-vivants-necromancien',
+    );
+  }
   if (heroes.length === 0) return [];
   const commandement = Math.max(
     ...heroes.map((hero) => hero.statistiques.commandement),
@@ -3746,29 +3872,10 @@ function candidatsSuccession(
 }
 
 function lireProgressions(
-  texte: string,
   nombre: number,
-  structure?: DossierProgressions,
+  structure: DossierProgressions,
 ): DossierProgressions {
-  let saisies: SaisieProgression[] = [];
-  if (structure?.version === 1 && Array.isArray(structure.saisies)) {
-    saisies = structure.saisies;
-  } else if (texte.startsWith(MARQUEUR_PROGRESSIONS)) {
-    try {
-      const donnees = JSON.parse(
-        texte.slice(MARQUEUR_PROGRESSIONS.length),
-      ) as Partial<DossierProgressions>;
-      if (Array.isArray(donnees.saisies)) {
-        saisies = donnees.saisies.map((saisie) => ({
-          jet: typeof saisie.jet === 'number' ? saisie.jet : null,
-          decision: typeof saisie.decision === 'string' ? saisie.decision : '',
-          note: typeof saisie.note === 'string' ? saisie.note : '',
-        }));
-      }
-    } catch {
-      saisies = [];
-    }
-  }
+  const saisies: SaisieProgression[] = [...structure.saisies];
   while (saisies.length < nombre)
     saisies.push({ jet: null, decision: '', note: '' });
   return { version: 1, saisies: saisies.slice(0, nombre) };
@@ -3807,9 +3914,12 @@ function validerProgressions(
   saisies: SaisieProgression[],
   categorie: 'Héros' | 'Hommes de main',
   statistiquesInitiales: Statistiques,
+  maximums: Statistiques,
+  competencesAutorisees: Set<string>,
 ) {
   /* Les jets multiples se contrôlent dans l'ordre : chaque hausse modifie la suivante. */
   const statistiquesSimulees = { ...combattant.statistiques };
+  const competencesSimulees = new Set(combattant.competences);
   for (const saisie of saisies) {
     const resultat = progressionSure(saisie.jet, categorie);
     if (!resultat) return 'chaque progression exige un jet 2D6 valide.';
@@ -3828,6 +3938,17 @@ function validerProgressions(
     if (resultat.id === 'gars-doue' && !saisie.note.trim()) {
       return '« Ce gars est doué » exige la résolution complète du nouveau Héros et du groupe.';
     }
+    if (resultat.id === 'competence') {
+      if (!competencesAutorisees.has(saisie.decision)) {
+        return 'la compétence choisie ne fait pas partie des tables autorisées pour ce Héros.';
+      }
+      if (competencesSimulees.has(saisie.decision)) {
+        return 'une même compétence ne peut pas être choisie deux fois.';
+      }
+      competencesSimulees.add(saisie.decision);
+      continue;
+    }
+    if (resultat.id === 'gars-doue') continue;
     const caracteristique =
       saisie.decision === CHOIX_AUTRE
         ? CHOIX_AUTRE
@@ -3842,6 +3963,7 @@ function validerProgressions(
         caracteristique,
         categorie,
         statistiquesInitiales,
+        maximums,
       )
     ) {
       return `${caracteristique} est déjà au maximum : effectuez la relance requise ou notez un remplacement autorisé.`;
@@ -3852,6 +3974,7 @@ function validerProgressions(
         caracteristique,
         categorie,
         statistiquesInitiales,
+        maximums,
       );
     }
   }
@@ -3863,6 +3986,7 @@ function appliquerProgressionsCombattant(
   saisies: SaisieProgression[],
   categorie: 'Héros' | 'Hommes de main',
   statistiquesInitiales: Statistiques,
+  maximums: Statistiques,
 ) {
   const statistiques = { ...combattant.statistiques };
   const competences = [...combattant.competences];
@@ -3888,6 +4012,7 @@ function appliquerProgressionsCombattant(
           caracteristique,
           categorie,
           statistiquesInitiales,
+          maximums,
         );
     }
     const details = [
@@ -3921,10 +4046,11 @@ function maximumProgression(
   cle: keyof Statistiques,
   categorie: 'Héros' | 'Hommes de main',
   statistiquesInitiales: Statistiques,
+  maximums: Statistiques,
 ) {
-  if (categorie === 'Héros') return maximumsHumains[cle];
+  if (categorie === 'Héros') return maximums[cle];
   /* Un Homme de main ne peut dépasser son profil initial que d'un point. */
-  return Math.min(maximumsHumains[cle], statistiquesInitiales[cle] + 1);
+  return Math.min(maximums[cle], statistiquesInitiales[cle] + 1);
 }
 
 function peutAugmenter(
@@ -3932,11 +4058,12 @@ function peutAugmenter(
   libelle: string,
   categorie: 'Héros' | 'Hommes de main',
   statistiquesInitiales: Statistiques,
+  maximums: Statistiques,
 ) {
   const cle = cleCaracteristique(libelle);
   return cle
     ? statistiques[cle] <
-        maximumProgression(cle, categorie, statistiquesInitiales)
+        maximumProgression(cle, categorie, statistiquesInitiales, maximums)
     : true;
 }
 
@@ -3945,11 +4072,12 @@ function augmenterCaracteristique(
   libelle: string,
   categorie: 'Héros' | 'Hommes de main',
   statistiquesInitiales: Statistiques,
+  maximums: Statistiques,
 ) {
   const cle = cleCaracteristique(libelle);
   if (!cle) return;
   statistiques[cle] = Math.min(
-    maximumProgression(cle, categorie, statistiquesInitiales),
+    maximumProgression(cle, categorie, statistiquesInitiales, maximums),
     statistiques[cle] + 1,
   );
 }
@@ -3995,73 +4123,22 @@ function prixCommerce(equipement: Equipement, campagne: EtatCampagne) {
   return equipement.coutCommerce ?? equipement.cout;
 }
 
-function lirePersonnel(
-  texte: string,
-  structure?: DossierPersonnel,
-): DossierPersonnel {
-  if (structure?.version === 1 && Array.isArray(structure.entrees)) {
-    return structure;
-  }
-  if (!texte) return { version: 1, aucun: false, entrees: [] };
-  if (texte.startsWith(MARQUEUR_PERSONNEL)) {
-    try {
-      const dossier = JSON.parse(
-        texte.slice(MARQUEUR_PERSONNEL.length),
-      ) as DossierPersonnel;
-      if (Array.isArray(dossier.entrees)) {
-        return {
-          version: 1,
-          aucun: Boolean(dossier.aucun),
-          entrees: dossier.entrees.map((entree) => ({
-            ...entree,
-            heroId: entree.heroId ?? '',
-            jetInitiative: entree.jetInitiative ?? null,
-            coutApplique: entree.coutApplique ?? false,
-          })),
-        };
-      }
-    } catch {
-      return { version: 1, aucun: false, entrees: [] };
-    }
-  }
-  return {
-    version: 1,
-    aucun: false,
-    entrees: [
-      {
-        id: 'note-importee',
-        type: 'Autre',
-        nom: 'Note importée',
-        decision: 'Autre',
-        heroId: '',
-        jetInitiative: null,
-        cout: 0,
-        coutApplique: false,
-        note: texte,
-      },
-    ],
-  };
+function lirePersonnel(structure: DossierPersonnel): DossierPersonnel {
+  return structure;
 }
 
 function peutRecevoirEquipement(
   combattant: Combattant,
   equipement: Equipement,
-  profilsParId: Map<string, (typeof profilsReiklanders)[number]>,
+  profilsParId: Map<string, ProfilRecrue>,
 ) {
   const profil = profilsParId.get(combattant.profilId);
   if (!profil) return false;
-  if (equipement.patchGlm) return false;
-  if (equipement.reserveAuxHeros && profil.categorie !== 'Héros') return false;
-  if (profil.listeEquipement === 'tireurs')
-    return equipement.listeTireurs === true;
-  return equipement.listeMercenaires === true;
+  return equipementAutorise(profil, equipement);
 }
 
 function construireNotesPartie(bataille: BatailleEnCours) {
-  const personnel = lirePersonnel(
-    bataille.personnagesSpeciaux,
-    bataille.personnel,
-  );
+  const personnel = lirePersonnel(bataille.personnel);
   const lignesPersonnel = personnel.aucun
     ? ['Personnel spécial : aucun.']
     : personnel.entrees.map(

@@ -5,7 +5,6 @@ import {
   Home,
   Search,
   Settings2,
-  Skull,
   Stamp,
   Swords,
   Users,
@@ -73,7 +72,10 @@ export function Sidebar({
     <aside className="sidebar">
       <div className="brand-block">
         <div className="brand-mark" aria-hidden="true">
-          <Skull />
+          <img
+            alt=""
+            src={`${import.meta.env.BASE_URL}img/trackheim-raven.png`}
+          />
         </div>
         <div>
           <p className="brand-kicker">Mordheim</p>

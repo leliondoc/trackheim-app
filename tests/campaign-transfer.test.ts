@@ -19,17 +19,17 @@ void test('une campagne exportée peut être réimportée sans perte', () => {
   assert.deepEqual(importerCampagneDepuisJson(json), campagne);
 });
 
-void test('un état de campagne brut reste importable', () => {
-  assert.deepEqual(
-    importerCampagneDepuisJson(JSON.stringify(etatInitial)),
-    etatInitial,
+void test('un état brut sans enveloppe Trackheim est refusé', () => {
+  assert.throws(
+    () => importerCampagneDepuisJson(JSON.stringify(etatInitial)),
+    /format de sauvegarde Trackheim/i,
   );
 });
 
 void test('un fichier invalide est refusé avec une erreur lisible', () => {
   assert.throws(
     () => importerCampagneDepuisJson('{"version":3}'),
-    /campagne importée est invalide/i,
+    /format de sauvegarde Trackheim/i,
   );
 });
 

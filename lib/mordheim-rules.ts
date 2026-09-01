@@ -46,7 +46,8 @@ export type ReferenceRegle = {
   note?: string;
 };
 
-export const ID_RULESET = 'mordheim-1999-rules-review-2005-reiklanders';
+export const ID_RULESET = 'mordheim-1999-rules-review-2005-bandes-core';
+export const ID_RULESET_GLM = 'glm-livre-complet-1.2f-bandes-core';
 
 export const sourcesRegles = {
   coeurOfficiel: {
@@ -81,13 +82,13 @@ export const sourcesRegles = {
     url: 'https://sites.google.com/view/grande-librairie-de-mordheim/campagne',
     dateVerification: '2026-08-30',
   },
-  reiklanders: {
-    id: 'glm-reiklanders-2b',
-    titre: 'Mercenaires Reiklanders',
-    version: 'V2bFr (2026-01-15)',
-    autorite: 'edition-glm',
-    url: 'https://sites.google.com/view/grande-librairie-de-mordheim/bandes/mercenaires-reiklanders',
-    dateVerification: '2026-08-30',
+  bandesCore: {
+    id: 'mordheim-1999-bandes-core',
+    titre: 'Mordheim — Warbands',
+    version: 'Livre de règles officiel, partie 2',
+    autorite: 'coeur-officiel',
+    url: 'https://broheim.net/downloads/rules/Mordheim%20-%20Part%202%20-%20Warbands.pdf',
+    dateVerification: '2026-09-01',
   },
 } satisfies Record<string, SourceRegle>;
 
@@ -112,7 +113,7 @@ export const rulesetOfficiel: ManifesteRuleset = {
   nom: 'Mordheim officiel + Rules Review 2005',
   coeurSourceId: 'mordheim-1999-campagnes',
   errataIds: ['mordheim-rules-review-2005'],
-  versionBandeId: 'glm-reiklanders-2b',
+  versionBandeId: 'mordheim-1999-bandes-core',
   modulesOptionnels: [],
   clarifications: [],
   resolutionsConflits: {
@@ -124,7 +125,7 @@ export const rulesetOfficiel: ManifesteRuleset = {
 /** Variante fidèle au Livre complet GLM lorsque le maître de campagne la choisit. */
 export const rulesetGlmStrict: ManifesteRuleset = {
   ...rulesetOfficiel,
-  id: 'glm-livre-complet-1.2f-reiklanders-2b',
+  id: ID_RULESET_GLM,
   nom: 'Livre complet GLM V1.2fFr',
   resolutionsConflits: {
     'succession-chef-lanceur-sort': 'tirage-aleatoire-glm',
@@ -196,11 +197,11 @@ export const referencesRegles = {
     'primaire-vérifiée',
     'p. 152',
   ),
-  reiklanders: ref(
-    'glm-reiklanders-2b',
-    'PDF pp. 1–4 · livre pp. 68–71',
+  bandesCore: ref(
+    'mordheim-1999-bandes-core',
+    'PDF pp. 5–31',
     'bande',
-    'éditorial-glm',
+    'primaire-vérifiée',
   ),
 } satisfies Record<string, ReferenceRegle>;
 
@@ -366,8 +367,62 @@ export type ResultatExploration = {
   des: number[];
   total: number;
   fragments: number;
-  combinaison: { valeur: number; occurrences: number } | null;
+  combinaison: {
+    valeur: number;
+    occurrences: number;
+    lieu: string;
+  } | null;
 };
+
+const lieuxExploration = [
+  [
+    'Puits',
+    'Boutique',
+    'Cadavre',
+    'Traînard',
+    'Chariot renversé',
+    'Masures en ruine',
+  ],
+  [
+    'Taverne',
+    'Forge',
+    'Prisonniers',
+    'Atelier d’archer',
+    'Halles',
+    'Service rendu',
+  ],
+  [
+    'Armurier à poudre',
+    'Sanctuaire',
+    'Maison de ville',
+    'Armurerie',
+    'Cimetière',
+    'Catacombes',
+  ],
+  [
+    'Maison du prêteur',
+    'Laboratoire d’alchimiste',
+    'Joaillier',
+    'Maison du marchand',
+    'Bâtiment effondré',
+    'Entrée des catacombes',
+  ],
+  [
+    'La fosse',
+    'Trésor caché',
+    'Forge naine',
+    'Bande massacrée',
+    'Arène de combat',
+    'Villa d’un noble',
+  ],
+] as const;
+
+export function trouverLieuExploration(occurrences: number, valeur: number) {
+  if (occurrences < 2 || occurrences > 6 || valeur < 1 || valeur > 6) {
+    return null;
+  }
+  return lieuxExploration[occurrences - 2][valeur - 1];
+}
 
 /**
  * Les dés sont ceux que le joueur a décidé de conserver. Le moteur ne choisit
@@ -396,7 +451,11 @@ export function resoudreExploration(
         ([valeurA, nombreA], [valeurB, nombreB]) =>
           nombreB - nombreA || valeurB - valeurA,
       )
-      .map(([valeur, nombre]) => ({ valeur, occurrences: nombre }))[0] ?? null;
+      .map(([valeur, nombre]) => ({
+        valeur,
+        occurrences: nombre,
+        lieu: trouverLieuExploration(nombre, valeur)!,
+      }))[0] ?? null;
 
   return { des, total, fragments: fragmentsPourTotal(total), combinaison };
 }
