@@ -27,17 +27,35 @@ describe('navigation principale', () => {
     history.replaceState(null, '', '#/overview');
   });
 
-  it('démarre sans bande fictive ni faction présélectionnée', async () => {
+  it('ouvre le mode découverte sans imposer la création d’une bande', async () => {
     render(<MordheimApp />);
 
-    const faction = await screen.findByRole('combobox', { name: 'Faction' });
-    expect(faction).toHaveValue('');
+    expect(
+      await screen.findByRole('heading', {
+        name: 'Explorez avant de commencer',
+      }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(
       screen.queryByText(/Bande de vérification/i),
     ).not.toBeInTheDocument();
     expect(
       screen.queryByText(/registre local est illisible/i),
     ).not.toBeInTheDocument();
+  });
+
+  it('laisse consulter la bibliothèque sans aucune bande', async () => {
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    await utilisateur.click(
+      await screen.findByRole('link', { name: /^Bibliothèque$/ }),
+    );
+
+    expect(
+      await screen.findByRole('heading', { name: /Bibliothèque/i }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('écarte silencieusement une ancienne donnée de vérification invalide', async () => {
@@ -48,7 +66,9 @@ describe('navigation principale', () => {
     render(<MordheimApp />);
 
     expect(
-      await screen.findByRole('heading', { name: 'Mes bandes' }),
+      await screen.findByRole('heading', {
+        name: 'Explorez avant de commencer',
+      }),
     ).toBeInTheDocument();
     expect(
       screen.queryByText(/registre local est illisible/i),
@@ -170,6 +190,14 @@ describe('navigation principale', () => {
     const utilisateur = userEvent.setup();
     render(<MordheimApp />);
 
+    await utilisateur.click(
+      (
+        await screen.findAllByRole('button', {
+          name: /Créer ou ouvrir une bande/i,
+        })
+      )[0],
+    );
+
     await utilisateur.selectOptions(
       await screen.findByRole('combobox', { name: 'Faction' }),
       'skavens-du-clan-eshin',
@@ -194,6 +222,14 @@ describe('navigation principale', () => {
   it('sépare la construction de bande du démarrage de campagne', async () => {
     const utilisateur = userEvent.setup();
     render(<MordheimApp />);
+
+    await utilisateur.click(
+      (
+        await screen.findAllByRole('button', {
+          name: /Créer ou ouvrir une bande/i,
+        })
+      )[0],
+    );
 
     await utilisateur.selectOptions(
       await screen.findByRole('combobox', { name: 'Faction' }),

@@ -220,6 +220,142 @@ label:has(input[type='file']:focus-visible) {
   }
 }
 
+.discovery-overview,
+.discovery-settings,
+.discovery-required {
+  min-height: calc(100dvh - 180px);
+}
+
+.discovery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.discovery-entry {
+  position: relative;
+  display: grid;
+  min-height: 180px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 18px;
+  overflow: hidden;
+  border: 0;
+  background:
+    linear-gradient(135deg, rgb(255 249 231 / 88%), rgb(220 197 153 / 62%)),
+    var(--paper-light);
+  box-shadow: 0 14px 30px rgb(55 34 18 / 13%);
+  color: var(--ink);
+  padding: clamp(22px, 4vw, 34px);
+  text-align: left;
+}
+
+.discovery-entry::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--oxblood), var(--brass), transparent);
+  content: '';
+}
+
+button.discovery-entry {
+  cursor: pointer;
+}
+
+button.discovery-entry:hover {
+  background:
+    linear-gradient(135deg, #fff8e5, rgb(217 187 132 / 76%)), var(--paper-light);
+  box-shadow: 0 18px 36px rgb(55 34 18 / 18%);
+  transform: translateY(-2px);
+}
+
+.discovery-entry > svg:first-child {
+  width: 30px;
+  height: 30px;
+  color: var(--oxblood);
+}
+
+.discovery-entry > span {
+  display: grid;
+  gap: 7px;
+}
+
+.discovery-entry small {
+  color: var(--oxblood);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.discovery-entry strong {
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: clamp(21px, 2vw, 28px);
+}
+
+.discovery-entry span span {
+  color: var(--muted-foreground);
+}
+
+.discovery-entry > svg:last-child {
+  width: 18px;
+  color: var(--oxblood);
+}
+
+.discovery-required {
+  display: grid;
+  max-width: 760px;
+  align-content: center;
+  justify-items: start;
+  margin-inline: auto;
+  padding-block: clamp(56px, 10vh, 120px);
+}
+
+.discovery-required-mark {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  margin-bottom: 22px;
+  background: var(--ink);
+  box-shadow: 6px 7px 0 rgb(118 43 37 / 28%);
+  color: var(--paper-light);
+  transform: rotate(-2deg);
+}
+
+.discovery-required h1 {
+  max-width: 680px;
+  margin: 7px 0 14px;
+  font-family: var(--font-pirata), Georgia, serif;
+  font-size: clamp(42px, 7vw, 76px);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.discovery-required > p:not(.eyebrow) {
+  max-width: 650px;
+  color: var(--muted-foreground);
+  font-size: 18px;
+}
+
+.discovery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+@media (max-width: 760px) {
+  .discovery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .discovery-entry {
+    min-height: 0;
+  }
+}
+
 .campaign-manager-dialog {
   border: 2px solid #604a31;
   border-top: 1px solid var(--frame-red);

@@ -132,7 +132,7 @@ export function Topbar({
   onCampagnes,
   onRecherche,
 }: {
-  campagne: EtatCampagne;
+  campagne: EtatCampagne | null;
   erreurSauvegarde: string | null;
   etatSauvegarde: EtatSauvegarde;
   rechercheOuverte: boolean;
@@ -150,9 +150,11 @@ export function Topbar({
     <header className="topbar">
       <div>
         <p className="eyebrow">
-          {campagne.campagneActive === false
-            ? 'Bande active'
-            : 'Campagne active'}
+          {!campagne
+            ? 'Mode découverte'
+            : campagne.campagneActive === false
+              ? 'Bande active'
+              : 'Campagne active'}
         </p>
         <button
           className="campaign-switcher"
@@ -160,37 +162,45 @@ export function Topbar({
           type="button"
         >
           <span>
-            {campagne.campagneActive === false
-              ? campagne.nomBande
-              : campagne.nomCampagne}
+            {!campagne
+              ? 'Créer ou ouvrir une bande'
+              : campagne.campagneActive === false
+                ? campagne.nomBande
+                : campagne.nomCampagne}
           </span>
           <ChevronDown aria-hidden="true" />
         </button>
       </div>
       <div className="topbar-actions">
-        <span
-          aria-live="polite"
-          className={`save-state ${etatSauvegarde}`}
-          role={etatSauvegarde === 'erreur' ? 'alert' : undefined}
-          title={erreurSauvegarde ?? undefined}
-        >
-          {libelles[etatSauvegarde]}
-          {erreurSauvegarde && (
-            <span className="sr-only"> : {erreurSauvegarde}</span>
-          )}
-        </span>
+        {campagne && (
+          <span
+            aria-live="polite"
+            className={`save-state ${etatSauvegarde}`}
+            role={etatSauvegarde === 'erreur' ? 'alert' : undefined}
+            title={erreurSauvegarde ?? undefined}
+          >
+            {libelles[etatSauvegarde]}
+            {erreurSauvegarde && (
+              <span className="sr-only"> : {erreurSauvegarde}</span>
+            )}
+          </span>
+        )}
         <button
           aria-expanded={rechercheOuverte}
           aria-haspopup="dialog"
           aria-keyshortcuts="Control+K Meta+K"
-          aria-label="Ouvrir la recherche globale"
+          aria-label={
+            campagne
+              ? 'Ouvrir la recherche globale'
+              : 'Explorer la bibliothèque'
+          }
           className="search-button"
           onClick={onRecherche}
           type="button"
         >
           <Search aria-hidden="true" />
-          <span>Rechercher</span>
-          <kbd aria-hidden="true">Ctrl K</kbd>
+          <span>{campagne ? 'Rechercher' : 'Explorer'}</span>
+          {campagne && <kbd aria-hidden="true">Ctrl K</kbd>}
         </button>
         <div className="avatar" aria-label="Profil de Troma">
           TR

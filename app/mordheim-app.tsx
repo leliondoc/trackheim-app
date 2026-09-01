@@ -266,7 +266,6 @@ export function MordheimApp() {
         );
         setEtatSauvegarde('erreur');
         setHydratationTerminee(true);
-        setGestionCampagnesOuverte(true);
         setConfigurationRequise(true);
         return;
       }
@@ -281,7 +280,6 @@ export function MordheimApp() {
         versionStockage.current = 0;
         setCampagne(null);
         setConfigurationRequise(true);
-        setGestionCampagnesOuverte(true);
         setErreurSauvegarde(null);
         setEtatSauvegarde('sauvegarde-ok');
         setHydratationTerminee(true);
@@ -298,7 +296,6 @@ export function MordheimApp() {
         if (lecture.statut === 'absente') {
           versionStockage.current = 0;
           setConfigurationRequise(true);
-          setGestionCampagnesOuverte(true);
         } else {
           versionStockage.current = lecture.copie.versionStockage;
           setConfigurationRequise(false);
@@ -611,28 +608,6 @@ export function MordheimApp() {
     [campagne],
   );
 
-  if (hydratationTerminee && !campagne && !conflitSauvegarde) {
-    return (
-      <div className="application first-run-shell">
-        <main className="first-run-background" id="contenu-principal">
-          <p className="eyebrow">Trackheim</p>
-          <h1>Créez votre première bande</h1>
-          <p>Aucune faction ni donnée de démonstration n’est imposée.</p>
-        </main>
-        <CampaignManagerDialog
-          campagneCourante={null}
-          configurationRequise
-          idCourant={idCampagne}
-          onCreate={creerBande}
-          onExport={exporterCampagne}
-          onOpenChange={() => setGestionCampagnesOuverte(true)}
-          onSelect={choisirCampagne}
-          open
-        />
-      </div>
-    );
-  }
-
   function naviguerDepuisRecherche(vueCible: Vue, cible?: string) {
     naviguerVers(vueCible);
     setRechercheOuverte(false);
@@ -654,20 +629,20 @@ export function MordheimApp() {
         <Sidebar vue={vue} onVueChange={naviguerVers} />
 
         <div className="workspace">
-          {campagne && (
-            <Topbar
-              campagne={campagne}
-              erreurSauvegarde={erreurSauvegarde}
-              etatSauvegarde={etatSauvegarde}
-              rechercheOuverte={rechercheOuverte}
-              onCampagnes={() => setGestionCampagnesOuverte(true)}
-              onRecherche={() => {
-                if (!document.querySelector('[role="dialog"]')) {
-                  setRechercheOuverte(true);
-                }
-              }}
-            />
-          )}
+          <Topbar
+            campagne={campagne}
+            erreurSauvegarde={erreurSauvegarde}
+            etatSauvegarde={etatSauvegarde}
+            rechercheOuverte={rechercheOuverte}
+            onCampagnes={() => setGestionCampagnesOuverte(true)}
+            onRecherche={() => {
+              if (!campagne) {
+                naviguerVers('library');
+              } else if (!document.querySelector('[role="dialog"]')) {
+                setRechercheOuverte(true);
+              }
+            }}
+          />
 
           <main
             className="content-wrap"
@@ -797,7 +772,17 @@ export function MordheimApp() {
                   />
                 )}
               </>
-            ) : null}
+            ) : (
+              <DiscoveryContent
+                vue={vue}
+                recherche={rechercheBibliotheque}
+                grade={gradeBibliotheque}
+                onCreate={() => setGestionCampagnesOuverte(true)}
+                onGradeChange={setGradeBibliotheque}
+                onRechercheChange={setRechercheBibliotheque}
+                onVueChange={naviguerVers}
+              />
+            )}
           </main>
           <footer className="site-disclaimer">
             Trackheim est un projet fan non officiel, sans affiliation ni
@@ -816,16 +801,14 @@ export function MordheimApp() {
         />
       )}
 
-      {gestionCampagnesOuverte && campagne && (
+      {gestionCampagnesOuverte && (
         <CampaignManagerDialog
           campagneCourante={campagne}
           configurationRequise={configurationRequise}
           idCourant={idCampagne}
           onCreate={creerBande}
           onExport={exporterCampagne}
-          onOpenChange={(ouvert) =>
-            setGestionCampagnesOuverte(configurationRequise || ouvert)
-          }
+          onOpenChange={setGestionCampagnesOuverte}
           onSelect={choisirCampagne}
           open
         />
@@ -1261,6 +1244,138 @@ function GlobalSearch({
         </footer>
       </Command>
     </CommandDialog>
+  );
+}
+
+function DiscoveryContent({
+  vue,
+  recherche,
+  grade,
+  onCreate,
+  onRechercheChange,
+  onGradeChange,
+  onVueChange,
+}: {
+  vue: Vue;
+  recherche: string;
+  grade: FiltreGrade;
+  onCreate: () => void;
+  onRechercheChange: (recherche: string) => void;
+  onGradeChange: (grade: FiltreGrade) => void;
+  onVueChange: (vue: Vue) => void;
+}) {
+  if (vue === 'library') {
+    return (
+      <LibraryView
+        recherche={recherche}
+        grade={grade}
+        onRechercheChange={onRechercheChange}
+        onGradeChange={onGradeChange}
+      />
+    );
+  }
+
+  if (vue === 'settings') {
+    return (
+      <section className="product-view discovery-settings">
+        <PageHeader
+          eyebrow="Règles et transparence"
+          title="Sources de Trackheim"
+          description="Le référentiel peut être consulté sans créer de bande. Les choix propres à une campagne restent disponibles une fois votre registre ouvert."
+        />
+        <RulesetProvenance rulesetId={rulesetOfficiel.id} variant="detailed" />
+      </section>
+    );
+  }
+
+  if (vue !== 'overview') {
+    const contenu: Record<
+      Exclude<Vue, 'overview' | 'library' | 'settings'>,
+      { titre: string; texte: string }
+    > = {
+      warband: {
+        titre: 'Le constructeur attend votre bande',
+        texte:
+          'Choisissez une faction uniquement lorsque vous souhaitez commencer à recruter et équiper vos combattants.',
+      },
+      campaign: {
+        titre: 'Aucune campagne ouverte',
+        texte:
+          'Vous pouvez parcourir Trackheim librement. Une bande devient nécessaire seulement pour enregistrer des batailles et une progression.',
+      },
+      homebrew: {
+        titre: 'Les règles maison sont liées à une bande',
+        texte:
+          'Ouvrez un registre quand vous voudrez créer des variantes. La bibliothèque officielle reste accessible sans inscription.',
+      },
+    };
+    const page = contenu[vue];
+    return (
+      <section className="product-view discovery-required">
+        <div className="discovery-required-mark" aria-hidden="true">
+          <Shield />
+        </div>
+        <p className="eyebrow">Fonction de suivi</p>
+        <h1>{page.titre}</h1>
+        <p>{page.texte}</p>
+        <div className="discovery-actions">
+          <Button className="primary-action" onClick={onCreate} size="lg">
+            <UserPlus aria-hidden="true" /> Créer ou ouvrir une bande
+          </Button>
+          <Button
+            onClick={() => onVueChange('library')}
+            size="lg"
+            variant="outline"
+          >
+            <BookOpen aria-hidden="true" /> Consulter la bibliothèque
+          </Button>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="product-view discovery-overview">
+      <PageHeader
+        eyebrow="Bienvenue dans Trackheim"
+        title="Explorez avant de commencer"
+        description="Consultez les bandes, les profils et les sources librement. Créez un registre seulement quand vous êtes prêt à construire votre propre bande."
+        action={
+          <Button className="primary-action" onClick={onCreate} size="lg">
+            <UserPlus aria-hidden="true" /> Créer ou ouvrir une bande
+          </Button>
+        }
+      />
+      <div className="discovery-grid">
+        <button
+          className="discovery-entry discovery-entry-library"
+          onClick={() => onVueChange('library')}
+          type="button"
+        >
+          <BookOpen aria-hidden="true" />
+          <span>
+            <small>Accès libre</small>
+            <strong>Bibliothèque des bandes</strong>
+            <span>
+              Comparez les factions officielles, leurs profils et leur niveau de
+              certification.
+            </span>
+          </span>
+          <ExternalLink aria-hidden="true" />
+        </button>
+        <div className="discovery-entry discovery-entry-guide">
+          <Shield aria-hidden="true" />
+          <span>
+            <small>Données locales</small>
+            <strong>Aucun compte requis</strong>
+            <span>
+              Vos bandes restent sur cet appareil et peuvent être exportées en
+              JSON à tout moment.
+            </span>
+          </span>
+        </div>
+      </div>
+    </section>
   );
 }
 
