@@ -27,12 +27,12 @@ describe('navigation principale', () => {
     history.replaceState(null, '', '#/overview');
   });
 
-  it('ouvre le mode découverte sans imposer la création d’une bande', async () => {
+  it('ouvre l’application normalement sans imposer la création d’une bande', async () => {
     render(<MordheimApp />);
 
     expect(
       await screen.findByRole('heading', {
-        name: 'Explorez avant de commencer',
+        name: 'Vue d’ensemble',
       }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('navigation principale', () => {
 
     expect(
       await screen.findByRole('heading', {
-        name: 'Explorez avant de commencer',
+        name: 'Vue d’ensemble',
       }),
     ).toBeInTheDocument();
     expect(
@@ -191,11 +191,7 @@ describe('navigation principale', () => {
     render(<MordheimApp />);
 
     await utilisateur.click(
-      (
-        await screen.findAllByRole('button', {
-          name: /Créer ou ouvrir une bande/i,
-        })
-      )[0],
+      await screen.findByRole('link', { name: /^Ma bande$/ }),
     );
 
     await utilisateur.selectOptions(
@@ -224,11 +220,7 @@ describe('navigation principale', () => {
     render(<MordheimApp />);
 
     await utilisateur.click(
-      (
-        await screen.findAllByRole('button', {
-          name: /Créer ou ouvrir une bande/i,
-        })
-      )[0],
+      await screen.findByRole('link', { name: /^Ma bande$/ }),
     );
 
     await utilisateur.selectOptions(

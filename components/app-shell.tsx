@@ -151,25 +151,29 @@ export function Topbar({
       <div>
         <p className="eyebrow">
           {!campagne
-            ? 'Mode découverte'
+            ? 'Trackheim'
             : campagne.campagneActive === false
               ? 'Bande active'
               : 'Campagne active'}
         </p>
-        <button
-          className="campaign-switcher"
-          onClick={onCampagnes}
-          type="button"
-        >
-          <span>
-            {!campagne
-              ? 'Créer ou ouvrir une bande'
-              : campagne.campagneActive === false
+        {campagne ? (
+          <button
+            className="campaign-switcher"
+            onClick={onCampagnes}
+            type="button"
+          >
+            <span>
+              {campagne.campagneActive === false
                 ? campagne.nomBande
                 : campagne.nomCampagne}
-          </span>
-          <ChevronDown aria-hidden="true" />
-        </button>
+            </span>
+            <ChevronDown aria-hidden="true" />
+          </button>
+        ) : (
+          <p className="campaign-switcher campaign-switcher-empty">
+            Aucune bande active
+          </p>
+        )}
       </div>
       <div className="topbar-actions">
         {campagne && (
@@ -192,14 +196,14 @@ export function Topbar({
           aria-label={
             campagne
               ? 'Ouvrir la recherche globale'
-              : 'Explorer la bibliothèque'
+              : 'Rechercher dans la bibliothèque'
           }
           className="search-button"
           onClick={onRecherche}
           type="button"
         >
           <Search aria-hidden="true" />
-          <span>{campagne ? 'Rechercher' : 'Explorer'}</span>
+          <span>Rechercher</span>
           {campagne && <kbd aria-hidden="true">Ctrl K</kbd>}
         </button>
         <div className="avatar" aria-label="Profil de Troma">

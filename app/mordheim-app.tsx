@@ -773,14 +773,13 @@ export function MordheimApp() {
                 )}
               </>
             ) : (
-              <DiscoveryContent
+              <EmptyApplicationContent
                 vue={vue}
                 recherche={rechercheBibliotheque}
                 grade={gradeBibliotheque}
-                onCreate={() => setGestionCampagnesOuverte(true)}
+                onCreate={creerBande}
                 onGradeChange={setGradeBibliotheque}
                 onRechercheChange={setRechercheBibliotheque}
-                onVueChange={naviguerVers}
               />
             )}
           </main>
@@ -1247,23 +1246,24 @@ function GlobalSearch({
   );
 }
 
-function DiscoveryContent({
+function EmptyApplicationContent({
   vue,
   recherche,
   grade,
   onCreate,
   onRechercheChange,
   onGradeChange,
-  onVueChange,
 }: {
   vue: Vue;
   recherche: string;
   grade: FiltreGrade;
-  onCreate: () => void;
+  onCreate: (nomBande: string, factionId: FactionId) => void;
   onRechercheChange: (recherche: string) => void;
   onGradeChange: (grade: FiltreGrade) => void;
-  onVueChange: (vue: Vue) => void;
 }) {
+  const [nomBande, setNomBande] = useState('');
+  const [factionSelectionnee, setFactionSelectionnee] = useState('');
+
   if (vue === 'library') {
     return (
       <LibraryView
@@ -1277,102 +1277,118 @@ function DiscoveryContent({
 
   if (vue === 'settings') {
     return (
-      <section className="product-view discovery-settings">
+      <section className="product-view empty-app-settings">
         <PageHeader
-          eyebrow="Règles et transparence"
-          title="Sources de Trackheim"
-          description="Le référentiel peut être consulté sans créer de bande. Les choix propres à une campagne restent disponibles une fois votre registre ouvert."
+          eyebrow="Paramètres"
+          title="Manifeste des règles"
+          description="Référentiel officiel utilisé par Trackheim. Les réglages propres à une campagne apparaîtront lorsqu’une bande sera active."
         />
         <RulesetProvenance rulesetId={rulesetOfficiel.id} variant="detailed" />
       </section>
     );
   }
 
-  if (vue !== 'overview') {
-    const contenu: Record<
-      Exclude<Vue, 'overview' | 'library' | 'settings'>,
-      { titre: string; texte: string }
-    > = {
-      warband: {
-        titre: 'Le constructeur attend votre bande',
-        texte:
-          'Choisissez une faction uniquement lorsque vous souhaitez commencer à recruter et équiper vos combattants.',
-      },
-      campaign: {
-        titre: 'Aucune campagne ouverte',
-        texte:
-          'Vous pouvez parcourir Trackheim librement. Une bande devient nécessaire seulement pour enregistrer des batailles et une progression.',
-      },
-      homebrew: {
-        titre: 'Les règles maison sont liées à une bande',
-        texte:
-          'Ouvrez un registre quand vous voudrez créer des variantes. La bibliothèque officielle reste accessible sans inscription.',
-      },
-    };
-    const page = contenu[vue];
+  if (vue === 'warband') {
     return (
-      <section className="product-view discovery-required">
-        <div className="discovery-required-mark" aria-hidden="true">
-          <Shield />
-        </div>
-        <p className="eyebrow">Fonction de suivi</p>
-        <h1>{page.titre}</h1>
-        <p>{page.texte}</p>
-        <div className="discovery-actions">
-          <Button className="primary-action" onClick={onCreate} size="lg">
-            <UserPlus aria-hidden="true" /> Créer ou ouvrir une bande
-          </Button>
+      <section className="product-view empty-warband-view">
+        <PageHeader
+          eyebrow="Constructeur de bande"
+          title="Ma bande"
+          description="Choisissez une faction et donnez un nom à votre bande. Le recrutement détaillé commence ensuite."
+        />
+        <form
+          className="empty-warband-builder"
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (!nomBande.trim() || !factionSelectionnee) return;
+            onCreate(nomBande.trim(), factionSelectionnee as FactionId);
+          }}
+        >
+          <div>
+            <p className="eyebrow">Nouvelle bande</p>
+            <h2>Ouvrir un registre</h2>
+            <p>
+              Aucune donnée n’est créée avant la validation de ce formulaire.
+            </p>
+          </div>
+          <label htmlFor="empty-warband-faction">
+            <span>Faction</span>
+            <NativeSelect
+              aria-label="Faction"
+              id="empty-warband-faction"
+              value={factionSelectionnee}
+              onChange={(event) => setFactionSelectionnee(event.target.value)}
+            >
+              <NativeSelectOption disabled value="">
+                Choisir une faction…
+              </NativeSelectOption>
+              {definitionsBandes.map((definition) => (
+                <NativeSelectOption key={definition.id} value={definition.id}>
+                  {definition.nom}
+                </NativeSelectOption>
+              ))}
+            </NativeSelect>
+          </label>
+          <label htmlFor="empty-warband-name">
+            <span>Nom de la bande</span>
+            <Input
+              aria-label="Nom de la nouvelle bande"
+              id="empty-warband-name"
+              maxLength={160}
+              placeholder="Nom de la bande"
+              value={nomBande}
+              onChange={(event) => setNomBande(event.target.value)}
+            />
+          </label>
           <Button
-            onClick={() => onVueChange('library')}
-            size="lg"
-            variant="outline"
+            className="primary-action"
+            disabled={!nomBande.trim() || !factionSelectionnee}
+            type="submit"
           >
-            <BookOpen aria-hidden="true" /> Consulter la bibliothèque
+            <Plus aria-hidden="true" /> Créer la bande
           </Button>
-        </div>
+        </form>
       </section>
     );
   }
 
-  return (
-    <section className="product-view discovery-overview">
-      <PageHeader
-        eyebrow="Bienvenue dans Trackheim"
-        title="Explorez avant de commencer"
-        description="Consultez les bandes, les profils et les sources librement. Créez un registre seulement quand vous êtes prêt à construire votre propre bande."
-        action={
-          <Button className="primary-action" onClick={onCreate} size="lg">
-            <UserPlus aria-hidden="true" /> Créer ou ouvrir une bande
-          </Button>
+  const page =
+    vue === 'campaign'
+      ? {
+          eyebrow: 'Campagne',
+          titre: 'Aucune campagne active',
+          texte:
+            'Les batailles et la progression apparaîtront ici après la création d’une bande.',
+          icone: Swords,
         }
+      : vue === 'homebrew'
+        ? {
+            eyebrow: 'Règles homebrew',
+            titre: 'Aucun registre actif',
+            texte:
+              'Les variantes sont enregistrées séparément pour chaque bande.',
+            icone: FlaskConical,
+          }
+        : {
+            eyebrow: 'Vue d’ensemble',
+            titre: 'Aucune bande active',
+            texte: 'Le résumé de votre bande apparaîtra ici.',
+            icone: LayoutDashboard,
+          };
+  const EmptyIcon = page.icone;
+
+  return (
+    <section className="product-view empty-app-view">
+      <PageHeader
+        eyebrow={page.eyebrow}
+        title={page.eyebrow}
+        description="Trackheim est prêt. Utilisez les onglets pour accéder aux différentes sections."
       />
-      <div className="discovery-grid">
-        <button
-          className="discovery-entry discovery-entry-library"
-          onClick={() => onVueChange('library')}
-          type="button"
-        >
-          <BookOpen aria-hidden="true" />
-          <span>
-            <small>Accès libre</small>
-            <strong>Bibliothèque des bandes</strong>
-            <span>
-              Comparez les factions officielles, leurs profils et leur niveau de
-              certification.
-            </span>
-          </span>
-          <ExternalLink aria-hidden="true" />
-        </button>
-        <div className="discovery-entry discovery-entry-guide">
-          <Shield aria-hidden="true" />
-          <span>
-            <small>Données locales</small>
-            <strong>Aucun compte requis</strong>
-            <span>
-              Vos bandes restent sur cet appareil et peuvent être exportées en
-              JSON à tout moment.
-            </span>
-          </span>
+      <div className="empty-app-panel">
+        <EmptyIcon aria-hidden="true" />
+        <div>
+          <h2>{page.titre}</h2>
+          <p>{page.texte}</p>
         </div>
       </div>
     </section>
