@@ -1499,7 +1499,7 @@ function EmptyApplicationContent({
       <section className="product-view empty-app-view">
         <PageHeader
           eyebrow="Règles homebrew"
-          title="Des variantes, jamais des surprises"
+          title="Règles optionnelles"
           description="Les règles optionnelles et les adaptations maison restent séparées du socle officiel. Elles s’activent uniquement dans le registre de la bande concernée."
         />
         <section className="empty-homebrew-guide">
