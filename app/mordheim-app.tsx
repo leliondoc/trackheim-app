@@ -78,6 +78,7 @@ import {
   calculerValeurBande,
   rulesetGlmStrict,
   rulesetOfficiel,
+  sourcesRegles,
   surcoutVeteran,
 } from '@/lib/mordheim-rules';
 import { RulesetProvenance } from '@/components/ruleset-provenance';
@@ -1299,58 +1300,82 @@ function EmptyApplicationContent({
           title="Ma bande"
           description="Choisissez une faction et donnez un nom à votre bande. Le recrutement détaillé commence ensuite."
         />
-        <form
-          className="empty-warband-builder"
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (!nomBande.trim() || !factionSelectionnee) return;
-            onCreate(nomBande.trim(), factionSelectionnee as FactionId);
-          }}
-        >
-          <div>
-            <p className="eyebrow">Nouvelle bande</p>
-            <h2>Ouvrir un registre</h2>
-            <p>
-              Aucune donnée n’est créée avant la validation de ce formulaire.
-            </p>
-          </div>
-          <label htmlFor="empty-warband-faction">
-            <span>Faction</span>
-            <NativeSelect
-              aria-label="Faction"
-              id="empty-warband-faction"
-              value={factionSelectionnee}
-              onChange={(event) => setFactionSelectionnee(event.target.value)}
-            >
-              <NativeSelectOption disabled value="">
-                Choisir une faction…
-              </NativeSelectOption>
-              {definitionsBandes.map((definition) => (
-                <NativeSelectOption key={definition.id} value={definition.id}>
-                  {definition.nom}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
-          </label>
-          <label htmlFor="empty-warband-name">
-            <span>Nom de la bande</span>
-            <Input
-              aria-label="Nom de la nouvelle bande"
-              id="empty-warband-name"
-              maxLength={160}
-              placeholder="Nom de la bande"
-              value={nomBande}
-              onChange={(event) => setNomBande(event.target.value)}
-            />
-          </label>
-          <Button
-            className="primary-action"
-            disabled={!nomBande.trim() || !factionSelectionnee}
-            type="submit"
+        <div className="empty-warband-layout">
+          <form
+            className="empty-warband-builder"
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (!nomBande.trim() || !factionSelectionnee) return;
+              onCreate(nomBande.trim(), factionSelectionnee as FactionId);
+            }}
           >
-            <Plus aria-hidden="true" /> Créer la bande
-          </Button>
-        </form>
+            <div>
+              <p className="eyebrow">Nouvelle bande</p>
+              <h2>Ouvrir un registre</h2>
+              <p>
+                Aucune donnée n’est créée avant la validation de ce formulaire.
+              </p>
+            </div>
+            <label htmlFor="empty-warband-faction">
+              <span>Faction</span>
+              <NativeSelect
+                aria-label="Faction"
+                id="empty-warband-faction"
+                value={factionSelectionnee}
+                onChange={(event) => setFactionSelectionnee(event.target.value)}
+              >
+                <NativeSelectOption disabled value="">
+                  Choisir une faction…
+                </NativeSelectOption>
+                {definitionsBandes.map((definition) => (
+                  <NativeSelectOption key={definition.id} value={definition.id}>
+                    {definition.nom}
+                  </NativeSelectOption>
+                ))}
+              </NativeSelect>
+            </label>
+            <label htmlFor="empty-warband-name">
+              <span>Nom de la bande</span>
+              <Input
+                aria-label="Nom de la nouvelle bande"
+                id="empty-warband-name"
+                maxLength={160}
+                placeholder="Nom de la bande"
+                value={nomBande}
+                onChange={(event) => setNomBande(event.target.value)}
+              />
+            </label>
+            <Button
+              className="primary-action"
+              disabled={!nomBande.trim() || !factionSelectionnee}
+              type="submit"
+            >
+              <Plus aria-hidden="true" /> Créer la bande
+            </Button>
+          </form>
+
+          <aside className="empty-rulebook-note">
+            <p className="eyebrow">Avant la première bataille</p>
+            <h2>Ce que prévoit le livre officiel</h2>
+            <ul className="empty-rule-facts">
+              <li>Un chef et au moins trois combattants pour commencer.</li>
+              <li>Des Héros individuels et des groupes d’Hommes de main.</li>
+              <li>Le trésor non dépensé reste disponible pour la suite.</li>
+              <li>
+                La valeur de bande évolue avec l’effectif et l’expérience.
+              </li>
+            </ul>
+            <a
+              className="empty-source-link"
+              href={sourcesRegles.bandesCore.url}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <FileText aria-hidden="true" /> Consulter le livre des bandes
+              <IndicationNouvelOnglet />
+            </a>
+          </aside>
+        </div>
       </section>
     );
   }
@@ -1361,7 +1386,7 @@ function EmptyApplicationContent({
         <PageHeader
           eyebrow="Vue d’ensemble"
           title="Vue d’ensemble"
-          description="Votre espace de jeu est prêt. Aucune donnée ne sera créée sans votre accord."
+          description="Composez votre bande, menez la campagne et appliquez chaque étape d’après-bataille dans un seul registre."
         />
 
         <section
@@ -1369,11 +1394,11 @@ function EmptyApplicationContent({
           aria-labelledby="empty-overview-title"
         >
           <div className="empty-overview-copy">
-            <p className="eyebrow">Premier registre</p>
-            <h2 id="empty-overview-title">Votre bande commence ici</h2>
+            <p className="eyebrow">Commencer une chronique</p>
+            <h2 id="empty-overview-title">Bâtissez votre première bande</h2>
             <p>
-              Choisissez une faction officielle, recrutez vos combattants puis
-              suivez leur progression au fil des batailles.
+              Choisissez une faction officielle, recrutez vos combattants et
+              préparez une feuille de bande prête pour la table.
             </p>
             <div className="empty-overview-actions">
               <Button
@@ -1396,13 +1421,32 @@ function EmptyApplicationContent({
 
           <aside className="empty-overview-rules">
             <img alt="" aria-hidden="true" src="./img/trackheim-raven.png" />
-            <div>
-              <p className="eyebrow">Prêt pour la table</p>
-              <h3>Les règles sont déjà en place</h3>
-              <p>
-                Profils officiels, valeur de bande, expérience, blessures et
-                séquence d’après-bataille sont réunis dans le même registre.
-              </p>
+            <div className="empty-overview-rules-copy">
+              <p className="eyebrow">Une campagne complète</p>
+              <h3>Du recrutement aux séquelles</h3>
+              <ol className="empty-overview-flow">
+                <li>
+                  <span>01</span>
+                  <div>
+                    <strong>Constituez l’effectif</strong>
+                    <p>Profils, équipement, trésor et valeur de bande.</p>
+                  </div>
+                </li>
+                <li>
+                  <span>02</span>
+                  <div>
+                    <strong>Jouez la bataille</strong>
+                    <p>Adversaire, scénario, expérience et résultat.</p>
+                  </div>
+                </li>
+                <li>
+                  <span>03</span>
+                  <div>
+                    <strong>Résolvez l’après-bataille</strong>
+                    <p>Blessures, revenus, exploration et progression.</p>
+                  </div>
+                </li>
+              </ol>
             </div>
           </aside>
         </section>
@@ -1410,47 +1454,80 @@ function EmptyApplicationContent({
     );
   }
 
-  const page =
-    vue === 'campaign'
-      ? {
-          eyebrow: 'Campagne',
-          titre: 'Aucune campagne active',
-          texte:
-            'Les batailles et la progression apparaîtront ici après la création d’une bande.',
-          icone: Swords,
-        }
-      : vue === 'homebrew'
-        ? {
-            eyebrow: 'Règles homebrew',
-            titre: 'Aucun registre actif',
-            texte:
-              'Les variantes sont enregistrées séparément pour chaque bande.',
-            icone: FlaskConical,
-          }
-        : {
-            eyebrow: 'Vue d’ensemble',
-            titre: 'Aucune bande active',
-            texte: 'Le résumé de votre bande apparaîtra ici.',
-            icone: LayoutDashboard,
-          };
-  const EmptyIcon = page.icone;
+  if (vue === 'campaign') {
+    return (
+      <section className="product-view empty-app-view">
+        <PageHeader
+          eyebrow="Campagne"
+          title="Entre deux batailles"
+          description="Le livre officiel fixe un ordre précis pour les blessures, l’expérience, les revenus et les achats. Trackheim reprend cette séquence étape par étape."
+        />
+        <section className="empty-campaign-guide">
+          <div className="empty-campaign-intro">
+            <p className="eyebrow">Séquence officielle</p>
+            <h2>Dix étapes, dans le bon ordre</h2>
+            <p>
+              Les jets importants restent visibles des deux joueurs. La bande
+              sera prête à combattre de nouveau après la mise à jour de sa
+              valeur.
+            </p>
+            <a
+              className="empty-source-link"
+              href={sourcesRegles.coeurOfficiel.url}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <FileText aria-hidden="true" /> Lire les règles de campagne
+              <IndicationNouvelOnglet />
+            </a>
+          </div>
+          <ol className="empty-campaign-sequence">
+            {etapesApresBataille.map((etape, index) => (
+              <li key={etape}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{etape}</strong>
+              </li>
+            ))}
+          </ol>
+        </section>
+      </section>
+    );
+  }
 
-  return (
-    <section className="product-view empty-app-view">
-      <PageHeader
-        eyebrow={page.eyebrow}
-        title={page.eyebrow}
-        description="Trackheim est prêt. Utilisez les onglets pour accéder aux différentes sections."
-      />
-      <div className="empty-app-panel">
-        <EmptyIcon aria-hidden="true" />
-        <div>
-          <h2>{page.titre}</h2>
-          <p>{page.texte}</p>
-        </div>
-      </div>
-    </section>
-  );
+  if (vue === 'homebrew') {
+    return (
+      <section className="product-view empty-app-view">
+        <PageHeader
+          eyebrow="Règles homebrew"
+          title="Des variantes, jamais des surprises"
+          description="Les règles optionnelles et les adaptations maison restent séparées du socle officiel. Elles s’activent uniquement dans le registre de la bande concernée."
+        />
+        <section className="empty-homebrew-guide">
+          <div>
+            <p className="eyebrow">Socle protégé</p>
+            <h2>L’officiel reste la référence</h2>
+            <p>
+              Le livre présente ses variantes comme des ajouts facultatifs. Dans
+              Trackheim, aucune d’elles ne modifie silencieusement les profils,
+              les coûts ou la séquence de campagne.
+            </p>
+            <a
+              className="empty-source-link"
+              href={sourcesRegles.coeurOfficiel.url}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <FileText aria-hidden="true" /> Voir les règles optionnelles
+              <IndicationNouvelOnglet />
+            </a>
+          </div>
+          <RulesetProvenance rulesetId={rulesetOfficiel.id} variant="compact" />
+        </section>
+      </section>
+    );
+  }
+
+  return null;
 }
 
 function OverviewView({

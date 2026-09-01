@@ -61,6 +61,44 @@ describe('navigation principale', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
+  it('présente un contenu utile dans chaque vue sans bande', async () => {
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    expect(
+      await screen.findByRole('heading', {
+        name: 'Bâtissez votre première bande',
+      }),
+    ).toBeInTheDocument();
+
+    await utilisateur.click(screen.getByRole('link', { name: /^Ma bande$/ }));
+    expect(
+      await screen.findByRole('heading', {
+        name: 'Ce que prévoit le livre officiel',
+      }),
+    ).toBeInTheDocument();
+
+    await utilisateur.click(screen.getByRole('link', { name: /^Campagne$/ }));
+    expect(
+      await screen.findByRole('heading', {
+        name: 'Dix étapes, dans le bon ordre',
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Mise à jour de la valeur de bande'),
+    ).toBeInTheDocument();
+
+    await utilisateur.click(
+      screen.getByRole('link', { name: /^Règles homebrew$/ }),
+    );
+    expect(
+      await screen.findByRole('heading', {
+        name: 'L’officiel reste la référence',
+      }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
   it('écarte silencieusement une ancienne donnée de vérification invalide', async () => {
     localStorage.setItem(
       cleCopieLocale('campagne-principale'),
