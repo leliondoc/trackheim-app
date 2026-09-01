@@ -594,9 +594,16 @@
 
   .recruit-dialog .equipment-option {
     min-height: 58px;
-    grid-template-columns: 22px minmax(0, 1fr) auto;
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    align-items: start;
     gap: 10px;
     padding: 10px 12px;
+  }
+
+  .recruit-dialog .equipment-option > [data-slot='checkbox'],
+  .recruit-dialog .equipment-quantity,
+  .recruit-dialog .equipment-option > b {
+    margin-top: 2px;
   }
 
   .recruit-dialog [data-slot='checkbox'] {
