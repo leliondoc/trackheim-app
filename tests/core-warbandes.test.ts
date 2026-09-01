@@ -7,14 +7,17 @@ import {
   coutEquipementPourProfil,
   equipementAutorise,
   equipements,
-  etatInitial,
   obtenirDefinitionBande,
   obtenirProfil,
   quantiteMaxEquipement,
   type FactionId,
 } from '../lib/mordheim-data.ts';
+import { campagneVideTest } from './fixtures.ts';
 import { validerCampagneV3 } from '../lib/campaign-validation.ts';
-import { competencesPourProfil } from '../lib/competences-data.ts';
+import {
+  competencesPourProfil,
+  sortsPourHeritageMagique,
+} from '../lib/competences-data.ts';
 
 const factionsAttendues: FactionId[] = [
   'mercenaires-reiklanders',
@@ -166,7 +169,7 @@ describe('catalogue des six bandes officielles', () => {
   it('valide chaque faction et refuse un profil provenant d’une autre bande', () => {
     for (const factionId of factionsAttendues) {
       const campagne = {
-        ...structuredClone(etatInitial),
+        ...campagneVideTest(),
         factionId,
         combattants: [],
       };
@@ -174,8 +177,30 @@ describe('catalogue des six bandes officielles', () => {
     }
 
     const campagneSkaven = {
-      ...structuredClone(etatInitial),
+      ...campagneVideTest(),
       factionId: 'skavens-du-clan-eshin' as const,
+      combattants: [
+        {
+          id: 'capitaine-reiklander',
+          nom: 'Capitaine étranger',
+          profilId: 'capitaine',
+          experience: 20,
+          statut: 'Prêt' as const,
+          statistiques: structuredClone(
+            obtenirProfil('capitaine').statistiques,
+          ),
+          equipementIds: [],
+          notes: '',
+          quantite: 1,
+          chef: true,
+          coutAcquisition: 60,
+          coutAcquisitionTotal: 60,
+          competences: [],
+          blessures: [],
+          progressions: [],
+          partiesManquees: 0,
+        },
+      ],
     };
     assert.equal(validerCampagneV3(campagneSkaven).ok, false);
   });
@@ -198,5 +223,17 @@ describe('catalogue des six bandes officielles', () => {
     assert.equal(superieure.includes('Détermination absolue'), false);
     assert.equal(necromancien.includes('Sorcellerie'), true);
     assert.equal(necromancien.includes('Langage de bataille'), false);
+  });
+
+  it('réserve l’héritage magique aux bandes officiellement concernées', () => {
+    assert.deepEqual(sortsPourHeritageMagique('mercenaires-reiklanders'), []);
+    assert.equal(sortsPourHeritageMagique('soeurs-de-sigmar').length, 6);
+    assert.equal(sortsPourHeritageMagique('culte-des-possedes').length, 6);
+    assert.equal(
+      sortsPourHeritageMagique('soeurs-de-sigmar').includes(
+        'Marteau de Sigmar',
+      ),
+      true,
+    );
   });
 });

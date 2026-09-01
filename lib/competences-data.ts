@@ -81,7 +81,62 @@ const lanceursDeSorts = new Set([
   'possedes-magister',
   'morts-vivants-necromancien',
   'skavens-sorcier',
+  'soeurs-matriarche',
 ]);
+
+const sortsParProfil: Record<string, string[]> = {
+  'possedes-magister': [
+    'Vision de tourment',
+    'Œil de Dieu',
+    'Sacrifice sanglant',
+    'Parole de douleur',
+    'Ailes des ténèbres',
+    'Possession',
+  ],
+  'morts-vivants-necromancien': [
+    'Vol de vie',
+    'Réanimation',
+    'Vision de mort',
+    'Malédiction',
+    'Appel de Vanhel',
+    'Éveil des morts',
+  ],
+  'skavens-sorcier': [
+    'Feu de malepierre',
+    'Enfants du Rat Cornu',
+    'Ronge-destin',
+    'Fureur noire',
+    'Œil du Warp',
+    'Malédiction du sorcier',
+  ],
+  'soeurs-matriarche': [
+    'Marteau de Sigmar',
+    'Cœurs d’acier',
+    'Feu de l’âme',
+    'Bouclier de foi',
+    'Main guérisseuse',
+    'Armure de justice',
+  ],
+};
+
+export function sortsPourProfil(profil: ProfilRecrue) {
+  return sortsParProfil[profil.id] ?? [];
+}
+
+/**
+ * Liste utilisée par le successeur d'un Chef lanceur de sorts. La règle de
+ * campagne lui permet de remplacer sa première progression par un tirage sur
+ * la liste de son ancienne dirigeante ou de son ancien dirigeant.
+ */
+export function sortsPourHeritageMagique(factionId: FactionId) {
+  const profilId =
+    factionId === 'soeurs-de-sigmar'
+      ? 'soeurs-matriarche'
+      : factionId === 'culte-des-possedes'
+        ? 'possedes-magister'
+        : null;
+  return profilId ? (sortsParProfil[profilId] ?? []) : [];
+}
 
 function competenceAutorisee(
   nom: string,

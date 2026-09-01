@@ -132,6 +132,8 @@ describe('blessures, vétérans et rareté', () => {
     assert.equal(disponibiliteVeterans(3, 4), 7);
     assert.equal(jetRareteReussi(4, 5, 9), true);
     assert.equal(jetRareteReussi(3, 5, 9), false);
+    assert.equal(jetRareteReussi(3, 5, 9, 1), true);
+    assert.equal(jetRareteReussi(1, 5, 9, 3), true);
     assert.throws(() => jetRareteReussi(0, 5, 9));
   });
 });

@@ -8,7 +8,7 @@ import {
   ecrireCopieLocale,
   lireCopieLocale,
 } from '../lib/campaign-storage.ts';
-import { etatInitial } from '../lib/mordheim-data.ts';
+import { campagneVideTest } from './fixtures.ts';
 
 class StockageMemoire implements Storage {
   #donnees = new Map<string, string>();
@@ -52,7 +52,7 @@ test('une sauvegarde sans métadonnées du format actuel est refusée', () => {
   const stockage = new StockageMemoire();
   stockage.setItem(
     cleCopieLocale('campagne-principale'),
-    JSON.stringify({ campagne: etatInitial }),
+    JSON.stringify({ campagne: campagneVideTest() }),
   );
 
   assert.equal(
@@ -61,18 +61,51 @@ test('une sauvegarde sans métadonnées du format actuel est refusée', () => {
   );
 });
 
+test('un stockage bloqué est distingué d’une sauvegarde corrompue', () => {
+  const stockageBloque = {
+    getItem() {
+      throw new DOMException('Accès refusé', 'SecurityError');
+    },
+  } as unknown as Storage;
+
+  const lecture = lireCopieLocale(stockageBloque, 'campagne-principale');
+  assert.equal(lecture.statut, 'indisponible');
+});
+
+test('une campagne trop volumineuse est refusée avant toute écriture', () => {
+  const stockage = new StockageMemoire();
+  const campagne = campagneVideTest();
+  campagne.parties = Array.from({ length: 60 }, (_, index) => ({
+    id: `partie-volume-${index}`,
+    scenario: 'Escarmouche',
+    adversaire: 'Adversaire',
+    resultat: 'Victoire' as const,
+    date: '2026-08-30',
+    notes: 'x'.repeat(9_900),
+  }));
+
+  assert.throws(
+    () =>
+      ecrireCopieLocale(stockage, 'campagne-principale', campagne, {
+        auteur: 'test',
+      }),
+    /512 Ko/,
+  );
+  assert.equal(stockage.length, 0);
+});
+
 test('une écriture concurrente est refusée sans écrasement', () => {
   const stockage = new StockageMemoire();
   const premiere = ecrireCopieLocale(
     stockage,
     'campagne-principale',
-    structuredClone(etatInitial),
+    campagneVideTest(),
     { auteur: 'onglet-a', versionAttendue: 0 },
   );
   ecrireCopieLocale(
     stockage,
     'campagne-principale',
-    { ...structuredClone(etatInitial), nomCampagne: 'Autre onglet' },
+    { ...campagneVideTest(), nomCampagne: 'Autre onglet' },
     { auteur: 'onglet-b', versionAttendue: premiere.versionStockage },
   );
 
@@ -81,7 +114,7 @@ test('une écriture concurrente est refusée sans écrasement', () => {
       ecrireCopieLocale(
         stockage,
         'campagne-principale',
-        { ...structuredClone(etatInitial), nomCampagne: 'Version onglet A' },
+        { ...campagneVideTest(), nomCampagne: 'Version onglet A' },
         { auteur: 'onglet-a', versionAttendue: premiere.versionStockage },
       ),
     ConflitSauvegardeLocale,

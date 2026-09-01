@@ -439,6 +439,7 @@ const profilsSkavens: ProfilRecrue[] = [
   profil({
     id: 'skavens-rat-ogre',
     nom: 'Rat-ogre',
+    grandeCreature: true,
     categorie: 'Hommes de main',
     cout: 210,
     minimum: 0,
@@ -505,6 +506,8 @@ export const equipementsBandesCore: Equipement[] = [
     quantitesMaxParProfil: {
       'soeurs-matriarche': 2,
       'soeurs-superieure': 2,
+      'soeurs-augure': 1,
+      'soeurs-novice': 1,
     },
   },
   equipement(

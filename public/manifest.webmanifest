@@ -1,0 +1,19 @@
+{
+  "name": "Trackheim",
+  "short_name": "Trackheim",
+  "description": "Créez votre bande et suivez votre campagne Mordheim.",
+  "lang": "fr",
+  "start_url": "./#/overview",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#efe0bd",
+  "theme_color": "#241a13",
+  "icons": [
+    {
+      "src": "img/trackheim-raven.png",
+      "sizes": "220x212",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -247,9 +247,9 @@ function VersionCompacte({
 
       <p className="mt-3 pt-2 text-xs text-muted-foreground">
         <span className="font-medium text-foreground">Résolution active :</span>{' '}
-        succession magique —{' '}
+        succession magique :{' '}
         {libelleResolution(manifeste, 'succession-chef-lanceur-sort')} ; rapière
-        — {libelleResolution(manifeste, 'reiklanders-rapiere')}.
+        ; rapière : {libelleResolution(manifeste, 'reiklanders-rapiere')}.
       </p>
     </section>
   );

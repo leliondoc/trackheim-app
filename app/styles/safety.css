@@ -99,6 +99,51 @@
   margin-top: 22px;
 }
 
+.storage-warning {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  background: #f0dcb8;
+  color: #351d18;
+}
+
+.storage-warning > svg {
+  color: #762b25;
+}
+
+.storage-warning p {
+  margin: 2px 0 0;
+}
+
+.first-run-shell {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  background: #241a13;
+}
+
+.first-run-background {
+  max-width: 620px;
+  padding: 32px;
+  color: #ead8b6;
+  text-align: center;
+}
+
+.first-run-background h1 {
+  margin: 8px 0;
+  font-family: var(--font-pirata), Georgia, serif;
+  font-size: clamp(40px, 8vw, 76px);
+  font-weight: 400;
+}
+
+label:has(input[type='file']:focus-visible) {
+  outline: 3px solid #762b25;
+  outline-offset: 3px;
+}
+
 .fatal-error button {
   min-height: 44px;
   margin-top: 18px;
@@ -134,6 +179,14 @@
 
   .site-disclaimer {
     font-size: 12px;
+  }
+
+  .storage-warning {
+    grid-template-columns: auto 1fr;
+  }
+
+  .storage-warning [data-slot='button'] {
+    grid-column: 1 / -1;
   }
 
   .step-number,

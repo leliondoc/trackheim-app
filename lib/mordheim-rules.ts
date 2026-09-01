@@ -52,7 +52,7 @@ export const ID_RULESET_GLM = 'glm-livre-complet-1.2f-bandes-core';
 export const sourcesRegles = {
   coeurOfficiel: {
     id: 'mordheim-1999-campagnes',
-    titre: 'Mordheim — Campaigns & Optional Rules',
+    titre: 'Mordheim: Campaigns & Optional Rules',
     version: 'LRB2 officiel, errata 2005 intégrés',
     autorite: 'coeur-officiel',
     url: 'https://www.broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf',
@@ -68,7 +68,7 @@ export const sourcesRegles = {
   },
   livreComplet: {
     id: 'glm-livre-complet-1.2f',
-    titre: 'Livre des Règles de Mordheim — complet VF avec errata',
+    titre: 'Livre des Règles de Mordheim, complet VF avec errata',
     version: 'V1.2fFr (2023-04-10)',
     autorite: 'edition-glm',
     url: 'https://sites.google.com/view/grande-librairie-de-mordheim/regles/livre-des-regles',
@@ -76,7 +76,7 @@ export const sourcesRegles = {
   },
   campagneGlm: {
     id: 'glm-campagne',
-    titre: 'Grande Librairie de Mordheim — Campagne',
+    titre: 'Grande Librairie de Mordheim, Campagne',
     version: 'pages GLM consultées le 2026-08-30',
     autorite: 'edition-glm',
     url: 'https://sites.google.com/view/grande-librairie-de-mordheim/campagne',
@@ -84,7 +84,7 @@ export const sourcesRegles = {
   },
   bandesCore: {
     id: 'mordheim-1999-bandes-core',
-    titre: 'Mordheim — Warbands',
+    titre: 'Mordheim: Warbands',
     version: 'Livre de règles officiel, partie 2',
     autorite: 'coeur-officiel',
     url: 'https://broheim.net/downloads/rules/Mordheim%20-%20Part%202%20-%20Warbands.pdf',
@@ -676,13 +676,21 @@ export function surcoutVeteran(experience: number) {
   return entierPositif(experience) * 2;
 }
 
-export function jetRareteReussi(de1: number, de2: number, rarete: number) {
+export function jetRareteReussi(
+  de1: number,
+  de2: number,
+  rarete: number,
+  bonus = 0,
+) {
   verifierDe(de1, 6);
   verifierDe(de2, 6);
   if (!Number.isInteger(rarete) || rarete < 2 || rarete > 12) {
     throw new Error('La rareté doit être comprise entre 2 et 12.');
   }
-  return de1 + de2 >= rarete;
+  if (!Number.isInteger(bonus) || bonus < 0 || bonus > 6) {
+    throw new Error('Le bonus de rareté est invalide.');
+  }
+  return de1 + de2 + bonus >= rarete;
 }
 
 function ref(

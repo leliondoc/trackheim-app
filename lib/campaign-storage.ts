@@ -5,8 +5,10 @@ import {
 } from './campaign-validation.ts';
 import type { EtatCampagne } from './mordheim-data.ts';
 
-export const CLE_CAMPAGNE_ACTIVE = 'trackheim:campagne-active';
-export const PREFIXE_CAMPAGNE = 'trackheim:campagne:';
+/* L'application n'étant pas encore publiée, le format de production démarre
+   dans un espace propre sans reprendre les jeux de données de vérification. */
+export const CLE_CAMPAGNE_ACTIVE = 'trackheim:v1:campagne-active';
+export const PREFIXE_CAMPAGNE = 'trackheim:v1:campagne:';
 
 export type CopieLocale = {
   campagne: EtatCampagne;
@@ -18,6 +20,7 @@ export type CopieLocale = {
 export type LectureCopieLocale =
   | { statut: 'absente' }
   | { statut: 'valide'; copie: CopieLocale }
+  | { statut: 'indisponible'; erreur: string }
   | { statut: 'invalide'; erreur: string; contenuBrut: string };
 
 export type ResumeCampagneLocale = {
@@ -72,15 +75,14 @@ export function lireCopieLocale(
     contenuBrut = stockage.getItem(cleCopieLocale(idCampagne));
   } catch {
     return {
-      statut: 'invalide',
+      statut: 'indisponible',
       erreur: 'Le navigateur refuse l’accès à la sauvegarde locale.',
-      contenuBrut: '',
     };
   }
   if (contenuBrut === null) return { statut: 'absente' };
   if (
     new TextEncoder().encode(contenuBrut).byteLength >
-    TAILLE_MAX_PAYLOAD_CAMPAGNE + 16_384
+    TAILLE_MAX_PAYLOAD_CAMPAGNE
   ) {
     return {
       statut: 'invalide',
@@ -173,7 +175,15 @@ export function ecrireCopieLocale(
     versionStockage: versionTrouvee + 1,
     auteur: options.auteur,
   };
-  stockage.setItem(cleCopieLocale(idCampagne), JSON.stringify(copie));
+  const contenu = JSON.stringify(copie);
+  if (
+    new TextEncoder().encode(contenu).byteLength > TAILLE_MAX_PAYLOAD_CAMPAGNE
+  ) {
+    throw new Error(
+      'La campagne dépasse la limite de 512 Ko. Exportez-la puis allégez les notes ou les règles maison.',
+    );
+  }
+  stockage.setItem(cleCopieLocale(idCampagne), contenu);
   return copie;
 }
 

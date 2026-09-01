@@ -62,6 +62,8 @@ export type ProfilRecrue = {
   competencesDisponibles?: CategorieCompetence[];
   listesEquipement: ListeEquipementId[];
   chef?: boolean;
+  /** Les grandes créatures comptent 20 points de base dans la valeur de bande. */
+  grandeCreature?: boolean;
   gagneExperience?: boolean;
   minimumMutations?: number;
   regleSpeciale?: string;
@@ -85,6 +87,8 @@ export type Equipement = {
   coutCommerce?: number;
   /** Formule à lancer à la table, puis saisir dans le workflow de commerce. */
   coutCommerceFormule?: string;
+  /** Objet du comptoir qui ne figure pas dans l’équipement de départ. */
+  commerceUniquement?: boolean;
   /** Ajout éditorial GLM, inactif dans le preset officiel strict. */
   patchGlm?: boolean;
 };
@@ -101,6 +105,10 @@ export type Combattant = {
   /** Les Hommes de main d'un même groupe partagent profil, XP et équipement. */
   quantite: number;
   chef: boolean;
+  /** Homme de main promu par « Ce gars est doué » et traité comme un Héros. */
+  herosPromu?: boolean;
+  /** Deux tables choisies au moment de la promotion. */
+  competencesDisponiblesPromu?: CategorieCompetence[];
   coutAcquisition: number;
   /** Coût historique total du groupe, utile quand des recrues vétéranes le rejoignent. */
   coutAcquisitionTotal: number;
@@ -136,6 +144,12 @@ export type SuiviCombattantBataille = {
     note: string;
     decision?: string;
     montant?: number | null;
+    blessuresMultiples?: Array<{
+      d66: number | null;
+      jetSecondaire: number | null;
+      note: string;
+      decision?: string;
+    }>;
   };
   ennemisHorsCombat: number;
   experienceScenario: number;
@@ -143,7 +157,18 @@ export type SuiviCombattantBataille = {
   experienceAppliquee: boolean;
   progressions: {
     version: 1;
-    saisies: Array<{ jet: number | null; decision: string; note: string }>;
+    saisies: Array<{
+      jet: number | null;
+      decision: string;
+      note: string;
+      tablesPromu?: CategorieCompetence[];
+      jetPromu?: number | null;
+      decisionPromu?: string;
+      notePromu?: string;
+      jetGroupeRestant?: number | null;
+      decisionGroupeRestant?: string;
+      noteGroupeRestant?: string;
+    }>;
   };
 };
 
@@ -274,6 +299,7 @@ const toutesListesArmees: ListeEquipementId[] = [
   'ames-sombres',
   'repurgateurs',
   'zelotes',
+  'flagellants',
   'soeurs',
   'augure',
   'morts-vivants',
@@ -518,7 +544,7 @@ export const equipements: Equipement[] = [
     nom: 'Morgenstern',
     categorie: 'Corps à corps',
     cout: 15,
-    listesEquipement: ['mercenaires', 'ames-sombres', 'flagellants'],
+    listesEquipement: ['mercenaires', 'flagellants'],
   },
   {
     id: 'rapiere',
@@ -696,6 +722,97 @@ export const equipements: Equipement[] = [
       'skavens-heros',
     ],
   },
+  {
+    id: 'arc-elfique',
+    nom: 'Arc elfique',
+    categorie: 'Tir',
+    cout: 35,
+    listesEquipement: toutesListesArmees,
+    reserveAuxHeros: true,
+    rareteCommerce: 12,
+    commerceUniquement: true,
+  },
+  {
+    id: 'armure-gromril',
+    nom: 'Armure en gromril',
+    categorie: 'Armure',
+    cout: 150,
+    listesEquipement: toutesListesArmees,
+    reserveAuxHeros: true,
+    rareteCommerce: 11,
+    commerceUniquement: true,
+  },
+  {
+    id: 'armure-ithilmar',
+    nom: 'Armure en ithilmar',
+    categorie: 'Armure',
+    cout: 90,
+    listesEquipement: toutesListesArmees,
+    reserveAuxHeros: true,
+    rareteCommerce: 11,
+    commerceUniquement: true,
+  },
+  {
+    id: 'arme-gromril',
+    nom: 'Arme en gromril',
+    categorie: 'Divers',
+    cout: 1,
+    listesEquipement: toutesListesArmees,
+    reserveAuxHeros: true,
+    rareteCommerce: 11,
+    coutCommerceFormule: '4 × le prix de l’arme choisie',
+    commerceUniquement: true,
+  },
+  {
+    id: 'arme-ithilmar',
+    nom: 'Arme en ithilmar',
+    categorie: 'Divers',
+    cout: 1,
+    listesEquipement: toutesListesArmees,
+    reserveAuxHeros: true,
+    rareteCommerce: 9,
+    coutCommerceFormule: '3 × le prix de l’arme choisie',
+    commerceUniquement: true,
+  },
+  ...[
+    ['fleches-chasse', 'Flèches de chasse', 35, 8],
+    ['porte-bonheur', 'Porte-bonheur', 10, 6],
+    ['cartes-tarot', 'Cartes de tarot', 50, 7],
+    ['herbes-soins', 'Herbes de soins', 20, 8],
+    ['lotus-noir', 'Lotus noir', 10, 9],
+    ['ombre-cramoisie', 'Ombre cramoisie', 35, 8],
+    ['racine-mandragore', 'Racine de mandragore', 25, 8],
+    ['tome-magie', 'Tome de magie', 200, 12],
+  ].map(
+    ([id, nom, cout, rarete]) =>
+      ({
+        id,
+        nom,
+        categorie: 'Divers',
+        cout,
+        listesEquipement: toutesListesArmees,
+        reserveAuxHeros: true,
+        rareteCommerce: rarete,
+        commerceUniquement: true,
+      }) as Equipement,
+  ),
+  ...[
+    ['ail', 'Ail', 1],
+    ['filet', 'Filet', 5],
+    ['corde-grappin', 'Corde et grappin', 5],
+    ['lanterne', 'Lanterne', 10],
+  ].map(
+    ([id, nom, cout]) =>
+      ({
+        id,
+        nom,
+        categorie: 'Divers',
+        cout,
+        listesEquipement: toutesListesArmees,
+        reserveAuxHeros: true,
+        commerceUniquement: true,
+      }) as Equipement,
+  ),
   ...equipementsBandesCore,
 ];
 
@@ -782,9 +899,10 @@ export function obtenirProfil(profilId: string) {
 export function equipementAutorise(
   profil: ProfilRecrue,
   equipement: Equipement,
+  estHeros = profil.categorie === 'Héros',
 ) {
   if (equipement.patchGlm) return false;
-  if (equipement.reserveAuxHeros && profil.categorie !== 'Héros') return false;
+  if (equipement.reserveAuxHeros && !estHeros) return false;
   return profil.listesEquipement.some((liste) =>
     equipement.listesEquipement.includes(liste),
   );
@@ -806,7 +924,11 @@ export function quantiteMaxEquipement(
   profil: ProfilRecrue,
 ) {
   return (
-    equipement.quantitesMaxParProfil?.[profil.id] ?? equipement.quantiteMax ?? 1
+    equipement.quantitesMaxParProfil?.[profil.id] ??
+    equipement.quantiteMax ??
+    (equipement.categorie === 'Corps à corps' || equipement.categorie === 'Tir'
+      ? 2
+      : 1)
   );
 }
 
@@ -916,70 +1038,6 @@ export const etapesApresBataille = [
   'Mise à jour de la valeur de bande',
 ];
 
-export const etatInitial: EtatCampagne = {
-  version: 3,
-  revision: 0,
-  rulesetId: 'mordheim-1999-rules-review-2005-bandes-core',
-  nomCampagne: 'Les Cendres de Sigmar',
-  nomBande: 'Les Corbeaux de Reikland',
-  campagneActive: true,
-  factionId: 'mercenaires-reiklanders',
-  grade: '1a',
-  couronnes: 72,
-  fragments: 4,
-  numeroBataille: 7,
-  etapesApresBataille: [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ],
-  combattants: [
-    combattant(
-      'wilhelm',
-      'Wilhelm Krieger',
-      'capitaine',
-      34,
-      ['epee', 'pistolet', 'armure-legere'],
-      'Prêt',
-      true,
-    ),
-    combattant('otto', 'Otto le Rouge', 'champion', 22, [
-      'masse',
-      'bouclier',
-      'casque',
-    ]),
-    combattant('hanna', 'Hanna Brume', 'tireur', 11, ['arc-long'], 'Blessé'),
-    combattant('markus', 'Markus Klein', 'guerrier', 6, ['hallebarde']),
-  ],
-  inventaire: {},
-  batailleEnCours: null,
-  parties: [
-    {
-      id: 'partie-7',
-      scenario: 'La Tour du Sorcier',
-      adversaire: 'Skavens',
-      resultat: 'Victoire',
-      date: '2026-08-28',
-    },
-  ],
-  homebrew: {
-    actifs: false,
-    nomSet: 'Règles des Cendres',
-    description:
-      'Ajustements de campagne appliqués au-dessus des règles officielles.',
-    coutsRecrues: {},
-    coutsEquipements: {},
-    regles: [],
-  },
-};
-
 function stats(
   mouvement: number,
   capaciteCombat: number,
@@ -1001,50 +1059,6 @@ function stats(
     initiative,
     attaques,
     commandement,
-  };
-}
-
-function combattant(
-  id: string,
-  nom: string,
-  profilId: string,
-  experience: number,
-  equipementIds: string[],
-  statut: Combattant['statut'] = 'Prêt',
-  chef = false,
-): Combattant {
-  const profil = profilsReiklanders.find((item) => item.id === profilId)!;
-  return {
-    id,
-    nom,
-    profilId,
-    experience,
-    statut,
-    statistiques: profil.statistiques,
-    equipementIds,
-    notes: '',
-    quantite: 1,
-    chef,
-    coutAcquisition:
-      profil.cout +
-      equipementIds.reduce(
-        (total, equipementId) =>
-          total +
-          (equipements.find((item) => item.id === equipementId)?.cout ?? 0),
-        0,
-      ),
-    coutAcquisitionTotal:
-      profil.cout +
-      equipementIds.reduce(
-        (total, equipementId) =>
-          total +
-          (equipements.find((item) => item.id === equipementId)?.cout ?? 0),
-        0,
-      ),
-    competences: [],
-    blessures: [],
-    progressions: [],
-    partiesManquees: 0,
   };
 }
 

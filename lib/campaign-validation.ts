@@ -1,7 +1,9 @@
 import {
   definitionsBandes,
   equipements,
+  equipementAutorise,
   profils,
+  quantiteMaxEquipement,
   type EtatCampagne,
   type FactionId,
 } from './mordheim-data.ts';
@@ -104,6 +106,8 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
     new Set(definition.profils.map((profil) => profil.id)),
   );
   if (erreurCombattants) return echec(erreurCombattants);
+  const erreurMetier = validerReglesMetier(valeur, definition);
+  if (erreurMetier) return echec(erreurMetier);
   const idsCombattants = new Set(
     (valeur.combattants as ObjetJson[]).map((combattant) =>
       String(combattant.id),
@@ -131,6 +135,104 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
 
   return { ok: true, campagne: valeur as unknown as EtatCampagne };
 }
+
+function validerReglesMetier(
+  campagne: ObjetJson,
+  definition: (typeof definitionsBandes)[number],
+) {
+  const combattants = campagne.combattants as ObjetJson[];
+  const effectif = combattants.reduce(
+    (total, combattant) => total + Number(combattant.quantite),
+    0,
+  );
+  if (effectif > definition.effectifMaximum) {
+    return `L’effectif dépasse la limite de ${definition.effectifMaximum} guerriers.`;
+  }
+
+  const chefs = combattants.filter((combattant) => combattant.chef === true);
+  if (chefs.length > 1) return 'Une bande ne peut avoir qu’un seul Chef.';
+  if (
+    campagne.campagneActive === true &&
+    campagne.batailleEnCours === null &&
+    chefs.length !== 1
+  ) {
+    return 'Une campagne active doit avoir exactement un Chef.';
+  }
+
+  for (const profil of definition.profils) {
+    const quantite = combattants
+      .filter((combattant) => combattant.profilId === profil.id)
+      .reduce((total, combattant) => total + Number(combattant.quantite), 0);
+    if (profil.maximum !== null && quantite > profil.maximum) {
+      return `${String(profil.nom)} dépasse sa limite de ${String(profil.maximum)}.`;
+    }
+  }
+
+  for (const combattant of combattants) {
+    const profil = definition.profils.find(
+      (candidat) => candidat.id === combattant.profilId,
+    )!;
+    const quantite = Number(combattant.quantite);
+    const estHeros =
+      profil.categorie === 'Héros' || combattant.herosPromu === true;
+    if (estHeros && quantite !== 1) {
+      return `${String(combattant.nom)} est un Héros et ne peut pas représenter un groupe.`;
+    }
+    if (combattant.chef === true && !estHeros) {
+      return `${String(combattant.nom)} ne peut pas être Chef sans être un Héros.`;
+    }
+
+    const maximums = profil.maximums ?? maximumsHumains;
+    const statistiques = combattant.statistiques as ObjetJson;
+    for (const cle of Object.keys(maximums) as Array<keyof typeof maximums>) {
+      if (Number(statistiques[cle]) > maximums[cle]) {
+        return `${String(combattant.nom)} dépasse son maximum de ${String(cle)}.`;
+      }
+    }
+
+    const ids = combattant.equipementIds as string[];
+    let armesCorpsACorps = 0;
+    let armesDeTir = 0;
+    const compteurs = new Map<string, number>();
+    for (const id of ids) {
+      const equipement = equipements.find((item) => item.id === id)!;
+      if (!equipementAutorise(profil, equipement, estHeros)) {
+        return `${equipement.nom} n’est pas autorisé pour ${String(combattant.nom)}.`;
+      }
+      compteurs.set(id, (compteurs.get(id) ?? 0) + 1);
+      if (equipement.categorie === 'Corps à corps') armesCorpsACorps += 1;
+      if (equipement.categorie === 'Tir') armesDeTir += 1;
+    }
+    if (armesCorpsACorps > 2 || armesDeTir > 2) {
+      return `${String(combattant.nom)} dépasse la limite de deux armes de corps à corps ou de tir.`;
+    }
+    for (const [id, nombre] of compteurs) {
+      const equipement = equipements.find((item) => item.id === id)!;
+      if (nombre > quantiteMaxEquipement(equipement, profil)) {
+        return `${String(combattant.nom)} porte trop d’exemplaires de ${equipement.nom}.`;
+      }
+    }
+    if (
+      Number(combattant.coutAcquisitionTotal) <
+      Number(combattant.coutAcquisition) * quantite
+    ) {
+      return `${String(combattant.nom)} possède un coût d’acquisition incohérent.`;
+    }
+  }
+  return null;
+}
+
+const maximumsHumains = {
+  mouvement: 4,
+  capaciteCombat: 6,
+  capaciteTir: 6,
+  force: 4,
+  endurance: 4,
+  pointsVie: 3,
+  initiative: 6,
+  attaques: 4,
+  commandement: 9,
+};
 
 function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
   if (!Array.isArray(valeur) || valeur.length > 200) {
@@ -193,6 +295,31 @@ function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
     }
     if (typeof combattant.chef !== 'boolean')
       return `${chemin}.chef est invalide.`;
+    if (
+      combattant.herosPromu !== undefined &&
+      typeof combattant.herosPromu !== 'boolean'
+    ) {
+      return `${chemin}.herosPromu est invalide.`;
+    }
+    if (combattant.competencesDisponiblesPromu !== undefined) {
+      const tables = combattant.competencesDisponiblesPromu;
+      const autorisees = new Set([
+        'Combat',
+        'Tir',
+        'Érudition',
+        'Force',
+        'Vitesse',
+        'Spécial',
+      ]);
+      if (
+        !Array.isArray(tables) ||
+        tables.length !== 2 ||
+        new Set(tables).size !== 2 ||
+        !tables.every((table) => autorisees.has(String(table)))
+      ) {
+        return `${chemin}.competencesDisponiblesPromu est invalide.`;
+      }
+    }
     if (!estEntierNaturel(combattant.coutAcquisition)) {
       return `${chemin}.coutAcquisition est invalide.`;
     }
@@ -358,7 +485,11 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
           !estTexte(suivi.resolutionBlessure.decision, 1, 80)) ||
         (suivi.resolutionBlessure.montant !== undefined &&
           suivi.resolutionBlessure.montant !== null &&
-          !estEntierNaturel(suivi.resolutionBlessure.montant))
+          !estEntierNaturel(suivi.resolutionBlessure.montant)) ||
+        (suivi.resolutionBlessure.blessuresMultiples !== undefined &&
+          !validerBlessuresMultiples(
+            suivi.resolutionBlessure.blessuresMultiples,
+          ))
       ) {
         return `${chemin}.resolutionBlessure est invalide.`;
       }
@@ -379,7 +510,30 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
         !estObjet(saisie) ||
         (saisie.jet !== null && !estEntierNaturel(saisie.jet)) ||
         !estTexte(saisie.decision, 0, 500) ||
-        !estTexte(saisie.note, 0, 10_000)
+        !estTexte(saisie.note, 0, 10_000) ||
+        (saisie.tablesPromu !== undefined &&
+          (!Array.isArray(saisie.tablesPromu) ||
+            saisie.tablesPromu.length !== 2 ||
+            new Set(saisie.tablesPromu).size !== 2 ||
+            !saisie.tablesPromu.every((table) =>
+              ['Combat', 'Tir', 'Érudition', 'Force', 'Vitesse'].includes(
+                String(table),
+              ),
+            ))) ||
+        (saisie.jetPromu !== undefined &&
+          saisie.jetPromu !== null &&
+          !estEntierNaturel(saisie.jetPromu)) ||
+        (saisie.decisionPromu !== undefined &&
+          !estTexte(saisie.decisionPromu, 0, 500)) ||
+        (saisie.notePromu !== undefined &&
+          !estTexte(saisie.notePromu, 0, 10_000)) ||
+        (saisie.jetGroupeRestant !== undefined &&
+          saisie.jetGroupeRestant !== null &&
+          !estEntierNaturel(saisie.jetGroupeRestant)) ||
+        (saisie.decisionGroupeRestant !== undefined &&
+          !estTexte(saisie.decisionGroupeRestant, 0, 500)) ||
+        (saisie.noteGroupeRestant !== undefined &&
+          !estTexte(saisie.noteGroupeRestant, 0, 10_000))
       ) {
         return `${chemin}.progressions contient une saisie invalide.`;
       }
@@ -471,6 +625,19 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
   if (!estTexte(valeur.notes, 0, 10_000))
     return 'batailleEnCours.notes est invalide.';
   return null;
+}
+
+function validerBlessuresMultiples(valeur: unknown) {
+  if (!Array.isArray(valeur) || valeur.length > 6) return false;
+  return valeur.every(
+    (entree) =>
+      estObjet(entree) &&
+      (entree.d66 === null || estEntierNaturel(entree.d66)) &&
+      (entree.jetSecondaire === null ||
+        estEntierNaturel(entree.jetSecondaire)) &&
+      estTexte(entree.note, 0, 10_000) &&
+      (entree.decision === undefined || estTexte(entree.decision, 1, 80)),
+  );
 }
 
 function validerPersonnel(valeur: unknown, idsCombattants: Set<string>) {

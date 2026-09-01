@@ -6,11 +6,11 @@ import {
   nomFichierCampagne,
   serialiserCampagne,
 } from '../lib/campaign-transfer.ts';
-import { etatInitial } from '../lib/mordheim-data.ts';
+import { campagneVideTest } from './fixtures.ts';
 
 void test('une campagne exportée peut être réimportée sans perte', () => {
   const campagne = {
-    ...etatInitial,
+    ...campagneVideTest(),
     nomCampagne: 'Les Brumes de Mordheim',
     nomBande: 'La Compagnie du Lion',
   };
@@ -21,7 +21,7 @@ void test('une campagne exportée peut être réimportée sans perte', () => {
 
 void test('un état brut sans enveloppe Trackheim est refusé', () => {
   assert.throws(
-    () => importerCampagneDepuisJson(JSON.stringify(etatInitial)),
+    () => importerCampagneDepuisJson(JSON.stringify(campagneVideTest())),
     /format de sauvegarde Trackheim/i,
   );
 });
@@ -36,7 +36,7 @@ void test('un fichier invalide est refusé avec une erreur lisible', () => {
 void test('le nom de fichier est portable', () => {
   assert.equal(
     nomFichierCampagne({
-      ...etatInitial,
+      ...campagneVideTest(),
       nomCampagne: 'À l’Ombre !',
       nomBande: 'Sœurs de Sigmar',
     }),

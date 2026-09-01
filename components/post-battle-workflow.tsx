@@ -43,12 +43,17 @@ import {
   ProgressValue,
 } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
-import { competencesPourProfil } from '@/lib/competences-data';
+import {
+  competencesPourProfil,
+  sortsPourHeritageMagique,
+  sortsPourProfil,
+} from '@/lib/competences-data';
 import {
   equipements,
   equipementAutorise,
   obtenirDefinitionBande,
   type BatailleEnCours,
+  type CategorieCompetence,
   type Combattant,
   type Equipement,
   type EtatCampagne,
@@ -94,6 +99,13 @@ type SaisieProgression = {
   jet: number | null;
   decision: string;
   note: string;
+  tablesPromu?: CategorieCompetence[];
+  jetPromu?: number | null;
+  decisionPromu?: string;
+  notePromu?: string;
+  jetGroupeRestant?: number | null;
+  decisionGroupeRestant?: string;
+  noteGroupeRestant?: string;
 };
 
 type DossierProgressions = {
@@ -107,6 +119,12 @@ type ResolutionBlessureStructuree = {
   note: string;
   decision?: string;
   montant?: number | null;
+  blessuresMultiples?: Array<{
+    d66: number | null;
+    jetSecondaire: number | null;
+    note: string;
+    decision?: string;
+  }>;
 };
 
 type EntreePersonnel = {
@@ -133,16 +151,58 @@ type BrouillonRarete = {
   de1: string;
   de2: string;
   prix: string;
+  remise: string;
 };
 
 const CHOIX_AUTRE = '__autre__';
+const MARQUE_CAMPAGNE_CLOSE = '[Campagne close : aucun successeur éligible]';
+const HERITAGE_PRIERE = 'Héritage du Chef : tirer une nouvelle prière';
+const HERITAGE_SORT = 'Héritage du Chef : tirer un nouveau sort';
+const CHOIX_HERITAGE_PREFIXE = '__heritage-magique__:';
+
+function possedeHeritageMagique(combattant: Combattant) {
+  return combattant.competences.some(
+    (competence) =>
+      competence === HERITAGE_PRIERE || competence === HERITAGE_SORT,
+  );
+}
+
+function choixHeritageMagique(sort: string) {
+  return `${CHOIX_HERITAGE_PREFIXE}${sort}`;
+}
+
+function sortDuChoixHeritage(decision: string) {
+  return decision.startsWith(CHOIX_HERITAGE_PREFIXE)
+    ? decision.slice(CHOIX_HERITAGE_PREFIXE.length)
+    : null;
+}
+
+function competenceMagique(sort: string) {
+  return `Sort ou prière : ${sort}`;
+}
+
+function possedeVieilleBlessure(combattant: Combattant) {
+  return combattant.blessures.some((blessure) =>
+    blessure.toLocaleLowerCase('fr').includes('vieille blessure'),
+  );
+}
+
+function deSixValide(jet: number | null | undefined) {
+  return Number.isInteger(jet) && Number(jet) >= 1 && Number(jet) <= 6;
+}
 
 function creerBrouillonBataille(): BrouillonBataille {
+  const maintenant = new Date();
+  const dateLocale = new Date(
+    maintenant.getTime() - maintenant.getTimezoneOffset() * 60_000,
+  )
+    .toISOString()
+    .slice(0, 10);
   return {
     scenario: '',
     adversaire: '',
     resultat: 'Victoire',
-    date: new Date().toISOString().slice(0, 10),
+    date: dateLocale,
     valeurAdverse: '',
   };
 }
@@ -182,6 +242,9 @@ export function PostBattleWorkflow({
       )
       .map((combattant) => combattant.id),
   );
+  const [jetsVieilleBlessure, setJetsVieilleBlessure] = useState<
+    Record<string, number | null>
+  >({});
   const [erreur, setErreur] = useState<string | null>(null);
   const [lancersExploration, setLancersExploration] = useState('');
   const [rarete, setRarete] = useState<BrouillonRarete>({
@@ -190,6 +253,7 @@ export function PostBattleWorkflow({
     de1: '',
     de2: '',
     prix: '',
+    remise: '',
   });
   const [personnel, setPersonnel] = useState<Omit<EntreePersonnel, 'id'>>({
     type: 'Franc-tireur',
@@ -205,6 +269,7 @@ export function PostBattleWorkflow({
     equipementId: '',
     combattantId: '',
   });
+  const [objetCommunId, setObjetCommunId] = useState('');
   const batailleEtaitActive = useRef(Boolean(campagne.batailleEnCours));
 
   useEffect(() => {
@@ -310,6 +375,19 @@ export function PostBattleWorkflow({
       setErreur('Sélectionnez au moins un participant.');
       return;
     }
+    const ancienneBlessureNonResolue = campagne.combattants.find(
+      (combattant) =>
+        combattant.statut !== 'Absent' &&
+        combattant.partiesManquees === 0 &&
+        possedeVieilleBlessure(combattant) &&
+        !deSixValide(jetsVieilleBlessure[combattant.id]),
+    );
+    if (ancienneBlessureNonResolue) {
+      setErreur(
+        `${ancienneBlessureNonResolue.nom} possède une vieille blessure : lancez son D6 avant de créer la bataille.`,
+      );
+      return;
+    }
     const participantIndisponible = campagne.combattants.find(
       (combattant) =>
         participantsSelectionnes.includes(combattant.id) &&
@@ -365,12 +443,30 @@ export function PostBattleWorkflow({
       },
       jetsRarete: [],
       personnel: { version: 1, aucun: false, entrees: [] },
-      notes: '',
+      notes: campagne.combattants
+        .filter(
+          (combattant) =>
+            possedeVieilleBlessure(combattant) &&
+            jetsVieilleBlessure[combattant.id] === 1,
+        )
+        .map(
+          (combattant) =>
+            `Vieille blessure : ${combattant.nom} ne participe pas (D6 : 1).`,
+        )
+        .join('\n'),
     };
 
     setLancersExploration('');
-    setRarete({ heroId: '', equipementId: '', de1: '', de2: '', prix: '' });
+    setRarete({
+      heroId: '',
+      equipementId: '',
+      de1: '',
+      de2: '',
+      prix: '',
+      remise: '',
+    });
     setAllocation({ equipementId: '', combattantId: '' });
+    setJetsVieilleBlessure({});
     setErreur(null);
     onCampagneChange({
       ...campagne,
@@ -407,6 +503,7 @@ export function PostBattleWorkflow({
         campagne={campagne}
         creation={creation}
         participantsSelectionnes={participantsSelectionnes}
+        jetsVieilleBlessure={jetsVieilleBlessure}
         erreur={erreur}
         onCreationChange={(modification) =>
           setCreation((courante) => ({ ...courante, ...modification }))
@@ -416,6 +513,14 @@ export function PostBattleWorkflow({
             selectionne
               ? [...new Set([...courants, id])]
               : courants.filter((item) => item !== id),
+          );
+        }}
+        onOldBattleWoundRoll={(id, jet) => {
+          setJetsVieilleBlessure((courants) => ({ ...courants, [id]: jet }));
+          setParticipantsSelectionnes((courants) =>
+            jet === 1
+              ? courants.filter((item) => item !== id)
+              : [...new Set([...courants, id])],
           );
         }}
         onCreate={creerBataille}
@@ -434,6 +539,7 @@ export function PostBattleWorkflow({
     campagne.combattants.map((combattant) => ({
       quantite: combattant.quantite,
       experience: combattant.experience,
+      grandeCreature: profilsParId.get(combattant.profilId)?.grandeCreature,
     })),
   );
   const bonusChallenger = calculerBonusChallenger(
@@ -572,6 +678,8 @@ export function PostBattleWorkflow({
         suivi.blessureNote,
         suivi.resolutionBlessure,
       );
+      let bonusCouronnes = 0;
+      let bonusExperience = 0;
       if (
         resultat.id === 'capture' &&
         resolutionBlessure.decision === 'rancon'
@@ -582,19 +690,45 @@ export function PostBattleWorkflow({
         resultat.id === 'arenes' &&
         resolutionBlessure.decision === 'victoire'
       ) {
-        couronnesApresBlessures += 50;
+        bonusCouronnes += 50;
+        bonusExperience += 2;
       }
-      const resolution = appliquerResultatHero(combattant, resultat.id, suivi);
+      let resolution: Combattant | null;
+      if (resultat.id === 'multiples') {
+        resolution = combattant;
+        for (const entree of resolutionBlessure.blessuresMultiples ?? []) {
+          if (!resolution || entree.d66 === null) break;
+          const blessureMultiple = trouverBlessureHero(entree.d66);
+          if (
+            blessureMultiple.id === 'arenes' &&
+            entree.decision === 'victoire'
+          ) {
+            bonusCouronnes += 50;
+            bonusExperience += 2;
+          }
+          if (blessureMultiple.id === 'miracle') bonusExperience += 1;
+          resolution = appliquerResultatHero(resolution, blessureMultiple.id, {
+            ...suivi,
+            blessureNote: entree.note,
+            resolutionBlessure: {
+              version: 1,
+              jetSecondaire: entree.jetSecondaire,
+              decision: entree.decision,
+              note: entree.note,
+            },
+          });
+        }
+      } else {
+        resolution = appliquerResultatHero(combattant, resultat.id, suivi);
+      }
+      couronnesApresBlessures += bonusCouronnes;
       participants[combattant.id] = {
         ...suivi,
         blessureResolue: true,
         experienceManuelle:
           suivi.experienceManuelle +
           (resultat.id === 'miracle' ? 1 : 0) +
-          (resultat.id === 'arenes' &&
-          resolutionBlessure.decision === 'victoire'
-            ? 2
-            : 0),
+          bonusExperience,
       };
       if (!resolution) {
         chefMort ||= combattant.chef;
@@ -615,6 +749,10 @@ export function PostBattleWorkflow({
       combattantsFinalises = combattantsApresBlessures.map((combattant) => ({
         ...combattant,
         chef: combattant.id === successeurChefId,
+        competences:
+          combattant.id === successeurChefId
+            ? ajouterHeritageMagique(combattant, campagne.factionId)
+            : combattant.competences,
       }));
     }
 
@@ -641,9 +779,23 @@ export function PostBattleWorkflow({
       combattants: campagne.combattants.map((combattant) => ({
         ...combattant,
         chef: combattant.id === combattantId,
+        competences:
+          combattant.id === combattantId
+            ? ajouterHeritageMagique(combattant, campagne.factionId)
+            : combattant.competences,
       })),
       batailleEnCours: { ...bataille, successeurChefId: combattantId },
     });
+  }
+
+  function cloreCampagneSansChef() {
+    if (candidatsChef.length > 0 || chefPresent) return;
+    publierBataille((courante) => ({
+      ...courante,
+      notes: courante.notes.includes(MARQUE_CAMPAGNE_CLOSE)
+        ? courante.notes
+        : [courante.notes, MARQUE_CAMPAGNE_CLOSE].filter(Boolean).join('\n'),
+    }));
   }
 
   function bilanExperience(combattant: Combattant) {
@@ -710,9 +862,12 @@ export function PostBattleWorkflow({
   function appliquerExperiences() {
     const erreurs: string[] = [];
     const participants = { ...bataille.participants };
-    const combattants = campagne.combattants.map((combattant) => {
+    let nombreHeros = campagne.combattants.filter(
+      (combattant) => categorieCombattant(combattant, profilsParId) === 'Héros',
+    ).length;
+    const combattants = campagne.combattants.flatMap((combattant) => {
       const suivi = participants[combattant.id];
-      if (!suivi || suivi.experienceAppliquee) return combattant;
+      if (!suivi || suivi.experienceAppliquee) return [combattant];
       const bilan = bilanExperience(combattant);
       const dossier = lireProgressions(bilan.progressions, suivi.progressions);
       const profil = profilsParId.get(combattant.profilId);
@@ -721,9 +876,19 @@ export function PostBattleWorkflow({
       const maximums = profil?.maximums ?? maximumsHumains;
       const competencesAutorisees = new Set(
         profil
-          ? competencesPourProfil(profil, campagne.factionId).map(
-              (competence) => competence.nom,
-            )
+          ? [
+              ...competencesPourProfil(profil, campagne.factionId).map(
+                (competence) => competence.nom,
+              ),
+              ...sortsPourProfil(profil).map(
+                (sort) => `Sort ou prière : ${sort}`,
+              ),
+              ...(possedeHeritageMagique(combattant)
+                ? sortsPourHeritageMagique(campagne.factionId).map(
+                    competenceMagique,
+                  )
+                : []),
+            ]
           : [],
       );
       const erreurProgression = validerProgressions(
@@ -736,17 +901,144 @@ export function PostBattleWorkflow({
       );
       if (erreurProgression) {
         erreurs.push(`${combattant.nom} : ${erreurProgression}`);
-        return combattant;
+        return [combattant];
       }
 
       participants[combattant.id] = { ...suivi, experienceAppliquee: true };
-      return appliquerProgressionsCombattant(
+      const applique = appliquerProgressionsCombattant(
         { ...combattant, experience: combattant.experience + bilan.total },
         dossier.saisies,
         bilan.categorie,
         statistiquesInitiales,
         maximums,
       );
+      const promotion = dossier.saisies.find(
+        (saisie) =>
+          progressionSure(saisie.jet, bilan.categorie)?.id === 'gars-doue',
+      );
+      if (!promotion || combattant.herosPromu) return [applique];
+
+      if (nombreHeros >= 6) {
+        erreurs.push(
+          `${combattant.nom} : la bande possède déjà le maximum de six Héros. Relancez la progression du groupe.`,
+        );
+        return [combattant];
+      }
+
+      const profilPromu = profil
+        ? {
+            ...profil,
+            categorie: 'Héros' as const,
+            competencesDisponibles: promotion.tablesPromu ?? [],
+          }
+        : null;
+      const competencesPromuAutorisees = new Set(
+        profilPromu
+          ? competencesPourProfil(profilPromu, campagne.factionId).map(
+              (competence) => competence.nom,
+            )
+          : [],
+      );
+      const progressionPromu = progressionSecondaire(
+        promotion.jetPromu,
+        promotion.decisionPromu,
+        promotion.notePromu,
+      );
+      const erreurPromu = validerProgressions(
+        applique,
+        [progressionPromu],
+        'Héros',
+        statistiquesInitiales,
+        maximums,
+        competencesPromuAutorisees,
+      );
+      if (erreurPromu) {
+        erreurs.push(
+          `${combattant.nom}, progression immédiate du nouveau Héros : ${erreurPromu}`,
+        );
+        return [combattant];
+      }
+
+      let progressionGroupeRestant: SaisieProgression | null = null;
+      if (combattant.quantite > 1) {
+        progressionGroupeRestant = progressionSecondaire(
+          promotion.jetGroupeRestant,
+          promotion.decisionGroupeRestant,
+          promotion.noteGroupeRestant,
+        );
+        if (
+          progressionGroupeRestant.jet !== null &&
+          progressionGroupeRestant.jet >= 10
+        ) {
+          erreurs.push(
+            `${combattant.nom} : le groupe restant doit relancer tout résultat de 10 à 12.`,
+          );
+          return [combattant];
+        }
+        const erreurGroupe = validerProgressions(
+          applique,
+          [progressionGroupeRestant],
+          'Hommes de main',
+          statistiquesInitiales,
+          maximums,
+          new Set(),
+        );
+        if (erreurGroupe) {
+          erreurs.push(
+            `${combattant.nom}, nouvelle progression du groupe restant : ${erreurGroupe}`,
+          );
+          return [combattant];
+        }
+      }
+
+      const coutPromu = Math.max(
+        combattant.coutAcquisition,
+        Math.floor(combattant.coutAcquisitionTotal / combattant.quantite),
+      );
+      const promuBase: Combattant = {
+        ...applique,
+        id: crypto.randomUUID(),
+        nom: promotion.decision.trim(),
+        quantite: 1,
+        chef: false,
+        herosPromu: true,
+        competencesDisponiblesPromu: promotion.tablesPromu,
+        coutAcquisitionTotal: coutPromu,
+        notes: [
+          applique.notes,
+          `Promu depuis le groupe « ${combattant.nom} » par Ce gars est doué.`,
+        ]
+          .filter(Boolean)
+          .join('\n'),
+      };
+      const promu = appliquerProgressionsCombattant(
+        promuBase,
+        [progressionPromu],
+        'Héros',
+        statistiquesInitiales,
+        maximums,
+      );
+      nombreHeros += 1;
+      if (combattant.quantite === 1) return [promu];
+      const groupeRestantBase: Combattant = {
+        ...applique,
+        quantite: combattant.quantite - 1,
+        coutAcquisitionTotal: Math.max(
+          combattant.coutAcquisition,
+          combattant.coutAcquisitionTotal - coutPromu,
+        ),
+        progressions: applique.progressions.filter(
+          (progression) => !progression.startsWith('Ce gars est doué'),
+        ),
+      };
+      const groupeRestant = appliquerProgressionsCombattant(
+        groupeRestantBase,
+        [progressionGroupeRestant!],
+        'Hommes de main',
+        statistiquesInitiales,
+        maximums,
+      );
+      return [groupeRestant, promu];
     });
 
     if (erreurs.length > 0) {
@@ -804,15 +1096,21 @@ export function PostBattleWorkflow({
 
   function appliquerExploration() {
     try {
-      if (bataille.exploration.lancers.length < desExplorationDeBase) {
+      if (bataille.exploration.lancers.length !== desExplorationDeBase) {
         setErreur(
-          `Il faut au moins ${desExplorationDeBase} dés : un par Héros survivant non hors de combat${bataille.resultat === 'Victoire' ? ', un pour la victoire' : ''}${augurePresente ? ' et le dé supplémentaire de l’Augure' : ''}.`,
+          `Il faut exactement ${desExplorationDeBase} dés : un par Héros survivant non hors de combat${bataille.resultat === 'Victoire' ? ', un pour la victoire' : ''}${augurePresente ? ' et le dé supplémentaire de l’Augure' : ''}. Saisissez directement le résultat final après les éventuelles relances.`,
         );
         return;
       }
       const resultat = resoudreExploration(bataille.exploration.desConserves);
       if (resultat.des.length === 0) {
         setErreur('Conservez au moins un dé d’exploration.');
+        return;
+      }
+      if (resultat.combinaison && !bataille.exploration.noteResultat.trim()) {
+        setErreur(
+          `Décrivez les conséquences appliquées pour « ${resultat.combinaison.lieu} » avant de valider.`,
+        );
         return;
       }
       const noteLieu = resultat.combinaison
@@ -926,6 +1224,16 @@ export function PostBattleWorkflow({
     }
     try {
       const prixSaisi = entierDepuisTexte(rarete.prix);
+      const remiseMarchandage = hero.competences.includes('Marchandage')
+        ? entierDepuisTexte(rarete.remise)
+        : 0;
+      if (
+        hero.competences.includes('Marchandage') &&
+        (remiseMarchandage < 2 || remiseMarchandage > 12)
+      ) {
+        setErreur('Marchandage exige le total de 2D6, entre 2 et 12.');
+        return;
+      }
       if (equipement.coutCommerceFormule && prixSaisi <= 0) {
         setErreur(
           `Lancez la formule « ${equipement.coutCommerceFormule} » et saisissez le prix obtenu.`,
@@ -934,10 +1242,16 @@ export function PostBattleWorkflow({
       }
       const bonusMarienburg =
         campagne.factionId === 'mercenaires-marienburgers' ? 1 : 0;
+      const bonusConnaissanceRues = hero.competences.includes(
+        'Connaissance des rues',
+      )
+        ? 2
+        : 0;
       const reussi = jetRareteReussi(
-        de1 + bonusMarienburg,
+        de1,
         de2,
         equipement.rareteCommerce,
+        bonusMarienburg + bonusConnaissanceRues,
       );
       const jet: JetRarete = {
         id: crypto.randomUUID(),
@@ -947,16 +1261,26 @@ export function PostBattleWorkflow({
         de2,
         reussi,
         achete: false,
-        prix: equipement.coutCommerceFormule
-          ? prixSaisi
-          : prixCommerce(equipement, campagne),
+        prix: Math.max(
+          1,
+          (equipement.coutCommerceFormule
+            ? prixSaisi
+            : prixCommerce(equipement, campagne)) - remiseMarchandage,
+        ),
       };
       setErreur(null);
       publierBataille((courante) => ({
         ...courante,
         jetsRarete: [...courante.jetsRarete, jet],
       }));
-      setRarete({ heroId: '', equipementId: '', de1: '', de2: '', prix: '' });
+      setRarete({
+        heroId: '',
+        equipementId: '',
+        de1: '',
+        de2: '',
+        prix: '',
+        remise: '',
+      });
     } catch (cause) {
       setErreur(
         cause instanceof Error ? cause.message : 'Jet de rareté invalide.',
@@ -986,6 +1310,52 @@ export function PostBattleWorkflow({
           item.id === jetId ? { ...item, achete: true } : item,
         ),
       },
+    });
+  }
+
+  function acheterObjetCommun() {
+    const equipement = equipementsParId.get(objetCommunId);
+    if (
+      !equipement ||
+      equipement.rareteCommerce !== undefined ||
+      equipement.patchGlm ||
+      equipement.cout <= 0
+    ) {
+      setErreur('Sélectionnez un objet commun disponible.');
+      return;
+    }
+    const prix = prixCommerce(equipement, campagne);
+    if (prix > campagne.couronnes) {
+      setErreur('Le trésor ne permet pas cet achat.');
+      return;
+    }
+    setErreur(null);
+    setObjetCommunId('');
+    onCampagneChange({
+      ...campagne,
+      revision: campagne.revision + 1,
+      couronnes: campagne.couronnes - prix,
+      inventaire: {
+        ...campagne.inventaire,
+        [equipement.id]: (campagne.inventaire[equipement.id] ?? 0) + 1,
+      },
+    });
+  }
+
+  function vendreObjetDuMagot(equipementId: string) {
+    const equipement = equipementsParId.get(equipementId);
+    const quantite = campagne.inventaire[equipementId] ?? 0;
+    if (!equipement || quantite < 1) return;
+    const inventaire = { ...campagne.inventaire };
+    inventaire[equipementId] = quantite - 1;
+    if (inventaire[equipementId] <= 0) delete inventaire[equipementId];
+    const prixVente = Math.floor(prixCommerce(equipement, campagne) / 2);
+    setErreur(null);
+    onCampagneChange({
+      ...campagne,
+      revision: campagne.revision + 1,
+      couronnes: campagne.couronnes + prixVente,
+      inventaire,
     });
   }
 
@@ -1245,6 +1615,10 @@ export function PostBattleWorkflow({
     onCampagneChange({
       ...campagne,
       revision: campagne.revision + 1,
+      campagneActive: !bataille.notes.includes(MARQUE_CAMPAGNE_CLOSE),
+      nomCampagne: bataille.notes.includes(MARQUE_CAMPAGNE_CLOSE)
+        ? 'Hors campagne'
+        : campagne.nomCampagne,
       numeroBataille: bataille.numero,
       combattants: combattantsApresAbsences,
       parties: [partie, ...campagne.parties],
@@ -1256,8 +1630,8 @@ export function PostBattleWorkflow({
   const blessuresResolues = Object.values(bataille.participants).every(
     (participant) => participant.blessureResolue,
   );
-  /* Sans Chef vivant, l'étape reste bloquée : zéro candidat n'est pas une résolution. */
-  const successionResolue = chefPresent;
+  const successionResolue =
+    chefPresent || bataille.notes.includes(MARQUE_CAMPAGNE_CLOSE);
   const experiencesAppliquees = combattantsParticipants.every(
     (combattant) => bataille.participants[combattant.id]?.experienceAppliquee,
   );
@@ -1274,7 +1648,7 @@ export function PostBattleWorkflow({
         <CardHeader className="border-b border-stone-500/20">
           <CardTitle as="h2" className="flex items-center gap-2 text-xl">
             <Swords className="size-5 text-red-900" />
-            Bataille {bataille.numero} — {bataille.scenario}
+            Bataille {bataille.numero} : {bataille.scenario}
           </CardTitle>
           <CardDescription>
             {bataille.resultat} contre {bataille.adversaire} · valeur adverse{' '}
@@ -1307,7 +1681,7 @@ export function PostBattleWorkflow({
                 >
                   <Button
                     aria-current={index === etapeActive ? 'step' : undefined}
-                    aria-label={`${index + 1}. ${etape.titre} — ${
+                    aria-label={`${index + 1}. ${etape.titre}, ${
                       etapes[index]
                         ? 'étape terminée'
                         : accessible
@@ -1374,6 +1748,7 @@ export function PostBattleWorkflow({
           onResolutionChange={modifierResolutionBlessure}
           onApply={appliquerBlessures}
           onSuccesseurChange={choisirSuccesseur}
+          onCloseCampaign={cloreCampagneSansChef}
           onContinue={() => terminerEtape(0)}
           peutContinuer={blessuresResolues && successionResolue}
         />
@@ -1491,7 +1866,12 @@ export function PostBattleWorkflow({
 
       {etapeActive === 7 && (
         <EtapeRecrutement
+          campagne={campagne}
+          objetCommunId={objetCommunId}
           recrutement={recrutement}
+          onCommonItemChange={setObjetCommunId}
+          onBuyCommon={acheterObjetCommun}
+          onSell={vendreObjetDuMagot}
           onContinue={() => terminerEtape(7)}
         />
       )}
@@ -1544,17 +1924,21 @@ function CreationBataille({
   campagne,
   creation,
   participantsSelectionnes,
+  jetsVieilleBlessure,
   erreur,
   onCreationChange,
   onParticipantChange,
+  onOldBattleWoundRoll,
   onCreate,
 }: {
   campagne: EtatCampagne;
   creation: BrouillonBataille;
   participantsSelectionnes: string[];
+  jetsVieilleBlessure: Record<string, number | null>;
   erreur: string | null;
   onCreationChange: (modification: Partial<BrouillonBataille>) => void;
   onParticipantChange: (id: string, selectionne: boolean) => void;
+  onOldBattleWoundRoll: (id: string, jet: number | null) => void;
   onCreate: () => void;
 }) {
   return (
@@ -1643,34 +2027,71 @@ function CreationBataille({
             </p>
           </div>
           <div className="grid gap-2 md:grid-cols-2">
-            {campagne.combattants.map((combattant) => (
-              <label
-                className="flex cursor-pointer items-center gap-3 rounded-md border border-stone-500/20 px-3 py-2"
-                htmlFor={`participant-${combattant.id}`}
-                key={combattant.id}
-              >
-                <Checkbox
-                  id={`participant-${combattant.id}`}
-                  checked={participantsSelectionnes.includes(combattant.id)}
-                  disabled={
-                    combattant.statut === 'Absent' ||
-                    combattant.partiesManquees > 0
-                  }
-                  onCheckedChange={(checked) =>
-                    onParticipantChange(combattant.id, checked === true)
-                  }
-                />
-                <span className="grid flex-1">
-                  <strong className="text-sm">{combattant.nom}</strong>
-                  <small className="text-muted-foreground">
-                    {combattant.statut} · {combattant.experience} XP
-                    {combattant.partiesManquees > 0
-                      ? ` · ${combattant.partiesManquees} partie(s) à manquer`
-                      : ''}
-                  </small>
-                </span>
-              </label>
-            ))}
+            {campagne.combattants.map((combattant) => {
+              const vieilleBlessure = possedeVieilleBlessure(combattant);
+              const jetVieilleBlessure = jetsVieilleBlessure[combattant.id];
+              const indisponible =
+                combattant.statut === 'Absent' ||
+                combattant.partiesManquees > 0 ||
+                jetVieilleBlessure === 1;
+              return (
+                <div
+                  className="grid gap-2 rounded-md border border-stone-500/20 px-3 py-2"
+                  key={combattant.id}
+                >
+                  <label
+                    className="flex cursor-pointer items-center gap-3"
+                    htmlFor={`participant-${combattant.id}`}
+                  >
+                    <Checkbox
+                      id={`participant-${combattant.id}`}
+                      checked={participantsSelectionnes.includes(combattant.id)}
+                      disabled={indisponible}
+                      onCheckedChange={(checked) =>
+                        onParticipantChange(combattant.id, checked === true)
+                      }
+                    />
+                    <span className="grid flex-1">
+                      <strong className="text-sm">{combattant.nom}</strong>
+                      <small className="text-muted-foreground">
+                        {combattant.statut} · {combattant.experience} XP
+                        {combattant.partiesManquees > 0
+                          ? ` · ${combattant.partiesManquees} partie(s) à manquer`
+                          : ''}
+                      </small>
+                    </span>
+                  </label>
+                  {vieilleBlessure &&
+                    combattant.statut !== 'Absent' &&
+                    combattant.partiesManquees === 0 && (
+                      <Champ
+                        libelle="Vieille blessure (D6 avant la bataille)"
+                        htmlFor={`old-battle-wound-${combattant.id}`}
+                      >
+                        <Input
+                          id={`old-battle-wound-${combattant.id}`}
+                          className="w-28"
+                          type="number"
+                          min={1}
+                          max={6}
+                          value={jetVieilleBlessure ?? ''}
+                          onChange={(event) =>
+                            onOldBattleWoundRoll(
+                              combattant.id,
+                              event.target.value
+                                ? entierDepuisTexte(event.target.value)
+                                : null,
+                            )
+                          }
+                        />
+                        {jetVieilleBlessure === 1 && (
+                          <small>Ce combattant manque cette bataille.</small>
+                        )}
+                      </Champ>
+                    )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </CardContent>
@@ -1759,7 +2180,7 @@ function TrackerBataille({
                     </Button>
                   </div>
                 ) : (
-                  <span>—</span>
+                  <span>Non applicable</span>
                 )}
               </fieldset>
               <Champ
@@ -1802,6 +2223,7 @@ function EtapeBlessures({
   onResolutionChange,
   onApply,
   onSuccesseurChange,
+  onCloseCampaign,
   onContinue,
   peutContinuer,
 }: {
@@ -1820,9 +2242,29 @@ function EtapeBlessures({
   ) => void;
   onApply: () => void;
   onSuccesseurChange: (id: string) => void;
+  onCloseCampaign: () => void;
   onContinue: () => void;
   peutContinuer: boolean;
 }) {
+  function modifierBlessureMultiple(
+    combattantId: string,
+    resolution: ResolutionBlessureStructuree,
+    index: number,
+    modification: Partial<
+      NonNullable<ResolutionBlessureStructuree['blessuresMultiples']>[number]
+    >,
+  ) {
+    const blessures = [...(resolution.blessuresMultiples ?? [])];
+    blessures[index] = {
+      ...blessures[index],
+      d66: blessures[index]?.d66 ?? null,
+      jetSecondaire: blessures[index]?.jetSecondaire ?? null,
+      note: blessures[index]?.note ?? '',
+      ...modification,
+    };
+    onResolutionChange(combattantId, { blessuresMultiples: blessures });
+  }
+
   return (
     <CarteEtape
       numero={1}
@@ -1853,12 +2295,14 @@ function EtapeBlessures({
           const complexe = apercu && apercu.application !== 'automatique';
           const brancheCapture = apercu?.id === 'capture';
           const brancheArenes = apercu?.id === 'arenes';
+          const brancheMultiples = apercu?.id === 'multiples';
           const absenceStructuree =
             apercu && ['bras', 'jambe-ecrasee', 'profonde'].includes(apercu.id);
           const resolution = lireResolutionBlessure(
             suivi.blessureNote,
             suivi.resolutionBlessure,
           );
+          const blessuresMultiples = resolution.blessuresMultiples ?? [];
           const blessureArene =
             brancheArenes &&
             resolution.decision === 'defaite' &&
@@ -1939,10 +2383,10 @@ function EtapeBlessures({
                         Résultat : <strong>{apercu.titre}</strong>
                         {complexe &&
                           (brancheCapture || brancheArenes
-                            ? ' — choisissez l’issue ci-dessous'
+                            ? ' : choisissez l’issue ci-dessous'
                             : absenceStructuree
-                              ? ' — jet secondaire requis'
-                              : ' — résolution manuelle requise')}
+                              ? ' : jet secondaire requis'
+                              : ' : résolution manuelle requise')}
                       </p>
                     )}
                   </div>
@@ -1991,6 +2435,196 @@ function EtapeBlessures({
                   </div>
                 </div>
               )}
+              {brancheMultiples && (
+                <div className="injury-decision-panel">
+                  <Champ
+                    libelle="Nombre de blessures (D6)"
+                    htmlFor={`injury-multiple-count-${combattant.id}`}
+                  >
+                    <Input
+                      id={`injury-multiple-count-${combattant.id}`}
+                      type="number"
+                      min={1}
+                      max={6}
+                      disabled={suivi.blessureResolue}
+                      value={resolution.jetSecondaire ?? ''}
+                      onChange={(event) => {
+                        const nombre = event.target.value
+                          ? entierDepuisTexte(event.target.value)
+                          : null;
+                        onResolutionChange(combattant.id, {
+                          jetSecondaire: nombre,
+                          blessuresMultiples:
+                            nombre === null
+                              ? []
+                              : Array.from(
+                                  { length: nombre },
+                                  (_, index) =>
+                                    blessuresMultiples[index] ?? {
+                                      d66: null,
+                                      jetSecondaire: null,
+                                      note: '',
+                                    },
+                                ),
+                        });
+                      }}
+                    />
+                  </Champ>
+                  {Array.from(
+                    { length: resolution.jetSecondaire ?? 0 },
+                    (_, index) => {
+                      const entree = blessuresMultiples[index] ?? {
+                        d66: null,
+                        jetSecondaire: null,
+                        note: '',
+                      };
+                      const resultatMultiple = entree.d66
+                        ? blessureHeroSure(entree.d66)
+                        : null;
+                      const jetAdditionnel =
+                        resultatMultiple &&
+                        ['bras', 'jambe-ecrasee', 'profonde'].includes(
+                          resultatMultiple.id,
+                        );
+                      const invalide =
+                        resultatMultiple &&
+                        ['mort', 'capture', 'multiples'].includes(
+                          resultatMultiple.id,
+                        );
+                      return (
+                        <div
+                          className="grid gap-2 rounded-md bg-stone-500/10 p-3"
+                          key={index}
+                        >
+                          <strong>Blessure {index + 1}</strong>
+                          <Input
+                            aria-label={`D66 de la blessure multiple ${index + 1} de ${combattant.nom}`}
+                            type="number"
+                            min={11}
+                            max={66}
+                            disabled={suivi.blessureResolue}
+                            value={entree.d66 ?? ''}
+                            onChange={(event) =>
+                              modifierBlessureMultiple(
+                                combattant.id,
+                                resolution,
+                                index,
+                                {
+                                  d66: event.target.value
+                                    ? entierDepuisTexte(event.target.value)
+                                    : null,
+                                  jetSecondaire: null,
+                                  decision: undefined,
+                                  note: '',
+                                },
+                              )
+                            }
+                          />
+                          {resultatMultiple && (
+                            <span>
+                              {resultatMultiple.titre}
+                              {invalide ? ' : relance obligatoire' : ''}
+                            </span>
+                          )}
+                          {jetAdditionnel && (
+                            <Input
+                              aria-label={`Jet secondaire de la blessure multiple ${index + 1} de ${combattant.nom}`}
+                              type="number"
+                              min={1}
+                              max={resultatMultiple?.id === 'profonde' ? 3 : 6}
+                              disabled={suivi.blessureResolue}
+                              value={entree.jetSecondaire ?? ''}
+                              onChange={(event) =>
+                                modifierBlessureMultiple(
+                                  combattant.id,
+                                  resolution,
+                                  index,
+                                  {
+                                    jetSecondaire: event.target.value
+                                      ? entierDepuisTexte(event.target.value)
+                                      : null,
+                                  },
+                                )
+                              }
+                            />
+                          )}
+                          {resultatMultiple?.id === 'arenes' && (
+                            <>
+                              <NativeSelect
+                                aria-label={`Issue de l’arène pour la blessure multiple ${index + 1} de ${combattant.nom}`}
+                                value={entree.decision ?? ''}
+                                onChange={(event) =>
+                                  modifierBlessureMultiple(
+                                    combattant.id,
+                                    resolution,
+                                    index,
+                                    {
+                                      decision: event.target.value,
+                                      jetSecondaire: null,
+                                    },
+                                  )
+                                }
+                              >
+                                <NativeSelectOption value="">
+                                  Choisir l’issue de l’arène
+                                </NativeSelectOption>
+                                <NativeSelectOption value="victoire">
+                                  Victoire
+                                </NativeSelectOption>
+                                <NativeSelectOption value="defaite">
+                                  Défaite
+                                </NativeSelectOption>
+                              </NativeSelect>
+                              {entree.decision === 'defaite' && (
+                                <Input
+                                  aria-label={`Nouveau D66 d’arène pour la blessure multiple ${index + 1} de ${combattant.nom}`}
+                                  type="number"
+                                  min={11}
+                                  max={35}
+                                  value={entree.jetSecondaire ?? ''}
+                                  onChange={(event) =>
+                                    modifierBlessureMultiple(
+                                      combattant.id,
+                                      resolution,
+                                      index,
+                                      {
+                                        jetSecondaire: event.target.value
+                                          ? entierDepuisTexte(
+                                              event.target.value,
+                                            )
+                                          : null,
+                                      },
+                                    )
+                                  }
+                                />
+                              )}
+                            </>
+                          )}
+                          {resultatMultiple &&
+                            resultatMultiple.application !== 'automatique' &&
+                            !invalide &&
+                            !jetAdditionnel &&
+                            resultatMultiple.id !== 'arenes' && (
+                              <Textarea
+                                aria-label={`Résolution de la blessure multiple ${index + 1} de ${combattant.nom}`}
+                                value={entree.note}
+                                onChange={(event) =>
+                                  modifierBlessureMultiple(
+                                    combattant.id,
+                                    resolution,
+                                    index,
+                                    { note: event.target.value },
+                                  )
+                                }
+                                placeholder="Résolution du jet secondaire…"
+                              />
+                            )}
+                        </div>
+                      );
+                    },
+                  )}
+                </div>
+              )}
               {brancheCapture && (
                 <div className="injury-decision-panel">
                   <Champ
@@ -2012,13 +2646,13 @@ function EtapeBlessures({
                         Choisir une issue…
                       </NativeSelectOption>
                       <NativeSelectOption value="rancon">
-                        Rançonné — revient avec son équipement
+                        Rançonné (revient avec son équipement)
                       </NativeSelectOption>
                       <NativeSelectOption value="echange">
-                        Échangé — revient avec son équipement
+                        Échangé (revient avec son équipement)
                       </NativeSelectOption>
                       <NativeSelectOption value="captif">
-                        Reste captif — indisponible
+                        Reste captif (indisponible)
                       </NativeSelectOption>
                       <NativeSelectOption value="perdu">
                         Vendu, tué, sacrifié ou transformé
@@ -2086,10 +2720,10 @@ function EtapeBlessures({
                         Choisir le résultat…
                       </NativeSelectOption>
                       <NativeSelectOption value="victoire">
-                        Victoire — +50 CO et +2 XP
+                        Victoire : +50 CO et +2 XP
                       </NativeSelectOption>
                       <NativeSelectOption value="defaite">
-                        Défaite — relancer sur 11–35
+                        Défaite : relancer sur 11–35
                       </NativeSelectOption>
                     </NativeSelect>
                   </Champ>
@@ -2151,7 +2785,8 @@ function EtapeBlessures({
               {complexe &&
                 !absenceStructuree &&
                 !brancheCapture &&
-                !brancheArenes && (
+                !brancheArenes &&
+                !brancheMultiples && (
                   <Champ
                     libelle="Résolution de la branche complexe"
                     htmlFor={`injury-note-${combattant.id}`}
@@ -2199,7 +2834,7 @@ function EtapeBlessures({
               </NativeSelectOption>
               {candidatsChef.map((candidat) => (
                 <NativeSelectOption key={candidat.id} value={candidat.id}>
-                  {candidat.nom} — Cd {candidat.statistiques.commandement},{' '}
+                  {candidat.nom} : Cd {candidat.statistiques.commandement},{' '}
                   {candidat.experience} XP
                 </NativeSelectOption>
               ))}
@@ -2211,8 +2846,14 @@ function EtapeBlessures({
         <Alert role="alert" variant="destructive">
           <AlertTriangle />
           <AlertTitle>Aucun successeur éligible</AlertTitle>
-          <AlertDescription>
-            Aucun Héros survivant ne peut recevoir la règle Chef.
+          <AlertDescription className="grid gap-3">
+            <span>
+              Aucun Héros survivant ne peut recevoir la règle Chef. La bande ne
+              peut plus poursuivre cette campagne.
+            </span>
+            <Button onClick={onCloseCampaign} variant="outline">
+              Clore la campagne et terminer l’après-bataille
+            </Button>
           </AlertDescription>
         </Alert>
       )}
@@ -2288,7 +2929,7 @@ function EtapeExperience({
           <AlertDescription>
             {reglesChallengerHomebrew.map((regle) => (
               <span className="block" key={regle.titre}>
-                <strong>{regle.titre}</strong> — {regle.description} Utilisez «
+                <strong>{regle.titre}</strong> : {regle.description} Utilisez «
                 XP manuel » pour appliquer son écart sans modifier la table
                 officielle.
               </span>
@@ -2301,10 +2942,31 @@ function EtapeExperience({
           const suivi = bataille.participants[combattant.id];
           const bilan = bilanExperience(combattant);
           const profil = profilsParId.get(combattant.profilId);
-          const choixCompetences = profil
-            ? competencesPourProfil(profil, factionId).filter(
+          const profilCompetences =
+            profil && combattant.herosPromu
+              ? {
+                  ...profil,
+                  categorie: 'Héros' as const,
+                  competencesDisponibles:
+                    combattant.competencesDisponiblesPromu ?? [],
+                }
+              : profil;
+          const choixCompetences = profilCompetences
+            ? [
+                ...competencesPourProfil(profilCompetences, factionId),
+                ...sortsPourProfil(profilCompetences).map((sort) => ({
+                  categorie: 'Érudition' as const,
+                  nom: `Sort ou prière : ${sort}`,
+                })),
+              ].filter(
                 (competence) =>
                   !combattant.competences.includes(competence.nom),
+              )
+            : [];
+          const choixHeritage = possedeHeritageMagique(combattant)
+            ? sortsPourHeritageMagique(factionId).filter(
+                (sort) =>
+                  !combattant.competences.includes(competenceMagique(sort)),
               )
             : [];
           const saisies = lireProgressions(
@@ -2420,6 +3082,7 @@ function EtapeExperience({
                     </p>
                   </div>
                   {saisies.map((saisie, index) => {
+                    const sortHerite = sortDuChoixHeritage(saisie.decision);
                     const resultat = progressionSure(
                       saisie.jet,
                       bilan.categorie,
@@ -2428,11 +3091,74 @@ function EtapeExperience({
                       ? choixProgression(resultat, bilan.categorie)
                       : [];
                     const exigeTexte = resultat?.id === 'gars-doue';
+                    const resultatPromu = progressionSure(
+                      saisie.jetPromu ?? null,
+                      'Héros',
+                    );
+                    const choixPromu = resultatPromu
+                      ? choixProgression(resultatPromu, 'Héros')
+                      : [];
+                    const profilPromu = profil
+                      ? {
+                          ...profil,
+                          categorie: 'Héros' as const,
+                          competencesDisponibles: saisie.tablesPromu ?? [],
+                        }
+                      : null;
+                    const competencesPromu = profilPromu
+                      ? competencesPourProfil(profilPromu, factionId).filter(
+                          (competence) =>
+                            !combattant.competences.includes(competence.nom),
+                        )
+                      : [];
+                    const resultatGroupeRestant = progressionSure(
+                      saisie.jetGroupeRestant ?? null,
+                      'Hommes de main',
+                    );
+                    const choixGroupeRestant = resultatGroupeRestant
+                      ? choixProgression(
+                          resultatGroupeRestant,
+                          'Hommes de main',
+                        )
+                      : [];
                     return (
                       <div
                         className="grid gap-3 rounded-md border border-stone-500/20 bg-background/40 p-3 md:grid-cols-[110px_1fr]"
                         key={index}
                       >
+                        {index === 0 && choixHeritage.length > 0 && (
+                          <div className="md:col-span-2 grid gap-2 rounded-md bg-amber-950/5 p-3">
+                            <strong>Héritage magique du Chef</strong>
+                            <p className="text-xs text-muted-foreground">
+                              Cette première progression peut être remplacée par
+                              un sort ou une prière de la liste de la bande.
+                            </p>
+                            <NativeSelect
+                              aria-label={`Héritage magique de ${combattant.nom}`}
+                              disabled={verrouille}
+                              value={saisie.decision}
+                              onChange={(event) =>
+                                onProgressionChange(combattant, index, {
+                                  jet: null,
+                                  decision: event.target.value,
+                                  note: '',
+                                })
+                              }
+                            >
+                              <NativeSelectOption value="">
+                                Conserver le jet normal
+                              </NativeSelectOption>
+                              {choixHeritage.map((sort) => (
+                                <NativeSelectOption
+                                  key={sort}
+                                  value={choixHeritageMagique(sort)}
+                                >
+                                  {sort}
+                                </NativeSelectOption>
+                              ))}
+                            </NativeSelect>
+                          </div>
+                        )}
                         <Champ
                           libelle={`Jet ${index + 1}`}
                           htmlFor={`advance-${combattant.id}-${index}`}
@@ -2442,7 +3168,7 @@ function EtapeExperience({
                             type="number"
                             min={2}
                             max={12}
-                            disabled={verrouille}
+                            disabled={verrouille || Boolean(sortHerite)}
                             value={saisie.jet ?? ''}
                             onChange={(event) =>
                               onProgressionChange(combattant, index, {
@@ -2454,97 +3180,362 @@ function EtapeExperience({
                           />
                         </Champ>
                         <div className="grid gap-2">
-                          <p className="text-sm">
-                            {resultat ? (
-                              <strong>{resultat.titre}</strong>
-                            ) : (
-                              'Saisissez un total de 2 à 12.'
-                            )}
-                          </p>
-                          {choix.length > 0 && (
-                            <NativeSelect
-                              aria-label={`Choix de progression ${index + 1} pour ${combattant.nom}`}
-                              disabled={verrouille}
-                              value={saisie.decision}
-                              onChange={(event) =>
-                                onProgressionChange(combattant, index, {
-                                  decision: event.target.value,
-                                })
-                              }
-                            >
-                              <NativeSelectOption value="">
-                                Choisir le résultat obtenu
-                              </NativeSelectOption>
-                              {choix.map((item) => (
-                                <NativeSelectOption key={item} value={item}>
-                                  {item}
-                                </NativeSelectOption>
-                              ))}
-                              <NativeSelectOption value={CHOIX_AUTRE}>
-                                Autre résultat autorisé, à noter
-                              </NativeSelectOption>
-                            </NativeSelect>
+                          {sortHerite && (
+                            <p className="text-sm">
+                              <strong>Progression remplacée :</strong>{' '}
+                              {sortHerite}
+                            </p>
                           )}
-                          {resultat?.id === 'competence' && (
-                            <div className="grid gap-1">
-                              <NativeSelect
-                                aria-label={`Compétence choisie pour ${combattant.nom}`}
-                                disabled={verrouille}
-                                value={saisie.decision}
-                                onChange={(event) =>
-                                  onProgressionChange(combattant, index, {
-                                    decision: event.target.value,
-                                  })
-                                }
-                              >
-                                <NativeSelectOption value="">
-                                  Choisir une compétence autorisée
-                                </NativeSelectOption>
-                                {choixCompetences.map((competence) => (
-                                  <NativeSelectOption
-                                    key={`${competence.categorie}-${competence.nom}`}
-                                    value={competence.nom}
-                                  >
-                                    {competence.categorie} — {competence.nom}
+                          {!sortHerite && (
+                            <>
+                              <p className="text-sm">
+                                {resultat ? (
+                                  <strong>{resultat.titre}</strong>
+                                ) : (
+                                  'Saisissez un total de 2 à 12.'
+                                )}
+                              </p>
+                              {choix.length > 0 && (
+                                <NativeSelect
+                                  aria-label={`Choix de progression ${index + 1} pour ${combattant.nom}`}
+                                  disabled={verrouille}
+                                  value={saisie.decision}
+                                  onChange={(event) =>
+                                    onProgressionChange(combattant, index, {
+                                      decision: event.target.value,
+                                    })
+                                  }
+                                >
+                                  <NativeSelectOption value="">
+                                    Choisir le résultat obtenu
                                   </NativeSelectOption>
-                                ))}
-                              </NativeSelect>
-                              {choixCompetences.length === 0 && (
-                                <small className="text-muted-foreground">
-                                  Aucune nouvelle compétence disponible dans les
-                                  tables autorisées.
-                                </small>
+                                  {choix.map((item) => (
+                                    <NativeSelectOption key={item} value={item}>
+                                      {item}
+                                    </NativeSelectOption>
+                                  ))}
+                                  <NativeSelectOption value={CHOIX_AUTRE}>
+                                    Autre résultat autorisé, à noter
+                                  </NativeSelectOption>
+                                </NativeSelect>
                               )}
-                            </div>
-                          )}
-                          {exigeTexte && (
-                            <div className="grid gap-1">
-                              <Input
-                                aria-label={`Décision de progression ${index + 1} pour ${combattant.nom}`}
-                                disabled={verrouille}
-                                value={saisie.decision}
-                                onChange={(event) =>
-                                  onProgressionChange(combattant, index, {
-                                    decision: event.target.value,
-                                  })
-                                }
-                                placeholder="Nom du promu et résolution du groupe"
-                              />
-                            </div>
-                          )}
-                          {(saisie.decision === CHOIX_AUTRE ||
-                            resultat?.id === 'gars-doue') && (
-                            <Textarea
-                              aria-label={`Note de progression ${index + 1} pour ${combattant.nom}`}
-                              disabled={verrouille}
-                              value={saisie.note}
-                              onChange={(event) =>
-                                onProgressionChange(combattant, index, {
-                                  note: event.target.value,
-                                })
-                              }
-                              placeholder="Décision complète et conséquences appliquées…"
-                            />
+                              {resultat?.id === 'competence' && (
+                                <div className="grid gap-1">
+                                  <NativeSelect
+                                    aria-label={`Compétence choisie pour ${combattant.nom}`}
+                                    disabled={verrouille}
+                                    value={saisie.decision}
+                                    onChange={(event) =>
+                                      onProgressionChange(combattant, index, {
+                                        decision: event.target.value,
+                                      })
+                                    }
+                                  >
+                                    <NativeSelectOption value="">
+                                      Choisir une compétence autorisée
+                                    </NativeSelectOption>
+                                    {choixCompetences.map((competence) => (
+                                      <NativeSelectOption
+                                        key={`${competence.categorie}-${competence.nom}`}
+                                        value={competence.nom}
+                                      >
+                                        {competence.categorie} :{' '}
+                                        {competence.nom}
+                                      </NativeSelectOption>
+                                    ))}
+                                  </NativeSelect>
+                                  {choixCompetences.length === 0 && (
+                                    <small className="text-muted-foreground">
+                                      Aucune nouvelle compétence disponible dans
+                                      les tables autorisées.
+                                    </small>
+                                  )}
+                                </div>
+                              )}
+                              {exigeTexte && (
+                                <div className="grid gap-1">
+                                  <Input
+                                    aria-label={`Décision de progression ${index + 1} pour ${combattant.nom}`}
+                                    disabled={verrouille}
+                                    value={saisie.decision}
+                                    onChange={(event) =>
+                                      onProgressionChange(combattant, index, {
+                                        decision: event.target.value,
+                                      })
+                                    }
+                                    placeholder="Nom du combattant promu"
+                                  />
+                                  <div className="grid gap-2 sm:grid-cols-2">
+                                    {[0, 1].map((position) => (
+                                      <NativeSelect
+                                        aria-label={`Table de compétences ${position + 1} du Héros promu`}
+                                        disabled={verrouille}
+                                        key={position}
+                                        value={
+                                          saisie.tablesPromu?.[position] ?? ''
+                                        }
+                                        onChange={(event) => {
+                                          const tables = [
+                                            ...(saisie.tablesPromu ?? []),
+                                          ];
+                                          tables[position] = event.target
+                                            .value as CategorieCompetence;
+                                          onProgressionChange(
+                                            combattant,
+                                            index,
+                                            {
+                                              tablesPromu: tables,
+                                            },
+                                          );
+                                        }}
+                                      >
+                                        <NativeSelectOption value="">
+                                          Table {position + 1}
+                                        </NativeSelectOption>
+                                        {[
+                                          'Combat',
+                                          'Tir',
+                                          'Érudition',
+                                          'Force',
+                                          'Vitesse',
+                                        ].map((table) => (
+                                          <NativeSelectOption
+                                            disabled={saisie.tablesPromu?.includes(
+                                              table as CategorieCompetence,
+                                            )}
+                                            key={table}
+                                            value={table}
+                                          >
+                                            {table}
+                                          </NativeSelectOption>
+                                        ))}
+                                      </NativeSelect>
+                                    ))}
+                                  </div>
+                                  <div className="grid gap-3 rounded-md bg-background/60 p-3">
+                                    <strong>
+                                      Progression immédiate du nouveau Héros
+                                    </strong>
+                                    <p className="text-xs text-muted-foreground">
+                                      Lancez 2D6 sur la table des Héros après
+                                      avoir choisi ses deux tables de
+                                      compétences.
+                                    </p>
+                                    <Input
+                                      aria-label={`Jet de progression immédiate du Héros promu depuis ${combattant.nom}`}
+                                      disabled={verrouille}
+                                      type="number"
+                                      min={2}
+                                      max={12}
+                                      value={saisie.jetPromu ?? ''}
+                                      onChange={(event) =>
+                                        onProgressionChange(combattant, index, {
+                                          jetPromu:
+                                            entierDepuisTexte(
+                                              event.target.value,
+                                            ) || null,
+                                          decisionPromu: '',
+                                          notePromu: '',
+                                        })
+                                      }
+                                    />
+                                    <p className="text-sm">
+                                      {resultatPromu
+                                        ? resultatPromu.titre
+                                        : 'Saisissez un total de 2 à 12.'}
+                                    </p>
+                                    {resultatPromu?.id === 'competence' && (
+                                      <NativeSelect
+                                        aria-label={`Compétence immédiate du Héros promu depuis ${combattant.nom}`}
+                                        disabled={verrouille}
+                                        value={saisie.decisionPromu ?? ''}
+                                        onChange={(event) =>
+                                          onProgressionChange(
+                                            combattant,
+                                            index,
+                                            {
+                                              decisionPromu: event.target.value,
+                                            },
+                                          )
+                                        }
+                                      >
+                                        <NativeSelectOption value="">
+                                          Choisir une compétence
+                                        </NativeSelectOption>
+                                        {competencesPromu.map((competence) => (
+                                          <NativeSelectOption
+                                            key={`${competence.categorie}-${competence.nom}`}
+                                            value={competence.nom}
+                                          >
+                                            {competence.categorie} :{' '}
+                                            {competence.nom}
+                                          </NativeSelectOption>
+                                        ))}
+                                      </NativeSelect>
+                                    )}
+                                    {resultatPromu?.id !== 'competence' &&
+                                      choixPromu.length > 1 && (
+                                        <NativeSelect
+                                          aria-label={`Choix de progression immédiate du Héros promu depuis ${combattant.nom}`}
+                                          disabled={verrouille}
+                                          value={saisie.decisionPromu ?? ''}
+                                          onChange={(event) =>
+                                            onProgressionChange(
+                                              combattant,
+                                              index,
+                                              {
+                                                decisionPromu:
+                                                  event.target.value,
+                                              },
+                                            )
+                                          }
+                                        >
+                                          <NativeSelectOption value="">
+                                            Choisir la caractéristique
+                                          </NativeSelectOption>
+                                          {choixPromu.map((item) => (
+                                            <NativeSelectOption
+                                              key={item}
+                                              value={item}
+                                            >
+                                              {item}
+                                            </NativeSelectOption>
+                                          ))}
+                                          <NativeSelectOption
+                                            value={CHOIX_AUTRE}
+                                          >
+                                            Relance ou remplacement autorisé
+                                          </NativeSelectOption>
+                                        </NativeSelect>
+                                      )}
+                                    {saisie.decisionPromu === CHOIX_AUTRE && (
+                                      <Textarea
+                                        aria-label={`Note de progression immédiate du Héros promu depuis ${combattant.nom}`}
+                                        disabled={verrouille}
+                                        value={saisie.notePromu ?? ''}
+                                        onChange={(event) =>
+                                          onProgressionChange(
+                                            combattant,
+                                            index,
+                                            {
+                                              notePromu: event.target.value,
+                                            },
+                                          )
+                                        }
+                                        placeholder="Résultat de la relance ou remplacement appliqué"
+                                      />
+                                    )}
+                                  </div>
+                                  {combattant.quantite > 1 && (
+                                    <div className="grid gap-3 rounded-md bg-background/60 p-3">
+                                      <strong>
+                                        Nouvelle progression du groupe restant
+                                      </strong>
+                                      <p className="text-xs text-muted-foreground">
+                                        Relancez le progrès gagné. Tout résultat
+                                        de 10 à 12 doit être relancé.
+                                      </p>
+                                      <Input
+                                        aria-label={`Nouveau jet de progression du groupe ${combattant.nom}`}
+                                        disabled={verrouille}
+                                        type="number"
+                                        min={2}
+                                        max={9}
+                                        value={saisie.jetGroupeRestant ?? ''}
+                                        onChange={(event) =>
+                                          onProgressionChange(
+                                            combattant,
+                                            index,
+                                            {
+                                              jetGroupeRestant:
+                                                entierDepuisTexte(
+                                                  event.target.value,
+                                                ) || null,
+                                              decisionGroupeRestant: '',
+                                              noteGroupeRestant: '',
+                                            },
+                                          )
+                                        }
+                                      />
+                                      <p className="text-sm">
+                                        {resultatGroupeRestant
+                                          ? resultatGroupeRestant.titre
+                                          : 'Saisissez un total de 2 à 9.'}
+                                      </p>
+                                      {choixGroupeRestant.length > 1 && (
+                                        <NativeSelect
+                                          aria-label={`Choix de progression du groupe restant ${combattant.nom}`}
+                                          disabled={verrouille}
+                                          value={
+                                            saisie.decisionGroupeRestant ?? ''
+                                          }
+                                          onChange={(event) =>
+                                            onProgressionChange(
+                                              combattant,
+                                              index,
+                                              {
+                                                decisionGroupeRestant:
+                                                  event.target.value,
+                                              },
+                                            )
+                                          }
+                                        >
+                                          <NativeSelectOption value="">
+                                            Choisir la caractéristique
+                                          </NativeSelectOption>
+                                          {choixGroupeRestant.map((item) => (
+                                            <NativeSelectOption
+                                              key={item}
+                                              value={item}
+                                            >
+                                              {item}
+                                            </NativeSelectOption>
+                                          ))}
+                                          <NativeSelectOption
+                                            value={CHOIX_AUTRE}
+                                          >
+                                            Relance ou remplacement autorisé
+                                          </NativeSelectOption>
+                                        </NativeSelect>
+                                      )}
+                                      {saisie.decisionGroupeRestant ===
+                                        CHOIX_AUTRE && (
+                                        <Textarea
+                                          aria-label={`Note de progression du groupe restant ${combattant.nom}`}
+                                          disabled={verrouille}
+                                          value={saisie.noteGroupeRestant ?? ''}
+                                          onChange={(event) =>
+                                            onProgressionChange(
+                                              combattant,
+                                              index,
+                                              {
+                                                noteGroupeRestant:
+                                                  event.target.value,
+                                              },
+                                            )
+                                          }
+                                          placeholder="Résultat de la relance ou remplacement appliqué"
+                                        />
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                              {(saisie.decision === CHOIX_AUTRE ||
+                                resultat?.id === 'gars-doue') && (
+                                <Textarea
+                                  aria-label={`Note de progression ${index + 1} pour ${combattant.nom}`}
+                                  disabled={verrouille}
+                                  value={saisie.note}
+                                  onChange={(event) =>
+                                    onProgressionChange(combattant, index, {
+                                      note: event.target.value,
+                                    })
+                                  }
+                                  placeholder="Décision complète et conséquences appliquées…"
+                                />
+                              )}
+                            </>
                           )}
                         </div>
                       </div>
@@ -2609,9 +3600,9 @@ function EtapeExploration({
         <Dices />
         <AlertTitle>{desExplorationDeBase} dés de base attendus</AlertTitle>
         <AlertDescription>
-          Ajoutez ensuite les éventuels dés de compétences ou d’objets. Vous
-          choisissez au maximum six dés à conserver ; le moteur ne privilégie
-          pas automatiquement la somme.
+          Saisissez exactement ces dés, après les éventuelles relances de
+          compétences ou d’objets. Vous choisissez au maximum six dés à
+          conserver ; le moteur ne privilégie pas automatiquement la somme.
           {augurePresente &&
             ' Le total inclut le second dé de l’Augure : ne conservez qu’un seul de ses deux résultats.'}
         </AlertDescription>
@@ -2875,6 +3866,9 @@ function EtapeRarete({
       ),
   );
   const equipementSelectionne = equipementsParId.get(brouillon.equipementId);
+  const heroSelectionne = campagne.combattants.find(
+    (hero) => hero.id === brouillon.heroId,
+  );
   return (
     <CarteEtape
       numero={6}
@@ -2921,7 +3915,7 @@ function EtapeRarete({
             <NativeSelectOption value="">Choisir</NativeSelectOption>
             {rares.map((equipement) => (
               <NativeSelectOption key={equipement.id} value={equipement.id}>
-                {equipement.nom} — {equipement.rareteCommerce}+
+                {equipement.nom} : {equipement.rareteCommerce}+
               </NativeSelectOption>
             ))}
           </NativeSelect>
@@ -2957,6 +3951,20 @@ function EtapeRarete({
                 onBrouillonChange({ prix: event.target.value })
               }
               placeholder={equipementSelectionne.coutCommerceFormule}
+            />
+          </Champ>
+        )}
+        {heroSelectionne?.competences.includes('Marchandage') && (
+          <Champ libelle="Remise Marchandage (2D6)" htmlFor="rarity-haggle">
+            <Input
+              id="rarity-haggle"
+              type="number"
+              min={2}
+              max={12}
+              value={brouillon.remise}
+              onChange={(event) =>
+                onBrouillonChange({ remise: event.target.value })
+              }
             />
           </Champ>
         )}
@@ -3139,7 +4147,7 @@ function EtapePersonnel({
                 <NativeSelectOption value="">Choisir</NativeSelectOption>
                 {heroesAdmissibles.map((hero) => (
                   <NativeSelectOption key={hero.id} value={hero.id}>
-                    {hero.nom} — I {hero.statistiques.initiative}
+                    {hero.nom} : I {hero.statistiques.initiative}
                   </NativeSelectOption>
                 ))}
               </NativeSelect>
@@ -3206,7 +4214,7 @@ function EtapePersonnel({
             <span className="text-xs text-muted-foreground">
               {entree.type} · {entree.decision} · {entree.cout} CO
               {entree.heroId
-                ? ` · ${campagne.combattants.find((combattant) => combattant.id === entree.heroId)?.nom ?? 'Héros inconnu'} · D6 ${entree.jetInitiative ?? '—'}`
+                ? ` · ${campagne.combattants.find((combattant) => combattant.id === entree.heroId)?.nom ?? 'Héros inconnu'} · D6 ${entree.jetInitiative ?? 'non renseigné'}`
                 : ''}
             </span>
             {entree.note && <p className="mt-1 text-sm">{entree.note}</p>}
@@ -3226,17 +4234,40 @@ function EtapePersonnel({
 }
 
 function EtapeRecrutement({
+  campagne,
+  objetCommunId,
   recrutement,
+  onCommonItemChange,
+  onBuyCommon,
+  onSell,
   onContinue,
 }: {
+  campagne: EtatCampagne;
+  objetCommunId: string;
   recrutement?: React.ReactNode;
+  onCommonItemChange: (id: string) => void;
+  onBuyCommon: () => void;
+  onSell: (id: string) => void;
   onContinue: () => void;
 }) {
+  const definition = obtenirDefinitionBande(campagne.factionId);
+  const communs = equipements.filter(
+    (equipement) =>
+      equipement.cout > 0 &&
+      equipement.rareteCommerce === undefined &&
+      !equipement.patchGlm &&
+      definition.profils.some((profil) =>
+        equipementAutorise(profil, equipement),
+      ),
+  );
+  const objetSelectionne = equipements.find(
+    (equipement) => equipement.id === objetCommunId,
+  );
   return (
     <CarteEtape
       numero={8}
       titre="Recrues et objets communs"
-      description="Utilisez l’outil de recrutement fourni par l’application, puis validez cette étape."
+      description="Recrutez les nouveaux membres, achetez les objets communs ou revendez le matériel du magot à la moitié de sa valeur."
       icone={<Users />}
       action={
         <Button onClick={onContinue}>
@@ -3253,6 +4284,62 @@ function EtapeRecrutement({
             objet commun n’est acheté.
           </AlertDescription>
         </Alert>
+      )}
+      <div className="grid gap-3 rounded-md bg-stone-500/10 p-3 md:grid-cols-[1fr_auto]">
+        <Champ libelle="Objet commun" htmlFor="common-item">
+          <NativeSelect
+            id="common-item"
+            value={objetCommunId}
+            onChange={(event) => onCommonItemChange(event.target.value)}
+          >
+            <NativeSelectOption value="">Choisir</NativeSelectOption>
+            {communs.map((equipement) => (
+              <NativeSelectOption key={equipement.id} value={equipement.id}>
+                {equipement.nom} : {prixCommerce(equipement, campagne)} CO
+              </NativeSelectOption>
+            ))}
+          </NativeSelect>
+        </Champ>
+        <div className="flex items-end">
+          <Button
+            disabled={
+              !objetSelectionne ||
+              prixCommerce(objetSelectionne, campagne) > campagne.couronnes
+            }
+            onClick={onBuyCommon}
+          >
+            <ShoppingCart /> Acheter
+          </Button>
+        </div>
+      </div>
+      {Object.entries(campagne.inventaire).some(([, nombre]) => nombre > 0) && (
+        <div className="grid gap-2">
+          <strong>Revendre depuis le magot</strong>
+          {Object.entries(campagne.inventaire)
+            .filter(([, nombre]) => nombre > 0)
+            .map(([id, nombre]) => {
+              const equipement = equipements.find((item) => item.id === id);
+              if (!equipement) return null;
+              const prix = Math.floor(prixCommerce(equipement, campagne) / 2);
+              return (
+                <div
+                  className="flex flex-wrap items-center gap-3 rounded-md bg-stone-500/10 p-3"
+                  key={id}
+                >
+                  <span className="flex-1">
+                    {equipement.nom} × {nombre}
+                  </span>
+                  <Button
+                    onClick={() => onSell(id)}
+                    size="sm"
+                    variant="outline"
+                  >
+                    <Coins /> Vendre {prix} CO
+                  </Button>
+                </div>
+              );
+            })}
+        </div>
       )}
     </CarteEtape>
   );
@@ -3529,6 +4616,7 @@ function categorieCombattant(
   combattant: Combattant,
   profilsParId: Map<string, ProfilRecrue>,
 ) {
+  if (combattant.herosPromu) return 'Héros';
   return profilsParId.get(combattant.profilId)?.categorie ?? 'Hommes de main';
 }
 
@@ -3641,6 +4729,68 @@ function validerBlessures(
           }
           continue;
         }
+        if (blessure.id === 'multiples') {
+          const resolution = lireResolutionBlessure(
+            suivi.blessureNote,
+            suivi.resolutionBlessure,
+          );
+          const nombre = resolution.jetSecondaire;
+          const multiples = resolution.blessuresMultiples ?? [];
+          if (
+            nombre === null ||
+            !Number.isInteger(nombre) ||
+            nombre < 1 ||
+            nombre > 6 ||
+            multiples.length !== nombre
+          ) {
+            return `${combattant.nom} : saisissez le D6 puis chacune des blessures multiples.`;
+          }
+          for (let index = 0; index < multiples.length; index += 1) {
+            const entree = multiples[index];
+            const resultatMultiple =
+              entree.d66 === null ? null : blessureHeroSure(entree.d66);
+            if (
+              !resultatMultiple ||
+              ['mort', 'capture', 'multiples'].includes(resultatMultiple.id)
+            ) {
+              return `${combattant.nom} : la blessure multiple ${index + 1} doit être relancée (mort, capture et blessures multiples sont ignorées).`;
+            }
+            if (
+              ['bras', 'jambe-ecrasee', 'profonde'].includes(
+                resultatMultiple.id,
+              )
+            ) {
+              const maximum = resultatMultiple.id === 'profonde' ? 3 : 6;
+              if (
+                entree.jetSecondaire === null ||
+                !Number.isInteger(entree.jetSecondaire) ||
+                entree.jetSecondaire < 1 ||
+                entree.jetSecondaire > maximum
+              ) {
+                return `${combattant.nom} : la blessure multiple ${index + 1} exige son jet secondaire.`;
+              }
+            } else if (resultatMultiple.id === 'arenes') {
+              if (!['victoire', 'defaite'].includes(entree.decision ?? '')) {
+                return `${combattant.nom} : choisissez l’issue de l’arène pour la blessure multiple ${index + 1}.`;
+              }
+              if (
+                entree.decision === 'defaite' &&
+                (entree.jetSecondaire === null ||
+                  !blessureHeroSure(entree.jetSecondaire) ||
+                  entree.jetSecondaire < 11 ||
+                  entree.jetSecondaire > 35)
+              ) {
+                return `${combattant.nom} : saisissez le D66 final de l’arène pour la blessure multiple ${index + 1}.`;
+              }
+            } else if (
+              resultatMultiple.application !== 'automatique' &&
+              !entree.note.trim()
+            ) {
+              return `${combattant.nom} : précisez la résolution de la blessure multiple ${index + 1}.`;
+            }
+          }
+          continue;
+        }
         if (blessure.id === 'arenes') {
           const resolution = lireResolutionBlessure(
             suivi.blessureNote,
@@ -3733,7 +4883,7 @@ function appliquerResultatHero(
     if (resolution.decision === 'perdu') return null;
     if (resolution.decision === 'captif') {
       blessures.push(
-        `Capturé — reste détenu${resolution.note.trim() ? ` · ${resolution.note.trim()}` : ''}`,
+        `Capturé (reste détenu)${resolution.note.trim() ? ` · ${resolution.note.trim()}` : ''}`,
       );
       return {
         ...combattant,
@@ -3768,7 +4918,7 @@ function appliquerResultatHero(
       equipementIds: [],
       blessures: [
         ...apresBlessure.blessures,
-        'Défaite dans les arènes — armes et armure perdues',
+        'Défaite dans les arènes : armes et armure perdues',
       ],
     };
   }
@@ -3794,14 +4944,14 @@ function appliquerResultatHero(
     partiesManquees = Math.max(partiesManquees, resolution.jetSecondaire);
   if (
     resultatId === 'endurci' &&
-    !competences.includes('Endurci — immunisé à la peur')
+    !competences.includes('Endurci (immunisé à la peur)')
   )
-    competences.push('Endurci — immunisé à la peur');
+    competences.push('Endurci (immunisé à la peur)');
   if (
     resultatId === 'balafres' &&
-    !competences.includes('Horribles balafres — provoque la peur')
+    !competences.includes('Horribles balafres (provoque la peur)')
   )
-    competences.push('Horribles balafres — provoque la peur');
+    competences.push('Horribles balafres (provoque la peur)');
 
   const resultat = blessureParId(resultatId);
   if (
@@ -3811,7 +4961,7 @@ function appliquerResultatHero(
     const libelle =
       resultat.application === 'automatique'
         ? resultat.titre
-        : `${resultat.titre} — ${decrireResolutionBlessure(
+        : `${resultat.titre} : ${decrireResolutionBlessure(
             suivi.blessureNote,
             suivi.resolutionBlessure,
           )}`;
@@ -3871,6 +5021,17 @@ function candidatsSuccession(
   return meilleursCd.filter((hero) => hero.experience === experience);
 }
 
+function ajouterHeritageMagique(combattant: Combattant, factionId: FactionId) {
+  if (!['culte-des-possedes', 'soeurs-de-sigmar'].includes(factionId)) {
+    return combattant.competences;
+  }
+  const heritage =
+    factionId === 'soeurs-de-sigmar' ? HERITAGE_PRIERE : HERITAGE_SORT;
+  return combattant.competences.includes(heritage)
+    ? combattant.competences
+    : [...combattant.competences, heritage];
+}
+
 function lireProgressions(
   nombre: number,
   structure: DossierProgressions,
@@ -3879,6 +5040,18 @@ function lireProgressions(
   while (saisies.length < nombre)
     saisies.push({ jet: null, decision: '', note: '' });
   return { version: 1, saisies: saisies.slice(0, nombre) };
+}
+
+function progressionSecondaire(
+  jet: number | null | undefined,
+  decision: string | undefined,
+  note: string | undefined,
+): SaisieProgression {
+  return {
+    jet: jet ?? null,
+    decision: decision ?? '',
+    note: note ?? '',
+  };
 }
 
 function progressionSure(
@@ -3920,7 +5093,22 @@ function validerProgressions(
   /* Les jets multiples se contrôlent dans l'ordre : chaque hausse modifie la suivante. */
   const statistiquesSimulees = { ...combattant.statistiques };
   const competencesSimulees = new Set(combattant.competences);
-  for (const saisie of saisies) {
+  for (const [index, saisie] of saisies.entries()) {
+    const sortHerite = sortDuChoixHeritage(saisie.decision);
+    if (sortHerite) {
+      const competence = competenceMagique(sortHerite);
+      if (index !== 0 || !possedeHeritageMagique(combattant)) {
+        return 'l’héritage magique ne peut remplacer que la première progression disponible du successeur.';
+      }
+      if (!competencesAutorisees.has(competence)) {
+        return 'le sort ou la prière choisi ne figure pas dans la liste de la bande.';
+      }
+      if (competencesSimulees.has(competence)) {
+        return 'ce sort ou cette prière est déjà connu.';
+      }
+      competencesSimulees.add(competence);
+      continue;
+    }
     const resultat = progressionSure(saisie.jet, categorie);
     if (!resultat) return 'chaque progression exige un jet 2D6 valide.';
     const choix = choixProgression(resultat, categorie);
@@ -3935,8 +5123,16 @@ function validerProgressions(
     if (saisie.decision === CHOIX_AUTRE && !saisie.note.trim()) {
       return 'un résultat de remplacement doit être détaillé dans la note.';
     }
-    if (resultat.id === 'gars-doue' && !saisie.note.trim()) {
-      return '« Ce gars est doué » exige la résolution complète du nouveau Héros et du groupe.';
+    if (resultat.id === 'gars-doue') {
+      if (combattant.quantite < 1 || combattant.herosPromu) {
+        return '« Ce gars est doué » ne peut promouvoir qu’un Homme de main.';
+      }
+      if (
+        saisie.tablesPromu?.length !== 2 ||
+        new Set(saisie.tablesPromu).size !== 2
+      ) {
+        return '« Ce gars est doué » exige deux tables de compétences distinctes.';
+      }
     }
     if (resultat.id === 'competence') {
       if (!competencesAutorisees.has(saisie.decision)) {
@@ -3989,10 +5185,20 @@ function appliquerProgressionsCombattant(
   maximums: Statistiques,
 ) {
   const statistiques = { ...combattant.statistiques };
-  const competences = [...combattant.competences];
+  let competences = [...combattant.competences];
   const progressions = [...combattant.progressions];
 
   for (const saisie of saisies) {
+    const sortHerite = sortDuChoixHeritage(saisie.decision);
+    if (sortHerite) {
+      const competence = competenceMagique(sortHerite);
+      competences = competences.filter(
+        (item) => item !== HERITAGE_PRIERE && item !== HERITAGE_SORT,
+      );
+      if (!competences.includes(competence)) competences.push(competence);
+      progressions.push(`Héritage magique : ${sortHerite}`);
+      continue;
+    }
     const resultat = progressionSure(saisie.jet, categorie);
     if (!resultat) continue;
     if (resultat.id === 'competence') {
@@ -4020,7 +5226,7 @@ function appliquerProgressionsCombattant(
       saisie.note,
     ]
       .filter((item, index, liste) => item && liste.indexOf(item) === index)
-      .join(' — ');
+      .join(' ; ');
     progressions.push(`${resultat.titre}${details ? ` : ${details}` : ''}`);
   }
 
@@ -4134,7 +5340,11 @@ function peutRecevoirEquipement(
 ) {
   const profil = profilsParId.get(combattant.profilId);
   if (!profil) return false;
-  return equipementAutorise(profil, equipement);
+  return equipementAutorise(
+    profil,
+    equipement,
+    profil.categorie === 'Héros' || combattant.herosPromu === true,
+  );
 }
 
 function construireNotesPartie(bataille: BatailleEnCours) {
@@ -4143,7 +5353,7 @@ function construireNotesPartie(bataille: BatailleEnCours) {
     ? ['Personnel spécial : aucun.']
     : personnel.entrees.map(
         (entree) =>
-          `${entree.type} ${entree.nom} : ${entree.decision}${entree.heroId ? `, chercheur ${entree.heroId}, D6 ${entree.jetInitiative}` : ''}${entree.cout ? `, ${entree.cout} CO` : ''}${entree.note ? ` — ${entree.note}` : ''}.`,
+          `${entree.type} ${entree.nom} : ${entree.decision}${entree.heroId ? `, chercheur ${entree.heroId}, D6 ${entree.jetInitiative}` : ''}${entree.cout ? `, ${entree.cout} CO` : ''}${entree.note ? ` ; ${entree.note}` : ''}.`,
       );
   return [
     bataille.notes.trim(),
