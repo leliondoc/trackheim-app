@@ -881,9 +881,6 @@ function CampaignManagerDialog({
 }) {
   const [nomBande, setNomBande] = useState('');
   const [factionSelectionnee, setFactionSelectionnee] = useState('');
-  const bandeSelectionnee = bandesBibliotheque.find(
-    (bande) => bande.slug === factionSelectionnee,
-  );
   const factionPriseEnCharge = definitionsBandes.some(
     (definition) => definition.id === factionSelectionnee,
   );
@@ -977,10 +974,9 @@ function CampaignManagerDialog({
           <label className="campaign-faction-field">
             <span>Faction</span>
             <NativeSelect
-              aria-describedby={
-                factionPriseEnCharge ? undefined : 'campaign-faction-status'
+              aria-invalid={
+                factionSelectionnee && !factionPriseEnCharge ? true : undefined
               }
-              aria-invalid={!factionPriseEnCharge}
               value={factionSelectionnee}
               onChange={(event) => setFactionSelectionnee(event.target.value)}
             >
@@ -990,37 +986,10 @@ function CampaignManagerDialog({
               {bandesBibliotheque.map((bande) => (
                 <NativeSelectOption key={bande.slug} value={bande.slug}>
                   {bande.nom} · grade {bande.grade}
-                  {definitionsBandes.some(
-                    (definition) => definition.id === bande.slug,
-                  )
-                    ? ' · constructeur disponible'
-                    : ''}
                 </NativeSelectOption>
               ))}
             </NativeSelect>
           </label>
-          {!factionPriseEnCharge && bandeSelectionnee && (
-            <output
-              className="campaign-faction-status"
-              id="campaign-faction-status"
-            >
-              <CircleAlert aria-hidden="true" />
-              <span>
-                <strong>{bandeSelectionnee.nom}</strong> est consultable dans la
-                bibliothèque, mais ses profils ne sont pas encore indexés. La
-                création reste bloquée tant que ses profils officiels ne sont
-                pas indexés.{' '}
-                <a
-                  href={`${SOURCE_GLM}/bandes/${bandeSelectionnee.slug}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Consulter sa fiche
-                  <IndicationNouvelOnglet />
-                </a>
-              </span>
-            </output>
-          )}
           <Input
             aria-label="Nom de la nouvelle bande"
             maxLength={160}
@@ -1380,9 +1349,9 @@ function EmptyApplicationContent({
                 <NativeSelectOption disabled value="">
                   Choisir une faction…
                 </NativeSelectOption>
-                {definitionsBandes.map((definition) => (
-                  <NativeSelectOption key={definition.id} value={definition.id}>
-                    {definition.nom}
+                {bandesBibliotheque.map((bande) => (
+                  <NativeSelectOption key={bande.slug} value={bande.slug}>
+                    {bande.nom} · grade {bande.grade}
                   </NativeSelectOption>
                 ))}
               </NativeSelect>
@@ -1409,7 +1378,7 @@ function EmptyApplicationContent({
 
           <aside className="empty-rulebook-note">
             <p className="eyebrow">Avant la première bataille</p>
-            <h2>Ce que prévoit le livre officiel</h2>
+            <h2>Ce que prévoit le livre de règles</h2>
             <ul className="empty-rule-facts">
               <li>Un chef et au moins trois combattants pour commencer.</li>
               <li>Des Héros individuels et des groupes d’Hommes de main.</li>
@@ -1450,7 +1419,7 @@ function EmptyApplicationContent({
             <p className="eyebrow">Commencer une chronique</p>
             <h2 id="empty-overview-title">Bâtissez votre première bande</h2>
             <p>
-              Choisissez une faction officielle, recrutez vos combattants et
+              Choisissez une bande du catalogue, recrutez vos combattants et
               préparez une feuille de bande prête pour la table.
             </p>
             <div className="empty-overview-actions">
@@ -1467,7 +1436,7 @@ function EmptyApplicationContent({
                 type="button"
                 variant="ghost"
               >
-                <BookOpen aria-hidden="true" /> Voir les bandes officielles
+                <BookOpen aria-hidden="true" /> Parcourir les 49 bandes
               </Button>
             </div>
           </div>
@@ -1667,7 +1636,7 @@ function WarbandHeading({
           ·
           {campagne.homebrew.actifs
             ? ` ${campagne.homebrew.nomSet}, en complément des règles officielles`
-            : ' règles officielles Games Workshop'}
+            : ` règles de grade ${campagne.grade}`}
         </p>
       </div>
       <RecruitDialog
@@ -1694,7 +1663,11 @@ function Metrics({
         icon={Users}
         label="Combattants"
         value={`${synthese.effectif}`}
-        unit={`/ ${definition.effectifMaximum}`}
+        unit={
+          definition.effectifMaximum === null
+            ? undefined
+            : `/ ${definition.effectifMaximum}`
+        }
         note={`${synthese.heros} héros · ${synthese.hommesDeMain} hommes de main`}
       />
       <MetricCard
@@ -1830,7 +1803,12 @@ function FighterRow({ combattant }: { combattant: Combattant }) {
             {combattant.statut}
           </span>
         </div>
-        <p className="stat-line">{formaterStats(combattant.statistiques)}</p>
+        <p className="stat-line">
+          {formaterStats(
+            combattant.statistiques,
+            combattant.statistiquesSpeciales,
+          )}
+        </p>
         <div className="fighter-foot">
           <span>{equipement || 'Dague gratuite'}</span>
           <span className="xp-pill">{combattant.experience} XP</span>
@@ -2057,7 +2035,12 @@ function WarbandView({
                 <strong>{coutProfil(profil, campagne)} CO</strong>
               </div>
               <h3>{profil.nom}</h3>
-              <p className="stat-line">{formaterStats(profil.statistiques)}</p>
+              <p className="stat-line">
+                {formaterStats(
+                  profil.statistiques,
+                  profil.statistiquesSpeciales,
+                )}
+              </p>
               {profil.competencesDisponibles && (
                 <p className="profile-skills">
                   Compétences : {profil.competencesDisponibles.join(', ')}
@@ -2080,7 +2063,10 @@ function WarbandView({
         <div className="panel-header">
           <div>
             <p className="eyebrow">Feuille de bande</p>
-            <h2>{synthese.effectif} combattants</h2>
+            <h2>
+              {synthese.effectif}{' '}
+              {synthese.effectif === 1 ? 'combattant' : 'combattants'}
+            </h2>
           </div>
           <span className="rating-chip">Valeur {synthese.valeurBande}</span>
         </div>
@@ -2275,8 +2261,9 @@ function RecruitDialog({
   const limiteAtteinte =
     profil.maximum !== null && nombreProfil + quantiteDemandee > profil.maximum;
   const bandePleine =
+    definition.effectifMaximum !== null &&
     calculerSynthese(campagne).effectif + quantiteDemandee >
-    definition.effectifMaximum;
+      definition.effectifMaximum;
   const fondsInsuffisants = cout > campagne.couronnes;
   const chefDejaRecrute =
     Boolean(profil.chef) && campagne.combattants.some((item) => item.chef);
@@ -2376,6 +2363,9 @@ function RecruitDialog({
       experience: profil.experienceInitiale,
       statut: 'Prêt',
       statistiques: { ...profil.statistiques },
+      statistiquesSpeciales: profil.statistiquesSpeciales
+        ? { ...profil.statistiquesSpeciales }
+        : undefined,
       equipementIds: selectionEquipement,
       notes: '',
       quantite: quantiteDemandee,
@@ -2562,7 +2552,9 @@ function RecruitDialog({
               <strong>{profil.nom}</strong>
               <span>{profil.categorie}</span>
             </div>
-            <code>{formaterStats(profil.statistiques)}</code>
+            <code>
+              {formaterStats(profil.statistiques, profil.statistiquesSpeciales)}
+            </code>
             {profil.regleSpeciale && <p>{profil.regleSpeciale}</p>}
             {profil.competencesDisponibles && (
               <p>
@@ -4420,6 +4412,10 @@ function creerEtatCampagne(
   factionId: FactionId,
 ): EtatCampagne {
   const definition = obtenirDefinitionBande(factionId);
+  const bande = bandesBibliotheque.find(
+    (candidate) => candidate.slug === factionId,
+  );
+  if (!bande) throw new Error(`Fiche de bande inconnue : ${factionId}`);
   return {
     version: 3,
     revision: 0,
@@ -4427,7 +4423,7 @@ function creerEtatCampagne(
     nomCampagne: 'Hors campagne',
     nomBande,
     factionId,
-    grade: '1a',
+    grade: bande.grade,
     campagneActive: false,
     couronnes: definition.budgetInitial,
     fragments: 0,
@@ -4483,8 +4479,12 @@ function equipementsPourProfil(
   });
 }
 
-function formaterStats(stats: Statistiques) {
-  return `M${stats.mouvement}  CC${stats.capaciteCombat}  CT${stats.capaciteTir}  F${stats.force}  E${stats.endurance}  PV${stats.pointsVie}  I${stats.initiative}  A${stats.attaques}  Cd${stats.commandement}`;
+function formaterStats(
+  stats: Statistiques,
+  speciales: Partial<Record<keyof Statistiques, string>> = {},
+) {
+  const valeur = (cle: keyof Statistiques) => speciales[cle] ?? stats[cle];
+  return `M${valeur('mouvement')}  CC${valeur('capaciteCombat')}  CT${valeur('capaciteTir')}  F${valeur('force')}  E${valeur('endurance')}  PV${valeur('pointsVie')}  I${valeur('initiative')}  A${valeur('attaques')}  Cd${valeur('commandement')}`;
 }
 
 function initiales(nom: string) {

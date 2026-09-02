@@ -3,7 +3,11 @@ import {
   equipementsBandesCore,
 } from './core-warbandes.ts';
 import catalogueBandesJson from './warbands/catalogue.json' with { type: 'json' };
-import type { CatalogueBandes } from './warbands/schema.ts';
+import { fichesBandesReference } from './warbands/reference.ts';
+import type {
+  CatalogueBandes,
+  StatistiquesBandeReference,
+} from './warbands/schema.ts';
 
 const catalogueBandes = catalogueBandesJson as CatalogueBandes;
 
@@ -19,30 +23,9 @@ export type Statistiques = {
   commandement: number;
 };
 
-export type FactionId =
-  | 'mercenaires-reiklanders'
-  | 'mercenaires-middenheimers'
-  | 'mercenaires-marienburgers'
-  | 'culte-des-possedes'
-  | 'repurgateurs'
-  | 'soeurs-de-sigmar'
-  | 'morts-vivants'
-  | 'skavens-du-clan-eshin';
+export type FactionId = keyof typeof catalogueBandesJson.bandes;
 
-export type ListeEquipementId =
-  | 'mercenaires'
-  | 'tireurs'
-  | 'possedes'
-  | 'ames-sombres'
-  | 'mutations'
-  | 'repurgateurs'
-  | 'zelotes'
-  | 'flagellants'
-  | 'soeurs'
-  | 'augure'
-  | 'morts-vivants'
-  | 'skavens-heros'
-  | 'skavens-hommes-main';
+export type ListeEquipementId = string;
 
 export type CategorieCompetence =
   | 'Combat'
@@ -61,6 +44,8 @@ export type ProfilRecrue = {
   maximum: number | null;
   experienceInitiale: number;
   statistiques: Statistiques;
+  /** Valeur imprimée non numérique, par exemple le Mouvement 2D6 d’un Squig. */
+  statistiquesSpeciales?: Partial<Record<keyof Statistiques, string>>;
   /** Plafonds raciaux utilisés pour les progressions ; humain par défaut. */
   maximums?: Statistiques;
   competencesDisponibles?: CategorieCompetence[];
@@ -82,6 +67,8 @@ export type Equipement = {
   /** Nombre d’exemplaires portables par combattant (une paire vaut deux). */
   quantiteMax?: number;
   quantitesMaxParProfil?: Record<string, number>;
+  /** Restriction nominative imprimée dans la liste de bande. */
+  profilsAutorises?: string[];
   /** Certains livres de bande fixent un prix de recrutement différent. */
   coutsParListe?: Partial<Record<ListeEquipementId, number>>;
   reserveAuxHeros?: boolean;
@@ -104,6 +91,7 @@ export type Combattant = {
   experience: number;
   statut: 'Prêt' | 'Blessé' | 'Absent';
   statistiques: Statistiques;
+  statistiquesSpeciales?: Partial<Record<keyof Statistiques, string>>;
   equipementIds: string[];
   notes: string;
   /** Les Hommes de main d'un même groupe partagent profil, XP et équipement. */
@@ -262,7 +250,7 @@ export type EtatCampagne = {
   nomBande: string;
   campagneActive: boolean;
   factionId: FactionId;
-  grade: '1a';
+  grade: BandeBibliotheque['grade'];
   couronnes: number;
   fragments: number;
   numeroBataille: number;
@@ -280,7 +268,7 @@ export type DefinitionBande = {
   slug: string;
   budgetInitial: number;
   effectifMinimum: number;
-  effectifMaximum: number;
+  effectifMaximum: number | null;
   profils: ProfilRecrue[];
   regles: Array<{ titre: string; description: string }>;
   source: string;
@@ -453,7 +441,7 @@ export const profilsMarienburgers = varianteMercenaire(
   }),
 );
 
-export const equipements: Equipement[] = [
+const equipementsAutomatises: Equipement[] = [
   {
     id: 'dague',
     nom: 'Dague supplémentaire',
@@ -826,7 +814,7 @@ export const equipements: Equipement[] = [
   ...equipementsBandesCore,
 ];
 
-export const definitionsBandes: DefinitionBande[] = [
+const definitionsBandesAutomatisees: DefinitionBande[] = [
   {
     id: 'mercenaires-reiklanders',
     nom: 'Mercenaires Reiklanders',
@@ -890,22 +878,6 @@ export const definitionsBandes: DefinitionBande[] = [
   ...definitionsBandesCore,
 ];
 
-export const profils = definitionsBandes.flatMap(
-  (definition) => definition.profils,
-);
-
-export function obtenirDefinitionBande(factionId: FactionId) {
-  const definition = definitionsBandes.find((item) => item.id === factionId);
-  if (!definition) throw new Error(`Faction inconnue : ${factionId}`);
-  return definition;
-}
-
-export function obtenirProfil(profilId: string) {
-  const profil = profils.find((item) => item.id === profilId);
-  if (!profil) throw new Error(`Profil inconnu : ${profilId}`);
-  return profil;
-}
-
 export function equipementAutorise(
   profil: ProfilRecrue,
   equipement: Equipement,
@@ -913,6 +885,12 @@ export function equipementAutorise(
 ) {
   if (equipement.patchGlm) return false;
   if (equipement.reserveAuxHeros && !estHeros) return false;
+  if (
+    equipement.profilsAutorises &&
+    !equipement.profilsAutorises.includes(profil.id)
+  ) {
+    return false;
+  }
   return profil.listesEquipement.some((liste) =>
     equipement.listesEquipement.includes(liste),
   );
@@ -1034,6 +1012,366 @@ export const bandesBibliotheque: BandeBibliotheque[] = [
     ['Strigannes', 'strigannes'],
   ]),
 ];
+
+const idsBandesAutomatisees = new Set(
+  definitionsBandesAutomatisees.map((definition) => definition.id),
+);
+
+function idListeReference(slug: string, index: number) {
+  return `ref-${slug}-l${index}`;
+}
+
+function idProfilReference(slug: string, id: string) {
+  return `ref-${slug}-${id}`;
+}
+
+function categorieEquipementReference(nom: string): Equipement['categorie'] {
+  const valeur = nom.toLocaleLowerCase('fr-FR');
+  if (valeur.includes('tir')) return 'Tir';
+  if (valeur.includes('armure')) return 'Armure';
+  if (valeur.includes('mutation')) return 'Mutation';
+  if (valeur.includes('corps à corps') || valeur === 'armes') {
+    return 'Corps à corps';
+  }
+  return 'Divers';
+}
+
+function normaliserRecherche(valeur: string) {
+  return valeur
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('fr-FR')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+const motsProfilGeneriques = new Set([
+  'ancien',
+  'bande',
+  'chaos',
+  'chef',
+  'combat',
+  'guerre',
+  'guerriere',
+  'homme',
+  'noir',
+  'noire',
+]);
+
+const famillesProfil = new Set([
+  'corsaire',
+  'gladiateur',
+  'gobelin',
+  'ogre',
+  'saurus',
+  'skink',
+  'tireur',
+]);
+
+const categoriesHorsRecrutement = new Set([
+  "Créature d'équipement",
+  'Monture optionnelle',
+  'Transformation',
+]);
+
+function radicalMotProfil(mot: string) {
+  return mot.length > 4 &&
+    mot.endsWith('s') &&
+    mot !== 'chaos' &&
+    mot !== 'saurus'
+    ? mot.slice(0, -1)
+    : mot;
+}
+
+function contientSequence(conteneur: string[], recherche: string[]) {
+  if (recherche.length === 0 || recherche.length > conteneur.length) {
+    return false;
+  }
+  return conteneur.some((_, index) =>
+    recherche.every((mot, decalage) => conteneur[index + decalage] === mot),
+  );
+}
+
+function profilsAutorisesReference(slug: FactionId, note: string | undefined) {
+  if (!note) return undefined;
+  const fiche = fichesBandesReference[slug];
+  const restrictions = note
+    .split(/[,.;:]/)
+    .map(normaliserRecherche)
+    .flatMap((clause) => {
+      const correspondance = clause.match(/^(.*?)\b(?:uniquement|seulement)\b/);
+      if (correspondance?.[1]) return [correspondance[1].trim()];
+      const herosFamille = clause.match(
+        /\b(?:pour|aux)\s+(?:les\s+)?heros\s+(skinks?|saurus|gobelins?|corsaires?|tireurs?|ogres?|gladiateurs?)\b/,
+      );
+      if (herosFamille?.[1]) return [`heros ${herosFamille[1]}`];
+      if (/\breserv\w*\b.*\bheros\b/.test(clause)) return ['heros'];
+      return [];
+    });
+  if (restrictions.length === 0) return undefined;
+
+  const profilsEligibles = fiche.profils
+    .filter(
+      (profil) =>
+        profil.cout !== null &&
+        !categoriesHorsRecrutement.has(profil.categorie),
+    )
+    .map((profil) => ({
+      profil,
+      motsComplets: normaliserRecherche(profil.nom)
+        .split(' ')
+        .map(radicalMotProfil)
+        .filter((mot) => mot.length >= 2),
+      mots: normaliserRecherche(profil.nom)
+        .split(' ')
+        .map(radicalMotProfil)
+        .filter((mot) => mot.length >= 4 && !motsProfilGeneriques.has(mot)),
+    }));
+  const frequences = new Map<string, number>();
+  for (const profil of profilsEligibles) {
+    for (const mot of new Set(profil.mots)) {
+      frequences.set(mot, (frequences.get(mot) ?? 0) + 1);
+    }
+  }
+
+  const idsAutorises = new Set<string>();
+  for (const restriction of restrictions) {
+    const mots = restriction.split(' ').map(radicalMotProfil);
+    const motsRestriction = new Set(mots);
+    const autoriseLesHeros = motsRestriction.has('hero');
+    const familles = mots.filter((mot) => famillesProfil.has(mot));
+    const unionHerosFamille = autoriseLesHeros && motsRestriction.has('et');
+    const motsRole = mots.filter(
+      (mot) =>
+        mot.length >= 4 &&
+        !['commun', 'hero', 'pour', 'rare', 'reserve'].includes(mot),
+    );
+    const familleSeule =
+      familles.length > 0 &&
+      motsRole.every((mot) => mot === 'et' || famillesProfil.has(mot));
+
+    for (const { profil, mots: motsNom, motsComplets } of profilsEligibles) {
+      const appartientFamille = familles.some((famille) =>
+        motsNom.includes(famille),
+      );
+      const profilNomme =
+        !(autoriseLesHeros && familles.length > 0) &&
+        (motsComplets.length > 1 || motsRole.length === 1) &&
+        contientSequence(mots, motsComplets);
+      const roleUnique = motsNom.some(
+        (mot) =>
+          motsRestriction.has(mot) &&
+          !famillesProfil.has(mot) &&
+          frequences.get(mot) === 1,
+      );
+      const herosAutorise =
+        autoriseLesHeros &&
+        profil.categorie === 'Héros' &&
+        (familles.length === 0 || unionHerosFamille || appartientFamille);
+      const familleAutorisee =
+        appartientFamille &&
+        ((familleSeule && !autoriseLesHeros) || unionHerosFamille);
+      if (herosAutorise || familleAutorisee || profilNomme || roleUnique) {
+        idsAutorises.add(idProfilReference(slug, profil.id));
+      }
+    }
+  }
+
+  let profilsAutorises = Array.from(idsAutorises);
+  if (/\bune seule marque par heros\b/.test(normaliserRecherche(note))) {
+    const idsHeros = new Set(
+      profilsEligibles
+        .filter(({ profil }) => profil.categorie === 'Héros')
+        .map(({ profil }) => idProfilReference(slug, profil.id)),
+    );
+    profilsAutorises =
+      profilsAutorises.length > 0
+        ? profilsAutorises.filter((id) => idsHeros.has(id))
+        : Array.from(idsHeros);
+  }
+
+  return profilsAutorises.length > 0 ? profilsAutorises : undefined;
+}
+
+function tablesCompetencesReference(noms: string[]) {
+  const tables = noms.flatMap<CategorieCompetence>((nom) => {
+    if (/combat/i.test(nom)) return ['Combat'];
+    if (/tir/i.test(nom)) return ['Tir'];
+    if (/érudition/i.test(nom)) return ['Érudition'];
+    if (/force/i.test(nom)) return ['Force'];
+    if (/vitesse/i.test(nom)) return ['Vitesse'];
+    if (/spécial/i.test(nom)) return ['Spécial'];
+    return [];
+  });
+  return Array.from(new Set(tables));
+}
+
+const clesStatistiques: Array<keyof Statistiques> = [
+  'mouvement',
+  'capaciteCombat',
+  'capaciteTir',
+  'force',
+  'endurance',
+  'pointsVie',
+  'initiative',
+  'attaques',
+  'commandement',
+];
+
+function convertirStatistiquesReference(valeurs: StatistiquesBandeReference) {
+  const statistiques = {} as Statistiques;
+  const statistiquesSpeciales: Partial<Record<keyof Statistiques, string>> = {};
+  for (const cle of clesStatistiques) {
+    const valeur = valeurs[cle];
+    if (typeof valeur === 'number') statistiques[cle] = valeur;
+    else {
+      statistiques[cle] = 0;
+      statistiquesSpeciales[cle] = valeur === null ? '-' : valeur;
+    }
+  }
+  return {
+    statistiques,
+    statistiquesSpeciales:
+      Object.keys(statistiquesSpeciales).length > 0
+        ? statistiquesSpeciales
+        : undefined,
+  };
+}
+
+function creerProfilsReference(slug: FactionId) {
+  const fiche = fichesBandesReference[slug];
+  return fiche.profils
+    .filter(
+      (profil) =>
+        profil.cout !== null &&
+        !categoriesHorsRecrutement.has(profil.categorie),
+    )
+    .map<ProfilRecrue>((profil) => {
+      const regles = profil.regles
+        .map((regle) => `${regle.titre} : ${regle.description}`)
+        .join(' ');
+      const estChef = profil.regles.some(
+        (regle) =>
+          /^chef$/i.test(regle.titre) ||
+          /\best (?:toujours )?le chef\b/i.test(regle.description),
+      );
+      const statsReference = convertirStatistiquesReference(
+        profil.statistiques,
+      );
+      const listesEquipement = fiche.listesEquipement.flatMap((liste, index) =>
+        liste.profils.includes(profil.id)
+          ? [idListeReference(slug, index)]
+          : [],
+      );
+      const competencesDisponibles = tablesCompetencesReference(
+        profil.competencesDisponibles,
+      );
+      return {
+        id: idProfilReference(slug, profil.id),
+        nom: profil.nom,
+        categorie: profil.categorie === 'Héros' ? 'Héros' : 'Hommes de main',
+        cout: profil.cout!,
+        minimum: profil.minimum,
+        maximum: profil.maximum,
+        experienceInitiale: profil.experienceInitiale,
+        ...statsReference,
+        competencesDisponibles:
+          competencesDisponibles.length > 0
+            ? competencesDisponibles
+            : undefined,
+        listesEquipement,
+        chef: estChef,
+        grandeCreature: profil.regles.some((regle) =>
+          /grande cible|grande créature/i.test(
+            `${regle.titre} ${regle.description}`,
+          ),
+        ),
+        gagneExperience:
+          !/ne gagne jamais d'expérience|aucune expérience/i.test(regles) &&
+          !/véhicule/i.test(profil.categorie),
+        regleSpeciale: regles || undefined,
+      };
+    });
+}
+
+const equipementsReference: Equipement[] = bandesBibliotheque.flatMap(
+  (bande) => {
+    if (idsBandesAutomatisees.has(bande.slug as FactionId)) return [];
+    const fiche = fichesBandesReference[bande.slug];
+    return fiche.listesEquipement.flatMap((liste, indexListe) =>
+      liste.categories.flatMap((categorie, indexCategorie) =>
+        categorie.entrees.map((entree, indexEntree) => ({
+          id: `ref-${bande.slug}-l${indexListe}-c${indexCategorie}-e${indexEntree}`,
+          nom: entree.nom,
+          categorie: categorieEquipementReference(categorie.nom),
+          cout: entree.cout,
+          listesEquipement: [idListeReference(bande.slug, indexListe)],
+          profilsAutorises: profilsAutorisesReference(
+            bande.slug as FactionId,
+            entree.note,
+          ),
+          quantiteMax:
+            /\bpaire\b/i.test(entree.nom) ||
+            (/\bpaire\b/i.test(entree.formuleCout ?? '') &&
+              !new RegExp(`${entree.cout * 2}\\s*CO`, 'i').test(
+                entree.formuleCout ?? '',
+              ))
+              ? 1
+              : undefined,
+          regleSpeciale: [entree.formuleCout, entree.note]
+            .filter(Boolean)
+            .join('. '),
+        })),
+      ),
+    );
+  },
+);
+
+const definitionsBandesReference: DefinitionBande[] = bandesBibliotheque
+  .filter((bande) => !idsBandesAutomatisees.has(bande.slug as FactionId))
+  .map((bande) => {
+    const fiche = fichesBandesReference[bande.slug];
+    return {
+      id: bande.slug as FactionId,
+      nom: bande.nom,
+      slug: bande.slug,
+      budgetInitial: fiche.composition.budgetInitial,
+      effectifMinimum: fiche.composition.effectifMinimum,
+      effectifMaximum: fiche.composition.effectifMaximum,
+      profils: creerProfilsReference(bande.slug as FactionId),
+      regles: fiche.regles.map(({ titre, description }) => ({
+        titre,
+        description,
+      })),
+      source: fiche.composition.source,
+    };
+  });
+
+export const equipements: Equipement[] = [
+  ...equipementsAutomatises,
+  ...equipementsReference,
+];
+
+export const definitionsBandes: DefinitionBande[] = [
+  ...definitionsBandesAutomatisees,
+  ...definitionsBandesReference,
+];
+
+export const profils = definitionsBandes.flatMap(
+  (definition) => definition.profils,
+);
+
+export function obtenirDefinitionBande(factionId: FactionId) {
+  const definition = definitionsBandes.find((item) => item.id === factionId);
+  if (!definition) throw new Error(`Faction inconnue : ${factionId}`);
+  return definition;
+}
+
+export function obtenirProfil(profilId: string) {
+  const profil = profils.find((item) => item.id === profilId);
+  if (!profil) throw new Error(`Profil inconnu : ${profilId}`);
+  return profil;
+}
 
 export const etapesApresBataille = [
   'Blessures graves',

@@ -30,13 +30,15 @@ const factionsAttendues: FactionId[] = [
   'skavens-du-clan-eshin',
 ];
 
-describe('catalogue des six bandes officielles', () => {
+describe('socle automatisé des huit bandes historiques', () => {
   it('indexe les six familles et les trois variantes mercenaires', () => {
     assert.deepEqual(
-      definitionsBandes.map((definition) => definition.id),
+      definitionsBandes
+        .filter((definition) => factionsAttendues.includes(definition.id))
+        .map((definition) => definition.id),
       factionsAttendues,
     );
-    assert.equal(new Set(definitionsBandes.map((item) => item.id)).size, 8);
+    assert.equal(new Set(definitionsBandes.map((item) => item.id)).size, 49);
     assert.equal(
       new Set(
         definitionsBandes.flatMap((item) =>
@@ -57,7 +59,8 @@ describe('catalogue des six bandes officielles', () => {
       obtenirDefinitionBande('skavens-du-clan-eshin').effectifMaximum,
       20,
     );
-    for (const definition of definitionsBandes) {
+    for (const factionId of factionsAttendues) {
+      const definition = obtenirDefinitionBande(factionId);
       assert.equal(definition.effectifMinimum, 3);
       assert.equal(
         definition.profils.filter((profil) => profil.chef).length,
@@ -91,7 +94,9 @@ describe('catalogue des six bandes officielles', () => {
 
   it('épingle le nombre de profils de chaque famille', () => {
     assert.deepEqual(
-      definitionsBandes.map((definition) => definition.profils.length),
+      factionsAttendues.map(
+        (factionId) => obtenirDefinitionBande(factionId).profils.length,
+      ),
       [6, 6, 6, 6, 6, 5, 6, 7],
     );
     assert.equal(obtenirProfil('morts-vivants-vampire').cout, 110);

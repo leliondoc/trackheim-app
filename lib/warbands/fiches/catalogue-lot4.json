@@ -1763,6 +1763,10 @@
           "competencesDisponibles": ["Érudition", "Force", "Spéciale"],
           "regles": [
             {
+              "titre": "Chef",
+              "description": "La Liche dirige la bande. Les guerriers à portée peuvent utiliser sa valeur de Commandement."
+            },
+            {
               "titre": "Sorcier",
               "description": "Il connaît deux sorts de Nécromancie tirés au hasard."
             },

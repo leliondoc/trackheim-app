@@ -47,6 +47,44 @@ describe('navigation principale', () => {
     ).not.toBeInTheDocument();
   });
 
+  it('propose les 49 bandes dans le constructeur et conserve la sélection de la bibliothèque', async () => {
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    await utilisateur.click(
+      await screen.findByRole('link', { name: /^Bibliothèque$/ }),
+    );
+    await utilisateur.click(
+      screen.getByRole('button', {
+        name: 'Consulter les informations de Strigannes',
+      }),
+    );
+    await utilisateur.click(
+      screen.getByRole('button', { name: 'Créer cette bande' }),
+    );
+
+    const selecteur = await screen.findByRole('combobox', { name: 'Faction' });
+    expect(screen.getAllByRole('option')).toHaveLength(50);
+    expect(selecteur).toHaveValue('strigannes');
+    expect(
+      screen.getByRole('option', { name: 'Strigannes · grade 2' }),
+    ).toBeInTheDocument();
+
+    await utilisateur.type(
+      screen.getByRole('textbox', { name: 'Nom de la nouvelle bande' }),
+      'Les Voyageurs',
+    );
+    await utilisateur.click(
+      screen.getByRole('button', { name: 'Créer la bande' }),
+    );
+
+    expect(await screen.findByText('Les Voyageurs')).toBeInTheDocument();
+    expect(
+      screen.getByText(/Les limites Strigannes sont contrôlées/i),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Domnu' })).toBeInTheDocument();
+  });
+
   it('laisse consulter la bibliothèque sans aucune bande', async () => {
     const utilisateur = userEvent.setup();
     render(<MordheimApp />);
@@ -124,7 +162,7 @@ describe('navigation principale', () => {
     await utilisateur.click(screen.getByRole('link', { name: /^Ma bande$/ }));
     expect(
       await screen.findByRole('heading', {
-        name: 'Ce que prévoit le livre officiel',
+        name: 'Ce que prévoit le livre de règles',
       }),
     ).toBeInTheDocument();
 

@@ -1,4 +1,5 @@
 import {
+  bandesBibliotheque,
   definitionsBandes,
   equipements,
   equipementAutorise,
@@ -76,8 +77,11 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
   ) {
     return echec("La faction de la campagne v3 n'est pas prise en charge.");
   }
-  if (valeur.grade !== '1a') {
-    return echec("Le grade de la campagne v3 n'est pas pris en charge.");
+  const bandeCatalogue = bandesBibliotheque.find(
+    (bande) => bande.slug === valeur.factionId,
+  );
+  if (!bandeCatalogue || valeur.grade !== bandeCatalogue.grade) {
+    return echec('Le grade de la campagne ne correspond pas à sa faction.');
   }
 
   for (const [cle, contenu] of [
@@ -145,7 +149,10 @@ function validerReglesMetier(
     (total, combattant) => total + Number(combattant.quantite),
     0,
   );
-  if (effectif > definition.effectifMaximum) {
+  if (
+    definition.effectifMaximum !== null &&
+    effectif > definition.effectifMaximum
+  ) {
     return `L’effectif dépasse la limite de ${definition.effectifMaximum} guerriers.`;
   }
 
@@ -182,7 +189,8 @@ function validerReglesMetier(
       return `${String(combattant.nom)} ne peut pas être Chef sans être un Héros.`;
     }
 
-    const maximums = profil.maximums ?? maximumsHumains;
+    const maximums =
+      profil.maximums ?? maximumsCompatiblesAvecLeProfil(profil.statistiques);
     const statistiques = combattant.statistiques as ObjetJson;
     for (const cle of Object.keys(maximums) as Array<keyof typeof maximums>) {
       if (Number(statistiques[cle]) > maximums[cle]) {
@@ -234,6 +242,17 @@ const maximumsHumains = {
   commandement: 9,
 };
 
+function maximumsCompatiblesAvecLeProfil(
+  statistiques: (typeof profils)[number]['statistiques'],
+) {
+  return Object.fromEntries(
+    Object.entries(maximumsHumains).map(([cle, maximum]) => [
+      cle,
+      Math.max(maximum, statistiques[cle as keyof typeof statistiques]),
+    ]),
+  ) as typeof maximumsHumains;
+}
+
 function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
   if (!Array.isArray(valeur) || valeur.length > 200) {
     return 'La liste des combattants est invalide.';
@@ -271,6 +290,11 @@ function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
       `${chemin}.statistiques`,
     );
     if (erreurStatistiques) return erreurStatistiques;
+    const erreurStatistiquesSpeciales = validerStatistiquesSpeciales(
+      combattant.statistiquesSpeciales,
+      `${chemin}.statistiquesSpeciales`,
+    );
+    if (erreurStatistiquesSpeciales) return erreurStatistiquesSpeciales;
 
     const erreurEquipement = validerListeTextes(
       combattant.equipementIds,
@@ -359,6 +383,28 @@ function validerStatistiques(valeur: unknown, chemin: string) {
   ];
   for (const cle of cles) {
     if (!estEntierNaturel(valeur[cle])) return `${chemin}.${cle} est invalide.`;
+  }
+  return null;
+}
+
+function validerStatistiquesSpeciales(valeur: unknown, chemin: string) {
+  if (valeur === undefined) return null;
+  if (!estObjet(valeur)) return `${chemin} doit être un objet.`;
+  const clesAutorisees = new Set([
+    'mouvement',
+    'capaciteCombat',
+    'capaciteTir',
+    'force',
+    'endurance',
+    'pointsVie',
+    'initiative',
+    'attaques',
+    'commandement',
+  ]);
+  for (const [cle, contenu] of Object.entries(valeur)) {
+    if (!clesAutorisees.has(cle) || !estTexte(contenu, 1, 16)) {
+      return `${chemin}.${cle} est invalide.`;
+    }
   }
   return null;
 }

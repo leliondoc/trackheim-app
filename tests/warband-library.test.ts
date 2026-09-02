@@ -1,7 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { bandesBibliotheque, definitionsBandes } from '../lib/mordheim-data.ts';
+import {
+  bandesBibliotheque,
+  definitionsBandes,
+  equipementAutorise,
+  equipements,
+  obtenirProfil,
+} from '../lib/mordheim-data.ts';
 import { fichesBandesReference } from '../lib/warbands/reference.ts';
 
 void test('le catalogue contient les 49 bandes GLM attendues', () => {
@@ -33,15 +39,85 @@ void test('chaque fiche possède une présentation et un document vérifiés', (
 });
 
 void test('chaque bande constructible correspond à une fiche du catalogue', () => {
+  assert.equal(definitionsBandes.length, bandesBibliotheque.length);
+  assert.deepEqual(
+    definitionsBandes.map((definition) => definition.id).sort(),
+    bandesBibliotheque.map((bande) => bande.slug).sort(),
+  );
   for (const definition of definitionsBandes) {
     const fiche = bandesBibliotheque.find(
       (bande) => bande.slug === definition.id,
     );
     assert.ok(fiche, definition.id);
-    assert.equal(fiche.grade, '1a');
     assert.ok(definition.profils.length >= 5, definition.id);
-    assert.ok(definition.regles.length >= 1, definition.id);
   }
+});
+
+void test('les restrictions nominatives des équipements sont appliquées', () => {
+  const domnu = obtenirProfil('ref-strigannes-domnu-striganne');
+  const retameur = obtenirProfil('ref-strigannes-retameur-striganne');
+  const tromblon = equipements.find(
+    (equipement) =>
+      equipement.nom === 'Tromblon' &&
+      equipement.listesEquipement.some((liste) => liste.includes('strigannes')),
+  );
+  assert.ok(tromblon);
+  assert.equal(equipementAutorise(domnu, tromblon), false);
+  assert.equal(equipementAutorise(retameur, tromblon), true);
+
+  const pretreSkink = obtenirProfil('ref-hommes-lezards-pretre-skink');
+  const skink = obtenirProfil('ref-hommes-lezards-skink');
+  const heaume = equipements.find(
+    (equipement) =>
+      equipement.nom === "Heaume d'os" &&
+      equipement.listesEquipement.some((liste) =>
+        liste.includes('hommes-lezards'),
+      ) &&
+      equipement.regleSpeciale?.includes('Prêtre Skink'),
+  );
+  const venin = equipements.find(
+    (equipement) =>
+      equipement.nom === 'Venin fuligineux' &&
+      equipement.listesEquipement.some((liste) =>
+        liste.includes('hommes-lezards'),
+      ),
+  );
+  assert.ok(heaume);
+  assert.ok(venin);
+  assert.equal(equipementAutorise(pretreSkink, heaume), true);
+  assert.equal(equipementAutorise(skink, heaume), false);
+  assert.equal(equipementAutorise(pretreSkink, venin), true);
+  assert.equal(equipementAutorise(skink, venin), false);
+
+  const saurusTotem = obtenirProfil('ref-hommes-lezards-guerrier-totem-saurus');
+  const saurus = obtenirProfil('ref-hommes-lezards-saurus');
+  const gueuleEnorme = equipements.find(
+    (equipement) =>
+      equipement.nom === 'Gueule énorme' &&
+      equipement.listesEquipement.some((liste) =>
+        liste.includes('hommes-lezards'),
+      ),
+  );
+  assert.ok(gueuleEnorme);
+  assert.equal(equipementAutorise(saurusTotem, gueuleEnorme), true);
+  assert.equal(equipementAutorise(saurus, gueuleEnorme), false);
+
+  const chevalier = obtenirProfil(
+    'ref-caravane-des-marchands-chevalier-avant-garde',
+  );
+  const gardeNoir = obtenirProfil(
+    'ref-caravane-des-marchands-garde-noir-caravane',
+  );
+  const destrier = equipements.find(
+    (equipement) =>
+      equipement.nom === 'Destrier' &&
+      equipement.listesEquipement.some((liste) =>
+        liste.includes('caravane-des-marchands'),
+      ),
+  );
+  assert.ok(destrier);
+  assert.equal(equipementAutorise(chevalier, destrier), true);
+  assert.equal(equipementAutorise(gardeNoir, destrier), false);
 });
 
 void test('aucun texte éditorial ne contient de cadratin', () => {
