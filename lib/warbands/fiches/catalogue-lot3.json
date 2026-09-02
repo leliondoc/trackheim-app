@@ -1,0 +1,3636 @@
+{
+  "bandes": {
+    "norses": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/norses",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 6,
+        "source": "PDF Norses VF GLM V1.1bFr, page 1, https://drive.google.com/file/d/1g_jZpK2O8EdMSaR2eFBvFafvx-vpkfZ_/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Marins",
+          "description": "Les Norses ajoutent 2 à leur Force lorsqu'ils rament. La note éditoriale recommande, pour le scénario concerné, d'appliquer plutôt ce bonus au Mouvement du bateau.",
+          "source": "PDF Norses VF GLM V1.1bFr, page 1"
+        },
+        {
+          "titre": "Transport d'un bateau",
+          "description": "Quatre figurines sont nécessaires pour mettre un bateau à l'eau ou le sortir. Leur Mouvement est alors limité à 4 ps et elles ne peuvent ni combattre ni tirer pendant le transport.",
+          "source": "PDF Norses VF GLM V1.1bFr, page 7"
+        },
+        {
+          "titre": "Équipage d'un bateau",
+          "description": "Une fois à l'eau, deux figurines rament et deux autres peuvent être passagères. Les rôles peuvent changer librement, mais seulement deux occupants peuvent employer des armes de tir ou d'autres actions similaires.",
+          "source": "PDF Norses VF GLM V1.1bFr, page 7"
+        },
+        {
+          "titre": "Courant et déplacement du bateau",
+          "description": "Le sens du courant est fixé au début de la partie, sauf sur une ligne de rivage où il alterne à chaque tour. Lancez un dé d'artillerie et comparez son résultat, un incident comptant pour 0, à la Force totale des rameurs. Si la Force est supérieure, le bateau se déplace de la différence dans la direction choisie. Si le dé est supérieur, il dérive de la différence avec le courant. En cas d'égalité, il reste sur place. Il peut virer sans pénalité et un bateau qui dérive hors table quitte la partie sans autre conséquence pour ses occupants.",
+          "source": "PDF Norses VF GLM V1.1bFr, page 7"
+        }
+      ],
+      "profils": [
+        {
+          "id": "jarl-norse",
+          "nom": "Jarl",
+          "categorie": "Héros",
+          "cout": 70,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 2,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les membres de la bande situés à 6 ps ou moins peuvent utiliser son Commandement."
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4"
+        },
+        {
+          "id": "berserk-norse",
+          "nom": "Berserk",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 11,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Berserk",
+              "description": "Il est sujet à la frénésie."
+            },
+            {
+              "titre": "Restriction d'armure",
+              "description": "Il utilise la liste d'équipement des Héros mais ne porte jamais d'armure."
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4"
+        },
+        {
+          "id": "wulfen-norse",
+          "nom": "Wulfen",
+          "categorie": "Héros",
+          "cout": 90,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 11,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 2,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            { "titre": "Peur", "description": "Le Wulfen cause la peur." },
+            {
+              "titre": "Bestial",
+              "description": "Il est immunisé à la psychologie et ne peut jamais devenir Chef de bande."
+            },
+            {
+              "titre": "Armes naturelles",
+              "description": "Il utilise uniquement ses griffes et crocs, sans arme ni armure, et ne subit pas la pénalité d'un combattant désarmé."
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4"
+        },
+        {
+          "id": "bondi-norse",
+          "nom": "Bóndi",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [],
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4"
+        },
+        {
+          "id": "maraudeur-norse",
+          "nom": "Maraudeur Norse",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1 et 5"
+        },
+        {
+          "id": "chasseur-norse",
+          "nom": "Chasseur Norse",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1 et 5"
+        },
+        {
+          "id": "loup-norse",
+          "nom": "Loup",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 9,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animal",
+              "description": "Le Loup n'utilise pas d'équipement et ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Chef de meute",
+              "description": "La bande ne peut recruter des Loups que si elle possède un Wulfen. Si le Wulfen meurt ou manque la bataille, les Loups ne peuvent pas participer jusqu'à son remplacement ou son retour."
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1 et 5"
+        },
+        {
+          "id": "mule-norse",
+          "nom": "Mule",
+          "categorie": "Monture optionnelle",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 2,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 0,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Lente",
+              "description": "Une Mule incontrôlable ne se déplace que de 2D6 ps."
+            },
+            {
+              "titre": "Tête de mule",
+              "description": "Son cavalier ou toute figurine en contact qui la mène doit réussir un test de Commandement à chaque tour pour la faire avancer."
+            },
+            {
+              "titre": "Sans meneur",
+              "description": "Sans cavalier ni meneur, elle se déplace dans une direction aléatoire et s'éloigne à l'opposé de tout combat situé à 6 ps ou moins."
+            },
+            {
+              "titre": "Pacifique",
+              "description": "Elle ne combat ni ne charge. Une Mule non montée chargée devient incontrôlable et fuit directement à l'opposé de l'attaquant."
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, page 6"
+        },
+        {
+          "id": "cheval-norse",
+          "nom": "Cheval",
+          "categorie": "Monture optionnelle",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 8,
+            "capaciteCombat": 1,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 0,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Monture humaine",
+              "description": "Le Cheval est réservé aux Humains et suit les règles de cavalerie de l'article Guerriers Montés."
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, page 6"
+        },
+        {
+          "id": "destrier-norse",
+          "nom": "Destrier",
+          "categorie": "Monture optionnelle",
+          "cout": 80,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 8,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Entraîné",
+              "description": "Son cavalier peut relancer une fois chaque test de contrôle raté."
+            },
+            {
+              "titre": "Monture humaine",
+              "description": "Le Destrier est réservé aux Humains et suit les règles de cavalerie de l'article Guerriers Montés."
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Héros Norses",
+          "profils": ["jarl-norse", "berserk-norse", "bondi-norse"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Fléau", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Haches de lancer",
+                  "cout": 15,
+                  "note": "Elles suivent les règles des couteaux de lancer."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, page 2"
+        },
+        {
+          "nom": "Équipement des Hommes de main Norses",
+          "profils": ["maraudeur-norse"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Haches de lancer",
+                  "cout": 15,
+                  "note": "Elles suivent les règles des couteaux de lancer."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, page 2"
+        },
+        {
+          "nom": "Équipement des Chasseurs Norses",
+          "profils": ["chasseur-norse"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Javelots",
+                  "cout": 5,
+                  "note": "Portée 8 ps, Force du porteur. Arme de lancer sans pénalité de tir après déplacement."
+                },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Norses VF GLM V1.1bFr, page 2"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Expert du bouclier",
+          "description": "Avec un bouclier, le Héros obtient sa sauvegarde d'armure de 6+ et peut aussi parer.",
+          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+        },
+        {
+          "titre": "Frappe destructrice",
+          "description": "Les attaques du Héros ne peuvent jamais être parées.",
+          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+        },
+        {
+          "titre": "Charge berserk",
+          "description": "Lorsqu'il charge avec une hache ou une arme à deux mains, le Héros relance ses jets pour toucher ratés.",
+          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+        },
+        {
+          "titre": "Jargon des batailles",
+          "description": "Réservée au Chef. La portée d'utilisation de son Commandement passe de 6 à 12 ps.",
+          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+        },
+        {
+          "titre": "Intrépidité",
+          "description": "Le Héros ne teste jamais Seul contre tous et peut relancer ses tests de peur ratés.",
+          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "La règle Marins donne formellement 2 en Force pour ramer, tandis que la note éditoriale recommande d'appliquer ce bonus au Mouvement du bateau.",
+        "Le profil des Chasseurs renvoie à la liste des Hommes de main alors que la page 2 fournit une liste dédiée aux Chasseurs. La fiche rattache les Chasseurs à la liste dédiée et conserve cette contradiction.",
+        "Les montures viennent d'une annexe optionnelle. Leur limite est de deux dans Mordheim ou Lustrie et disparaît dans les environnements ouverts. Le champ maximum retient deux pour le cadre Mordheim.",
+        "Le paragraphe Pacifique de la Mule renvoie à un tableau dont le nom ou le contenu est tronqué dans le PDF. Les règles complètes de cavalerie restent nécessaires.",
+        "Le PDF suggère que les joueurs peuvent autoriser des Sang-Froids aux Norses, sans donner ici leur prix ni leur profil. Aucun Sang-Froid n'a donc été inventé."
+      ]
+    },
+    "orques-noirs": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/orques-noirs",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "PDF Orques Noirs VF GLM V1hFr, page 2, https://drive.google.com/file/d/1__rnCCXqj5FGRyomQfWjDUXxL9iEnoYg/view?usp=drive_link"
+      },
+      "regles": [
+        {
+          "titre": "Laiss' lé vrais mecs faire l'boulô'",
+          "description": "Les Orques Noirs ne peuvent utiliser aucune monture. Les Orques ordinaires de la bande peuvent employer les montures auxquelles ils ont accès.",
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 1"
+        },
+        {
+          "titre": "L'chef il a kané",
+          "description": "Si le Chef meurt, l'Orque Noir qui possède le plus d'expérience devient automatiquement Chef, même si un Orque ordinaire est plus expérimenté. Il gagne alors T'vas t'calmer.",
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 1"
+        },
+        {
+          "titre": "Animosité",
+          "description": "Au début de chaque tour, chaque Orque de main non engagé lance 1D6. Sur 1, lancez encore 1D6. Sur 1, il charge immédiatement l'Orque de main ou le Franc-Tireur allié le plus proche à portée et livre un tour de combat, puis les deux figurines sont séparées de 1 ps. Faute de charge, il tire sur la cible alliée valable la plus proche s'il le peut. Les Héros ne sont jamais ciblés. Faute de cible ou si la plus proche est un Héros, appliquez le résultat 2 à 5. Sur 2 à 5, il ne fait rien d'autre que se défendre ce tour. Sur 6, il avance au maximum vers l'ennemi visible le plus proche et le charge si possible. Sans ennemi visible, il gagne immédiatement un Mouvement normal supplémentaire et devra charger au tour suivant si ce déplacement le met à portée.",
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "boss-orque-noir",
+          "nom": "Boss Orque Noir",
+          "categorie": "Héros",
+          "cout": 90,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les membres à moins de 6 ps peuvent utiliser son Commandement."
+            },
+            {
+              "titre": "Orque noir",
+              "description": "Il commence avec une sauvegarde d'armure naturelle de 6+, cumulable avec l'équipement."
+            },
+            {
+              "titre": "T'vas t'calmer",
+              "description": "Lorsqu'un Orque de main rate l'Animosité à moins de 6 ps, le Boss peut lui infliger une touche automatique d'une Force choisie par le joueur. Si la cible reste debout, ajoutez cette Force au résultat de son tableau d'Animosité."
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2, 4 et 5"
+        },
+        {
+          "id": "orque-noir",
+          "nom": "Orque Noir",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Orque noir",
+              "description": "Il commence avec une sauvegarde d'armure naturelle de 6+, cumulable avec l'équipement."
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2, 4 et 5"
+        },
+        {
+          "id": "ptitmek",
+          "nom": "Pti'mek",
+          "categorie": "Héros",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sang d'orque noir",
+              "description": "À partir de 25 points d'expérience, il peut payer 10 CO pour subir son rituel. Lors de sa prochaine acquisition de compétence, il peut remplacer celle-ci par la règle Orque noir. Il devient alors un Orque Noir et gagne les mêmes accès à l'équipement et aux compétences."
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2, 4 et 5"
+        },
+        {
+          "id": "kastagneur-orque",
+          "nom": "Kastagneur Orque",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animosité",
+              "description": "Il est soumis à l'Animosité de la bande."
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 6"
+        },
+        {
+          "id": "chasseur-orque-noir",
+          "nom": "Chasseur Orque",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animosité",
+              "description": "Il est soumis à l'Animosité de la bande."
+            },
+            {
+              "titre": "Peu commun",
+              "description": "Le nombre de Chasseurs ne peut dépasser celui des Kastagneurs. Si une perte rompt cet équilibre, la prochaine recrue doit être un Kastagneur."
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 6"
+        },
+        {
+          "id": "dingboy",
+          "nom": "Ding'boy",
+          "categorie": "Homme de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 4,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Instable",
+              "description": "Il n'est pas soumis à l'Animosité."
+            },
+            {
+              "titre": "Fou",
+              "description": "Il réussit automatiquement tous ses tests de Commandement. S'il devient Héros, il ne peut jamais apprendre de compétence d'Érudition."
+            },
+            {
+              "titre": "Sauvage",
+              "description": "Il doit courir ou charger au maximum vers l'ennemi visible le plus proche, les alliés ne bloquant pas sa ligne de vue. Sans ennemi visible, il se déplace normalement. Il gagne une Attaque au corps à corps, hors profil et hors maximum racial. Il n'utilise ni armure ni arme de tir. Il ne peut devenir Chef et son Commandement ne sert aux tests de Déroute que si les Ding'boyz sont les seuls survivants de la bande."
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 6"
+        },
+        {
+          "id": "troll-orque-noir",
+          "nom": "Troll",
+          "categorie": "Homme de main",
+          "cout": 200,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 1,
+            "force": 5,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 1,
+            "attaques": 3,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Équipement",
+              "description": "Il ne peut recevoir ni arme ni armure."
+            },
+            { "titre": "Peur", "description": "Il cause la peur." },
+            {
+              "titre": "Zéro de QI",
+              "description": "Il ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Régénération",
+              "description": "Chaque blessure est ignorée sur 4+, sauf si elle vient du feu ou d'un sort fondé sur le feu. Il ne fait jamais de jet de Blessure Grave après la partie."
+            },
+            {
+              "titre": "Stupidité",
+              "description": "Il est soumis à la stupidité."
+            },
+            {
+              "titre": "Toujours faim",
+              "description": "Après chaque bataille, il coûte 20 CO à nourrir. Le Chef peut le compter comme deux membres pour réduire ce coût à 5 CO, mais la limite de la bande passe alors à 11. Si même ce coût ne peut être payé, le Troll quitte définitivement la bande."
+            },
+            {
+              "titre": "Vomi",
+              "description": "Il peut remplacer ses attaques par une touche automatique de Force 5 qui ignore les sauvegardes d'armure."
+            },
+            {
+              "titre": "Grande cible",
+              "description": "Il suit la règle de Grande cible."
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 7"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Orques Noirs",
+          "profils": ["boss-orque-noir", "orque-noir"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Kikoup'",
+                  "cout": 10,
+                  "note": "Compte comme une morgenstern."
+                },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arbalète", "cout": 25 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 3"
+        },
+        {
+          "nom": "Équipement des Jeunô",
+          "profils": ["ptitmek"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Kikoup'",
+                  "cout": 10,
+                  "note": "Compte comme une morgenstern."
+                },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            { "nom": "Tir", "entrees": [{ "nom": "Arc", "cout": 10 }] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 3"
+        },
+        {
+          "nom": "Équipement des Kastagneurs",
+          "profils": ["kastagneur-orque"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Kikoup'",
+                  "cout": 10,
+                  "note": "Compte comme une morgenstern."
+                },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            { "nom": "Tir", "entrees": [{ "nom": "Arc", "cout": 10 }] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 3"
+        },
+        {
+          "nom": "Équipement des Ding'boyz",
+          "profils": ["dingboy"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Kikoup'",
+                  "cout": 10,
+                  "note": "Compte comme une morgenstern."
+                },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 3 et 6"
+        },
+        {
+          "nom": "Équipement des Chasseurs",
+          "profils": ["chasseur-orque-noir"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Kikoup'",
+                  "cout": 10,
+                  "note": "Compte comme une morgenstern."
+                },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arbalète", "cout": 25 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Têt'dure",
+          "description": "Le Héros évite un résultat sonné sur 3+ et devient seulement à terre. Avec un casque, cette sauvegarde passe à 2+ et remplace la règle normale du casque.",
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+        },
+        {
+          "titre": "Waaagh",
+          "description": "Le Héros ajoute 1D3 ps à sa portée de charge.",
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+        },
+        {
+          "titre": "On y va",
+          "description": "Le Héros ignore les tests de peur et de terreur lorsqu'il charge.",
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+        },
+        {
+          "titre": "Rev'nez ici",
+          "description": "Réservée au Chef. La bande relance ses tests de Déroute ratés tant que le Chef n'est pas hors de combat.",
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+        },
+        {
+          "titre": "Coup d'boule",
+          "description": "Toute figurine mise à terre par le Héros au corps à corps est considérée comme sonnée.",
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "La liste des Ding'boyz contient des armes qu'ils peuvent acheter, mais leur règle Sauvage interdit les armures et les armes à distance seulement. Cette fiche conserve donc toutes les armes de corps à corps imprimées.",
+        "Le Troll peut être compté comme deux membres pour son entretien, ce qui réduit la limite de bande à 11. Le PDF ne précise pas la durée exacte de ce choix au-delà du paiement après bataille."
+      ]
+    },
+    "pilleurs-de-tombes-arabiens": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/pilleurs-de-tombes-arabiens",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 4,
+        "source": "PDF Arabian Tomb Raiders VO, Khemri The Land of the Dead, page 14 du document, page PDF 1, https://drive.google.com/file/d/1n6dUwpeBsNE9CgTVqiYhyM77SZ3LIu35/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Haine des Morts-Vivants",
+          "description": "Tous les Héros arabiens sont sujets à la haine contre tous les Morts-Vivants.",
+          "source": "PDF Arabian Tomb Raiders VO, page 14 du document, page PDF 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "sheikh-arabien",
+          "nom": "Sheikh",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Il est le Chef de la bande et applique la règle standard de Commandement du Chef."
+            },
+            {
+              "titre": "Haine des Morts-Vivants",
+              "description": "Il hait tous les Morts-Vivants."
+            }
+          ],
+          "source": "PDF Arabian Tomb Raiders VO, pages 14 à 16 du document, pages PDF 1 à 3"
+        },
+        {
+          "id": "champion-arabien",
+          "nom": "Champion",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Haine des Morts-Vivants",
+              "description": "Il hait tous les Morts-Vivants."
+            }
+          ],
+          "source": "PDF Arabian Tomb Raiders VO, pages 14 à 16 du document, pages PDF 1 à 3"
+        },
+        {
+          "id": "mystique-nomade",
+          "nom": "Mystique nomade",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il utilise la Magie élémentaire arabienne et commence avec un sort déterminé aléatoirement."
+            },
+            {
+              "titre": "Haine des Morts-Vivants",
+              "description": "Il hait tous les Morts-Vivants."
+            }
+          ],
+          "source": "PDF Arabian Tomb Raiders VO, pages 14 à 16 du document, pages PDF 1 à 3"
+        },
+        {
+          "id": "bedouin",
+          "nom": "Bédouin",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Marchand du désert",
+              "description": "La bande ajoute 1 à son jet de recherche lors de l'équipement ou du commerce. Ce bonus reste limité à 1 même avec deux Bédouins."
+            }
+          ],
+          "source": "PDF Arabian Tomb Raiders VO, page 17 du document, page PDF 4"
+        },
+        {
+          "id": "guerrier-nomade",
+          "nom": "Guerrier nomade",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Arabian Tomb Raiders VO, page 17 du document, page PDF 4"
+        },
+        {
+          "id": "esclave-arabien",
+          "nom": "Esclave",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Vie d'esclave",
+              "description": "Il gagne de l'expérience normalement, mais si son groupe obtient Ce gars est doué, le Chef exécute l'Esclave concerné et le retire de la feuille. Le reste du groupe relance alors sa progression."
+            }
+          ],
+          "source": "PDF Arabian Tomb Raiders VO, page 17 du document, page PDF 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Guerriers arabiens",
+          "profils": [
+            "sheikh-arabien",
+            "champion-arabien",
+            "mystique-nomade",
+            "bedouin",
+            "guerrier-nomade"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague Jambiya",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Épée ou cimeterre", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Fléau", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Arc", "cout": 10 },
+                {
+                  "nom": "Tufenk",
+                  "cout": 15,
+                  "note": "Le profil de l'arme n'est pas défini dans ce PDF de bande."
+                },
+                { "nom": "Arquebuse", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Armure légère", "cout": 20 }
+              ]
+            }
+          ],
+          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2"
+        },
+        {
+          "nom": "Équipement des Esclaves",
+          "profils": ["esclave-arabien"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague Jambiya",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Gourdin", "cout": 3 },
+                {
+                  "nom": "Katar",
+                  "cout": 5,
+                  "note": "Le profil de l'arme n'est pas défini dans ce PDF de bande."
+                },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            { "nom": "Tir", "entrees": [] },
+            { "nom": "Armures", "entrees": [{ "nom": "Bouclier", "cout": 5 }] }
+          ],
+          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Ver des sables",
+          "description": "Le Héros peut se dissimuler à découvert en s'enfouissant dans le sable. Cette aptitude ne fonctionne pas à l'intérieur des bâtiments.",
+          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2"
+        },
+        {
+          "titre": "Frappe et fuite",
+          "description": "Le Héros peut courir puis tirer, avec un malus de 2 pour toucher au lieu du malus de 1 appliqué après un déplacement.",
+          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2"
+        },
+        {
+          "titre": "Résistant aux intempéries",
+          "description": "Les conditions météorologiques, dont la chaleur, n'affectent plus le Héros.",
+          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Chevaucher le vent",
+          "difficulte": 6,
+          "description": "Se lance au début de la phase de Mouvement. Le sorcier se déplace de 12 + 1D6 ps vers n'importe quel point du champ de bataille en ignorant le terrain. Ce déplacement remplace son Mouvement du tour et ne peut le placer au contact d'un ennemi. Il peut ensuite tirer avec le malus normal de 1 pour déplacement.",
+          "source": "PDF Arabian Tomb Raiders VO, page 18 du document, page PDF 5"
+        },
+        {
+          "titre": "Peau de pierre",
+          "difficulte": 7,
+          "description": "Une figurine alliée à 6 ps ou moins gagne 2 à sa sauvegarde d'armure et perd 1 en Initiative. Le sort peut être maintenu d'un tour à l'autre si la cible reste à 6 ps ou moins et si le sorcier réussit chaque test de difficulté. Il prend fin si la cible est trop éloignée pendant la phase de Récupération. Une seule cible peut être affectée à la fois, mais le sorcier peut lancer d'autres sorts pendant le maintien.",
+          "source": "PDF Arabian Tomb Raiders VO, page 18 du document, page PDF 5"
+        },
+        {
+          "titre": "Main brûlante",
+          "difficulte": 8,
+          "description": "Se lance au début de la phase de Corps à corps. Le sorcier abandonne toutes ses attaques normales pour une attaque de Force 5 qui inflige 2 blessures. Une cible touchée prend feu sur 4+. L'effet dure un seul round.",
+          "source": "PDF Arabian Tomb Raiders VO, page 18 du document, page PDF 5"
+        },
+        {
+          "titre": "Sables mouvants",
+          "difficulte": 6,
+          "description": "Choisissez une figurine à 6 ps ou moins. Une zone de 3 ps autour d'elle devient impraticable jusqu'au début de la prochaine phase de Récupération du sorcier. Toute figurine dans la zone doit réussir un test de Force pour se déplacer. Les combattants engagés ne peuvent pas attaquer mais continuent à se défendre.",
+          "source": "PDF Arabian Tomb Raiders VO, page 18 du document, page PDF 5"
+        },
+        {
+          "titre": "Tempête de magie",
+          "difficulte": 9,
+          "description": "Une cible à 12 ps ou moins subit automatiquement une touche de Force 5. Les sauvegardes d'armure s'appliquent normalement.",
+          "source": "PDF Arabian Tomb Raiders VO, page 18 du document, page PDF 5"
+        },
+        {
+          "titre": "Bénédiction des éléments",
+          "difficulte": 6,
+          "description": "Pendant la séquence d'après-bataille, le joueur peut relancer un dé ou modifier un dé de 1 en plus ou en moins. Le sort ne peut pas être lancé si le sorcier a été mis hors de combat.",
+          "source": "PDF Arabian Tomb Raiders VO, page 18 du document, page PDF 5"
+        }
+      ],
+      "ambiguites": [
+        "La section Choix des guerriers de la page 14 autorise un seul Champion, tandis que le profil de la page 16 porte explicitement la limite 0 à 2. La fiche retient le profil détaillé à deux Champions et signale le conflit.",
+        "Le Tufenk et le Katar sont proposés dans les listes avec un prix, mais leurs règles ne figurent pas dans ce PDF. La fiche n'invente pas leurs caractéristiques.",
+        "Le PDF est une publication anglaise scannée sans couche de texte. Les pages ont été contrôlées visuellement et les règles sont traduites et paraphrasées en français."
+      ]
+    },
+    "pirates": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/pirates",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "PDF Pirates VF GLM V1hFr, page 2, https://drive.google.com/file/d/1iSoUttc13KhoiquOxfFOXOxNPirbKHWP/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Francs-Tireurs",
+          "description": "La bande utilise les Francs-Tireurs, objets et règles ordinaires des Mercenaires humains, sauf exception. Si elle emploie simultanément des Nains et des Elfes, elle paie 20 CO de solde supplémentaire.",
+          "source": "PDF Pirates VF GLM V1hFr, page 1"
+        },
+        {
+          "titre": "Enrôlés en partie unique",
+          "description": "En partie unique, la bande commence avec deux Enrôlés gratuits.",
+          "source": "PDF Pirates VF GLM V1hFr, pages 1 et 2"
+        },
+        {
+          "titre": "Succession",
+          "description": "Si le Capitaine meurt, un Quartier-Maître lui succède comme un Champion succéderait au Chef d'une bande de Mercenaires.",
+          "source": "PDF Pirates VF GLM V1hFr, page 1"
+        },
+        {
+          "titre": "Enrôlement d'un Héros capturé",
+          "description": "Un Héros humain adverse qui obtient Capturé peut être enrôlé au lieu d'être échangé, rançonné ou vendu. Chaque camp lance 2D6 et ajoute le Commandement du Capitaine ou du captif, avec 1 de plus pour le vainqueur de la partie. Si les Pirates gagnent, le captif devient Matelot, rejoint éventuellement un groupe de quatre membres ou moins, adopte ses caractéristiques et compétences, et son ancien équipement est vendu pour payer le nouvel équipement. Si le captif gagne, il devient Enrôlé, conserve caractéristiques et compétences, perd son équipement au profit de la bande et ne peut utiliser que la liste des Enrôlés.",
+          "source": "PDF Pirates VF GLM V1hFr, page 1"
+        },
+        {
+          "titre": "Enrôlement d'un Homme de main",
+          "description": "Après une victoire pirate, chaque Homme de main humain adverse perdu définitivement sur un résultat 1 ou 2 est récupéré sur 4+. Les deux camps font ensuite le même jet opposé de 2D6 plus Commandement, avec le bonus de victoire de 1 pour les Pirates.",
+          "source": "PDF Pirates VF GLM V1hFr, page 2"
+        },
+        {
+          "titre": "Captifs exclus",
+          "description": "Les Francs-Tireurs et Dramatis Personae ne peuvent jamais être enrôlés.",
+          "source": "PDF Pirates VF GLM V1hFr, page 2"
+        },
+        {
+          "titre": "Vagabonds",
+          "description": "Avec le résultat d'Exploration Vagabonds, le Capitaine peut tenter un test de Commandement. En cas de réussite, le Vagabond rejoint la bande comme Enrôlé.",
+          "source": "PDF Pirates VF GLM V1hFr, page 2"
+        },
+        {
+          "titre": "Prisonniers",
+          "description": "Avec le résultat d'Exploration Prisonniers, lancez 1D3 pour connaître le nombre de rescapés puis un test de Commandement du Capitaine pour chacun. Une réussite donne un Matelot, à intégrer à un groupe de quatre membres ou moins ou à créer comme nouveau groupe, à condition de payer son équipement. Un échec ou l'impossibilité de l'équiper donne un Enrôlé.",
+          "source": "PDF Pirates VF GLM V1hFr, page 2"
+        },
+        {
+          "titre": "Limite des Enrôlés",
+          "description": "La bande compte au plus cinq Enrôlés et jamais plus d'Enrôlés que de Matelots.",
+          "source": "PDF Pirates VF GLM V1hFr, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "capitaine-pirate",
+          "nom": "Capitaine Pirate",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout Pirate à 6 ps ou moins peut utiliser son Commandement."
+            }
+          ],
+          "source": "PDF Pirates VF GLM V1hFr, pages 2, 3 et 9"
+        },
+        {
+          "id": "quartier-maitre-pirate",
+          "nom": "Quartier-Maître",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Spéciale"],
+          "regles": [],
+          "source": "PDF Pirates VF GLM V1hFr, pages 2, 3 et 9"
+        },
+        {
+          "id": "mousse-pirate",
+          "nom": "Mousse",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
+          "regles": [],
+          "source": "PDF Pirates VF GLM V1hFr, pages 2, 3 et 9"
+        },
+        {
+          "id": "matelot-pirate",
+          "nom": "Matelot",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Pirates VF GLM V1hFr, pages 2 et 10"
+        },
+        {
+          "id": "artilleur-pirate",
+          "nom": "Artilleur",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Pierrier isolé",
+              "description": "L'Artilleur qui porte l'unique pierrier forme toujours un groupe d'Hommes de main à lui seul. S'il est séparé d'un groupe existant, il conserve son expérience et ses compétences."
+            }
+          ],
+          "source": "PDF Pirates VF GLM V1hFr, pages 2 et 10"
+        },
+        {
+          "id": "bosco-pirate",
+          "nom": "Bosco",
+          "categorie": "Homme de main",
+          "cout": 32,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Corde et grappin",
+              "description": "Il commence avec une corde et un grappin qu'il ne peut ni vendre ni donner."
+            },
+            {
+              "titre": "Gréeur expert",
+              "description": "Il relance les tests d'Initiative ratés pour franchir un vide, effectuer une charge plongeante ou monter et descendre avec une corde."
+            }
+          ],
+          "source": "PDF Pirates VF GLM V1hFr, pages 2 et 10"
+        },
+        {
+          "id": "enrole-pirate",
+          "nom": "Enrôlé",
+          "categorie": "Homme de main",
+          "cout": null,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Non recruté",
+              "description": "Il ne s'achète pas et rejoint la bande uniquement par les règles d'Enrôlement, sauf les deux figurines gratuites d'une partie unique."
+            },
+            {
+              "titre": "Aucune expérience",
+              "description": "Il ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Racaille",
+              "description": "Les membres d'un même groupe peuvent avoir des équipements différents de la liste des Enrôlés. Ils ne peuvent jamais utiliser la magie ni lancer de sort."
+            },
+            {
+              "titre": "Évasion",
+              "description": "Après une Déroute pirate, tout Enrôlé qui avait déjà quitté la table s'échappe définitivement et est retiré de la feuille de bande."
+            },
+            {
+              "titre": "Ignoré par l'équipage",
+              "description": "Les Enrôlés en fuite ou hors de combat ne comptent jamais pour déterminer le seuil de test de Déroute."
+            }
+          ],
+          "source": "PDF Pirates VF GLM V1hFr, pages 1, 2 et 11"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Pirates",
+          "profils": [
+            "capitaine-pirate",
+            "quartier-maitre-pirate",
+            "mousse-pirate",
+            "matelot-pirate",
+            "bosco-pirate"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau ou masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Gaffe",
+                  "cout": 8,
+                  "note": "Force du porteur moins 1, à deux mains et frappe en premier au premier tour de combat, même contre une charge."
+                },
+                {
+                  "nom": "Chat à neuf queues",
+                  "cout": 8,
+                  "note": "Héros uniquement. Force du porteur, 1 à la sauvegarde ennemie, impossible à parer. Il donne une Attaque en charge ou contre la figurine qui charge, cette attaque frappant en premier."
+                },
+                {
+                  "nom": "Sabre d'abordage",
+                  "cout": 10,
+                  "note": "Compte comme une épée."
+                },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Cabillot",
+                  "cout": 3,
+                  "note": "Portée 6 ps, Force du porteur moins 1. Pas de pénalité de longue portée, mais malus de 1 après mouvement. La cible blessée gagne 1 à sa sauvegarde ou une sauvegarde de 6+."
+                },
+                { "nom": "Arbalète", "cout": 25 },
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 30,
+                  "note": "60 CO la paire."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                {
+                  "nom": "Cuir durci",
+                  "cout": 5,
+                  "note": "Sauvegarde de 6+, cumulable seulement avec casque ou rondache. Compte comme armure pour l'interdiction de lancer des sorts et ne peut être revendu."
+                },
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Pirates VF GLM V1hFr, pages 3 et 4"
+        },
+        {
+          "nom": "Équipement des Enrôlés",
+          "profils": ["enrole-pirate"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau ou masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Crochet",
+                  "cout": 8,
+                  "note": "Prix imprimé dans la liste des Enrôlés. La fiche détaillée de l'objet indique 4 CO."
+                },
+                {
+                  "nom": "Sabre d'abordage",
+                  "cout": 10,
+                  "note": "Compte comme une épée."
+                },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Cabillot", "cout": 3 },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Cuir durci", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Pirates VF GLM V1hFr, page 3"
+        },
+        {
+          "nom": "Équipement des Artilleurs",
+          "profils": ["artilleur-pirate"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau ou masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Sabre d'abordage",
+                  "cout": 10,
+                  "note": "Compte comme une épée."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 30,
+                  "note": "60 CO la paire."
+                },
+                { "nom": "Tromblon", "cout": 30 },
+                { "nom": "Arquebuse", "cout": 35 },
+                {
+                  "nom": "Pierrier",
+                  "cout": 65,
+                  "note": "Rare 8, un seul par bande. Le porteur perd 1 en Mouvement et Initiative. L'arme ne tire jamais deux fois par tour, ne tire pas après déplacement, demande un tour complet de rechargement et applique toujours les incidents optionnels de poudre noire sans réduction de prix."
+                },
+                {
+                  "nom": "Boulet de pierrier",
+                  "cout": 5,
+                  "note": "Usage pour une bataille. Portée 36 ps, Force 5. Un résultat de dégâts 2 à 4 sonne la cible. Malus de sauvegarde supplémentaire de 2, soit 4 au total."
+                },
+                {
+                  "nom": "Chaînes de pierrier",
+                  "cout": 2,
+                  "note": "Usage pour une bataille. Portée 24 ps, Force 4. Une cible touchée mais non blessée est mise à terre sur 4+, même si elle y est normalement immunisée. Malus de sauvegarde supplémentaire de 1, soit 2 au total."
+                },
+                {
+                  "nom": "Mitraille de pierrier",
+                  "cout": 2,
+                  "note": "Usage pour une bataille. Portée 24 ps, Force 3. Après une touche, 1D6 autres ennemis à 4 ps ou moins de la cible initiale et visibles subissent une touche automatique, du plus proche au plus éloigné. Leur état de couvert doit correspondre à celui de la cible initiale. Les figurines cachées visibles sont éligibles. Les Pirates alliés ne sont jamais touchés."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Cuir durci", "cout": 5 },
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF Pirates VF GLM V1hFr, pages 3 à 5"
+        },
+        {
+          "nom": "Équipement spécial des Pirates",
+          "profils": [
+            "capitaine-pirate",
+            "quartier-maitre-pirate",
+            "mousse-pirate",
+            "matelot-pirate",
+            "artilleur-pirate",
+            "bosco-pirate"
+          ],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Biscuit de mer",
+                  "cout": 5,
+                  "note": "Commun, un par Héros et usage unique. Au début de son tour hors corps à corps, le Héros gagne 1 en Endurance jusqu'à la fin du tour ennemi suivant. Ensuite, sur 1, il rate la prochaine bataille. Cette absence s'ajoute à toute autre absence."
+                },
+                {
+                  "nom": "Boussole",
+                  "cout": 45,
+                  "formuleCout": "45 + 2D6 CO",
+                  "note": "Rare 9. Quand le scénario fait lancer 1D6 pour le premier déploiement, la bande peut relancer son dé une seule fois. Plusieurs boussoles ne donnent pas plusieurs relances et si les deux bandes en ont, aucune relance n'est permise."
+                },
+                {
+                  "nom": "Perroquet",
+                  "cout": 15,
+                  "note": "Rare 8, Capitaine et officiers. Un ennemi au contact teste son Commandement ou subit 1 pour toucher pendant son premier tour de combat contre le propriétaire."
+                },
+                {
+                  "nom": "Jolly Roger",
+                  "cout": 40,
+                  "formuleCout": "40 + 2D6 CO",
+                  "note": "Commun, un seul par bande. Les Pirates à 12 ps ou moins ne sont jamais seuls contre tous, sauf les Enrôlés. Le porteur occupe une main et ne peut jamais employer d'arme à deux mains pendant la bataille."
+                },
+                {
+                  "nom": "Longue-vue",
+                  "cout": 20,
+                  "note": "Rare 8. Au début du tour, elle révèle sur 4+ un ennemi caché visible. Le porteur peut se déplacer mais ne peut ni courir ni charger ce tour."
+                },
+                {
+                  "nom": "Crochet",
+                  "cout": 4,
+                  "note": "Commun, un par figurine. Remplace une main ou un bras perdu, interdit les armes à deux mains et compte comme une dague. Une future blessure à la main ou au bras est ignorée sur 4+. Une nouvelle recrue peut commencer avec."
+                },
+                {
+                  "nom": "Jambe de bois",
+                  "cout": 8,
+                  "note": "Commun, une par figurine. Remplace une jambe blessée, réduit de 1 le Mouvement actuel et maximal, puis donne une sauvegarde spéciale non modifiable de 6+ après une sauvegarde ratée ou quand aucune n'est permise. Une future blessure à la jambe est ignorée sur 4+. Une nouvelle recrue peut commencer avec."
+                },
+                {
+                  "nom": "Carte au trésor",
+                  "cout": 75,
+                  "formuleCout": "75 + 4D6 CO",
+                  "note": "Rare 10, usage unique et remplace l'Exploration. Sur 1, gain de 1D6 fois 5 CO. Sur 2, un fragment et 2D6 fois 10 CO. Sur 3, une bière de Bugman et 2D6 fois 10 CO. Sur 4, l'achat suivant traite un objet de prix comme commun, puis rapporte 2D6 fois 10 CO et donne 1 Commandement au prochain jet d'Enrôlement lié à une capture, des Vagabonds ou des Prisonniers. Sur 5, un Héros teste son Initiative, gagne dans tous les cas 3D6 fois 10 CO, trouve aussi un porte-bonheur s'il réussit et rate la prochaine partie s'il échoue. Sur 6, la bande gagne 1D3 + 2 fragments et une carte de Mordheim."
+                }
+              ]
+            }
+          ],
+          "source": "PDF Pirates VF GLM V1hFr, pages 6 et 7"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Interprète de chants marins",
+          "description": "Au début de sa phase de Corps à corps, le Héros choisit un adversaire au contact. Sur un test de Commandement raté, cet adversaire perd une Attaque pour le tour. Les Morts-Vivants et autres créatures non vivantes ne sont pas affectés.",
+          "source": "PDF Pirates VF GLM V1hFr, page 8"
+        },
+        {
+          "titre": "Pied marin",
+          "description": "En cas de chute, le Héros ignore l'ensemble des 1D3 touches sur 4+. S'il est mis à terre ou sonné à moins de 1 ps d'un précipice, il relance son test d'Initiative pour éviter de tomber.",
+          "source": "PDF Pirates VF GLM V1hFr, page 8"
+        },
+        {
+          "titre": "Maître du sabre d'abordage",
+          "description": "Avec une épée, le Héros pare sur un jet égal ou supérieur au meilleur jet pour toucher adverse. Cette amélioration fonctionne seulement à couvert, dans un bâtiment ou à 2 ps ou moins d'un élément de décor.",
+          "source": "PDF Pirates VF GLM V1hFr, page 8"
+        },
+        {
+          "titre": "Constitution solide",
+          "description": "Le Héros annule l'effet critique d'un Coup Critique sur 5+ et traite alors la blessure normalement.",
+          "source": "PDF Pirates VF GLM V1hFr, page 8"
+        },
+        {
+          "titre": "Voix tonitruante",
+          "description": "Réservée au Capitaine. Une fois par tour, s'il est debout et hors combat, il permet à un Pirate à 8 ps ou moins de relancer un test raté qui le ferait fuir un combat ou un test de Ralliement.",
+          "source": "PDF Pirates VF GLM V1hFr, page 8"
+        },
+        {
+          "titre": "Bretteur",
+          "description": "À la fin de toute phase de Corps à corps, le Héros encore au contact peut tester son Commandement. En cas de réussite, il effectue un Mouvement normal sans courir ni charger pour rompre le combat sans subir de coup. En cas d'échec, il reste engagé.",
+          "source": "PDF Pirates VF GLM V1hFr, page 8"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "Le Crochet coûte 8 CO dans la liste initiale des Enrôlés de la page 3, mais sa fiche détaillée de la page 6 indique 4 CO. Les deux prix sont conservés dans leurs contextes respectifs.",
+        "Le Perroquet est réservé au Capitaine et aux Lieutenants dans sa fiche, alors que la bande nomme ses officiers Quartiers-Maîtres. La fiche l'associe aux officiers sans inventer un profil supplémentaire.",
+        "Les Enrôlés ne disposent pas d'un prix de recrutement, car ils ne peuvent pas être achetés. Leur coût est donc null plutôt qu'un faux prix nul."
+      ]
+    },
+    "skavens-du-clan-pestilens": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/skavens-du-clan-pestilens",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 6,
+        "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 1, https://drive.google.com/file/d/1k8V8q6nLOQlZmAOt0pziTE4ViT3Mlo-H/view?usp=share_link"
+      },
+      "regles": [],
+      "profils": [
+        {
+          "id": "pretre-de-la-peste",
+          "nom": "Prêtre de la Peste",
+          "categorie": "Héros",
+          "cout": 85,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout membre situé à moins de 6 ps peut utiliser son Commandement."
+            }
+          ],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4 et 5"
+        },
+        {
+          "id": "precheur-sorcier-pestilens",
+          "nom": "Prêcheur-Sorcier Pestilens",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il utilise la Magie du Rat Cornu."
+            }
+          ],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4, 5 et 7"
+        },
+        {
+          "id": "moine-de-la-peste",
+          "nom": "Moine de la Peste",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4 et 5"
+        },
+        {
+          "id": "initie-de-la-peste",
+          "nom": "Initié de la Peste",
+          "categorie": "Héros",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 2,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
+          "regles": [],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4 et 5"
+        },
+        {
+          "id": "novice-de-la-peste",
+          "nom": "Novice de la Peste",
+          "categorie": "Homme de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1 et 6"
+        },
+        {
+          "id": "rat-geant-pestilens",
+          "nom": "Rat Géant",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 2,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Équipement",
+              "description": "Il ne reçoit aucun équipement."
+            }
+          ],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1 et 6"
+        },
+        {
+          "id": "rat-familier-pestilens",
+          "nom": "Rat Familier",
+          "categorie": "Transformation",
+          "cout": null,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 2,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Transformation",
+              "description": "Avant la bataille, le Parchemin de Rat Familier transforme un Rat Géant de la bande. Il reste Homme de main, compte dans la limite de la bande et redevient Rat Géant si le Prêcheur-Sorcier meurt."
+            },
+            {
+              "titre": "Animal enchanté",
+              "description": "Il gagne de l'expérience comme Homme de main. Sur un résultat Ce gars est doué, il gagne à la place Lancement de sorts amélioré. Tant qu'il se trouve à 6 ps ou moins du Prêcheur-Sorcier, celui-ci ajoute 1 à ses jets de lancement. Le bonus est cumulatif si ce résultat est acquis plusieurs fois."
+            }
+          ],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 2"
+        },
+        {
+          "id": "rat-ogre-pestilens",
+          "nom": "Rat Ogre",
+          "categorie": "Homme de main",
+          "cout": 210,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 4,
+            "attaques": 3,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Équipement",
+              "description": "Il utilise uniquement ses crocs, griffes et force brute, sans arme ni armure."
+            },
+            { "titre": "Peur", "description": "Il cause la peur." },
+            {
+              "titre": "Stupidité",
+              "description": "Il est soumis à la stupidité sauf lorsqu'un Héros skaven est à moins de 6 ps."
+            },
+            {
+              "titre": "Aucune expérience",
+              "description": "Il ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Grande cible",
+              "description": "Il suit la règle de Grande cible."
+            }
+          ],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1 et 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Héros Pestilens",
+          "profils": [
+            "pretre-de-la-peste",
+            "precheur-sorcier-pestilens",
+            "moine-de-la-peste",
+            "initie-de-la-peste"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Fléau", "cout": 15 },
+                {
+                  "nom": "Dague de la peste",
+                  "cout": 15,
+                  "note": "Force du porteur, 1 à la sauvegarde adverse. Sur un 6 pour toucher, la cible teste son Endurance et subit une blessure automatique en cas d'échec. Morts-Vivants et Possédés sont immunisés. Deux dagues donnent une attaque additionnelle sans autre bonus."
+                },
+                {
+                  "nom": "Encensoir à peste",
+                  "cout": 40,
+                  "note": "Rare 9, à deux mains, Force du porteur plus 2 au premier tour de chaque combat seulement. Toute cible touchée teste son Endurance et subit une blessure automatique supplémentaire en cas d'échec, un 6 blessant toujours. Le porteur teste aussi et est blessé sur 6. Morts-Vivants et Possédés sont immunisés."
+                }
+              ]
+            },
+            { "nom": "Tir", "entrees": [{ "nom": "Fronde", "cout": 2 }] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 2 et 3"
+        },
+        {
+          "nom": "Équipement des Hommes de main Pestilens",
+          "profils": ["novice-de-la-peste"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            { "nom": "Tir", "entrees": [{ "nom": "Fronde", "cout": 2 }] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 2"
+        },
+        {
+          "nom": "Équipement spécial du Clan Pestilens",
+          "profils": [
+            "pretre-de-la-peste",
+            "precheur-sorcier-pestilens",
+            "moine-de-la-peste",
+            "initie-de-la-peste"
+          ],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Parchemin de Rat Familier",
+                  "cout": 25,
+                  "formuleCout": "25 + 1D6 CO",
+                  "note": "Rare 8. Transforme avant la bataille un Rat Géant en Rat Familier si la bande en possède un. À 6 ps ou moins de son familier, le Prêcheur-Sorcier peut relancer une fois par partie un jet de sort et doit accepter le second résultat. Un seul familier par Prêcheur-Sorcier."
+                },
+                {
+                  "nom": "Fragments de malepierre incandescents",
+                  "cout": 100,
+                  "formuleCout": "100 + 1D6 fois 10 CO",
+                  "note": "Rare 9. Placés dans un encensoir, ils imposent 1 pour toucher aux tirs qui visent le porteur. Remplacent la cape elfique pour cette bande."
+                },
+                {
+                  "nom": "Amulette de malepierre",
+                  "cout": 10,
+                  "note": "Rare 5. Permet de relancer un dé pendant la bataille ou, si elle n'a pas servi et que le Héros peut explorer, un dé d'Exploration. Remplace la patte de lapin."
+                },
+                {
+                  "nom": "Liber Bubonicus",
+                  "cout": 200,
+                  "formuleCout": "200 + 1D6 fois 25 CO",
+                  "note": "Rare 12, usage unique et un seul utilisateur par campagne. Un Prêcheur-Sorcier apprend définitivement un sort aléatoire du Rat Cornu. Un Prêtre de la Peste avec Sorcellerie peut à la place devenir sorcier du Rat Cornu et apprendre un sort aléatoire. Remplace le grimoire de magie."
+                },
+                {
+                  "nom": "Bannière du Clan Pestilens",
+                  "cout": 10,
+                  "note": "Rare 5, une par bande. Les figurines à 12 ps ou moins relancent une fois chaque test raté de Seul contre tous. Le manche compte comme une arme à deux mains. Remplace la bannière ordinaire."
+                },
+                {
+                  "nom": "Liturgicus Infectus",
+                  "cout": 30,
+                  "formuleCout": "30 + 2D6 CO",
+                  "note": "Rare 8. Au début d'un tour ou juste avant un test de Déroute, la bande peut le chanter pour gagner 1 en Commandement jusqu'à la fin du tour. Remplace le cor de guerre."
+                }
+              ]
+            }
+          ],
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 2 à 4"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Insensible à la douleur",
+          "description": "Nécessite Dur à cuire. Le Héros traite les résultats sonné comme à terre.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+        },
+        {
+          "titre": "Frénésie mortelle",
+          "description": "Au début de son tour, le Héros peut gagner une Attaque et 1D3 ps de Mouvement pour le tour. À la fin du tour, il subit 1D3 touches de Force 3 sans sauvegarde.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+        },
+        {
+          "titre": "Porteur d'encensoir à peste",
+          "description": "Nécessite Frénésie mortelle. Le Héros gagne la frénésie et ne peut employer que l'encensoir à peste comme arme de corps à corps.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+        },
+        {
+          "titre": "Corps putréfié",
+          "description": "Le Héros devient immunisé aux poisons et maladies. S'il est mis hors de combat après un test d'Endurance raté provoqué par son encensoir, il ne fait pas de Blessure Grave après la partie.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+        },
+        {
+          "titre": "Contagieux",
+          "description": "Nécessite Corps putréfié. Toute figurine qui met le Héros hors de combat teste son Endurance. Un échec lui inflige une blessure automatique et un 6 blesse toujours. Morts-Vivants et Possédés sont immunisés.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Maleflamme",
+          "difficulte": 8,
+          "description": "Portée 8 ps, frappe la première figurine sur la trajectoire pour 1D3 touches de Force 4. Chaque figurine à 2 ps ou moins de la cible subit une touche de Force 3.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 7"
+        },
+        {
+          "titre": "Rejetons du Rat Cornu",
+          "description": "Réussite automatique et une seule utilisation avant chaque partie. Placez 1D3 Rats Géants à 6 ps ou moins du sorcier. Ils ne comptent pas dans la limite d'effectif de la bande.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 7"
+        },
+        {
+          "titre": "Rongeviande",
+          "difficulte": 7,
+          "description": "Une cible à 8 ps ou moins subit 2D6 touches de Force 1.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 7"
+        },
+        {
+          "titre": "Fureur noire",
+          "difficulte": 8,
+          "description": "Le sorcier charge immédiatement une cible à 12 ps ou moins en ignorant terrain et figurines. Il gagne 2 Attaques et 1 en Force pendant la phase de Corps à corps de ce tour.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 7"
+        },
+        {
+          "titre": "Œil du Warp",
+          "difficulte": 8,
+          "description": "Toutes les figurines debout au contact du sorcier testent leur Commandement. Chaque échec inflige une touche de Force 3 puis fait fuir la cible de 2D6 ps dans la direction opposée, comme après un test raté de Seul contre tous.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 7"
+        },
+        {
+          "titre": "Malédiction du Sorcier",
+          "difficulte": 6,
+          "description": "Une cible à 12 ps ou moins doit relancer ses jets pour toucher et sauvegardes d'armure réussis pendant la prochaine phase de Corps à corps Pestilens, puis pendant ses propres prochaines phases de Tir et de Corps à corps.",
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 7"
+        }
+      ],
+      "ambiguites": [
+        "Le profil imprimé du Rat Ogre lui donne une Capacité de Tir de 3, malgré son interdiction totale d'équipement. La valeur imprimée est conservée.",
+        "Le Rat Familier n'a pas de coût de recrutement. Son coût est null car il résulte de la transformation d'un Rat Géant par un objet payant.",
+        "La difficulté de Rejetons du Rat Cornu est automatique. Elle est représentée par 0, avec la réussite automatique explicitée dans la description."
+      ]
+    },
+    "tileens": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/tileens",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "PDF Tiléens VF GLM V1.1eFr, page 2, https://drive.google.com/file/d/1gytvw4Tmh-EnBxBFW2_jEL_T_TtI9YLd/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Choix de la cité",
+          "description": "La bande choisit Miragliano, Remas ou Trantio. Ce choix détermine ses règles et le tableau de compétences de ses Héros.",
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 1 et 3"
+        },
+        {
+          "titre": "Miragliano, arbalétriers",
+          "description": "Les Héros gagnent 1 pour toucher avec une arbalète. Les Tireurs d'Élite gagnent 1 pour toucher avec toute arme de tir.",
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 1"
+        },
+        {
+          "titre": "Miragliano, haine des Skavens",
+          "description": "Tous les membres de la bande, sauf les Francs-Tireurs, sont sujets à la haine contre les Skavens.",
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 1"
+        },
+        {
+          "titre": "Remas, haine des Elfes Noirs",
+          "description": "Lorsqu'elle combat des Elfes Noirs, la bande peut relancer un test de Déroute raté et doit conserver le second résultat.",
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 1"
+        },
+        {
+          "titre": "Remas, officiers",
+          "description": "Le Capitaine, les Champions et les Recrues gagnent toujours 1 en Commandement, quelle que soit la bande adverse.",
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 1"
+        },
+        {
+          "titre": "Trantio, richesse",
+          "description": "En partie unique, la bande reçoit 100 CO supplémentaires. Dans une campagne en Lustrie, son budget de recrutement est augmenté de 20 pour cent.",
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 1"
+        },
+        {
+          "titre": "Francs-Tireurs",
+          "description": "La bande peut employer les Francs-Tireurs des Mercenaires, ainsi que le Guerrier Fantôme, le Chasseur de gros gibier et l'Arbalétrier Tiléen. Sauf mention contraire, ils ne bénéficient pas des règles de cité.",
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "capitaine-tileen",
+          "nom": "Capitaine",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 2,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout combattant à 6 ps ou moins peut utiliser son Commandement."
+            }
+          ],
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2, 3 et 5"
+        },
+        {
+          "id": "champion-tileen",
+          "nom": "Champion",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Miragliano: Combat",
+            "Miragliano: Tir",
+            "Miragliano: Vitesse",
+            "Remas: Combat",
+            "Remas: Érudition",
+            "Remas: Force",
+            "Trantio: Combat",
+            "Trantio: Tir",
+            "Trantio: Vitesse"
+          ],
+          "regles": [],
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2, 3 et 5"
+        },
+        {
+          "id": "recrue-tileenne",
+          "nom": "Recrue",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [
+            "Miragliano: Combat",
+            "Miragliano: Tir",
+            "Miragliano: Force",
+            "Remas: Combat",
+            "Remas: Érudition",
+            "Remas: Vitesse",
+            "Trantio: Combat",
+            "Trantio: Tir",
+            "Trantio: Force"
+          ],
+          "regles": [],
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2, 3 et 5"
+        },
+        {
+          "id": "guerrier-tileen",
+          "nom": "Guerrier",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2 et 6"
+        },
+        {
+          "id": "duelliste-tileen",
+          "nom": "Duelliste",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Cape et dague",
+              "description": "Au corps à corps uniquement, il est considéré comme utilisant un bouclier."
+            }
+          ],
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2 et 6"
+        },
+        {
+          "id": "tireur-delite-tileen",
+          "nom": "Tireur d'Élite",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2 et 6"
+        },
+        {
+          "id": "mule-tileenne",
+          "nom": "Mule",
+          "categorie": "Monture optionnelle",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 2,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 0,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Lente",
+              "description": "Une Mule incontrôlable ne se déplace que de 2D6 ps."
+            },
+            {
+              "titre": "Tête de mule",
+              "description": "Son cavalier ou meneur au contact teste son Commandement à chaque tour pour la faire avancer."
+            },
+            {
+              "titre": "Sans meneur",
+              "description": "Elle se déplace aléatoirement et s'éloigne à l'opposé d'un combat situé à 6 ps ou moins."
+            },
+            {
+              "titre": "Pacifique",
+              "description": "Elle ne combat ni ne charge. Une Mule non montée chargée devient incontrôlable et fuit à l'opposé de l'attaquant."
+            }
+          ],
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 7"
+        },
+        {
+          "id": "cheval-tileen",
+          "nom": "Cheval",
+          "categorie": "Monture optionnelle",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 8,
+            "capaciteCombat": 1,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 0,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Monture humaine",
+              "description": "Réservé aux Humains et soumis aux règles de cavalerie de l'article Guerriers Montés."
+            }
+          ],
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 7"
+        },
+        {
+          "id": "destrier-tileen",
+          "nom": "Destrier",
+          "categorie": "Monture optionnelle",
+          "cout": 80,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 8,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Entraîné",
+              "description": "Le cavalier relance une fois chaque test de contrôle raté."
+            },
+            {
+              "titre": "Monture humaine",
+              "description": "Réservé aux Humains et soumis aux règles de cavalerie de l'article Guerriers Montés."
+            }
+          ],
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 7"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Tiléens",
+          "profils": [
+            "capitaine-tileen",
+            "champion-tileen",
+            "recrue-tileenne",
+            "guerrier-tileen",
+            "duelliste-tileen"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                {
+                  "nom": "Pique",
+                  "cout": 12,
+                  "note": "Portée de corps à corps jusqu'à 3 ps. À deux mains, une seule attaque par tour et frappe toujours en premier au premier tour, même contre une autre règle identique. Réservée aux créatures de taille humaine ou plus grande."
+                },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Rapière",
+                  "cout": 15,
+                  "note": "Force du porteur moins 1, 1 à la sauvegarde ennemie et Parade. Après une touche qui ne blesse pas, permet une nouvelle attaque avec un malus cumulatif de 1 pour toucher, jusqu'à 6+, dans la limite du nombre initial d'Attaques."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 25,
+                  "note": "50 CO la paire."
+                },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arbalète", "cout": 25 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 3 et 4"
+        },
+        {
+          "nom": "Équipement des Tireurs d'Élite",
+          "profils": ["tireur-delite-tileen"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 25,
+                  "note": "50 CO la paire."
+                },
+                { "nom": "Arc long", "cout": 15 },
+                { "nom": "Arbalète", "cout": 25 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Long fusil d'Hochland", "cout": 200 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 3"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [],
+      "ambiguites": [
+        "Le tableau de compétences des Champions et Recrues varie selon la cité. Les valeurs sont conservées sous forme d'entrées préfixées par Miragliano, Remas ou Trantio au lieu de créer trois faux profils distincts.",
+        "Le PDF donne 8 points d'expérience aux Recrues, valeur inhabituelle mais conservée telle qu'imprimée.",
+        "La Rapière est présente dans la liste tiléenne, mais sa fiche d'équipement nomme seulement Bandits du Hochland, Reiklanders, Marienburgers et Caravane des Marchands dans sa disponibilité. Cette contradiction est conservée.",
+        "Les montures sont optionnelles et limitées à deux dans Mordheim ou Lustrie, sans limite dans les environnements ouverts. Le champ maximum retient deux pour Mordheim.",
+        "Le paragraphe Pacifique de la Mule renvoie à un tableau tronqué dans le PDF. Les règles complètes de cavalerie restent nécessaires."
+      ]
+    },
+    "caravane-des-marchands": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/caravane-des-marchands",
+      "composition": {
+        "budgetInitial": 600,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "PDF Merchant Caravans VO, Border Town Burning, page 2, https://drive.google.com/file/d/1no4mkSguLaCbkAWMP1aBgeRx5IKdF1z_/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Marchand",
+          "description": "Le Marchand est le Chef et les membres à 6 ps ou moins peuvent utiliser son Commandement. S'il quitte définitivement la bande, le nouveau Chef gagne cette règle et l'accès aux compétences spéciales du Marchand. Si aucun membre ne peut devenir Chef, la bande doit recruter un Apprenti dès que possible pour remplir ce rôle.",
+          "source": "PDF Merchant Caravans VO, page 1"
+        },
+        {
+          "titre": "Commerce",
+          "description": "Avant toute recherche d'objet rare, le Marchand peut tenter de vendre un objet rare stocké dans la Roulotte pendant la bataille précédente. Lancez 1D6. Sur 1 ou 2, l'offre vaut la moitié du prix de base. Sur 3 ou 4, elle vaut le prix de base. Sur 5 ou 6, elle vaut une fois et demie le prix de base. Le Marchand peut refuser et réessayer après une autre bataille. Vente en gros permet de traiter 1D3 + 1 objets par partie.",
+          "source": "PDF Merchant Caravans VO, page 1"
+        },
+        {
+          "titre": "Ouvert aux affaires",
+          "description": "Un joueur peut envoyer un Héros chez le Marchand à la place de sa recherche d'objet rare. Ce Héros peut acheter un objet stocké par la bande au prix convenu, éventuellement par échange d'objets ou de trésors, ou vendre un objet, commun, rare, magique ou trésor, au Marchand. Sans accord sur le prix, la visite est perdue.",
+          "source": "PDF Merchant Caravans VO, page 1"
+        },
+        {
+          "titre": "Rareté",
+          "description": "Tout objet rare dont la rareté est réduite à 2 ou moins par la Réputation de la Roulotte, Connaissance des rues ou un autre effet peut être acheté comme un objet commun.",
+          "source": "PDF Merchant Caravans VO, page 1"
+        },
+        {
+          "titre": "Francs-Tireurs",
+          "description": "La Caravane peut engager tout Franc-Tireur accessible aux bandes de Mercenaires.",
+          "source": "PDF Merchant Caravans VO, page 1"
+        },
+        {
+          "titre": "Roulotte obligatoire",
+          "description": "La bande doit inclure une Roulotte de Commerce dès sa création.",
+          "source": "PDF Merchant Caravans VO, pages 2 et 5"
+        }
+      ],
+      "profils": [
+        {
+          "id": "marchand-caravane",
+          "nom": "Marchand",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Tir", "Érudition", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Marchand",
+              "description": "Il est toujours le Chef et applique les règles de succession, de commerce et d'ouverture aux autres joueurs décrites pour la bande."
+            }
+          ],
+          "source": "PDF Merchant Caravans VO, pages 1 à 3"
+        },
+        {
+          "id": "apprenti-marchand",
+          "nom": "Apprenti",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Érudition", "Vitesse"],
+          "regles": [],
+          "source": "PDF Merchant Caravans VO, pages 2 et 3"
+        },
+        {
+          "id": "chevalier-avant-garde",
+          "nom": "Chevalier d'Avant-Garde",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Réflexes fulgurants",
+              "description": "Lorsqu'il est chargé, il frappe en premier contre les chargeurs. Comme ceux-ci frappent normalement aussi en premier, l'ordre est déterminé par l'Initiative."
+            },
+            {
+              "titre": "Cavalier",
+              "description": "Il est entraîné à monter un destrier."
+            },
+            {
+              "titre": "Mercenaire",
+              "description": "Il est payé par le Marchand et ne peut jamais devenir Chef."
+            }
+          ],
+          "source": "PDF Merchant Caravans VO, pages 2 et 3"
+        },
+        {
+          "id": "magicien-caravane",
+          "nom": "Magicien",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il utilise la Magie mineure du livre de règles."
+            },
+            {
+              "titre": "Mercenaire",
+              "description": "Il est payé par le Marchand et ne peut jamais devenir Chef."
+            }
+          ],
+          "source": "PDF Merchant Caravans VO, pages 2 et 3"
+        },
+        {
+          "id": "epee-louee",
+          "nom": "Épée louée",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Merchant Caravans VO, pages 2 et 4"
+        },
+        {
+          "id": "tireur-caravane",
+          "nom": "Tireur",
+          "categorie": "Homme de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Merchant Caravans VO, pages 2 et 4"
+        },
+        {
+          "id": "garde-noir-caravane",
+          "nom": "Garde Noir",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Homme fort",
+              "description": "Il utilise une arme à deux mains sans frapper en dernier. L'ordre des attaques est résolu comme pour une arme ordinaire."
+            },
+            {
+              "titre": "Mercenaire peu fiable",
+              "description": "Il ne peut jamais devenir Héros. Tout résultat Ce gars est doué est relancé."
+            }
+          ],
+          "source": "PDF Merchant Caravans VO, pages 2 et 4"
+        },
+        {
+          "id": "roulotte-de-commerce",
+          "nom": "Roulotte de Commerce",
+          "categorie": "Véhicule obligatoire",
+          "cout": 180,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": null,
+            "capaciteCombat": null,
+            "capaciteTir": null,
+            "force": null,
+            "endurance": 8,
+            "pointsVie": 4,
+            "initiative": null,
+            "attaques": null,
+            "commandement": null
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Profil composite",
+              "description": "Châssis: E8, 4 PV. Chaque roue: E6, 1 PV. Chacun des deux chevaux de trait: M8, CC1, CT0, F3, E3, 1 PV, I3, A0, Cd5."
+            },
+            {
+              "titre": "Chariot",
+              "description": "Elle suit les règles de chariots d'Empire en Flammes. Son prix inclut deux chevaux de trait et un membre de la bande doit la conduire."
+            },
+            {
+              "titre": "Stockage",
+              "description": "Tout équipement et tout trésor non affecté, mais pas l'or, est stocké dans la Roulotte. Si elle est détruite, tout ce contenu est perdu. Sans nouvelle Roulotte ou Diligence, aucun équipement ne peut être stocké et tout trésor non vendu avant la partie suivante est perdu."
+            },
+            {
+              "titre": "Réputation",
+              "description": "Pour chaque tranche de cinq objets rares différents stockés, le Marchand gagne 1 à ses jets de recherche d'objets rares."
+            },
+            {
+              "titre": "Abandonnée",
+              "description": "Après un test de Déroute raté, si personne ne la conduit, le vainqueur la capture. Il peut voler son contenu, garder le véhicule s'il y est autorisé ou négocier sa rançon selon Capturé. Une bande qui capture la Roulotte ne peut pas rechercher d'objets rares après la bataille, sauf si toute la Caravane a été mise hors de combat."
+            }
+          ],
+          "source": "PDF Merchant Caravans VO, pages 2 et 5"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Héros",
+          "profils": [
+            "marchand-caravane",
+            "apprenti-marchand",
+            "chevalier-avant-garde",
+            "magicien-caravane"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Rapière",
+                  "cout": 15,
+                  "note": "Le PDF renvoie à la règle de rapière du corpus de campagne."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 30,
+                  "note": "60 CO la paire."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                {
+                  "nom": "Cape de soie cathayenne",
+                  "cout": 40,
+                  "note": "La règle de cet objet n'est pas reproduite dans le PDF de bande."
+                },
+                {
+                  "nom": "Destrier",
+                  "cout": 40,
+                  "note": "Chevaliers d'Avant-Garde uniquement. Les caractéristiques et règles de cavalerie ne sont pas reproduites dans ce PDF."
+                },
+                {
+                  "nom": "Roulotte de Commerce",
+                  "cout": 180,
+                  "note": "Obligatoire à la création de la bande."
+                }
+              ]
+            }
+          ],
+          "source": "PDF Merchant Caravans VO, page 2"
+        },
+        {
+          "nom": "Équipement des Hommes de main",
+          "profils": ["epee-louee", "tireur-caravane"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Pique",
+                  "cout": 10,
+                  "note": "Épées louées uniquement. À deux mains et frappe en premier au premier tour de combat, avec 1 en Initiative pour départager d'autres combattants qui frappent en premier."
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10,
+                  "note": "Épées louées uniquement."
+                }
+              ]
+            },
+            { "nom": "Tir", "entrees": [{ "nom": "Arbalète", "cout": 25 }] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF Merchant Caravans VO, pages 2 et 5"
+        },
+        {
+          "nom": "Équipement cathayen",
+          "profils": ["chevalier-avant-garde", "garde-noir-caravane"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Gourdin", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Katana",
+                  "cout": 20,
+                  "note": "La règle du Katana n'est pas reproduite dans ce PDF de bande."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF Merchant Caravans VO, page 2"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Corruption",
+          "description": "Lorsqu'un test de Déroute est requis, le Marchand peut payer 5 CO pour chaque membre non Héros encore en jeu, Francs-Tireurs compris. Un membre déjà hors de combat cesse alors de compter pour le test. Si le test reste requis, il est effectué normalement. La compétence peut être réutilisée tant que la bande peut payer.",
+          "source": "PDF Merchant Caravans VO, page 4"
+        },
+        {
+          "titre": "Revenu douteux",
+          "description": "Après une bataille où il n'a pas été mis hors de combat et avant toute dépense, le Marchand peut tester son Commandement. Une réussite rapporte autant de CO qu'il possède de points d'expérience. Un échec fait perdre jusqu'à cette même somme.",
+          "source": "PDF Merchant Caravans VO, page 4"
+        },
+        {
+          "titre": "Vente en gros",
+          "description": "Après chaque bataille où il n'est pas hors de combat, le Marchand peut rechercher 1D3 + 1 objets rares au lieu d'un seul.",
+          "source": "PDF Merchant Caravans VO, page 4"
+        },
+        {
+          "titre": "Négociateur",
+          "description": "Le Marchand ajoute 1 au jet qui détermine le prix obtenu par sa règle Commerce.",
+          "source": "PDF Merchant Caravans VO, page 4"
+        },
+        {
+          "titre": "Bien introduit",
+          "description": "Au lieu d'une recherche rare ordinaire, le Marchand peut chercher au marché noir: Parchemin de dissipation pour 50 + 4D6 CO, rareté 12; Artefact mineur pour 200 + 1D6 fois 15 CO, rareté 16; Artefact magique pour 350 + 1D6 fois 25 CO, rareté 18; Parchemin magique pour 100 CO, rareté 14. Les objets ainsi achetés ne peuvent jamais être revendus.",
+          "source": "PDF Merchant Caravans VO, page 4"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Magie mineure",
+          "description": "Le Magicien utilise la liste de Magie mineure du livre de règles. Les sorts et difficultés ne sont pas reproduits dans le PDF de cette bande.",
+          "source": "PDF Merchant Caravans VO, page 3"
+        }
+      ],
+      "ambiguites": [
+        "Le document impose une Roulotte en plus d'un minimum de trois figurines, mais ne précise pas explicitement si le véhicule compte dans le minimum ou la limite de douze guerriers. La composition conserve les nombres imprimés et modélise la Roulotte séparément comme obligatoire.",
+        "La Cape de soie cathayenne, le Katana, le Destrier et la Magie mineure renvoient à des règles externes non reproduites. Leurs effets n'ont pas été inventés.",
+        "La Roulotte emploie plusieurs sous-profils. Ses statistiques principales représentent le châssis et les roues et chevaux sont détaillés dans Profil composite.",
+        "Le document est uniquement disponible en anglais sur la page GLM. Les formulations françaises sont des traductions paraphrasées."
+      ]
+    },
+    "fils-dhashut": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/fils-dhashut",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 14,
+        "maximumHeros": 4,
+        "source": "PDF The Sons of Hashut VO, page 1, https://drive.google.com/file/d/1A-fOwm-mt8T8H5K8EF6m_yKLRuXHe81I/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Tête dure",
+          "description": "Les Nains du Chaos ignorent les règles spéciales des masses, gourdins et armes similaires qui facilitent un résultat sonné.",
+          "source": "PDF The Sons of Hashut VO, page 1"
+        },
+        {
+          "titre": "Armure",
+          "description": "Les Nains du Chaos et Centaures-Taureaux ne subissent aucune pénalité de Mouvement due au port d'une armure.",
+          "source": "PDF The Sons of Hashut VO, page 1"
+        },
+        {
+          "titre": "Difficiles à tuer",
+          "description": "Pour un Nain du Chaos ou un Centaure-Taureau, 1 ou 2 au jet de dégâts donne à terre, 3 à 5 donne sonné et seul 6 met hors de combat.",
+          "source": "PDF The Sons of Hashut VO, page 1"
+        },
+        {
+          "titre": "Esclavagistes",
+          "description": "La bande ne libère jamais un captif. Elle choisit de le sacrifier, ce qui donne 1 point d'expérience à l'Apprenti Sorcier, ou de le faire travailler. Un captif au travail rapporte un fragment de pierre magique supplémentaire après la partie, puis lance 1D6. Sur 2 à 6 il meurt et la bande garde son équipement. Sur 1 il s'échappe avec son équipement et gagne 1D3 points d'expérience, ou 1 point s'il est Homme de main.",
+          "source": "PDF The Sons of Hashut VO, page 1"
+        },
+        {
+          "titre": "Peu communs",
+          "description": "Pour recruter de nouveaux Nains du Chaos, la bande doit dépenser une fois et demie le nombre de points d'expérience normalement nécessaire, arrondi au supérieur. Cette règle ne concerne pas les Hobgobelins.",
+          "source": "PDF The Sons of Hashut VO, page 1"
+        },
+        {
+          "titre": "Serviteurs sous contrat",
+          "description": "La bande commence avec au moins quatre Hobgobelins. Si elle tombe sous ce seuil, elle ne peut recruter aucun autre membre avant d'être remontée à quatre Hobgobelins ou plus.",
+          "source": "PDF The Sons of Hashut VO, pages 1 et 2"
+        },
+        {
+          "titre": "Francs-Tireurs",
+          "description": "La bande peut engager Garde du Corps Ogre, Gladiateur, Sorcier, Assassin Impérial et Éclaireur Hobgobelin, ainsi que tout Franc-Tireur ouvert à tous ou autorisé aux Orques et au Chaos. Elle ne peut jamais engager d'Elfe.",
+          "source": "PDF The Sons of Hashut VO, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "apprenti-sorcier-hashut",
+          "nom": "Apprenti Sorcier",
+          "categorie": "Héros",
+          "cout": 85,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Érudition", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout membre à 6 ps ou moins peut utiliser son Commandement."
+            },
+            {
+              "titre": "Rituels du Chaos",
+              "description": "Il est sorcier et commence avec un sort aléatoire de la magie des Nains du Chaos."
+            },
+            {
+              "titre": "Armure et magie",
+              "description": "Il peut acheter les armes et armures naines, mais ne peut pas lancer de sort s'il porte une armure."
+            }
+          ],
+          "source": "PDF The Sons of Hashut VO, pages 1 à 3 et 5"
+        },
+        {
+          "id": "centaure-taureau-hashut",
+          "nom": "Centaure-Taureau",
+          "categorie": "Héros",
+          "cout": 75,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 7,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Grande cible",
+              "description": "Les tirs contre lui gagnent 1 pour toucher et peuvent le viser même s'il n'est pas la cible la plus proche. Il ajoute 20 à la valeur de bande au lieu de 5."
+            }
+          ],
+          "source": "PDF The Sons of Hashut VO, pages 1 à 4"
+        },
+        {
+          "id": "champion-nain-du-chaos",
+          "nom": "Champion Nain du Chaos",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 5,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Spéciale"],
+          "regles": [],
+          "source": "PDF The Sons of Hashut VO, pages 1, 2 et 4"
+        },
+        {
+          "id": "guerrier-nain-du-chaos",
+          "nom": "Guerrier Nain du Chaos",
+          "categorie": "Homme de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 6,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF The Sons of Hashut VO, pages 1 et 4"
+        },
+        {
+          "id": "tromblonnier-nain-du-chaos",
+          "nom": "Tromblonnier Nain du Chaos",
+          "categorie": "Homme de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF The Sons of Hashut VO, pages 1 et 4"
+        },
+        {
+          "id": "hobgobelin-hashut",
+          "nom": "Hobgobelin",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 4,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Maigre",
+              "description": "Lors du jet de blessure d'après-bataille, un résultat de 1 à 3 signifie que le Hobgobelin abandonne la bande."
+            },
+            {
+              "titre": "Personne ne s'en soucie",
+              "description": "Chaque Hobgobelin hors de combat compte comme une demi-figurine pour le seuil de Déroute. Il ne peut jamais devenir Héros et tout résultat Ce gars est doué est relancé."
+            }
+          ],
+          "source": "PDF The Sons of Hashut VO, pages 1, 2 et 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Nains du Chaos",
+          "profils": [
+            "apprenti-sorcier-hashut",
+            "centaure-taureau-hashut",
+            "champion-nain-du-chaos",
+            "guerrier-nain-du-chaos"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Arme d'obsidienne",
+                  "cout": 60,
+                  "formuleCout": "30 ou 60 CO selon deux indications contradictoires du PDF",
+                  "note": "Rare 10. Épée, hache ou marteau uniquement. Conserve les règles de l'arme, ajoute 1 en Force et retire 1 en Initiative au corps à corps."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF The Sons of Hashut VO, pages 2 et 3"
+        },
+        {
+          "nom": "Équipement des Tromblonniers",
+          "profils": ["tromblonnier-nain-du-chaos"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Tromblon nain du Chaos",
+                  "cout": 40,
+                  "note": "Rare 9, portée 16 ps, Force 3. Tracez une ligne droite de 16 ps sur 1 ps de large, toutes les figurines traversées sont automatiquement touchées. Après chaque tir, il faut un tour complet pour recharger, donc l'arme ne tire qu'un tour sur deux."
+                },
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF The Sons of Hashut VO, pages 2 et 3"
+        },
+        {
+          "nom": "Équipement des Hobgobelins",
+          "profils": ["hobgobelin-hashut"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Dagues empoisonnées",
+                  "cout": 15,
+                  "note": "Rare 9, paire de dagues. Donne une attaque additionnelle, 1 en Initiative pour déterminer l'ordre, compte comme enduite en permanence de Lotus Noir et ne peut recevoir un autre poison. La cible blessée gagne 1 à sa sauvegarde ou une sauvegarde de 6+."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF The Sons of Hashut VO, pages 2 et 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Vrai dur",
+          "description": "Pour ce Héros, 1 à 3 au jet de dégâts donne à terre, 4 ou 5 donne sonné et 6 donne hors de combat.",
+          "source": "PDF The Sons of Hashut VO, page 4"
+        },
+        {
+          "titre": "Extra coriace",
+          "description": "Le Héros peut relancer son jet de Blessure Grave après la partie et doit conserver le second résultat.",
+          "source": "PDF The Sons of Hashut VO, page 4"
+        },
+        {
+          "titre": "Haine sans limite",
+          "description": "Le Héros est sujet à la haine contre toutes les figurines adverses.",
+          "source": "PDF The Sons of Hashut VO, page 4"
+        },
+        {
+          "titre": "Crâne épais",
+          "description": "Le Héros dispose d'une sauvegarde spéciale de 3+ lorsqu'il devrait être sonné.",
+          "source": "PDF The Sons of Hashut VO, page 4"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Spectre d'Hashut",
+          "difficulte": 9,
+          "description": "La figurine ennemie la plus proche du sorcier dans un rayon de 10 ps est automatiquement sonnée.",
+          "source": "PDF The Sons of Hashut VO, page 5"
+        },
+        {
+          "titre": "Statue de pierre",
+          "difficulte": 9,
+          "description": "Choisissez un ennemi visible à 12 ps ou moins. Jusqu'à la fin du tour suivant, il ne peut rien faire. Au corps à corps, il subit une touche automatique. Les tirs contre lui gagnent 1 pour toucher.",
+          "source": "PDF The Sons of Hashut VO, page 5"
+        },
+        {
+          "titre": "Boule de feu",
+          "difficulte": 7,
+          "description": "Une cible visible à 16 ps ou moins subit automatiquement une touche de Force 4.",
+          "source": "PDF The Sons of Hashut VO, page 5"
+        },
+        {
+          "titre": "Disparition",
+          "difficulte": 7,
+          "description": "Le sorcier se déplace immédiatement de 6 ps au maximum dans toute direction. Il peut entrer ou sortir d'un corps à corps sans pénalité et compte comme chargeant s'il rejoint un combat.",
+          "source": "PDF The Sons of Hashut VO, page 5"
+        },
+        {
+          "titre": "Éruption",
+          "difficulte": 8,
+          "description": "Toutes les figurines, alliées ou ennemies, à 4 ps ou moins subissent automatiquement une touche de Force 4. Après résolution, le sorcier ne peut plus lancer de sort jusqu'au tour suivant et perd 1 en Endurance.",
+          "source": "PDF The Sons of Hashut VO, page 5"
+        },
+        {
+          "titre": "Œil d'Hashut",
+          "difficulte": 6,
+          "description": "Choisissez un allié à 12 ps ou moins et lancez 1D6, avec 1 en moins pour un Hobgobelin. Ce sort ne peut réussir qu'une fois par bataille. Sur 1, la cible est mise hors de combat sans jet de Blessure Grave. Sur 2 à 5, elle gagne 1 dans une caractéristique pour le reste de la partie. Sur 6, elle gagne 1 dans toutes ses caractéristiques pour le reste de la partie.",
+          "source": "PDF The Sons of Hashut VO, page 5"
+        }
+      ],
+      "ambiguites": [
+        "La bande annonce un minimum général de trois figurines, mais impose aussi au moins quatre Hobgobelins et un Apprenti Sorcier. Le minimum jouable réel semble donc être cinq. La composition conserve la valeur générale imprimée et la règle des quatre Hobgobelins reste obligatoire.",
+        "La liste affiche une Arme d'obsidienne à 30 ou 60 CO et une note autorisant le demi-prix au départ, tandis que les notes éditoriales affirment que la réduction initiale a été supprimée et que toutes ces armes coûtent 60 CO. La fiche retient 60 comme coût principal et conserve le conflit dans formuleCout.",
+        "La règle Maigre parle d'un jet de blessure sans nommer explicitement le tableau d'après-bataille. La formulation a été rattachée au jet de blessure d'après-bataille, mais ce point doit être confirmé avec l'édition source espagnole.",
+        "Éruption retire 1 en Endurance au sorcier sans préciser la durée. Aucun terme de fin n'a été ajouté.",
+        "La section Expérience appelle le Chef Warlock alors que le profil s'appelle Apprentice Sorcerer. La fiche associe les 20 points au profil unique de Chef.",
+        "Le PDF est uniquement disponible en anglais sur la page GLM et comporte des notes d'adaptation éditoriale. Les règles françaises sont traduites et paraphrasées, sans fusion avec une autre liste de Nains du Chaos."
+      ]
+    }
+  }
+}

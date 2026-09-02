@@ -1,0 +1,3032 @@
+{
+  "bandes": {
+    "expeditions-runiques": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 4,
+        "source": "Expédition Runique V1.2aFr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Difficiles à tuer",
+          "description": "Quand un Nain perd son dernier point de vie, un résultat de 1 ou 2 le met à terre, de 3 à 5 le sonne et 6 le met hors de combat.",
+          "source": "Expédition Runique V1.2aFr, page 1"
+        },
+        {
+          "titre": "Tête dure",
+          "description": "Les Nains ignorent les règles qui augmentent spécialement les chances de les sonner, notamment celles des marteaux, masses et autres armes contondantes.",
+          "source": "Expédition Runique V1.2aFr, page 1"
+        },
+        {
+          "titre": "Armure",
+          "description": "Le Mouvement d'un Nain n'est jamais réduit par le port d'une armure.",
+          "source": "Expédition Runique V1.2aFr, page 1"
+        },
+        {
+          "titre": "Haine des Orques et Gobelins",
+          "description": "Tous les Nains de la bande haïssent les Orques et les Gobelins.",
+          "source": "Expédition Runique V1.2aFr, page 1"
+        },
+        {
+          "titre": "Rancuniers",
+          "description": "La bande ne peut jamais recruter un franc-tireur elfe.",
+          "source": "Expédition Runique V1.2aFr, page 1"
+        },
+        {
+          "titre": "Mineurs sans égal",
+          "description": "Après une bataille, la bande ajoute 1 au nombre de trésors trouvé par son jet d'exploration.",
+          "source": "Expédition Runique V1.2aFr, page 1"
+        },
+        {
+          "titre": "Suspicieux",
+          "description": "Dans une partie multijoueur, deux bandes naines restent séparées. Elles ne se considèrent pas comme alliées pour les mouvements, les charges et les tests de seul contre tous. Elles ne sont toutefois pas ennemies et partagent normalement les trouvailles d'exploration.",
+          "source": "Expédition Runique V1.2aFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "forgerune",
+          "nom": "Forgerune",
+          "categorie": "Héros",
+          "cout": 85,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 5,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 10
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout guerrier allié situé à 6 ps ou moins peut utiliser le Commandement du Forgerune pour ses tests."
+            },
+            {
+              "titre": "Graveur de runes",
+              "description": "Il connaît au départ une rune mineure tirée au hasard. Avant chaque bataille, il peut tenter d'inscrire une rune sur un objet. Chaque fois qu'il obtient une nouvelle compétence, il peut choisir d'apprendre une rune mineure supplémentaire à la place."
+            }
+          ],
+          "source": "Expédition Runique V1.2aFr, pages 2, 4, 5 et 7"
+        },
+        {
+          "id": "apprenti-forgerune",
+          "nom": "Apprenti Forgerune",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Force",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Une paire de mains supplémentaire",
+              "description": "Tant que l'Apprenti est présent, le Forgerune peut tenter d'inscrire deux objets avant une bataille au lieu d'un seul."
+            }
+          ],
+          "source": "Expédition Runique V1.2aFr, pages 2, 4 et 5"
+        },
+        {
+          "id": "tueur-de-trolls",
+          "nom": "Tueur de Trolls",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Vœu de mort",
+              "description": "Le Tueur est immunisé à toute psychologie et ne fait jamais de test de seul contre tous."
+            },
+            {
+              "titre": "Restrictions d'équipement",
+              "description": "Il ne peut employer ni arme de tir ni armure."
+            }
+          ],
+          "source": "Expédition Runique V1.2aFr, pages 2, 4 et 5"
+        },
+        {
+          "id": "longue-barbe",
+          "nom": "Longue-Barbe",
+          "categorie": "Hommes de main",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 5,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Tenace",
+              "description": "Il relance tout test de Commandement raté et doit conserver le second résultat."
+            }
+          ],
+          "source": "Expédition Runique V1.2aFr, page 6"
+        },
+        {
+          "id": "guerrier-des-clans",
+          "nom": "Guerrier des Clans",
+          "categorie": "Hommes de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Expédition Runique V1.2aFr, page 6"
+        },
+        {
+          "id": "arbaletrier-nain",
+          "nom": "Arbalétrier Nain",
+          "categorie": "Hommes de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Expédition Runique V1.2aFr, page 6"
+        },
+        {
+          "id": "poil-au-menton",
+          "nom": "Poil-au-Menton",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Expédition Runique V1.2aFr, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Guerriers Nains",
+          "profils": [
+            "forgerune",
+            "apprenti-forgerune",
+            "tueur-de-trolls",
+            "longue-barbe",
+            "guerrier-des-clans",
+            "poil-au-menton"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                {
+                  "nom": "Hache naine",
+                  "cout": 15,
+                  "note": "Parade. Deux haches permettent de relancer une parade ratée. Tranchante: modificateur supplémentaire de moins 1 à la sauvegarde adverse."
+                },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Arme en gromril",
+                  "cout": 0,
+                  "formuleCout": "coût normal x 3",
+                  "note": "Accessible uniquement à la création parmi les armes normalement autorisées au profil."
+                }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Pistolet", "cout": 15 },
+                { "nom": "Paire de pistolets", "cout": 30 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                {
+                  "nom": "Armure en gromril",
+                  "cout": 75,
+                  "note": "Prix réservé à la création de la bande."
+                },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Expédition Runique V1.2aFr, pages 2 et 3"
+        },
+        {
+          "nom": "Arbalétriers Nains",
+          "profils": ["arbaletrier-nain"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [{ "nom": "Arbalète", "cout": 25 }]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Expédition Runique V1.2aFr, page 2"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Maître des lames",
+          "description": "Une parade réussit sur un résultat supérieur ou égal au meilleur jet pour toucher adverse. Deux armes de parade permettent deux parades. Deux haches naines permettent en plus de relancer les parades ratées.",
+          "source": "Expédition Runique V1.2aFr, page 4"
+        },
+        {
+          "titre": "Crâne épais",
+          "description": "Le Héros possède une sauvegarde spéciale de 3+ pour transformer un résultat sonné en à terre. Avec un casque, cette sauvegarde passe à 2+ et remplace la règle normale du casque.",
+          "source": "Expédition Runique V1.2aFr, page 4"
+        },
+        {
+          "titre": "Increvable",
+          "description": "Après avoir été mis hors de combat, le Héros peut relancer une fois son jet de blessure grave et doit garder le second résultat.",
+          "source": "Expédition Runique V1.2aFr, page 4"
+        },
+        {
+          "titre": "Prospecteur",
+          "description": "Après une bataille, le Héros peut modifier de plus ou moins 1 l'un de ses dés d'exploration.",
+          "source": "Expédition Runique V1.2aFr, page 4"
+        },
+        {
+          "titre": "Très coriace",
+          "description": "Pour ce Héros, un jet de dégâts de 1 à 3 le met à terre, de 4 à 5 le sonne et 6 le met hors de combat.",
+          "source": "Expédition Runique V1.2aFr, page 4"
+        },
+        {
+          "titre": "Charge furieuse",
+          "description": "Un Tueur de Trolls double ses Attaques pendant le tour où il charge, mais subit moins 1 pour toucher pendant ce tour.",
+          "source": "Expédition Runique V1.2aFr, page 4"
+        },
+        {
+          "titre": "Tueur de monstres",
+          "description": "Un Tueur de Trolls blesse toujours sur 4+, sauf si sa Force modifiée lui permet de blesser plus facilement.",
+          "source": "Expédition Runique V1.2aFr, page 4"
+        },
+        {
+          "titre": "Berserk",
+          "description": "Un Tueur de Trolls gagne plus 1 à ses jets pour toucher pendant le tour où il charge.",
+          "source": "Expédition Runique V1.2aFr, page 4"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Règles des runes mineures",
+          "description": "Avant chaque bataille, le Forgerune lance 2D6 contre la difficulté de la rune pour l'inscrire sur un objet pendant cette bataille. Un double 1 détruit définitivement l'objet, qui peut être remplacé avant la bataille si la bande peut le payer. Un autre échec ne confère aucun effet. Un objet ne peut porter qu'une seule rune et ne peut cumuler rune et propriété magique.",
+          "source": "Expédition Runique V1.2aFr, page 7"
+        },
+        {
+          "titre": "Rune de Pierre",
+          "difficulte": 8,
+          "description": "Inscrite sur une armure, elle améliore sa sauvegarde de 1.",
+          "source": "Expédition Runique V1.2aFr, page 7"
+        },
+        {
+          "titre": "Rune Tranchante",
+          "difficulte": 6,
+          "description": "Inscrite sur une arme, elle impose un modificateur supplémentaire de moins 1 à la sauvegarde d'armure adverse.",
+          "source": "Expédition Runique V1.2aFr, page 7"
+        },
+        {
+          "titre": "Rune de Vitesse",
+          "difficulte": 7,
+          "description": "Inscrite sur une arme, elle double l'Initiative de son porteur.",
+          "source": "Expédition Runique V1.2aFr, page 7"
+        },
+        {
+          "titre": "Rune de Protection",
+          "difficulte": 8,
+          "description": "Inscrite sur un vêtement, une ceinture ou une armure, elle accorde une sauvegarde spéciale de 4+ contre les sorts.",
+          "source": "Expédition Runique V1.2aFr, page 7"
+        },
+        {
+          "titre": "Rune de Précision",
+          "difficulte": 9,
+          "description": "Inscrite sur une arme, elle accorde plus 1 pour toucher avec cette arme.",
+          "source": "Expédition Runique V1.2aFr, page 7"
+        },
+        {
+          "titre": "Rune de Course",
+          "difficulte": 8,
+          "description": "Inscrite sur des bottes, une ceinture ou un objet comparable, elle augmente le Mouvement de 1.",
+          "source": "Expédition Runique V1.2aFr, page 7"
+        }
+      ],
+      "ambiguites": [
+        "La règle Crâne épais mentionne un Nain du Chaos portant un casque. Cette occurrence paraît être une erreur de rédaction, car le texte appartient aux compétences de l'Expédition Runique.",
+        "Le texte d'ambiance du Forgerune évoque une ou deux runes, mais sa règle mécanique impose une seule rune mineure aléatoire au recrutement. Cette dernière formulation est retenue."
+      ]
+    },
+    "gardiens-des-tombes": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 4,
+        "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 1"
+      },
+      "regles": [
+        {
+          "titre": "Provoque la peur",
+          "description": "Tous les guerriers dotés de la règle Mort-vivant provoquent la peur.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 2"
+        },
+        {
+          "titre": "Immunité à la psychologie",
+          "description": "Les Mort-vivants sont immunisés à la psychologie et ne quittent jamais volontairement un combat.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 2"
+        },
+        {
+          "titre": "Insensibles à la douleur",
+          "description": "Les Mort-vivants traitent tout résultat sonné comme un résultat à terre.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 2"
+        },
+        {
+          "titre": "Ne peuvent pas courir",
+          "description": "Les Mort-vivants ne peuvent pas courir, mais chargent normalement.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 2"
+        },
+        {
+          "titre": "Immunité au poison",
+          "description": "Les Mort-vivants ne sont jamais affectés par le poison.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 2"
+        },
+        {
+          "titre": "Sans cerveau",
+          "description": "Les squelettes ne gagnent jamais d'expérience.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 2"
+        },
+        {
+          "titre": "Terrain natal",
+          "description": "À chaque phase d'exploration, la bande lance toujours un dé supplémentaire.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 3"
+        }
+      ],
+      "profils": [
+        {
+          "id": "seigneur-des-tombes",
+          "nom": "Seigneur des Tombes",
+          "categorie": "Héros",
+          "cout": 150,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Il dirige la bande et suit les règles normales des chefs."
+            },
+            {
+              "titre": "Mort-vivant",
+              "description": "Il applique toutes les règles communes des Mort-vivants de la bande."
+            },
+            {
+              "titre": "Inflammable",
+              "description": "Une attaque fondée sur le feu qui le blesse lui retire deux fois le nombre normal de points de vie."
+            },
+            {
+              "titre": "Ne boit pas",
+              "description": "Il n'a besoin ni de nourriture ni d'eau. Les animaux vivants accompagnant la bande appliquent toutefois les règles d'eau normalement."
+            }
+          ],
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2, 3 et 4"
+        },
+        {
+          "id": "pretre-liche",
+          "nom": "Prêtre Liche",
+          "categorie": "Héros",
+          "cout": 55,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Érudition"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il utilise les Parchemins du Culte Mortuaire."
+            },
+            {
+              "titre": "Mort-vivant",
+              "description": "Il applique toutes les règles communes des Mort-vivants de la bande."
+            },
+            {
+              "titre": "Restriction d'armure",
+              "description": "Il ne peut porter aucune armure, car elle gênerait ses incantations."
+            }
+          ],
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2 et 4"
+        },
+        {
+          "id": "acolyte",
+          "nom": "Acolyte",
+          "categorie": "Héros",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Érudition"],
+          "regles": [
+            {
+              "titre": "Mort-vivant",
+              "description": "Il applique toutes les règles communes des Mort-vivants de la bande."
+            }
+          ],
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2 et 4"
+        },
+        {
+          "id": "guerrier-squelette",
+          "nom": "Guerrier Squelette",
+          "categorie": "Hommes de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Mort-vivant",
+              "description": "Il applique toutes les règles communes des Mort-vivants et ne gagne jamais d'expérience."
+            }
+          ],
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 5"
+        },
+        {
+          "id": "garde-des-tombes",
+          "nom": "Garde des Tombes",
+          "categorie": "Hommes de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Mort-vivant",
+              "description": "Il applique toutes les règles communes des Mort-vivants de la bande."
+            }
+          ],
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 5"
+        },
+        {
+          "id": "scorpion-des-tombes",
+          "nom": "Scorpion des Tombes",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 2,
+            "capaciteTir": 0,
+            "force": 2,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Vivant",
+              "description": "Il suit normalement les règles de psychologie, mais sa petite taille lui évite les besoins en eau."
+            },
+            {
+              "titre": "Animal",
+              "description": "Il ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Dard empoisonné",
+              "description": "Son attaque de dard est résolue exactement comme une attaque enduite de Lotus Noir."
+            },
+            {
+              "titre": "Sans équipement",
+              "description": "Il ne peut utiliser ni arme ni armure."
+            }
+          ],
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 5"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Mort-vivants",
+          "profils": [
+            "seigneur-des-tombes",
+            "guerrier-squelette",
+            "garde-des-tombes"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Fléau", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                {
+                  "nom": "Flèches d'aspic",
+                  "cout": 10,
+                  "note": "Seigneur des Tombes seulement. Accordent plus 1 pour toucher."
+                },
+                {
+                  "nom": "Javelot nehekharien",
+                  "cout": 10,
+                  "note": "Seigneur des Tombes seulement. Portée 8 ps, Force de l'utilisateur et plus 1 pour toucher."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Armure légère", "cout": 20 }
+              ]
+            }
+          ],
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2 et 3"
+        },
+        {
+          "nom": "Prêtres Liches",
+          "profils": ["pretre-liche", "acolyte"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Bâton", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                {
+                  "nom": "Bâton serpent",
+                  "cout": 30,
+                  "note": "Prêtre Liche seulement. Arme à deux mains dotée de Parade. Le Prêtre peut renoncer à toutes ses attaques et parades pour effectuer une attaque qui frappe toujours en premier avec CC 4 et Force 4."
+                }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            { "nom": "Armures", "entrees": [] }
+          ],
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2 et 3"
+        },
+        {
+          "nom": "Équipement de bande",
+          "profils": [
+            "seigneur-des-tombes",
+            "pretre-liche",
+            "acolyte",
+            "guerrier-squelette",
+            "garde-des-tombes"
+          ],
+          "categories": [
+            {
+              "nom": "Véhicule",
+              "entrees": [
+                {
+                  "nom": "Char squelette",
+                  "cout": 200,
+                  "formuleCout": "200 + 10D6",
+                  "note": "Maximum un. Mouvement 8, ne court pas et double son mouvement en charge. Terrain difficile: D3 touches de Force 4, ou 2D3 touches de Force 6 pendant une charge. Un attelage mort réduit de moitié le mouvement et supprime les touches d'impact. Deux attelages morts immobilisent le char. Après plus d'un demi-mouvement, il inflige une touche de Force 4 avec moins 2 à la sauvegarde aux figurines sur sa trajectoire qui ratent leur Initiative. Le char est une grande cible. Une touche de tir atteint sur 1 à 2 l'attelage, sur 3 à 4 le char et sur 5 à 6 le conducteur."
+                }
+              ]
+            }
+          ],
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Conduite de char",
+          "description": "Cette compétence d'Érudition permet de conduire efficacement un char au combat. Sans elle, le conducteur ne peut pas charger.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 3"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Parchemin d'urgence de Menkare",
+          "difficulte": 6,
+          "description": "Chaque Mort-vivant situé à 6 ps ou moins avance immédiatement jusqu'à son Mouvement maximal vers un ennemi. S'il atteint le contact, ce déplacement compte comme une charge.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 8"
+        },
+        {
+          "titre": "Malédiction de la momie de Horrebe",
+          "difficulte": 8,
+          "description": "Une figurine ennemie au contact d'une momie située à 18 ps ou moins du Prêtre subit moins 1 pour toucher, blesser et réussir toute sauvegarde. L'effet cesse au début de la prochaine phase de tir des Gardiens des Tombes.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 8"
+        },
+        {
+          "titre": "Parchemin de poussière des tombes de Tawosrete",
+          "difficulte": 8,
+          "description": "Une figurine vivante située à 12 ps ou moins est automatiquement mise à terre par le sable étouffant.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 8"
+        },
+        {
+          "titre": "Parchemin d'horreur tremblante de Neferre",
+          "difficulte": 7,
+          "description": "Une figurine ennemie à 12 ps ou moins teste son Commandement. En cas d'échec, elle fuit immédiatement de 2D6 ps à l'opposé du Prêtre. Après une réussite, elle devient immunisée à cet effet pour le reste de la partie.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 8"
+        },
+        {
+          "titre": "Chant des scarabées de Merneptah",
+          "difficulte": 7,
+          "description": "Une cible ennemie à 8 ps ou moins subit 2D6 touches de Force 1. Jusqu'au début de la prochaine phase de tir des Gardiens, elle ne peut ni tirer ni combattre et ne peut être combattue. Si elle était engagée, elle recule de 1 ps et ses adversaires restent en place.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 8"
+        },
+        {
+          "titre": "Invocation des morts vengeurs de Djedre",
+          "difficulte": 5,
+          "description": "Un Guerrier Squelette mis hors de combat au tour précédent revient en jeu à 6 ps ou moins du Prêtre, sans être placé au corps à corps.",
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 8"
+        }
+      ],
+      "ambiguites": [
+        "Le lien PDF nommé de la page source renvoyait une erreur. Le document exploité provient du lien alternatif public de la même fiche.",
+        "Le tableau d'expérience écrit Mummy Prince alors que le profil de chef s'intitule Tomb Lord. Les 20 points indiqués sont appliqués au Seigneur des Tombes.",
+        "La source disponible est une numérisation anglaise. Les formulations françaises présentes ici sont des paraphrases mécaniques contrôlées sur les pages scannées."
+      ]
+    },
+    "gladiateurs": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 4,
+        "source": "Gladiateurs V1.4eFr, page 3"
+      },
+      "regles": [
+        {
+          "titre": "Gladiateur",
+          "description": "Tous les Gladiateurs gagnent plus 1 en Capacité de Combat et plus 1 Attaque lorsqu'ils combattent dans un bâtiment, des ruines ou une arène. Les joueurs définissent avant la bataille quels décors sont concernés.",
+          "source": "Gladiateurs V1.4eFr, page 2"
+        },
+        {
+          "titre": "Libérez les esclaves",
+          "description": "Les Gladiateurs haïssent les esclavagistes et ne vendent jamais un captif à des esclavagistes.",
+          "source": "Gladiateurs V1.4eFr, page 2"
+        },
+        {
+          "titre": "Dans l'arène",
+          "description": "Un prisonnier peut affronter un ou plusieurs Gladiateurs dans l'arène du Bourg des Coupe-gorge. Un Gladiateur vainqueur gagne 2 points d'expérience et sa bande reçoit l'équipement du prisonnier plus 50 CO. S'il perd, il lance une blessure grave en ignorant Dépouillé, Capturé, Endurci, Vendu aux arènes et Survie miraculeuse, sans perdre son équipement. Le prisonnier reçoit alors 50 CO et 2 points d'expérience. Après le combat, le public libère le prisonnier sur 4+, sinon il reste captif pour une prochaine arène.",
+          "source": "Gladiateurs V1.4eFr, page 2"
+        },
+        {
+          "titre": "Styles de combat",
+          "description": "Les Gladiateurs et les Rétiaires achètent un style complet qui fixe leur combinaison d'armes et d'armures. Les Tueurs et Ogres utilisent leur liste restreinte. Un Héros peut employer un autre équipement avec la compétence appropriée. Le style peut changer entre deux batailles par échange ou achat. Les membres d'un même groupe d'Hommes de main peuvent employer des styles différents.",
+          "source": "Gladiateurs V1.4eFr, page 2"
+        },
+        {
+          "titre": "Francs-tireurs",
+          "description": "La bande peut recruter tous les francs-tireurs sauf l'Éclaireur Elfe.",
+          "source": "Gladiateurs V1.4eFr, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "roi-de-l-arene",
+          "nom": "Roi de l'arène",
+          "categorie": "Héros",
+          "cout": 80,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 2,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Toute figurine alliée située à 6 ps ou moins peut employer son Commandement pour ses tests."
+            },
+            {
+              "titre": "Gladiateur",
+              "description": "Il applique la règle commune Gladiateur de la bande."
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, pages 3, 4 et 6"
+        },
+        {
+          "id": "veteran-de-l-arene",
+          "nom": "Vétéran de l'arène",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Gladiateur",
+              "description": "Il applique la règle commune Gladiateur de la bande."
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, pages 3, 4 et 6"
+        },
+        {
+          "id": "gladiateur-tueur-de-trolls",
+          "nom": "Gladiateur Tueur de Trolls",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Gladiateur",
+              "description": "Il applique la règle commune Gladiateur de la bande."
+            },
+            {
+              "titre": "Difficile à tuer",
+              "description": "Sur le tableau des dégâts, 1 ou 2 le met à terre, de 3 à 5 le sonne et 6 le met hors de combat."
+            },
+            {
+              "titre": "Tête dure",
+              "description": "Il ignore les règles qui augmentent spécialement les chances de le sonner avec une arme contondante."
+            },
+            {
+              "titre": "Haine des Orques et Gobelins",
+              "description": "Il hait les Orques et les Gobelins."
+            },
+            {
+              "titre": "Rancunier",
+              "description": "Il quitte la bande si celle-ci recrute un franc-tireur elfe."
+            },
+            {
+              "titre": "Vœu de mort",
+              "description": "Il est immunisé à la psychologie et ne teste jamais seul contre tous."
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, pages 3, 4 et 7"
+        },
+        {
+          "id": "gladiateur",
+          "nom": "Gladiateur",
+          "categorie": "Hommes de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Gladiateur",
+              "description": "Il applique la règle commune Gladiateur de la bande."
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, page 8"
+        },
+        {
+          "id": "retiaire",
+          "nom": "Rétiaire",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Gladiateur",
+              "description": "Il applique la règle commune Gladiateur de la bande."
+            },
+            {
+              "titre": "Esquive",
+              "description": "Lorsqu'il est chargé, il peut réussir un test d'Initiative pour transformer cette charge en charge ratée."
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, page 8"
+        },
+        {
+          "id": "gladiateur-ogre",
+          "nom": "Gladiateur Ogre",
+          "categorie": "Hommes de main",
+          "cout": 165,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Gladiateur",
+              "description": "Il applique la règle commune Gladiateur de la bande."
+            },
+            { "titre": "Peur", "description": "Il provoque la peur." },
+            {
+              "titre": "Grande cible",
+              "description": "Il peut toujours être pris pour cible, même si une cible plus proche est disponible."
+            },
+            {
+              "titre": "Lent d'esprit",
+              "description": "Il ne coche qu'une demi-case d'expérience par point gagné et a donc besoin de deux points pour progresser d'une case."
+            },
+            {
+              "titre": "Promotion",
+              "description": "S'il devient Héros grâce à Ce gars est doué, il peut apprendre les compétences de Combat, de Force et les compétences spéciales de Gladiateur."
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, pages 3 et 9"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Styles des Gladiateurs",
+          "profils": ["roi-de-l-arene", "veteran-de-l-arene", "gladiateur"],
+          "categories": [
+            {
+              "nom": "Styles complets",
+              "entrees": [
+                {
+                  "nom": "Style Orque",
+                  "cout": 20,
+                  "note": "Dague et hache, casque et bouclier."
+                },
+                {
+                  "nom": "Style Mort-vivant",
+                  "cout": 35,
+                  "note": "Dague, gantelet à pointes et épée, plus casque."
+                },
+                {
+                  "nom": "Style Empire",
+                  "cout": 45,
+                  "note": "Dague et arme à deux mains, plus casque et armure légère."
+                },
+                {
+                  "nom": "Style Chaos",
+                  "cout": 50,
+                  "note": "Dague et fléau, plus casque, bouclier et armure légère."
+                }
+              ]
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, page 3"
+        },
+        {
+          "nom": "Styles des Rétiaires",
+          "profils": ["retiaire"],
+          "categories": [
+            {
+              "nom": "Styles complets",
+              "entrees": [
+                {
+                  "nom": "Style Skink",
+                  "cout": 25,
+                  "note": "Dague, trident ou javelots, casque, filet ou rondache."
+                },
+                {
+                  "nom": "Style Furie",
+                  "cout": 30,
+                  "note": "Dague, deux épées ou lance et filet, plus casque."
+                }
+              ]
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, page 3"
+        },
+        {
+          "nom": "Ogres et Tueurs de Trolls",
+          "profils": ["gladiateur-ogre", "gladiateur-tueur-de-trolls"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Hache naine",
+                  "cout": 15,
+                  "note": "Tueur de Trolls seulement."
+                },
+                { "nom": "Fléau", "cout": 15 },
+                {
+                  "nom": "Gantelet à pointes",
+                  "cout": 15,
+                  "note": "Compte comme rondache et arme additionnelle. Une épée associée permet de relancer une parade ratée par tour."
+                },
+                {
+                  "nom": "Arme en gromril",
+                  "cout": 0,
+                  "formuleCout": "coût normal x 3",
+                  "note": "Tueur de Trolls seulement."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                {
+                  "nom": "Armure légère",
+                  "cout": 20,
+                  "note": "Ogre seulement."
+                },
+                { "nom": "Casque", "cout": 10, "note": "Ogre seulement." }
+              ]
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, pages 3 et 5"
+        },
+        {
+          "nom": "Armes spéciales",
+          "profils": [
+            "roi-de-l-arene",
+            "veteran-de-l-arene",
+            "gladiateur",
+            "retiaire",
+            "gladiateur-ogre",
+            "gladiateur-tueur-de-trolls"
+          ],
+          "categories": [
+            {
+              "nom": "Armes",
+              "entrees": [
+                {
+                  "nom": "Trident",
+                  "cout": 15,
+                  "note": "Rare 7, Gladiateurs seulement. Corps à corps, Force de l'utilisateur, frappe en premier au premier tour et Parade."
+                },
+                {
+                  "nom": "Gantelet à pointes",
+                  "cout": 15,
+                  "note": "Rare 7, Gladiateurs seulement. Compte comme rondache et arme additionnelle, avec Parade. Associé à une épée, permet une relance de parade ratée par tour."
+                },
+                {
+                  "nom": "Javelot de gladiateur",
+                  "cout": 10,
+                  "note": "Commun, Gladiateurs seulement. Portée 10 ps, Force de l'utilisateur, sans malus de tir après un déplacement."
+                }
+              ]
+            }
+          ],
+          "source": "Gladiateurs V1.4eFr, page 5"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Renversement",
+          "description": "Au lieu d'une charge normale, le Gladiateur effectue une seule attaque avec plus 1 pour toucher et plus 1 en Force, sans bonus d'arme ni de capacité. Le coup est critique sur 5+.",
+          "source": "Gladiateurs V1.4eFr, page 4"
+        },
+        {
+          "titre": "Volonté de fer",
+          "description": "Quand il perd son dernier point de vie et serait mis hors de combat, le Gladiateur teste son Endurance. En cas de réussite, il continue à combattre. Au début de chaque tour suivant, il recommence avec un malus cumulatif de moins 1. Une nouvelle mise hors de combat le retire normalement.",
+          "source": "Gladiateurs V1.4eFr, page 4"
+        },
+        {
+          "titre": "Gros bras",
+          "description": "Le Gladiateur ignore les pénalités de Fatigue. Le bonus de Force d'une arme s'applique à tous les tours de corps à corps et pas seulement au premier.",
+          "source": "Gladiateurs V1.4eFr, page 4"
+        },
+        {
+          "titre": "Maître d'armes",
+          "description": "Le Gladiateur ignore les restrictions de Difficile à manier et peut combiner des armes normalement incompatibles.",
+          "source": "Gladiateurs V1.4eFr, page 4"
+        },
+        {
+          "titre": "Vieux de la vieille",
+          "description": "Le Gladiateur est immunisé à la psychologie.",
+          "source": "Gladiateurs V1.4eFr, page 4"
+        },
+        {
+          "titre": "Berserk",
+          "description": "Le Tueur gagne plus 1 pour toucher au corps à corps pendant le tour où il charge. Cette compétence ne se combine pas avec Charge furieuse.",
+          "source": "Gladiateurs V1.4eFr, page 4"
+        },
+        {
+          "titre": "Charge furieuse",
+          "description": "Le Tueur double ses Attaques pendant le tour où il charge, mais subit moins 1 pour toucher pendant ce tour.",
+          "source": "Gladiateurs V1.4eFr, page 4"
+        },
+        {
+          "titre": "Tueur de monstres",
+          "description": "Le Tueur blesse toujours sur 4+, sauf si sa Force modifiée lui permet de blesser plus facilement.",
+          "source": "Gladiateurs V1.4eFr, page 4"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "Le maximum de quatre Héros correspond aux profils recrutables au départ. Un Gladiateur Ogre peut ensuite devenir Héros grâce à Ce gars est doué.",
+        "La date du changelog de la source contient une frappe et est imprimée 2026-04-222."
+      ]
+    },
+    "gobelins-des-forets": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": null,
+        "maximumHeros": 6,
+        "source": "Gobelins des Forêts V1gFr, page 2"
+      },
+      "regles": [
+        {
+          "titre": "Natifs",
+          "description": "Les Gobelins des Forêts ne subissent aucune pénalité de Mouvement dans les terrains boisés.",
+          "source": "Gobelins des Forêts V1gFr, page 1"
+        },
+        {
+          "titre": "Animosité",
+          "description": "Au début de son tour, chaque Brav' et chaque Homme de main gobelin qui n'est pas au corps à corps lance 1D6. Sur 1, lancez encore 1D6. Sur 1, il charge le plus proche Homme de main gobelin ou franc-tireur à portée, ou lui tire dessus s'il ne peut pas charger mais peut tirer. S'il n'existe que des Héros ou aucune cible, traitez ce résultat comme 2 à 5. Sur 2 à 5, il ne fait rien de tout le tour, mais se défend normalement s'il est engagé. Sur 6, il avance aussi vite que possible vers l'ennemi visible le plus proche et le charge s'il le peut. Sans ennemi visible, il peut faire un mouvement normal supplémentaire. S'il entre ainsi à portée de charge pour le tour suivant, il devra charger pendant cette phase de Mouvement.",
+          "source": "Gobelins des Forêts V1gFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "gran-chef",
+          "nom": "Gran' Chef",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 17,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout membre de la bande situé à 6 ps ou moins peut utiliser son Commandement."
+            },
+            {
+              "titre": "Chevaucheur d'araignées",
+              "description": "Il peut monter une Araignée Géante ou l'Araignée Gigantesque selon les règles de cavalerie."
+            }
+          ],
+          "source": "Gobelins des Forêts V1gFr, pages 2 et 4"
+        },
+        {
+          "id": "chaman-gobelin-des-forets",
+          "nom": "Chaman Gobelin des Forêts",
+          "categorie": "Héros",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 6,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il débute avec un sort aléatoire de Magie Gobeline."
+            }
+          ],
+          "source": "Gobelins des Forêts V1gFr, pages 2 et 4"
+        },
+        {
+          "id": "brav",
+          "nom": "Brav'",
+          "categorie": "Héros",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 4,
+          "experienceInitiale": 6,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Animosité",
+              "description": "Il applique la règle commune d'animosité. Lors d'une progression de compétence, il peut supprimer définitivement cette règle à la place d'apprendre une compétence."
+            }
+          ],
+          "source": "Gobelins des Forêts V1gFr, pages 2 et 4"
+        },
+        {
+          "id": "gobelin-des-forets",
+          "nom": "Gobelin des Forêts",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animosité",
+              "description": "Il applique la règle commune d'animosité."
+            }
+          ],
+          "source": "Gobelins des Forêts V1gFr, page 5"
+        },
+        {
+          "id": "dent-rouj",
+          "nom": "Gobelin d'la Dent Rouj'",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Berserk",
+              "description": "Il est frénétique. S'il commence son tour à portée de charge d'un ennemi, il ignore l'animosité pendant ce tour."
+            },
+            {
+              "titre": "Animosité",
+              "description": "Il applique la règle commune d'animosité."
+            }
+          ],
+          "source": "Gobelins des Forêts V1gFr, page 5"
+        },
+        {
+          "id": "lanceur",
+          "nom": "Lanceur",
+          "categorie": "Hommes de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Lanceur",
+              "description": "Il peut lancer des armes de jet jusqu'à trois fois par phase de Tir. S'il devient Héros, cette capacité ne se combine pas avec Tir rapide."
+            },
+            {
+              "titre": "Animosité",
+              "description": "Il applique la règle commune d'animosité."
+            }
+          ],
+          "source": "Gobelins des Forêts V1gFr, page 5"
+        },
+        {
+          "id": "araignee-gigantesque",
+          "nom": "Araignée Gigantesque",
+          "categorie": "Hommes de main",
+          "cout": 200,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 4,
+            "attaques": 2,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            { "titre": "Peur", "description": "Elle provoque la peur." },
+            {
+              "titre": "Grosse bête",
+              "description": "Elle est une grande cible."
+            },
+            {
+              "titre": "Locale",
+              "description": "Elle ignore toute pénalité de Mouvement dans les terrains boisés."
+            },
+            {
+              "titre": "Venimeuse",
+              "description": "Pour chaque blessure qu'elle inflige, un jet de 1 met la victime à terre, de 2 à 4 la sonne et de 5 à 6 la met hors de combat."
+            },
+            {
+              "titre": "Non sentiente",
+              "description": "Elle est sujette à la stupidité, ne gagne jamais d'expérience et peut néanmoins grimper normalement."
+            },
+            {
+              "titre": "Monture",
+              "description": "Le Gran' Chef peut la chevaucher. Montée, elle ignore la stupidité. Une touche de tir atteint le chef sur 1 à 2 et l'araignée sur 3 à 6. Au corps à corps, l'attaquant choisit sa cible."
+            },
+            {
+              "titre": "Sans équipement",
+              "description": "Elle n'emploie ni arme ni armure."
+            }
+          ],
+          "source": "Gobelins des Forêts V1gFr, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Héros",
+          "profils": ["gran-chef", "chaman-gobelin-des-forets", "brav"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Lance", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Bâton d'boss",
+                  "cout": 20,
+                  "note": "Commun. Ignore l'animosité pour les Héros et Hommes de main gobelins visibles à 6 ps ou moins. Donne plus 1 en Force à un cavalier pendant sa charge, frappe en premier au premier tour et interdit une arme additionnelle, mais pas un bouclier ou une rondache."
+                }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 5 },
+                {
+                  "nom": "Sarbacane",
+                  "cout": 25,
+                  "note": "Portée 8 ps, Force 1. Le tireur caché reste caché, sauf si la cible réussit un test d'Initiative. Une touche naturelle de 6 blesse automatiquement, sans coup critique. La cible gagne plus 1 à sa sauvegarde ou une sauvegarde de 6+ si elle n'en avait pas."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Équipement spécial",
+              "entrees": [
+                {
+                  "nom": "Attirail tribal des Dent Rouj'",
+                  "cout": 40,
+                  "note": "Rare 9. Fixe et non revendable. Le porteur devient frénétique."
+                },
+                {
+                  "nom": "Bidules magiques",
+                  "cout": 50,
+                  "note": "Rare 9. Le Chaman peut relancer un jet d'incantation s'il obtient 4+ sur 1D6."
+                },
+                {
+                  "nom": "Arme empoisonnée",
+                  "cout": 25,
+                  "note": "Supplément par arme. L'arme choisie ne peut ensuite être échangée ni vendue et gagne plus 1 à ses jets pour blesser."
+                }
+              ]
+            }
+          ],
+          "source": "Gobelins des Forêts V1gFr, pages 2 et 3"
+        },
+        {
+          "nom": "Hommes de main",
+          "profils": ["gobelin-des-forets", "dent-rouj", "lanceur"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Lance", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Armes de jet", "cout": 15 },
+                { "nom": "Sarbacane", "cout": 25 }
+              ]
+            },
+            { "nom": "Armures", "entrees": [{ "nom": "Bouclier", "cout": 5 }] }
+          ],
+          "source": "Gobelins des Forêts V1gFr, pages 2 et 3"
+        },
+        {
+          "nom": "Monture",
+          "profils": ["gran-chef"],
+          "categories": [
+            {
+              "nom": "Montures",
+              "entrees": [
+                {
+                  "nom": "Araignée géante",
+                  "cout": 100,
+                  "note": "Rare 11, Gobelins seulement. M7, CC3, CT0, F3 avec attaques empoisonnées de Force 4, E3, PV1, I4, A1, Cd4. Ses attaques n'appliquent aucun malus de sauvegarde. Elle grimpe aux murs sans test et saute au plus 2 ps. Le cavalier teste son Initiative après un saut. Incompatible avec les loups géants."
+                }
+              ]
+            }
+          ],
+          "source": "Gobelins des Forêts V1gFr, page 7"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [
+        {
+          "titre": "Vent de Gork",
+          "difficulte": 6,
+          "description": "Portée 12 ps. La première cible sur la trajectoire teste son Endurance. En cas d'échec, elle subit une touche de Force 2 et est automatiquement mise à terre.",
+          "source": "Gobelins des Forêts V1gFr, page 8"
+        },
+        {
+          "titre": "Regard de Mork",
+          "difficulte": 8,
+          "description": "Portée 12 ps. La première cible sur la trajectoire subit 1D3 touches de Force 3.",
+          "source": "Gobelins des Forêts V1gFr, page 8"
+        },
+        {
+          "titre": "Têtechercheuz'",
+          "difficulte": 8,
+          "description": "Portée 6 ps. Le Chaman projette autant d'éclairs que sa valeur d'Attaques de base. Leur Force est égale à son Endurance et ils frappent la première cible sur leur trajectoire. Après résolution, le Chaman est automatiquement mis hors de combat sur un résultat de 1 sur 1D6.",
+          "source": "Gobelins des Forêts V1gFr, page 8"
+        },
+        {
+          "titre": "Saut de Waaagh !",
+          "difficulte": 7,
+          "description": "Le Chaman ou un Gobelin situé à 3 ps ou moins est déplacé de 12 ps au maximum en ignorant le terrain. S'il atteint un corps à corps, il compte comme ayant chargé.",
+          "source": "Gobelins des Forêts V1gFr, page 8"
+        },
+        {
+          "titre": "Idole de Gork",
+          "difficulte": 8,
+          "description": "Le Chaman gagne plus 1 en Capacité de Combat, Force et Attaques jusqu'à ce qu'il subisse une blessure.",
+          "source": "Gobelins des Forêts V1gFr, page 8"
+        },
+        {
+          "titre": "On y va !",
+          "difficulte": 8,
+          "description": "Tous les alliés à 6 ps ou moins du Chaman traitent les résultats sonnés comme à terre jusqu'à ce que le Chaman subisse une blessure.",
+          "source": "Gobelins des Forêts V1gFr, page 8"
+        }
+      ],
+      "ambiguites": [
+        "La phrase de composition s'arrête après Elle ne doit jamais comporter plus. Aucun maximum d'effectif n'est imprimé. effectifMaximum est donc null parce que la donnée est indéterminée, et non parce que l'effectif serait illimité.",
+        "La règle Locale et la règle Natifs de l'Araignée Gigantesque expriment deux fois la même immunité aux pénalités de Mouvement en terrain boisé. Elles sont fusionnées dans la fiche sans ajouter d'effet."
+      ]
+    },
+    "guerriers-fantomes": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 2"
+      },
+      "regles": [
+        {
+          "titre": "Haine des Elfes Noirs",
+          "description": "Tous les membres de la bande, hors francs-tireurs, haïssent les Elfes Noirs.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 1"
+        },
+        {
+          "titre": "Vue excellente",
+          "description": "Un Guerrier Fantôme repère un ennemi caché jusqu'à une distance égale à deux fois son Initiative en ps.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 1"
+        },
+        {
+          "titre": "Aversion pour le poison",
+          "description": "Les membres de la bande n'utilisent jamais de poison ni de drogue.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 2"
+        },
+        {
+          "titre": "Impitoyables",
+          "description": "Dans une partie multijoueur, la bande ne peut jamais s'allier avec une bande de nature chaotique, notamment Possédés, Skavens, Hommes-bêtes, Elfes Noirs et assimilés.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 2"
+        },
+        {
+          "titre": "Tolérants",
+          "description": "La bande peut engager tout franc-tireur qui n'est ni chaotique ni maléfique et n'utilise pas de poison. Sont notamment exclus Skavens, Possédés, Hommes-bêtes, Elfes Noirs, Mort-vivants et Assassins.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "maitre-des-ombres",
+          "nom": "Maître des Ombres",
+          "categorie": "Héros",
+          "cout": 70,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 5,
+            "capaciteTir": 5,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout guerrier allié situé à 6 ps ou moins peut utiliser son Commandement pour ses tests."
+            }
+          ],
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 2, 3 et 5"
+        },
+        {
+          "id": "rodeur-des-ombres",
+          "nom": "Rôdeur des Ombres",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 5,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
+          "regles": [],
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 2, 3 et 5"
+        },
+        {
+          "id": "tisseur-dombres",
+          "nom": "Tisseur d'Ombres",
+          "categorie": "Héros",
+          "cout": 55,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il utilise la Magie des Ombres et ne peut lancer aucun sort s'il porte une armure."
+            }
+          ],
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 2, 3 et 5"
+        },
+        {
+          "id": "guerrier-fantome",
+          "nom": "Guerrier Fantôme",
+          "categorie": "Hommes de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+        },
+        {
+          "id": "novice",
+          "nom": "Novice",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Guerriers Fantômes",
+          "profils": [
+            "maitre-des-ombres",
+            "rodeur-des-ombres",
+            "tisseur-dombres",
+            "guerrier-fantome",
+            "novice"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance", "cout": 10 },
+                {
+                  "nom": "Arme en ithilmar",
+                  "cout": 0,
+                  "formuleCout": "coût normal x 2",
+                  "note": "Héros seulement."
+                }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 },
+                { "nom": "Arc elfique", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Heaume", "cout": 10 },
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 },
+                {
+                  "nom": "Armure en ithilmar",
+                  "cout": 60,
+                  "note": "Héros seulement."
+                }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                {
+                  "nom": "Bannière de Nagarythe",
+                  "cout": 75,
+                  "note": "Héros seulement, achat uniquement à la création. À 12 ps ou moins, les membres de la bande relancent leurs tests de Commandement ratés. Si son porteur est mis hors de combat, les membres de la bande haïssent l'ennemi et ne peuvent plus dérouter volontairement. Occupe une main. Peut servir de lance improvisée avec moins 1 pour toucher."
+                },
+                {
+                  "nom": "Cor de Guerre de Nagarythe",
+                  "cout": 25,
+                  "note": "Héros seulement. Une fois par partie, au début d'un tour, donne plus 1 Commandement, maximum 10, à toute la bande jusqu'au tour suivant. Il doit être utilisé juste avant un test de déroute."
+                },
+                { "nom": "Cape elfique", "cout": 75 },
+                {
+                  "nom": "Vin elfique",
+                  "cout": 30,
+                  "note": "Héros seulement. Une utilisation. La bande devient immunisée à la peur pendant toute la bataille."
+                },
+                {
+                  "nom": "Pierres runiques elfiques",
+                  "cout": 50,
+                  "note": "Héros seulement, Tisseur d'Ombres pour l'effet. Permettent de tenter de dissiper un sort lancé sur le sorcier ou un allié en réussissant un jet contre la difficulté du sort, sans bonus de Sorcellerie."
+                }
+              ]
+            }
+          ],
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 3 et 4"
+        },
+        {
+          "nom": "Équipement de sorcier",
+          "profils": ["tisseur-dombres"],
+          "categories": [
+            {
+              "nom": "Familier",
+              "entrees": [
+                {
+                  "nom": "Familier",
+                  "cout": 20,
+                  "formuleCout": "20 + 1D6",
+                  "note": "Rare 8. Le prix du rituel est payé même si le jet de rareté échoue. Un lanceur de sorts qui l'obtient peut relancer un jet d'incantation par tour et doit garder le second résultat. Le familier n'agit pas comme une figurine indépendante."
+                }
+              ]
+            }
+          ],
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 4"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Infiltration",
+          "description": "Cette compétence fonctionne comme la compétence skaven du même nom.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+        },
+        {
+          "titre": "Voir dans les ténèbres",
+          "description": "Si son mouvement suffit, le guerrier peut toujours tenter de charger un ennemi qu'il ne voit pas, sans la limite habituelle de 4 ps.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+        },
+        {
+          "titre": "Se cacher parmi les ombres",
+          "description": "Un ennemi qui cherche ce guerrier caché divise son Initiative par deux avant de mesurer sa distance de détection.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+        },
+        {
+          "titre": "Tir silencieux",
+          "description": "Le guerrier caché peut tirer ou lancer un sort sans révéler automatiquement sa position. Si la cible n'est pas immédiatement mise hors de combat, elle le repère en réussissant un test d'Initiative.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+        },
+        {
+          "titre": "Solide carrure",
+          "description": "Le guerrier obtient accès aux compétences de Force. Le Tisseur d'Ombres ne peut pas la choisir et la bande ne peut jamais compter plus de deux elfes qui la possèdent.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+        },
+        {
+          "titre": "Maître des runes",
+          "description": "Tisseur d'Ombres seulement. Il ajoute 1 à ses jets de dissipation avec les Pierres runiques elfiques. Il peut aussi graver avant la bataille une rune temporaire sur l'arme ou l'armure d'un compagnon, qui accorde une relance unique de sauvegarde d'armure ou de parade pendant cette bataille.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Puits de Ténèbres",
+          "difficulte": 7,
+          "description": "Le Tisseur et les figurines situées à 6 ps ou moins peuvent se cacher comme si un mur les séparait de l'ennemi, même après avoir couru, et comptent comme à couvert contre les tirs. L'effet cesse si un ennemi entre dans la zone ou au début du prochain tour du Tisseur.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 7"
+        },
+        {
+          "titre": "Ombres Vivantes",
+          "difficulte": 7,
+          "description": "Une figurine ennemie à 12 ps ou moins et à 2 ps ou moins d'un mur subit une touche de Force 4 sans sauvegarde d'armure.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 7"
+        },
+        {
+          "titre": "Ailes de la Nuit",
+          "difficulte": 6,
+          "description": "Si le Tisseur est à 2 ps ou moins d'un mur, il est déplacé jusqu'à 12 ps vers un autre point situé à 2 ps ou moins d'un mur. S'il atteint un ennemi, il compte comme ayant chargé.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 7"
+        },
+        {
+          "titre": "Cape de Ténèbres",
+          "difficulte": 7,
+          "description": "Tant qu'il n'attaque pas par un sort, un tir ou au corps à corps, le Tisseur ne peut pas être attaqué. Il peut intercepter sans y être obligé. L'effet cesse dès qu'il attaque. Au corps à corps, il ne peut choisir de ne pas attaquer.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 7"
+        },
+        {
+          "titre": "Théâtre d'Ombres",
+          "difficulte": 9,
+          "description": "Une figurine ennemie à 24 ps ou moins et à 2 ps ou moins d'un mur ne peut se déplacer qu'en réussissant un test de Force sur 2D6 au début de son tour. L'effet cesse si le Tisseur est blessé ou tente un autre sort. Si la cible est attaquée, elle compte comme sonnée.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 7"
+        },
+        {
+          "titre": "Bouclier d'Ombres",
+          "difficulte": 7,
+          "description": "Le Tisseur ou un allié à 12 ps ou moins reçoit une sauvegarde d'armure de 5+ qui n'est pas modifiée par la Force, jusqu'au début du prochain tour du Tisseur.",
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 7"
+        }
+      ],
+      "ambiguites": [
+        "La source renvoie les caractéristiques maximales des Elfes à la page 121 du livre de règles sans les reproduire dans cette fiche.",
+        "La Cape elfique figure dans la liste avec son prix mais ses règles sont renvoyées au livre principal et ne sont pas répétées dans cette source."
+      ]
+    },
+    "hommes-lezards": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 20,
+        "maximumHeros": 4,
+        "source": "Hommes-Lézards V1.1eFr, page 3"
+      },
+      "regles": [
+        {
+          "titre": "Peau écailleuse",
+          "description": "Les Skinks ont une sauvegarde naturelle de 6+, les Saurus de 5+ et le Kroxigor de 4+. Les modificateurs ne peuvent la dégrader au-delà de 6+, mais un coup critique qui interdit toute sauvegarde l'annule. Armure légère et bouclier améliorent chacun cette sauvegarde de 1.",
+          "source": "Hommes-Lézards V1.1eFr, page 1"
+        },
+        {
+          "titre": "Armure rare",
+          "description": "Pour cette bande, une armure légère coûte toujours 50 CO, y compris lorsqu'elle est achetée dans une liste d'équipement.",
+          "source": "Hommes-Lézards V1.1eFr, page 1"
+        },
+        {
+          "titre": "Morsure",
+          "description": "Chaque Saurus effectue une attaque supplémentaire avec la Force de son profil, sans malus de combat à mains nues. Elle est toujours résolue en dernier, indépendamment de la charge et de l'arme employée.",
+          "source": "Hommes-Lézards V1.1eFr, page 1"
+        },
+        {
+          "titre": "Sang-froid",
+          "description": "Pour les tests de psychologie et de déroute, la bande lance 3D6 et conserve les deux plus petits dés. Le Commandement d'un Saurus ou du Kroxigor ne peut jamais servir aux tests de déroute.",
+          "source": "Hommes-Lézards V1.1eFr, page 1"
+        },
+        {
+          "titre": "Aquatiques",
+          "description": "Les Skinks se déplacent sans pénalité dans les terrains aquatiques et y comptent comme à couvert.",
+          "source": "Hommes-Lézards V1.1eFr, page 1"
+        },
+        {
+          "titre": "Créatures de la jungle",
+          "description": "Les Skinks traversent les terrains de jungle sans pénalité.",
+          "source": "Hommes-Lézards V1.1eFr, page 1"
+        },
+        {
+          "titre": "Rareté des Saurus",
+          "description": "La bande ne peut jamais compter plus d'Hommes de main Saurus que d'Hommes de main Skinks.",
+          "source": "Hommes-Lézards V1.1eFr, pages 1 et 7"
+        }
+      ],
+      "profils": [
+        {
+          "id": "pretre-skink",
+          "nom": "Prêtre Skink",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout Homme-Lézard situé à 6 ps ou moins peut utiliser son Commandement. S'il meurt, un remplaçant peut être recruté mais la bande doit jouer une partie sans chef avant son arrivée."
+            },
+            {
+              "titre": "Sorcier",
+              "description": "Il utilise la Magie des Hommes-Lézards."
+            }
+          ],
+          "source": "Hommes-Lézards V1.1eFr, pages 3, 5 et 6"
+        },
+        {
+          "id": "guerrier-totem-saurus",
+          "nom": "Guerrier Totem Saurus",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 11,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Morsure",
+              "description": "Il effectue en plus l'attaque de morsure commune aux Saurus."
+            },
+            {
+              "titre": "Listes interdites",
+              "description": "Il ne peut jamais apprendre de compétence d'Érudition ni utiliser d'arme de tir."
+            }
+          ],
+          "source": "Hommes-Lézards V1.1eFr, pages 3, 5 et 6"
+        },
+        {
+          "id": "skink-grande-crete",
+          "nom": "Skink à Grande Crête",
+          "categorie": "Héros",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Tir", "Vitesse", "Spéciale"],
+          "regles": [],
+          "source": "Hommes-Lézards V1.1eFr, pages 3, 5 et 6"
+        },
+        {
+          "id": "skink",
+          "nom": "Skink",
+          "categorie": "Hommes de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Hommes-Lézards V1.1eFr, page 7"
+        },
+        {
+          "id": "saurus",
+          "nom": "Saurus",
+          "categorie": "Hommes de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 4,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 1,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Morsure",
+              "description": "Il effectue en plus l'attaque de morsure commune aux Saurus."
+            },
+            {
+              "titre": "Rareté des Saurus",
+              "description": "Le nombre de Saurus ne peut dépasser celui des Hommes de main Skinks."
+            }
+          ],
+          "source": "Hommes-Lézards V1.1eFr, page 7"
+        },
+        {
+          "id": "kroxigor",
+          "nom": "Kroxigor",
+          "categorie": "Hommes de main",
+          "cout": 200,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 5,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 1,
+            "attaques": 3,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Équipement fixe",
+              "description": "Il est recruté avec une hallebarde, n'a accès à aucune liste d'équipement et résout donc ses attaques avec Force 6."
+            },
+            {
+              "titre": "Aquatique",
+              "description": "Il traverse les terrains aquatiques sans pénalité et y compte comme à couvert."
+            },
+            { "titre": "Peur", "description": "Il provoque la peur." },
+            {
+              "titre": "Grand",
+              "description": "Il peut toujours être choisi comme cible de tir, même si une cible plus proche est disponible."
+            },
+            {
+              "titre": "Animal",
+              "description": "Il ne gagne jamais d'expérience."
+            }
+          ],
+          "source": "Hommes-Lézards V1.1eFr, page 7"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Saurus",
+          "profils": ["guerrier-totem-saurus", "saurus"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Hache de pierre ou massue", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 50 },
+                {
+                  "nom": "Heaume d'os",
+                  "cout": 10,
+                  "note": "Utilise les règles du casque."
+                },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Marques sacrées",
+              "entrees": [
+                {
+                  "nom": "Gueule énorme",
+                  "cout": 40,
+                  "note": "Saurus seulement, uniquement au recrutement et une seule marque par Héros. L'attaque de morsure gagne plus 1 en Force."
+                },
+                {
+                  "nom": "Marque des Anciens",
+                  "cout": 50,
+                  "note": "Uniquement au recrutement et une seule marque par Héros. Une fois par bataille, transforme un jet raté du Héros en réussite, y compris un test de déroute."
+                }
+              ]
+            }
+          ],
+          "source": "Hommes-Lézards V1.1eFr, pages 3 et 5"
+        },
+        {
+          "nom": "Skinks",
+          "profils": ["pretre-skink", "skink-grande-crete", "skink"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Hache de pierre ou massue", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10, "note": "Héros seulement." },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 5 },
+                {
+                  "nom": "Bolas",
+                  "cout": 5,
+                  "note": "Une utilisation par bataille. Portée 16 ps. Un 1 pour toucher inflige une touche de Force 3 au lanceur. Une cible touchée n'est pas blessée, mais ne peut plus bouger et subit moins 2 en Capacité de Combat. Elle se libère sur 4+ pendant sa récupération."
+                },
+                {
+                  "nom": "Javelot",
+                  "cout": 10,
+                  "note": "Portée 8 ps et Force de l'utilisateur, sans malus après un déplacement."
+                },
+                { "nom": "Couteaux de lancer", "cout": 15 },
+                {
+                  "nom": "Sarbacane",
+                  "cout": 25,
+                  "note": "Rare 7. Portée 8 ps, Force 1. Le tireur caché reste caché sauf si la cible réussit son Initiative. Une touche naturelle de 6 blesse automatiquement, sans coup critique. La cible gagne plus 1 à sa sauvegarde ou une sauvegarde de 6+ si elle n'en avait pas."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                {
+                  "nom": "Heaume d'os",
+                  "cout": 10,
+                  "note": "Prêtre Skink seulement. Utilise les règles du casque."
+                },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Poisons",
+              "entrees": [
+                {
+                  "nom": "Venin fuligineux",
+                  "cout": 20,
+                  "note": "Commun pour les Héros Skinks, armes de tir seulement."
+                },
+                {
+                  "nom": "Lotus Noir",
+                  "cout": 10,
+                  "note": "Commun pour les Héros Skinks, armes de tir seulement."
+                },
+                {
+                  "nom": "Venin de reptile",
+                  "cout": 5,
+                  "note": "Par arme de jet et pour une bataille. Hommes de main Skinks. Ajoute 1 à la Force de l'arme sans modifier davantage la sauvegarde adverse."
+                }
+              ]
+            },
+            {
+              "nom": "Marques sacrées",
+              "entrees": [
+                {
+                  "nom": "Glandes à venin",
+                  "cout": 40,
+                  "note": "Skinks seulement, uniquement au recrutement et une seule marque par Héros. Le Skink peut remplacer tout ou partie de ses attaques par des morsures, résolues en dernier. Elles donnent plus 1 à la sauvegarde adverse, ignorent le malus de mains nues et ajoutent 1 au jet de dégâts si elles blessent."
+                },
+                {
+                  "nom": "Marque des Anciens",
+                  "cout": 50,
+                  "note": "Uniquement au recrutement et une seule marque par Héros. Une fois par bataille, transforme un jet raté du Héros en réussite, y compris un test de déroute."
+                }
+              ]
+            }
+          ],
+          "source": "Hommes-Lézards V1.1eFr, pages 3, 4 et 5"
+        },
+        {
+          "nom": "Montures",
+          "profils": ["pretre-skink", "skink-grande-crete"],
+          "categories": [
+            {
+              "nom": "Montures",
+              "entrees": [
+                {
+                  "nom": "Sang-froid",
+                  "cout": 100,
+                  "note": "Rare 11, Skinks. M7, CC3, CT0, F4, E4, PV1, I3, A1, Cd3. Provoque la peur, teste la stupidité sous le Commandement du cavalier et ajoute 2 à sa sauvegarde au lieu de 1."
+                },
+                {
+                  "nom": "Mule",
+                  "cout": 30,
+                  "note": "Rare 7. M6, CC2, CT0, F3, E3, PV1, I2, A0, Cd4. Se déplace de 2D6 ps quand elle est incontrôlable. Le cavalier ou meneur en contact doit réussir un test de Commandement pour la faire avancer. Sans contrôle, elle erre aléatoirement et fuit un combat proche. Elle ne combat ni ne charge."
+                }
+              ]
+            }
+          ],
+          "source": "Hommes-Lézards V1.1eFr, page 8"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Infiltration",
+          "description": "Skink seulement. Au début de la partie, il peut être placé n'importe où, caché et à plus de 12 ps de tout ennemi.",
+          "source": "Hommes-Lézards V1.1eFr, page 5"
+        },
+        {
+          "titre": "Grand chasseur",
+          "description": "Skink à Grande Crête seulement. Lorsqu'il est à couvert, le malus subi par les tirs qui le visent passe de moins 1 à moins 2.",
+          "source": "Hommes-Lézards V1.1eFr, page 5"
+        },
+        {
+          "titre": "Cri de guerre",
+          "description": "Saurus seulement. Les ennemis en contact avec lui subissent moins 1 pour toucher au premier tour de corps à corps.",
+          "source": "Hommes-Lézards V1.1eFr, page 5"
+        },
+        {
+          "titre": "Peau de bois",
+          "description": "Saurus seulement. Il n'est mis hors de combat que sur un résultat de 6 sur le jet de dégâts.",
+          "source": "Hommes-Lézards V1.1eFr, page 5"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Colère de Chotec",
+          "difficulte": 8,
+          "description": "L'ennemi le plus proche à 10 ps ou moins subit une touche de Force 5. S'il porte une armure, la touche passe à Force 6 et ajoute 1 au jet de dégâts.",
+          "source": "Hommes-Lézards V1.1eFr, page 9"
+        },
+        {
+          "titre": "Bénédiction de Sotek",
+          "difficulte": 7,
+          "description": "Le Prêtre ou une cible à 6 ps ou moins reçoit aléatoirement: sur 1 ou 2, plus 1 en Capacité de Tir ou pour toucher au corps à corps; sur 3 ou 4, plus 1 Endurance; sur 5 ou 6, plus 1 Mouvement et Initiative. Une seule cible à la fois. L'effet cesse si elle ou le Prêtre est sonné ou mis hors de combat.",
+          "source": "Hommes-Lézards V1.1eFr, page 9"
+        },
+        {
+          "titre": "Furtivité d'Huanchi",
+          "difficulte": 7,
+          "description": "Tous les Skinks à moins de 6 ps, y compris le Prêtre, peuvent se cacher immédiatement s'ils sont à couvert, même après avoir couru ou tiré.",
+          "source": "Hommes-Lézards V1.1eFr, page 9"
+        },
+        {
+          "titre": "Protection des Anciens",
+          "difficulte": 6,
+          "description": "Le Prêtre et tous les Hommes-Lézards à moins de 4 ps gagnent une sauvegarde spéciale de 4+ contre sorts et prières jusqu'à la mise hors de combat du Prêtre.",
+          "source": "Hommes-Lézards V1.1eFr, page 9"
+        },
+        {
+          "titre": "Fureur de Tinci",
+          "difficulte": 8,
+          "description": "Le Prêtre ou une cible à 6 ps ou moins devient frénétique et gagne plus 1 Force. Une seule cible à la fois. L'effet cesse si le Prêtre est sonné ou hors de combat et doit être maintenu chaque tour par un test de Commandement du Prêtre. Il peut y mettre fin au début de son tour.",
+          "source": "Hommes-Lézards V1.1eFr, page 9"
+        },
+        {
+          "titre": "Célérité d'Itzl",
+          "difficulte": 7,
+          "description": "Le Prêtre ou une cible à 6 ps ou moins effectue un mouvement supplémentaire de 4 ps qui compte comme une course. Il est impossible de charger ainsi et la cible ne peut bouger si elle a déjà utilisé une arme de jet ce tour.",
+          "source": "Hommes-Lézards V1.1eFr, page 9"
+        }
+      ],
+      "ambiguites": [
+        "Le profil imprime 1+1 Attaques pour les Saurus. La caractéristique de base est enregistrée à 1 et l'attaque supplémentaire est décrite explicitement par la règle Morsure.",
+        "La Mule est bien listée dans l'annexe des montures de cette bande, malgré une note suggérant d'utiliser une figurine de saurien équivalente dans le thème Homme-Lézard."
+      ]
+    },
+    "hors-la-loi-de-stirwood": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Archers obligatoires",
+          "description": "Chaque guerrier doit être équipé d'un arc et ne peut porter aucune autre arme de tir, même s'il acquiert une compétence qui l'autoriserait. Le Moine est la seule exception: il peut porter un arc, sans y être obligé.",
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 1"
+        },
+        {
+          "titre": "Francs-tireurs interdits",
+          "description": "La bande ne peut engager ni Chasseur de primes, ni Prêtre-loup d'Ulric, ni Chaman norse, ni Assassin elfe noir.",
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 1"
+        },
+        {
+          "titre": "Place du Moine",
+          "description": "Un Moine peut être inclus, mais il remplace obligatoirement un Champion de Stirwood ou un Petit Voleur dans les choix de Héros.",
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "chef-des-hors-la-loi",
+          "nom": "Chef des Hors-la-loi",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Toute figurine alliée située à 6 ps ou moins peut utiliser son Commandement pour ses tests."
+            }
+          ],
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2 et 3"
+        },
+        {
+          "id": "moine",
+          "nom": "Moine",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Érudition"],
+          "regles": [
+            {
+              "titre": "Disciple de Sigmar",
+              "description": "Il utilise les Prières de Sigmar, peut porter une armure car les prières ne sont pas des sorts, et ne peut apprendre ni Sorcellerie ni Magie."
+            },
+            {
+              "titre": "Arc facultatif",
+              "description": "Contrairement aux autres membres, il n'est pas obligé de porter un arc."
+            }
+          ],
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2, 3 et 5"
+        },
+        {
+          "id": "champion-de-stirwood",
+          "nom": "Champion de Stirwood",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force"],
+          "regles": [],
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2 et 4"
+        },
+        {
+          "id": "petit-voleur",
+          "nom": "Petit Voleur",
+          "categorie": "Héros",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
+          "regles": [],
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2 et 4"
+        },
+        {
+          "id": "hors-la-loi",
+          "nom": "Hors-la-loi",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 4"
+        },
+        {
+          "id": "tireur",
+          "nom": "Tireur",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Hors-la-loi",
+          "profils": [
+            "chef-des-hors-la-loi",
+            "moine",
+            "champion-de-stirwood",
+            "petit-voleur",
+            "hors-la-loi",
+            "tireur"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau, masse ou bâton", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Arc", "cout": 10 },
+                {
+                  "nom": "Arc long",
+                  "cout": 15,
+                  "note": "Héros et Tireurs seulement."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                {
+                  "nom": "Armure légère",
+                  "cout": 20,
+                  "note": "Héros et Tireurs seulement."
+                },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Équipement spécial",
+              "entrees": [
+                {
+                  "nom": "Flèches de chasse",
+                  "cout": 30,
+                  "note": "Rare 8, Héros seulement. Disponibles sans jet de rareté au recrutement. Utilisables avec arc court, arc, arc long ou arc elfique. Ajoutent 1 à tous les jets de dégâts."
+                },
+                {
+                  "nom": "Cape des bois",
+                  "cout": 50,
+                  "note": "Rare 10, Héros seulement. Disponible sans jet de rareté au recrutement. À couvert par un arbre, buisson ou haie, les tirs subissent un malus supplémentaire de moins 1 et un sort d'attaque ne peut le cibler que sur 4+. L'effet est annulé si l'attaquant est à une distance inférieure ou égale à son Initiative."
+                }
+              ]
+            }
+          ],
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 2"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [
+        {
+          "titre": "Le Marteau de Sigmar",
+          "difficulte": 7,
+          "description": "Le Moine gagne plus 2 Force au corps à corps et chacune de ses blessures inflige deux points de dégâts. Il doit réussir l'invocation à chaque phase de Tir où il veut employer cet effet.",
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 5"
+        },
+        {
+          "titre": "Cœur d'Acier",
+          "difficulte": 8,
+          "description": "Les alliés à 8 ps ou moins deviennent immunisés à la peur et aux tests de seul contre tous. La bande entière gagne plus 1 à ses tests de déroute. Les effets ne se cumulent pas et cessent lorsque le Moine est mis hors de combat.",
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 5"
+        },
+        {
+          "titre": "Feu de l'Âme",
+          "difficulte": 9,
+          "description": "Chaque ennemi à 4 ps ou moins subit une touche de Force 3 sans sauvegarde d'armure. La Force passe à 5 contre les Mort-vivants et les Possédés.",
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 5"
+        },
+        {
+          "titre": "Bouclier de Sigmar",
+          "difficulte": 6,
+          "description": "Le Moine devient immunisé aux sorts. Au début de chaque tour, pendant la phase de ralliement, l'effet cesse sur 1 ou 2 sur 1D6.",
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 5"
+        },
+        {
+          "titre": "Imposition des Mains",
+          "difficulte": 5,
+          "description": "Le Moine ou une figurine à 2 ps ou moins récupère tous ses points de vie. Les alliés à 2 ps ou moins qui sont sonnés ou à terre se relèvent immédiatement et agissent normalement.",
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 5"
+        },
+        {
+          "titre": "Armure du Juste",
+          "difficulte": 9,
+          "description": "Le Moine reçoit une sauvegarde de 2+ qui remplace celle de son armure, provoque la peur et devient lui-même immunisé à la peur jusqu'au début de sa prochaine phase de Tir.",
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 5"
+        }
+      ],
+      "ambiguites": [
+        "Le Moine remplace un Champion de Stirwood ou un Petit Voleur. Les maxima individuels restent ceux imprimés, mais la contrainte de remplacement doit être appliquée lors de la composition.",
+        "La règle impose un arc à tous les guerriers, alors que la liste propose également l'arc court et l'arc long. Le terme arc est conservé comme catégorie générale obligatoire et la source ne précise pas si un arc court satisfait cette obligation."
+      ]
+    },
+    "mootlanders": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 20,
+        "maximumHeros": 5,
+        "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF page 1"
+      },
+      "regles": [
+        {
+          "titre": "Faibles et chétifs",
+          "description": "Lorsqu'un Halfling lance sur le tableau des dégâts, un résultat de 2 le sonne au lieu de l'effet normal.",
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "ancien-du-moot",
+          "nom": "Ancien du Moot",
+          "categorie": "Héros",
+          "cout": 55,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 5,
+            "force": 2,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout guerrier allié situé à 6 ps ou moins peut utiliser son Commandement pour ses tests."
+            },
+            {
+              "titre": "Pistolet de famille",
+              "description": "Au recrutement, il peut acheter un pistolet pour 15 CO en plus de la liste commune."
+            }
+          ],
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 1, 2 et 4"
+        },
+        {
+          "id": "maitre-queux",
+          "nom": "Maître Queux",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Cuisine inspirée",
+              "description": "Tout Halfling situé à 6 ps ou moins peut relancer ses jets pour toucher ratés au corps à corps une fois par tour."
+            }
+          ],
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 1, 2 et 4"
+        },
+        {
+          "id": "voleur-halfling",
+          "nom": "Voleur Halfling",
+          "categorie": "Héros",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 2,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Tir", "Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Furtif",
+              "description": "Il peut se cacher dans la moindre ombre ou derrière le moindre couvert. Les tirs qui le visent subissent toujours un malus supplémentaire de moins 1, cumulable avec les autres modificateurs."
+            }
+          ],
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 1, 2 et 4"
+        },
+        {
+          "id": "guerrier-halfling",
+          "nom": "Guerrier Halfling",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 4,
+            "force": 2,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF page 3"
+        },
+        {
+          "id": "eclaireur-halfling",
+          "nom": "Éclaireur Halfling",
+          "categorie": "Hommes de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 4,
+            "force": 2,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Vue perçante",
+              "description": "Il repère les ennemis cachés jusqu'à une distance égale à deux fois son Initiative en ps."
+            }
+          ],
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF page 3"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Mootlanders",
+          "profils": [
+            "ancien-du-moot",
+            "voleur-halfling",
+            "guerrier-halfling",
+            "eclaireur-halfling"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Bâton", "cout": 3 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Fronde", "cout": 2 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 },
+                {
+                  "nom": "Casque marmite",
+                  "cout": 8,
+                  "note": "Accorde une sauvegarde spéciale non modifiable de 5+ contre un résultat sonné."
+                }
+              ]
+            }
+          ],
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF page 4"
+        },
+        {
+          "nom": "Ustensiles du Maître Queux",
+          "profils": ["maitre-queux"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Couteau de cuisine",
+                  "cout": 2,
+                  "note": "Force de l'utilisateur et modificateur de moins 1 à la sauvegarde adverse."
+                },
+                {
+                  "nom": "Couperet",
+                  "cout": 3,
+                  "note": "Force de l'utilisateur et modificateur de moins 1 à la sauvegarde adverse."
+                },
+                {
+                  "nom": "Louche",
+                  "cout": 2,
+                  "note": "Force de l'utilisateur moins 1. Seuls les boucliers accordent une sauvegarde. Sur un 6 pour toucher au corps à corps, l'adversaire lâche son arme."
+                },
+                {
+                  "nom": "Attendrisseur",
+                  "cout": 3,
+                  "note": "Force de l'utilisateur. Un jet de dégâts de 2 à 4 sonne la victime."
+                }
+              ]
+            }
+          ],
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 3 et 4"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [],
+      "ambiguites": [
+        "Le choix des guerriers autorise jusqu'à trois Voleurs Halflings, mais l'en-tête du profil imprime 0-2. La limite de trois, issue de la section de composition, est retenue et la contradiction reste signalée.",
+        "La source disponible est une numérisation anglaise de Citadel Journal 36. Les formulations françaises sont des paraphrases mécaniques contrôlées sur les pages scannées."
+      ]
+    }
+  }
+}

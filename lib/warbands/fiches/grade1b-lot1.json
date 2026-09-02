@@ -1,0 +1,3318 @@
+{
+  "bandes": {
+    "amazones-l": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/amazones-l",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Amazones de Lustrie V1.1gFr, page 2"
+      },
+      "regles": [
+        {
+          "titre": "Isolationnistes",
+          "description": "Lors du premier tour de corps à corps contre une bande de Norses ou d'Hommes-Lézards, chaque Amazone peut relancer ses jets pour toucher ratés.",
+          "source": "Amazones de Lustrie V1.1gFr, page 1"
+        },
+        {
+          "titre": "Sacrifice",
+          "description": "Une Amazone capturée sur un résultat 61 peut être sacrifiée. Le Chef gagne alors 1 point d'expérience. Si la victime est un Homme-Lézard, la bande reçoit gratuitement une Peau enchantée.",
+          "source": "Amazones de Lustrie V1.1gFr, page 1"
+        },
+        {
+          "titre": "Inimitié envers les Norses",
+          "description": "Contre une bande de Norses, la bande peut relancer son premier test de Déroute raté. Elle ne peut pas dérouter volontairement tant que la Prêtresse Serpent n'est pas hors de combat.",
+          "source": "Amazones de Lustrie V1.1gFr, page 1"
+        },
+        {
+          "titre": "Il n'est pas des nôtres",
+          "description": "La bande ne peut engager aucun Franc-Tireur ou Personnage dramatique, sauf s'il s'agit d'une Amazone.",
+          "source": "Amazones de Lustrie V1.1gFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "pretresse-serpent",
+          "nom": "Prêtresse Serpent",
+          "categorie": "Héros",
+          "cout": 70,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les guerrières alliées à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Sorcière",
+              "description": "Elle connaît un Rituel des Amazones déterminé aléatoirement à la création."
+            }
+          ],
+          "source": "Amazones de Lustrie V1.1gFr, pages 3 et 5"
+        },
+        {
+          "id": "guerriere-aigle",
+          "nom": "Guerrière Aigle",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [],
+          "source": "Amazones de Lustrie V1.1gFr, pages 3 et 5"
+        },
+        {
+          "id": "guerriere-piranha",
+          "nom": "Guerrière Piranha",
+          "categorie": "Héros",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
+          "regles": [],
+          "source": "Amazones de Lustrie V1.1gFr, pages 3 et 5"
+        },
+        {
+          "id": "guerriere-amazone",
+          "nom": "Guerrière Amazone",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 1,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Recrutées par groupes de 1 à 5."
+            }
+          ],
+          "source": "Amazones de Lustrie V1.1gFr, pages 2 et 6"
+        },
+        {
+          "id": "guerriere-jaguar",
+          "nom": "Guerrière Jaguar",
+          "categorie": "Homme de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Filles de la Jungle",
+              "description": "Elles ne subissent aucune pénalité de Mouvement dans les terrains de jungle."
+            }
+          ],
+          "source": "Amazones de Lustrie V1.1gFr, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Héroïnes",
+          "profils": [
+            "pretresse-serpent",
+            "guerriere-aigle",
+            "guerriere-piranha"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Massue", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lame des étoiles", "cout": 15 },
+                { "nom": "Épée des étoiles", "cout": 30 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Bâton solaire", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Peau enchantée", "cout": 20 }
+              ]
+            },
+            {
+              "nom": "Équipement spécial",
+              "entrees": [
+                { "nom": "Amulette de la Lune", "cout": 50 },
+                { "nom": "Herbes médicinales", "cout": 35 }
+              ]
+            }
+          ],
+          "source": "Amazones de Lustrie V1.1gFr, page 2"
+        },
+        {
+          "nom": "Guerrières Amazones",
+          "profils": ["guerriere-amazone"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Massue", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Fronde", "cout": 5 },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Bâton solaire", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Peau enchantée", "cout": 20 }
+              ]
+            }
+          ],
+          "source": "Amazones de Lustrie V1.1gFr, page 2"
+        },
+        {
+          "nom": "Guerrières Jaguars",
+          "profils": ["guerriere-jaguar"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Massue", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Fronde", "cout": 5 },
+                { "nom": "Bolas", "cout": 5 },
+                { "nom": "Javelots", "cout": 5 },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Bâton solaire", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Amazones de Lustrie V1.1gFr, page 2"
+        },
+        {
+          "nom": "Équipement spécial des Amazones",
+          "profils": [
+            "pretresse-serpent",
+            "guerriere-aigle",
+            "guerriere-piranha",
+            "guerriere-amazone",
+            "guerriere-jaguar"
+          ],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Bâton solaire",
+                  "cout": 35,
+                  "note": "Rare 10. Corps à corps F utilisateur ou tir à 12 ps F4. Le tir ignore les armures, mais pas les protections magiques ni les esquives."
+                },
+                {
+                  "nom": "Lame des étoiles",
+                  "cout": 15,
+                  "note": "Rare 7. L'adversaire reçoit +1 à sa sauvegarde, ou 6+ s'il n'en a pas. La première touche réussie subie à chaque combat est parée sur 4+."
+                },
+                {
+                  "nom": "Épée des étoiles",
+                  "cout": 30,
+                  "note": "Rare 10. Force utilisateur +1. Aucune sauvegarde d'armure, sauf protection magique ou esquive."
+                },
+                {
+                  "nom": "Peau enchantée",
+                  "cout": 20,
+                  "note": "Rare 6. Sauvegarde spéciale de 6+ contre toute blessure. Les sorts ennemis sont ignorés sur 5+."
+                },
+                {
+                  "nom": "Herbes médicinales",
+                  "cout": 35,
+                  "note": "Commun pour les Amazones. Au début d'une phase de ralliement, si l'Héroïne n'est pas engagée, elle récupère tous ses PV."
+                },
+                {
+                  "nom": "Amulette de la Lune",
+                  "cout": 50,
+                  "note": "Rare 11. Les tirs visant la porteuse ont -1 pour toucher. Elle bénéficie aussi d'une sauvegarde spéciale de 5+ contre les tirs."
+                },
+                {
+                  "nom": "Conque musicale",
+                  "cout": 25,
+                  "note": "Rare 8, Guerrière Piranha uniquement. Au début de la partie, permet une seule relance du jet qui détermine qui se déploie ou commence en premier."
+                }
+              ]
+            }
+          ],
+          "source": "Amazones de Lustrie V1.1gFr, pages 3 et 4"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Chasseuse de Skinks",
+          "description": "Au premier tour de chaque corps à corps contre un Skink, l'Héroïne frappe toujours en premier.",
+          "source": "Amazones de Lustrie V1.1gFr, page 4"
+        },
+        {
+          "titre": "Fureur sauvage",
+          "description": "L'Héroïne gagne +1 Attaque lorsqu'elle charge et est immunisée à la peur et aux charmes.",
+          "source": "Amazones de Lustrie V1.1gFr, page 4"
+        },
+        {
+          "titre": "Dissimulation",
+          "description": "En jungle, la distance à laquelle les ennemis peuvent détecter l'Héroïne cachée est divisée par deux.",
+          "source": "Amazones de Lustrie V1.1gFr, page 4"
+        },
+        {
+          "titre": "Danse hypnotique",
+          "description": "Au début de chaque tour, un ennemi au contact doit réussir un test de Commandement. En cas d'échec, il ne peut pas attaquer ce tour, mais se défend normalement. Sans effet sur les Hommes-Lézards et les Morts-Vivants.",
+          "source": "Amazones de Lustrie V1.1gFr, page 4"
+        },
+        {
+          "titre": "Élixir de vie",
+          "description": "Après une mise hors de combat, l'Héroïne peut relancer son jet de blessure grave. Sur 1 à 4 au résultat applicable, elle ignore les conséquences et participe normalement à l'après-bataille.",
+          "source": "Amazones de Lustrie V1.1gFr, page 4"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Chant du Vent",
+          "difficulte": 8,
+          "description": "Choisissez un ennemi à 10 ps ou moins. Jusqu'au prochain tour des Amazones, il ne peut ni se déplacer, ni tirer, ni lancer de sort. Il peut se défendre au corps à corps, mais frappe en dernier.",
+          "source": "Amazones de Lustrie V1.1gFr, page 8"
+        },
+        {
+          "titre": "Force du Serpent",
+          "difficulte": 9,
+          "description": "Toutes les Amazones à 8 ps ou moins, lanceuse comprise, gagnent +1 Force jusqu'à la fin du prochain tour des Amazones. Le rituel ne peut pas être lancé si la Prêtresse est engagée.",
+          "source": "Amazones de Lustrie V1.1gFr, page 8"
+        },
+        {
+          "titre": "Maelström de Wendala",
+          "difficulte": 7,
+          "description": "Jusqu'au prochain tour des Amazones, tous les tirs ennemis effectués dans un rayon de 18 ps autour de la Prêtresse subissent -1 pour toucher.",
+          "source": "Amazones de Lustrie V1.1gFr, page 8"
+        },
+        {
+          "titre": "Bouclier d'Épines",
+          "difficulte": 7,
+          "description": "La Prêtresse devient immunisée aux tirs et à la magie. Elle peut être chargée, mais toutes les attaques des deux camps sont annulées au premier tour de ce combat. Impossible à lancer lorsqu'elle est engagée.",
+          "source": "Amazones de Lustrie V1.1gFr, page 8"
+        },
+        {
+          "titre": "Jungle Vivante",
+          "difficulte": 6,
+          "description": "Une cible à 12 ps ou moins subit 1D6 touches de Force 2. Aucune sauvegarde d'armure n'est permise, sauf une sauvegarde invulnérable, et ces touches ne peuvent pas être esquivées.",
+          "source": "Amazones de Lustrie V1.1gFr, page 8"
+        },
+        {
+          "titre": "Rêves de la Sirène",
+          "difficulte": 7,
+          "description": "Tous les ennemis à 12 ps ou moins subissent -1 à leurs tests de Commandement jusqu'à la fin de leur prochain tour. Sans effet sur les Hommes-Lézards et les Morts-Vivants.",
+          "source": "Amazones de Lustrie V1.1gFr, page 8"
+        }
+      ],
+      "ambiguites": [
+        "Les montures de la page 7 relèvent de l'article optionnel Guerriers Montés. Le PDF indique mule, cheval et destrier, mais leur usage dépend de l'accord du groupe et du cadre de campagne."
+      ]
+    },
+    "amazones-m": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/amazones-m",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Amazones de Mordheim, page 2"
+      },
+      "regles": [
+        {
+          "titre": "Sacrifice",
+          "description": "Les captifs peuvent être sacrifiés selon la règle employée par le Culte des Possédés.",
+          "source": "Amazones de Mordheim, page 2"
+        },
+        {
+          "titre": "Il n'est pas des nôtres",
+          "description": "Aucun Franc-Tireur ou Personnage dramatique ne peut être engagé, sauf s'il s'agit d'une Amazone.",
+          "source": "Amazones de Mordheim, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "pretresse",
+          "nom": "Prêtresse",
+          "categorie": "Héros",
+          "cout": 70,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliées à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Sorcière",
+              "description": "Elle connaît un Rituel des Amazones déterminé aléatoirement."
+            }
+          ],
+          "source": "Amazones de Mordheim, pages 3 et 5"
+        },
+        {
+          "id": "championne",
+          "nom": "Championne",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
+          "regles": [],
+          "source": "Amazones de Mordheim, pages 3 et 5"
+        },
+        {
+          "id": "guerriere-totem",
+          "nom": "Guerrière Totem",
+          "categorie": "Héros",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Frénésie",
+              "description": "Elle suit la règle de frénésie."
+            }
+          ],
+          "source": "Amazones de Mordheim, pages 3 et 5"
+        },
+        {
+          "id": "guerriere-amazone",
+          "nom": "Guerrière Amazone",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 1,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Recrutées par groupes de 1 à 5."
+            }
+          ],
+          "source": "Amazones de Mordheim, pages 2 et 6"
+        },
+        {
+          "id": "eclaireuse",
+          "nom": "Éclaireuse",
+          "categorie": "Homme de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Furtive",
+              "description": "Elle peut être déployée jusqu'à deux fois la distance normale et peut commencer la partie cachée."
+            }
+          ],
+          "source": "Amazones de Mordheim, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Héroïnes",
+          "profils": ["pretresse", "championne", "guerriere-totem"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Massue", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Griffe des Anciens", "cout": 30 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Bâton solaire", "cout": 50 },
+                { "nom": "Gantelet solaire", "cout": 40 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Équipement spécial",
+              "entrees": [
+                { "nom": "Amulette de la Lune", "cout": 50 },
+                { "nom": "Herbes médicinales", "cout": 35 }
+              ]
+            }
+          ],
+          "source": "Amazones de Mordheim, page 3"
+        },
+        {
+          "nom": "Guerrières",
+          "profils": ["guerriere-amazone"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Massue", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Fronde", "cout": 5 },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Amazones de Mordheim, page 3"
+        },
+        {
+          "nom": "Éclaireuses",
+          "profils": ["eclaireuse"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Massue", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Fronde", "cout": 5 },
+                { "nom": "Javelots", "cout": 5 },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Amazones de Mordheim, page 3"
+        },
+        {
+          "nom": "Équipement spécial des Amazones",
+          "profils": ["pretresse", "championne", "guerriere-totem"],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Griffe des Anciens",
+                  "cout": 30,
+                  "note": "Rare 12. Force utilisateur +1, aucune sauvegarde d'armure et permet de parer."
+                },
+                {
+                  "nom": "Bâton solaire",
+                  "cout": 50,
+                  "note": "Rare 12. Portée 24 ps, Force 4, pas de malus de longue portée et aucune sauvegarde d'armure."
+                },
+                {
+                  "nom": "Gantelet solaire",
+                  "cout": 40,
+                  "note": "Rare 12. Portée 12 ps, Force 4, pas de malus de longue portée, aucune sauvegarde. Au corps à corps, il fournit une attaque supplémentaire de Force 4 sans sauvegarde à chaque tour."
+                },
+                {
+                  "nom": "Javelot",
+                  "cout": 5,
+                  "note": "Commun. Portée 8 ps, Force utilisateur, sans pénalité pour mouvement et tir."
+                },
+                {
+                  "nom": "Amulette de la Lune",
+                  "cout": 50,
+                  "note": "Rare 11. -1 pour toucher la porteuse au tir et sauvegarde spéciale de 5+ contre les tirs."
+                },
+                {
+                  "nom": "Herbes médicinales",
+                  "cout": 35,
+                  "note": "Commun pour les Amazones."
+                }
+              ]
+            }
+          ],
+          "source": "Amazones de Mordheim, page 4"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [
+        {
+          "titre": "Chanson du Vent",
+          "difficulte": 8,
+          "description": "Un ennemi à 10 ps ou moins ne peut ni bouger, ni tirer, ni lancer de sort jusqu'au prochain tour des Amazones. Il peut se défendre, mais frappe en dernier.",
+          "source": "Amazones de Mordheim, page 7"
+        },
+        {
+          "titre": "Force du Serpent",
+          "difficulte": 9,
+          "description": "Les Amazones à 8 ps ou moins, lanceuse comprise, gagnent +1 Force jusqu'à la fin du prochain tour des Amazones. Impossible à lancer si la Prêtresse est engagée.",
+          "source": "Amazones de Mordheim, page 7"
+        },
+        {
+          "titre": "Maelström de Wendala",
+          "difficulte": 7,
+          "description": "Les tirs ennemis dans un rayon de 18 ps subissent -1 pour toucher jusqu'au prochain tour des Amazones.",
+          "source": "Amazones de Mordheim, page 7"
+        },
+        {
+          "titre": "Bouclier d'Épines",
+          "difficulte": 7,
+          "description": "La Prêtresse devient immunisée aux tirs et à la magie. Si elle est chargée, les attaques des deux camps sont annulées au premier tour. Impossible à lancer lorsqu'elle est engagée.",
+          "source": "Amazones de Mordheim, page 7"
+        },
+        {
+          "titre": "Jungle Vivante",
+          "difficulte": 6,
+          "description": "Une cible à 12 ps ou moins subit 1D6 touches de Force 2 sans sauvegarde d'armure, sauf sauvegarde invulnérable, et sans esquive.",
+          "source": "Amazones de Mordheim, page 7"
+        },
+        {
+          "titre": "Rêve de la Sirène",
+          "difficulte": 7,
+          "description": "Les ennemis à 12 ps ou moins subissent -1 à leurs tests de Commandement jusqu'à la fin de leur prochain tour. Sans effet sur les Hommes-Lézards et les Morts-Vivants.",
+          "source": "Amazones de Mordheim, page 7"
+        }
+      ],
+      "ambiguites": [
+        "La règle Sacrifice renvoie au profil des Possédés sans en reproduire le texte. Le PDF ne fournit pas de compétence spéciale propre à cette version."
+      ]
+    },
+    "artilleurs-de-nuln": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/artilleurs-de-nuln",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Artilleurs de Nuln V1lFr, page 2"
+      },
+      "regles": [
+        {
+          "titre": "Entretenues",
+          "description": "Les coûts réduits des armes à poudre noire s'appliquent toujours. Lors de la recherche d'une arme à poudre noire, ajoutez +2 au jet de rareté.",
+          "source": "Artilleurs de Nuln V1lFr, page 1"
+        },
+        {
+          "titre": "Utilisation appropriée",
+          "description": "Si les incidents de tir optionnels sont utilisés, après un 1 naturel pour toucher avec une arme à poudre noire, un jet de 3+ évite l'incident. Le tir reste raté.",
+          "source": "Artilleurs de Nuln V1lFr, page 1"
+        },
+        {
+          "titre": "Fiers artilleurs",
+          "description": "Les membres de la bande n'utilisent jamais d'arme de tir qui ne soit pas à poudre noire. Cette restriction ne concerne pas les Francs-Tireurs ni les Personnages dramatiques.",
+          "source": "Artilleurs de Nuln V1lFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "officier-superieur-artillerie",
+          "nom": "Officier supérieur d'artillerie",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 12 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Chasseur",
+              "description": "Il peut tirer à chaque tour avec une arquebuse ou un long fusil d'Hochland. Acquérir la compétence du même nom n'apporte aucun effet supplémentaire."
+            }
+          ],
+          "source": "Artilleurs de Nuln V1lFr, pages 3 et 6"
+        },
+        {
+          "id": "instructeur",
+          "nom": "Instructeur",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Tir", "Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Expert en armes",
+              "description": "Tant qu'il est dans la bande, la portée des pistolets augmente de 3 ps et celle des autres armes à poudre noire de 6 ps."
+            }
+          ],
+          "source": "Artilleurs de Nuln V1lFr, pages 3 et 6"
+        },
+        {
+          "id": "aspirant",
+          "nom": "Aspirant",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Vitesse"],
+          "regles": [],
+          "source": "Artilleurs de Nuln V1lFr, pages 3 et 6"
+        },
+        {
+          "id": "cadet",
+          "nom": "Cadet",
+          "categorie": "Héros",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
+          "regles": [],
+          "source": "Artilleurs de Nuln V1lFr, pages 3 et 6"
+        },
+        {
+          "id": "eleve-de-nuln",
+          "nom": "Élève de Nuln",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Artilleurs de Nuln V1lFr, page 7"
+        },
+        {
+          "id": "tireur",
+          "nom": "Tireur",
+          "categorie": "Homme de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Chasseur",
+              "description": "Peut tirer à chaque tour avec une arquebuse ou un long fusil d'Hochland."
+            }
+          ],
+          "source": "Artilleurs de Nuln V1lFr, page 7"
+        },
+        {
+          "id": "pistolier",
+          "nom": "Pistolier",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "As de la gâchette",
+              "description": "Au premier tour de corps à corps avec des pistolets, il relance ses jets pour toucher ratés. Le second résultat est définitif."
+            }
+          ],
+          "source": "Artilleurs de Nuln V1lFr, page 7"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Artilleurs de Nuln",
+          "profils": [
+            "officier-superieur-artillerie",
+            "instructeur",
+            "aspirant",
+            "cadet",
+            "eleve-de-nuln",
+            "pistolier"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse ou marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                {
+                  "nom": "Pistolet",
+                  "cout": 10,
+                  "formuleCout": "20 CO la paire"
+                },
+                {
+                  "nom": "Pistolet à double canon",
+                  "cout": 20,
+                  "formuleCout": "35 CO la paire"
+                },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 20,
+                  "formuleCout": "35 CO la paire"
+                },
+                {
+                  "nom": "Pistolet de duel à double canon",
+                  "cout": 35,
+                  "formuleCout": "65 CO la paire"
+                },
+                { "nom": "Arquebuse", "cout": 25 },
+                { "nom": "Arquebuse à double canon", "cout": 45 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [{ "nom": "Poudre noire supérieure", "cout": 25 }]
+            }
+          ],
+          "source": "Artilleurs de Nuln V1lFr, page 2"
+        },
+        {
+          "nom": "Tireurs",
+          "profils": ["instructeur", "tireur"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse ou marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                {
+                  "nom": "Pistolet",
+                  "cout": 10,
+                  "formuleCout": "20 CO la paire"
+                },
+                {
+                  "nom": "Pistolet à double canon",
+                  "cout": 20,
+                  "formuleCout": "35 CO la paire"
+                },
+                { "nom": "Pistolet à répétition", "cout": 25 },
+                { "nom": "Tromblon", "cout": 20 },
+                { "nom": "Arquebuse", "cout": 25 },
+                { "nom": "Arquebuse à double canon", "cout": 45 },
+                { "nom": "Long fusil d'Hochland", "cout": 100 },
+                { "nom": "Arquebuse à répétition", "cout": 50 },
+                { "nom": "Mortier portable", "cout": 70 },
+                { "nom": "Pigeon explosif", "cout": 25 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [{ "nom": "Poudre noire supérieure", "cout": 25 }]
+            }
+          ],
+          "source": "Artilleurs de Nuln V1lFr, page 2"
+        },
+        {
+          "nom": "Armes expérimentales",
+          "profils": ["instructeur", "tireur"],
+          "categories": [
+            {
+              "nom": "Règles complètes",
+              "entrees": [
+                {
+                  "nom": "Arquebuse à répétition",
+                  "cout": 50,
+                  "formuleCout": "60 + 2D6 CO après la création",
+                  "note": "Rare 11, portée 24 ps, F4, sauvegarde -1 supplémentaire, mouvement ou tir. Rechargement complet: un tour entier sans autre action. Jusqu'à 3 tirs, tous à -1 si plus d'un tir; les cibles suivantes doivent être à 3 ps de la précédente."
+                },
+                {
+                  "nom": "Mortier portable",
+                  "cout": 70,
+                  "formuleCout": "80 + 2D6 CO après la création",
+                  "note": "Rare 12, portée 24 ps, F4, gabarit de 1,5 ps, sauvegarde -1 supplémentaire, mouvement ou tir et un tour complet de rechargement. Un tir raté dévie de 2D6 ps dans une direction aléatoire."
+                },
+                {
+                  "nom": "Pistolet à répétition",
+                  "cout": 25,
+                  "formuleCout": "30 + 2D6 CO après la création",
+                  "note": "Rare 9, portée 6 ps, F4, sauvegarde -1 supplémentaire. Jusqu'à 3 tirs avec -1 si plus d'un. Une salve complète exige une phase de tir entière de rechargement hors combat."
+                },
+                {
+                  "nom": "Pigeon explosif",
+                  "cout": 25,
+                  "formuleCout": "30 + 2D6 CO après la création",
+                  "note": "Rare 8, portée illimitée, F4, gabarit de 1,5 ps, mouvement ou tir. Sur 1 il explose sur le porteur, sur 2 à 4 il échoue, sur 5 ou 6 il atteint la cible. La réserve est renouvelée entre les parties."
+                },
+                {
+                  "nom": "Arme à double canon",
+                  "cout": 0,
+                  "note": "Pour les arquebuses et pistolets compatibles. Un canon suit le tir normal. Deux canons donnent un seul jet pour toucher puis deux jets pour blesser et deux rechargements séparés. Chaque marqueur retiré consomme l'action finale d'une phase de tir."
+                }
+              ]
+            }
+          ],
+          "source": "Artilleurs de Nuln V1lFr, pages 3 à 5"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [],
+      "ambiguites": [
+        "Le coût de recrutement des armes expérimentales diffère de leur coût d'achat ultérieur. Les deux valeurs sont conservées.",
+        "Les montures de la page 8 sont une annexe optionnelle de Guerriers Montés."
+      ]
+    },
+    "bandits-du-hochland": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/bandits-du-hochland",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "Bandits du Hochland V1.3Fr, page 2"
+      },
+      "regles": [
+        {
+          "titre": "La poudre, c'est cher",
+          "description": "Seuls les Héros peuvent acquérir des armes à poudre noire. Leur prix majoré figure dans la liste des Ferrailleurs.",
+          "source": "Bandits du Hochland V1.3Fr, pages 1 et 3"
+        },
+        {
+          "titre": "Radins",
+          "description": "Pour déterminer le revenu, décalez la taille de la bande d'une colonne vers la gauche. Une bande de 1 à 3 membres reste sur la première colonne.",
+          "source": "Bandits du Hochland V1.3Fr, page 1"
+        },
+        {
+          "titre": "Receleur",
+          "description": "Lorsqu'un objet à coût variable est revendu, la bande récupère la moitié du prix de base et la moitié de sa partie variable.",
+          "source": "Bandits du Hochland V1.3Fr, page 1"
+        },
+        {
+          "titre": "Francs-Tireurs",
+          "description": "La bande peut engager tout Franc-Tireur autorisé aux Mercenaires humains.",
+          "source": "Bandits du Hochland V1.3Fr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "prince-des-bandits",
+          "nom": "Prince des bandits",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, pages 3 et 5"
+        },
+        {
+          "id": "brigand",
+          "nom": "Brigand",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Dissimulation",
+              "description": "Un ennemi qui ne le voit pas subit -1 Initiative pour tenter de le charger et échoue toujours sur un 6. Sa distance de détection lorsqu'il est caché est aussi divisée par deux."
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, pages 3 et 5"
+        },
+        {
+          "id": "ferrailleur",
+          "nom": "Ferrailleur",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Maître à l'épée",
+              "description": "Avec un équipement permettant une parade, il réussit sur un résultat supérieur ou égal au meilleur jet adverse."
+            },
+            {
+              "titre": "Connaissance des armes",
+              "description": "Après la création, il peut employer toute arme de corps à corps ou de tir trouvée par la bande."
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, pages 3 et 6"
+        },
+        {
+          "id": "demagogue",
+          "nom": "Démagogue",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 2,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Manières convaincantes",
+              "description": "Un ennemi qui veut charger un membre de la bande à 12 ps ou moins du Démagogue doit d'abord réussir un test de Commandement. En cas d'échec, la charge échoue et il reste immobile. Les animaux et les créatures sujettes à stupidité sont immunisés."
+            },
+            {
+              "titre": "Gestionnaire astucieux",
+              "description": "Entre deux parties, lancez 1D6. Sur 2 à 6, la bande gagne 2D6 CO. Sur 1, le Démagogue rate la prochaine partie et sa phase d'Exploration."
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, pages 3 et 6"
+        },
+        {
+          "id": "malfrat",
+          "nom": "Malfrat",
+          "categorie": "Homme de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            { "titre": "Groupe", "description": "Achetés par groupes de 5." }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 7"
+        },
+        {
+          "id": "braconnier",
+          "nom": "Braconnier",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Pionnier",
+              "description": "Chaque Braconnier permet de relancer un dé pendant la phase d'Exploration."
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 7"
+        },
+        {
+          "id": "detrousseur",
+          "nom": "Détrousseur",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 4,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Détrousser les cadavres",
+              "description": "Après la bataille, pour chaque guerrier ami ou ennemi mort et retiré de sa liste, lancez 1D6 par Détrousseur jusqu'à obtenir 4+. Sur ce succès, tout son équipement est récupéré. Passez ensuite au mort suivant. Un cadavre ne peut être dépouillé qu'une fois."
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 7"
+        },
+        {
+          "id": "sans-coeur",
+          "nom": "Sans-cœur",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Endurci",
+              "description": "Immunisé à la peur et ne fait jamais de test Seul contre tous."
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 8"
+        },
+        {
+          "id": "racaille",
+          "nom": "Racaille",
+          "categorie": "Homme de main",
+          "cout": 10,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            { "titre": "Groupe", "description": "Achetées par groupes de 5." },
+            {
+              "titre": "Totalement inapte",
+              "description": "Les Racailles n'acquièrent jamais d'expérience."
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 8"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Bandits",
+          "profils": ["prince-des-bandits", "brigand", "malfrat", "sans-coeur"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                {
+                  "nom": "Hache de lancer",
+                  "cout": 15,
+                  "note": "Suit les règles des couteaux de lancer."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 3"
+        },
+        {
+          "nom": "Pleutres",
+          "profils": ["demagogue", "detrousseur", "racaille"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [{ "nom": "Fronde", "cout": 2 }]
+            },
+            { "nom": "Armures", "entrees": [] }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 3"
+        },
+        {
+          "nom": "Ferrailleur",
+          "profils": ["ferrailleur"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Rapière", "cout": 15 },
+                { "nom": "Main-gauche", "cout": 7 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                {
+                  "nom": "Pistolet",
+                  "cout": 20,
+                  "formuleCout": "40 CO la paire"
+                },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 30,
+                  "formuleCout": "60 CO la paire"
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 3"
+        },
+        {
+          "nom": "Braconniers",
+          "profils": ["braconnier"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 },
+                { "nom": "Arbalète", "cout": 25 }
+              ]
+            },
+            { "nom": "Armures", "entrees": [{ "nom": "Casque", "cout": 10 }] }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 3"
+        },
+        {
+          "nom": "Armes spéciales",
+          "profils": ["ferrailleur"],
+          "categories": [
+            {
+              "nom": "Règles",
+              "entrees": [
+                {
+                  "nom": "Main-gauche",
+                  "cout": 7,
+                  "note": "Rare 7, Force utilisateur. +1 à la sauvegarde ennemie, parade et une relance de parade par tour lorsqu'elle est utilisée avec une épée."
+                },
+                {
+                  "nom": "Rapière",
+                  "cout": 15,
+                  "note": "Rare 5, Force utilisateur. +1 à la sauvegarde ennemie, parade. Après une touche qui ne blesse pas, peut réattaquer avec -1 pour toucher, autant de fois que son nombre d'Attaques."
+                }
+              ]
+            }
+          ],
+          "source": "Bandits du Hochland V1.3Fr, page 2"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Banditisme",
+          "description": "Au lieu de chercher un objet rare, lancez 1D6. Sur 2 à 6, ajoutez 1D6+1 CO à la réserve. Sur 1, faites un jet de Blessure grave pour le Héros. Incompatible avec Gestionnaire astucieux.",
+          "source": "Bandits du Hochland V1.3Fr, page 4"
+        },
+        {
+          "titre": "Caché dans l'ombre",
+          "description": "Les ennemis divisent par deux leur Initiative, arrondie au supérieur, pour mesurer la distance de détection de ce Héros caché.",
+          "source": "Bandits du Hochland V1.3Fr, page 4"
+        },
+        {
+          "titre": "Bond arrière",
+          "description": "Au début de son mouvement, s'il est engagé et debout, le Héros peut tester son Initiative. En cas de succès, placez-le à 1 ps de l'ennemi sans dépenser de Mouvement, puis il agit normalement. En cas d'échec, il frappe automatiquement en dernier ce tour.",
+          "source": "Bandits du Hochland V1.3Fr, page 4"
+        },
+        {
+          "titre": "Tir silencieux",
+          "description": "Un Héros caché peut tirer ou lancer un sort sans se révéler. Si la cible n'est pas immédiatement hors de combat, elle le repère sur un test d'Initiative réussi. Inutilisable avec une arme à poudre noire.",
+          "source": "Bandits du Hochland V1.3Fr, page 4"
+        },
+        {
+          "titre": "Ventriloque",
+          "description": "Quand un ennemi tente de détecter ce Héros caché, un jet de 4+ lui permet de rester caché.",
+          "source": "Bandits du Hochland V1.3Fr, page 4"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "Le PDF signale comme recommandations de scribe, et non comme règles officielles, des limitations possibles pour Manières convaincantes et Détrousser les cadavres.",
+        "Les montures de la page 9 relèvent de l'article optionnel Guerriers Montés."
+      ]
+    },
+    "chasseurs-cornus": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/chasseurs-cornus",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "Chasseurs Cornus V1hFr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Forestiers",
+          "description": "La bande ne subit aucune pénalité de Mouvement dans les terrains accidentés.",
+          "source": "Chasseurs Cornus V1hFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "chasseur-cornu",
+          "nom": "Chasseur Cornu",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Pendez les Bandits",
+              "description": "Il hait tous les Bandits et Hors-la-loi."
+            }
+          ],
+          "source": "Chasseurs Cornus V1hFr, pages 1 et 4"
+        },
+        {
+          "id": "pretre-de-taal",
+          "nom": "Prêtre de Taal",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Prières",
+              "description": "Il utilise les Prières de Taal."
+            },
+            {
+              "titre": "Restriction",
+              "description": "Il ne porte jamais d'armure lourde."
+            }
+          ],
+          "source": "Chasseurs Cornus V1hFr, pages 1 et 4"
+        },
+        {
+          "id": "initie",
+          "nom": "Initié",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Infiltration",
+              "description": "Se déploie après la bande adverse, hors de sa ligne de vue et à plus de 12 ps de tout ennemi. Si les deux camps infiltrent, le plus petit résultat sur 1D6 se déploie en premier."
+            },
+            {
+              "titre": "Pendez les Bandits",
+              "description": "Il hait tous les Bandits et Hors-la-loi."
+            },
+            {
+              "titre": "Restriction",
+              "description": "Il ne porte jamais d'armure."
+            }
+          ],
+          "source": "Chasseurs Cornus V1hFr, pages 1 et 4"
+        },
+        {
+          "id": "soiffard",
+          "nom": "Soiffard",
+          "categorie": "Homme de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Ivresse",
+              "description": "Réussit automatiquement tous ses tests de Commandement."
+            }
+          ],
+          "source": "Chasseurs Cornus V1hFr, page 5"
+        },
+        {
+          "id": "zelote",
+          "nom": "Zélote",
+          "categorie": "Homme de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Restriction",
+              "description": "Ne porte jamais d'armure."
+            }
+          ],
+          "source": "Chasseurs Cornus V1hFr, page 5"
+        },
+        {
+          "id": "chien-de-guerre",
+          "nom": "Chien de guerre",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animal",
+              "description": "N'utilise ni arme ni armure et ne gagne jamais d'expérience."
+            }
+          ],
+          "source": "Chasseurs Cornus V1hFr, page 5"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Héros",
+          "profils": ["chasseur-cornu", "pretre-de-taal", "initie"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse ou marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 5 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Cuir durci", "cout": 5 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                { "nom": "Collet", "cout": 15 },
+                { "nom": "Flèches de chasseur", "cout": 20 },
+                { "nom": "Peau de cerf bénie", "cout": 40 }
+              ]
+            }
+          ],
+          "source": "Chasseurs Cornus V1hFr, page 2"
+        },
+        {
+          "nom": "Hommes de main",
+          "profils": ["soiffard", "zelote"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse ou marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [{ "nom": "Arc", "cout": 10 }]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Cuir durci", "cout": 5 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Chasseurs Cornus V1hFr, page 2"
+        },
+        {
+          "nom": "Équipement spécial",
+          "profils": ["chasseur-cornu", "pretre-de-taal", "initie"],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Collet",
+                  "cout": 15,
+                  "note": "Commun, Héros uniquement. Après un tour sans autre action, pose un piège au contact. Toute autre figurine à 2 ps le déclenche sur 3 à 6 et subit une touche F4, puis le marqueur est retiré."
+                },
+                {
+                  "nom": "Cuir durci",
+                  "cout": 5,
+                  "note": "Commun. Sauvegarde 6+, combinable seulement avec casque ou rondache, invendable et normalement réservé aux Héros en tant qu'équipement spécial."
+                },
+                {
+                  "nom": "Flèches de chasse",
+                  "cout": 25,
+                  "formuleCout": "25 + 1D6 CO",
+                  "note": "Rare 8. Avec arc court, arc, arc long ou arc elfique, ajoute +1 aux jets de Dégâts."
+                },
+                {
+                  "nom": "Peau de cerf bénie",
+                  "cout": 40,
+                  "note": "Rare 10, Héros uniquement. Permet une relance de test d'Initiative raté par tour."
+                }
+              ]
+            }
+          ],
+          "source": "Chasseurs Cornus V1hFr, pages 2 et 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Maître trappeur",
+          "description": "Les collets posés par le Héros ont une portée de déclenchement de 4 ps et partent sur 2+.",
+          "source": "Chasseurs Cornus V1hFr, page 3"
+        },
+        {
+          "titre": "Effluve nauséabonde",
+          "description": "Les ennemis vivants ont -1 pour le toucher au corps à corps. Il ne peut porter aucune flamme et les attaques enflammées qui le touchent gagnent +1 Force. Les Morts-Vivants et les Possédés ne sont pas affectés par le malus.",
+          "source": "Chasseurs Cornus V1hFr, page 3"
+        },
+        {
+          "titre": "Ami des bêtes",
+          "description": "Les animaux ne peuvent pas attaquer ce Héros. Jusqu'à deux de ses chiens de guerre ne comptent pas dans l'effectif maximal.",
+          "source": "Chasseurs Cornus V1hFr, page 3"
+        },
+        {
+          "titre": "Infiltration",
+          "description": "Se déploie après la bande adverse, hors de sa ligne de vue et à plus de 12 ps de tout ennemi. Si les deux camps infiltrent, le plus petit résultat sur 1D6 se place en premier.",
+          "source": "Chasseurs Cornus V1hFr, page 3"
+        },
+        {
+          "titre": "Guide",
+          "description": "Ajoute 1D6 à la phase d'Exploration. Une bande ne peut avoir qu'un seul Guide.",
+          "source": "Chasseurs Cornus V1hFr, page 3"
+        },
+        {
+          "titre": "Caché dans les ombres",
+          "description": "Les ennemis divisent leur Initiative par deux pour détecter ce Héros caché.",
+          "source": "Chasseurs Cornus V1hFr, page 3"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Bond du Cerf",
+          "difficulte": 7,
+          "description": "Le Prêtre se déplace immédiatement n'importe où à 9 ps ou moins. Il peut charger et gagne +1 Force au premier tour. Contre un ennemi en fuite, il inflige une touche automatique à F+1 puis la cible reprend sa fuite.",
+          "source": "Chasseurs Cornus V1hFr, page 7"
+        },
+        {
+          "titre": "Bière bénite",
+          "difficulte": 5,
+          "description": "Un combattant à 2 ps ou moins, Prêtre compris, récupère tous ses PV. Jusqu'au prochain tour de corps à corps, les ennemis vivants à 2 ps ou moins ont -1 Attaque. Sans effet sur les Morts-Vivants et les Possédés.",
+          "source": "Chasseurs Cornus V1hFr, page 7"
+        },
+        {
+          "titre": "Patte d'Ours",
+          "difficulte": 7,
+          "description": "Un allié à 6 ps ou moins, Prêtre compris, gagne +2 Force jusqu'au prochain tour du Prêtre.",
+          "source": "Chasseurs Cornus V1hFr, page 7"
+        },
+        {
+          "titre": "Secousse tellurique",
+          "difficulte": 9,
+          "description": "Cible un bâtiment à 4 ps ou moins. Chaque ennemi à son contact subit une touche F3. Le bâtiment s'effondre, ses occupants chutent et le décor est retiré pour le reste de la partie.",
+          "source": "Chasseurs Cornus V1hFr, page 7"
+        },
+        {
+          "titre": "Enchevêtrement",
+          "difficulte": 8,
+          "description": "Jusqu'à la prochaine phase de Tir, tous les combattants à 12 ps ou moins voient leur Mouvement divisé par deux, sauf les Zélotes.",
+          "source": "Chasseurs Cornus V1hFr, page 7"
+        },
+        {
+          "titre": "Convocation d'Écureuils",
+          "difficulte": 7,
+          "description": "Un ennemi à 12 ps ou moins subit 2D6 touches de Force 1 sans sauvegarde d'armure.",
+          "source": "Chasseurs Cornus V1hFr, page 7"
+        }
+      ],
+      "ambiguites": [
+        "La ligne Flèches de chasseur de la liste de création affiche 20 CO, tandis que la fiche détaillée indique 25 + 1D6 CO. Les deux valeurs sont conservées.",
+        "Les montures de la page 6 relèvent de l'article optionnel Guerriers Montés."
+      ]
+    },
+    "chevaliers-bretonniens": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/chevaliers-bretonniens",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 6,
+        "source": "Chevaliers Bretonniens V1.6dFr, page 2"
+      },
+      "regles": [
+        {
+          "titre": "Dame du Lac",
+          "description": "Avant la bataille, testez le Commandement du Chef. En cas de succès, chaque ennemi qui veut tirer avec une arme à feu doit obtenir 4+ sur 1D6 à chaque tir. Les autres armes de tir ne testent que lorsqu'elles visent le Chevalier de la Quête ou un Chevalier errant.",
+          "source": "Chevaliers Bretonniens V1.6dFr, page 1"
+        },
+        {
+          "titre": "Équitation",
+          "description": "Un Chevalier ou Écuyer recruté avec une monture possède automatiquement la compétence Équitation correspondant à cette monture.",
+          "source": "Chevaliers Bretonniens V1.6dFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "chevalier-de-la-quete",
+          "nom": "Chevalier de la Quête",
+          "categorie": "Héros",
+          "cout": 80,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Vertu chevaleresque",
+              "description": "Ne fait jamais de test Seul contre tous."
+            }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, pages 4 et 5"
+        },
+        {
+          "id": "chevalier-errant",
+          "nom": "Chevalier errant",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Vertu chevaleresque",
+              "description": "Ne fait jamais de test Seul contre tous."
+            },
+            {
+              "titre": "Destrier conditionnel",
+              "description": "Ne peut monter un destrier que si le Chevalier de la Quête en monte déjà un."
+            }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, pages 4 et 5"
+        },
+        {
+          "id": "ecuyer",
+          "nom": "Écuyer",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Effectif",
+              "description": "Il ne peut pas y avoir plus d'Écuyers que de Chevaliers."
+            },
+            {
+              "titre": "Cheval conditionnel",
+              "description": "Ne peut monter un cheval que si le Chevalier de la Quête et tous les Chevaliers errants montent déjà un destrier."
+            }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, pages 2, 4 et 5"
+        },
+        {
+          "id": "homme-d-armes",
+          "nom": "Homme d'armes",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 8,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, page 6"
+        },
+        {
+          "id": "archer",
+          "nom": "Archer",
+          "categorie": "Homme de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Chevaliers",
+          "profils": ["chevalier-de-la-quete", "chevalier-errant"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance de cavalerie", "cout": 20 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Caparaçon bretonnien", "cout": 30 }
+              ]
+            },
+            { "nom": "Divers", "entrees": [{ "nom": "Destrier", "cout": 80 }] }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, page 3"
+        },
+        {
+          "nom": "Écuyers",
+          "profils": ["ecuyer"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            },
+            { "nom": "Divers", "entrees": [{ "nom": "Cheval", "cout": 40 }] }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, page 3"
+        },
+        {
+          "nom": "Hommes d'armes",
+          "profils": ["homme-d-armes"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, page 3"
+        },
+        {
+          "nom": "Archers",
+          "profils": ["archer"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, page 3"
+        },
+        {
+          "nom": "Équipement monté",
+          "profils": ["chevalier-de-la-quete", "chevalier-errant", "ecuyer"],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Caparaçon bretonnien",
+                  "cout": 30,
+                  "note": "Rare 11, destrier uniquement. Ajoute +1 supplémentaire à la sauvegarde du cavalier. Une monture mise hors de combat n'est tuée après la partie que sur un 1."
+                },
+                {
+                  "nom": "Cheval",
+                  "cout": 40,
+                  "note": "Rare 8. Profil M8 CC1 CT0 F3 E3 PV1 I3 A0 Cd5."
+                },
+                {
+                  "nom": "Destrier",
+                  "cout": 80,
+                  "note": "Rare 11. Profil M8 CC3 CT0 F3 E3 PV1 I3 A1 Cd5. Une relance par test de contrôle raté."
+                }
+              ]
+            }
+          ],
+          "source": "Chevaliers Bretonniens V1.6dFr, page 7"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Vertu de Discipline",
+          "description": "Une fois par bataille, si le Héros est encore debout et en jeu, la bande peut relancer un test de Déroute raté.",
+          "source": "Chevaliers Bretonniens V1.6dFr, page 4"
+        },
+        {
+          "titre": "Vertu d'Impétuosité",
+          "description": "Lors d'une charge, ajoutez 1D3 ps au Mouvement avant de déplacer le Héros.",
+          "source": "Chevaliers Bretonniens V1.6dFr, page 4"
+        },
+        {
+          "titre": "Vertu de Pureté",
+          "description": "Tout sort visant le Héros est dissipé sur 4+ sur 1D6.",
+          "source": "Chevaliers Bretonniens V1.6dFr, page 4"
+        },
+        {
+          "titre": "Vertu de Bravoure",
+          "description": "Au corps à corps contre une figurine de Force supérieure, le Héros relance ses jets pour toucher ratés.",
+          "source": "Chevaliers Bretonniens V1.6dFr, page 4"
+        },
+        {
+          "titre": "Vertu de Noble Dédain",
+          "description": "Le Héros hait tous les ennemis équipés d'armes de tir.",
+          "source": "Chevaliers Bretonniens V1.6dFr, page 4"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "Le PDF présente cette bande comme une option anachronique pour Mordheim, à la discrétion du groupe.",
+        "L'annexe de la page 7 contient encore le texte générique 'bandes de XXX', coquille éditoriale sans effet mécanique."
+      ]
+    },
+    "elfes-noirs": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/elfes-noirs",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "Elfes Noirs V1.1hFr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Haine fratricide",
+          "description": "Tous les Elfes Noirs haïssent les Hauts Elfes, y compris leurs Francs-Tireurs.",
+          "source": "Elfes Noirs V1.1hFr, page 1"
+        },
+        {
+          "titre": "Vue surhumaine",
+          "description": "Ils détectent les ennemis cachés jusqu'à une distance égale au double de leur Initiative.",
+          "source": "Elfes Noirs V1.1hFr, page 1"
+        },
+        {
+          "titre": "Armes à feu",
+          "description": "Ils n'utilisent jamais d'armes à poudre noire.",
+          "source": "Elfes Noirs V1.1hFr, page 1"
+        },
+        {
+          "titre": "Profil maximal",
+          "description": "M5, CC7, CT7, F4, E4, PV3, I9, A4, Cd10.",
+          "source": "Elfes Noirs V1.1hFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "dynaste",
+          "nom": "Dynaste",
+          "categorie": "Héros",
+          "cout": 70,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 5,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            }
+          ],
+          "source": "Elfes Noirs V1.1hFr, pages 3 et 4"
+        },
+        {
+          "id": "spadassin",
+          "nom": "Spadassin",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 5,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Spécialiste de la mêlée",
+              "description": "Ne peut jamais être équipé d'une arme de tir."
+            }
+          ],
+          "source": "Elfes Noirs V1.1hFr, pages 3 et 4"
+        },
+        {
+          "id": "maitre-des-betes",
+          "nom": "Maître des Bêtes",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Molosses à Sang-Froid",
+              "description": "Peut être accompagné d'au plus deux Molosses à Sang-Froid."
+            }
+          ],
+          "source": "Elfes Noirs V1.1hFr, pages 3 et 4"
+        },
+        {
+          "id": "sorciere",
+          "nom": "Sorcière",
+          "categorie": "Héros",
+          "cout": 55,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Magie",
+              "description": "Utilise la Magie des Elfes Noirs."
+            },
+            {
+              "titre": "Armure",
+              "description": "Ne peut pas lancer de sort lorsqu'elle porte une armure."
+            }
+          ],
+          "source": "Elfes Noirs V1.1hFr, pages 3 et 4"
+        },
+        {
+          "id": "corsaire",
+          "nom": "Corsaire",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 6,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            },
+            {
+              "titre": "Cape",
+              "description": "Peut porter une Cape en peau de dragon des mers malgré son statut d'Homme de main."
+            }
+          ],
+          "source": "Elfes Noirs V1.1hFr, page 5"
+        },
+        {
+          "id": "ombre",
+          "nom": "Ombre",
+          "categorie": "Homme de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Discrétion",
+              "description": "Les ennemis subissent -1 Initiative pour la détecter lorsqu'elle est cachée."
+            }
+          ],
+          "source": "Elfes Noirs V1.1hFr, page 5"
+        },
+        {
+          "id": "molosse-a-sang-froid",
+          "nom": "Molosse à Sang-Froid",
+          "categorie": "Homme de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 1,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animal",
+              "description": "Ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Maître des Bêtes",
+              "description": "Si le Maître des Bêtes meurt, les Molosses quittent définitivement la bande. S'il manque une bataille, eux aussi."
+            },
+            {
+              "titre": "Soumis",
+              "description": "À 6 ps ou moins du Maître, ils peuvent utiliser son Commandement de base, jamais celui du Chef."
+            },
+            {
+              "titre": "Écailles",
+              "description": "Sauvegarde d'armure 6+ non réduite par la Force, mais annulable par certains coups critiques."
+            },
+            { "titre": "Peur", "description": "Provoque la peur." }
+          ],
+          "source": "Elfes Noirs V1.1hFr, page 5"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Elfes Noirs",
+          "profils": [
+            "dynaste",
+            "spadassin",
+            "maitre-des-betes",
+            "sorciere",
+            "corsaire"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Fouet à bêtes",
+                  "cout": 10,
+                  "note": "Maître des Bêtes seulement."
+                },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète à répétition", "cout": 35 },
+                { "nom": "Arbalète de poing", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Équipement spécial",
+              "entrees": [
+                {
+                  "nom": "Lame Elfe Noire",
+                  "cout": 15,
+                  "formuleCout": "Prix de l'arme + 15 CO",
+                  "note": "Héros uniquement selon la liste."
+                },
+                {
+                  "nom": "Venin fuligineux",
+                  "cout": 15,
+                  "note": "Héros uniquement."
+                },
+                {
+                  "nom": "Cape en peau de dragon des mers",
+                  "cout": 50,
+                  "note": "Héros et Corsaires uniquement."
+                }
+              ]
+            }
+          ],
+          "source": "Elfes Noirs V1.1hFr, page 2"
+        },
+        {
+          "nom": "Ombres",
+          "profils": ["ombre"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [{ "nom": "Arbalète à répétition", "cout": 35 }]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Elfes Noirs V1.1hFr, page 2"
+        },
+        {
+          "nom": "Équipement spécial détaillé",
+          "profils": [
+            "dynaste",
+            "spadassin",
+            "maitre-des-betes",
+            "sorciere",
+            "corsaire"
+          ],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Lame Elfe Noire",
+                  "cout": 20,
+                  "formuleCout": "Prix d'une dague ou épée + 20 CO",
+                  "note": "Rare 9. Conserve les règles de l'arme. Sur un coup critique, +1 au tableau des critiques; un dégât de 2 à 4 devient sonné."
+                },
+                {
+                  "nom": "Fouet à bêtes",
+                  "cout": 10,
+                  "formuleCout": "10 + 1D6 CO",
+                  "note": "Rare 8, Maître des Bêtes seulement. F utilisateur -1. Provoque la peur chez les animaux. Donne +1 Attaque en charge et +1 Attaque frappant en premier contre la figurine qui charge le porteur."
+                },
+                {
+                  "nom": "Cape en peau de dragon des mers",
+                  "cout": 50,
+                  "formuleCout": "50 + 2D6 CO",
+                  "note": "Rare 10. Sauvegarde 5+, ou 4+ contre les tirs. Avec un bouclier, impose -1 Mouvement."
+                }
+              ]
+            }
+          ],
+          "source": "Elfes Noirs V1.1hFr, page 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Infiltration",
+          "description": "Se déploie après l'adversaire, hors de toute ligne de vue et à plus de 12 ps de tout ennemi. Si les deux camps infiltrent, le plus faible résultat sur 1D6 se place d'abord.",
+          "source": "Elfes Noirs V1.1hFr, page 2"
+        },
+        {
+          "titre": "Rapidité surnaturelle",
+          "description": "Évite toute attaque de tir ou de corps à corps sur 6+. Avec Esquive ou Saut de côté, la sauvegarde correspondante passe à 4+.",
+          "source": "Elfes Noirs V1.1hFr, page 2"
+        },
+        {
+          "titre": "Fureur de Khaine",
+          "description": "Après avoir mis tous ses adversaires hors de combat, peut poursuivre de 4 ps. S'il rejoint un nouvel ennemi, le combat commence au tour suivant et il compte comme ayant chargé. Inutilisable pendant le tour ennemi.",
+          "source": "Elfes Noirs V1.1hFr, page 2"
+        },
+        {
+          "titre": "Massif",
+          "description": "Donne accès aux compétences de Force. La Sorcière ne peut pas la choisir et la bande ne peut compter que deux porteurs.",
+          "source": "Elfes Noirs V1.1hFr, page 2"
+        },
+        {
+          "titre": "Maître des Poisons",
+          "description": "Au lieu de chercher un objet rare, fabrique 1D3-1 doses de venin fuligineux. Elles doivent servir à la prochaine bataille et ne peuvent être vendues ni échangées.",
+          "source": "Elfes Noirs V1.1hFr, page 2"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Éclair Noir",
+          "difficulte": 9,
+          "description": "Cible visible à 18 ps, touche F5. Si elle est blessée, la figurine la plus proche à 6 ps est touchée sur 4+ avec une Force réduite de 1. L'effet continue jusqu'à échec, absence de cible ou Force inférieure à 1. Une figurine ne peut être touchée qu'une fois. Armures autorisées.",
+          "source": "Elfes Noirs V1.1hFr, page 7"
+        },
+        {
+          "titre": "Mot de Douleur",
+          "difficulte": 8,
+          "description": "Une cible à 12 ps relance tous ses jets réussis pour toucher et blesser, au tir et au corps à corps, et doit réussir un test de Commandement pour charger. Dure jusqu'au prochain tour des Elfes Noirs.",
+          "source": "Elfes Noirs V1.1hFr, page 7"
+        },
+        {
+          "titre": "Voleur d'Âmes",
+          "difficulte": 9,
+          "description": "Après le lancement, faites un jet pour toucher une cible au contact. En cas de succès, elle perd 1 PV sans sauvegarde et la Sorcière gagne 1 PV, au maximum un PV bonus jusqu'à la fin de la partie.",
+          "source": "Elfes Noirs V1.1hFr, page 7"
+        },
+        {
+          "titre": "Épée de Feu",
+          "difficulte": 8,
+          "description": "Une arme de corps à corps portée par un Elfe Noir à 6 ps garde son type, mais donne +2 Force et ignore les sauvegardes d'armure jusqu'à la prochaine phase de Tir des Elfes Noirs.",
+          "source": "Elfes Noirs V1.1hFr, page 7"
+        },
+        {
+          "titre": "Spasmes de Mort",
+          "difficulte": 10,
+          "description": "L'ennemi le plus proche à 6 ps fait immédiatement un jet sur le tableau des Dégâts. Après un lancement réussi, la Sorcière est mise à terre.",
+          "source": "Elfes Noirs V1.1hFr, page 7"
+        },
+        {
+          "titre": "Vol des Sorcières",
+          "difficulte": 7,
+          "description": "La Sorcière se déplace immédiatement jusqu'à 12 ps et peut charger. Contre un ennemi en fuite, elle inflige une touche automatique puis il reprend sa fuite.",
+          "source": "Elfes Noirs V1.1hFr, page 7"
+        }
+      ],
+      "ambiguites": [
+        "La liste de création affiche la Lame Elfe Noire à prix de l'arme + 15 CO, tandis que la fiche détaillée indique +20 CO. Les deux valeurs sont conservées.",
+        "La cape coûte 50 CO dans la liste et 50 + 2D6 CO dans sa fiche après création.",
+        "Les montures de la page 6 sont une annexe optionnelle."
+      ]
+    },
+    "escorteurs-imperiaux": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/escorteurs-imperiaux",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "Escorteurs Impériaux V1.2Fr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Francs-Tireurs",
+          "description": "Seuls les Francs-Tireurs montés peuvent rejoindre la bande: Chevaliers solitaires et Patrouilleurs. Les Bandits de grand chemin sont interdits.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 1"
+        },
+        {
+          "titre": "Terrain dense",
+          "description": "La bande ignore la limite normale de deux montures en terrain dense.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 1"
+        },
+        {
+          "titre": "Combat monté",
+          "description": "Un cavalier ne combat pas avec deux armes et n'utilise pas d'arme à deux mains. Bouclier et rondache restent permis. Au premier tour de corps à corps, un pistolet remplace l'arme habituelle.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 5"
+        },
+        {
+          "titre": "Ciblage monté",
+          "description": "Une monture avec cavalier ne peut pas être ciblée. Le cavalier peut toujours être choisi au tir même si d'autres ennemis sont plus proches, sans bonus de taille.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 5"
+        },
+        {
+          "titre": "Perte du cavalier ou de la monture",
+          "description": "Un cavalier sonné tombe selon le tableau Holà, tout doux et peut remonter s'il rejoint sa monture. Une monture survivant à un cavalier tué réduit de 40 CO le coût de sa remplaçante. Une monture tuée doit être remplacée avant toute autre dépense, au besoin en vendant les trésors, et son guerrier ne combat pas sans elle.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 5"
+        }
+      ],
+      "profils": [
+        {
+          "id": "chevalier",
+          "nom": "Chevalier",
+          "categorie": "Héros",
+          "cout": 85,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Équitation"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Monture",
+              "description": "Commence sur un cheval. Peut l'améliorer en destrier pour +40 CO."
+            },
+            {
+              "titre": "Équitation",
+              "description": "Possède la compétence Équitation."
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, pages 2 et 3"
+        },
+        {
+          "id": "escorteur",
+          "nom": "Escorteur",
+          "categorie": "Héros",
+          "cout": 65,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Équitation"],
+          "regles": [
+            {
+              "titre": "Monture",
+              "description": "Commence sur un cheval, améliorable en destrier pour +40 CO."
+            },
+            {
+              "titre": "Équitation",
+              "description": "Possède la compétence Équitation."
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, pages 2 et 3"
+        },
+        {
+          "id": "eclaireur",
+          "nom": "Éclaireur",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Équitation"],
+          "regles": [
+            { "titre": "Monture", "description": "Commence sur un cheval." },
+            {
+              "titre": "Équitation",
+              "description": "Possède la compétence Équitation."
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, pages 2 et 3"
+        },
+        {
+          "id": "pistolier",
+          "nom": "Pistolier",
+          "categorie": "Homme de main",
+          "cout": 55,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Monture",
+              "description": "Commence sur un cheval et possède Équitation."
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, page 4"
+        },
+        {
+          "id": "hussard",
+          "nom": "Hussard",
+          "categorie": "Homme de main",
+          "cout": 60,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Monture",
+              "description": "Commence sur un cheval, améliorable en destrier pour +40 CO, et possède Équitation."
+            },
+            {
+              "titre": "Piétinement",
+              "description": "En charge contre un ennemi à pied, gagne une attaque supplémentaire de Force 4."
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, page 4"
+        },
+        {
+          "id": "palefrenier",
+          "nom": "Palefrenier",
+          "categorie": "Homme de main",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Monture",
+              "description": "Commence sur un cheval et possède Équitation."
+            },
+            {
+              "titre": "Dresseur de cheval",
+              "description": "Les animaux à 6 ps ou moins peuvent employer son Commandement. Les animaux têtus au contact ignorent leur règle Têtu."
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Escorteurs Impériaux",
+          "profils": [
+            "chevalier",
+            "escorteur",
+            "eclaireur",
+            "pistolier",
+            "hussard",
+            "palefrenier"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Lance de cavalerie", "cout": 40 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Armure d'ithilmar", "cout": 90 },
+                { "nom": "Armure en gromril", "cout": 150 },
+                { "nom": "Caparaçon", "cout": 30 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, page 2"
+        },
+        {
+          "nom": "Armes de tir des Escorteurs",
+          "profils": ["escorteur", "pistolier"],
+          "categories": [
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                { "nom": "Tromblon", "cout": 30 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Long fusil d'Hochland", "cout": 200 }
+              ]
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, page 2"
+        },
+        {
+          "nom": "Armes de tir des Éclaireurs",
+          "profils": ["eclaireur", "palefrenier"],
+          "categories": [
+            {
+              "nom": "Armes de tir",
+              "entrees": [{ "nom": "Couteaux de lancer", "cout": 15 }]
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, page 2"
+        },
+        {
+          "nom": "Montures",
+          "profils": [
+            "chevalier",
+            "escorteur",
+            "eclaireur",
+            "pistolier",
+            "hussard",
+            "palefrenier"
+          ],
+          "categories": [
+            {
+              "nom": "Profils",
+              "entrees": [
+                {
+                  "nom": "Cheval",
+                  "cout": 40,
+                  "note": "Rare 8. Profil M8 CC1 CT0 F3 E3 PV1 I3 A0 Cd5."
+                },
+                {
+                  "nom": "Destrier",
+                  "cout": 80,
+                  "note": "Rare 11. Profil M8 CC3 CT0 F3 E3 PV1 I3 A1 Cd5. Une relance par test de contrôle raté."
+                },
+                {
+                  "nom": "Mule",
+                  "cout": 30,
+                  "note": "Rare 7. Profil M6 CC2 CT0 F3 E3 PV1 I2 A0 Cd4. Mouvement incontrôlé 2D6 ps, tests de Commandement pour avancer, non combattante."
+                }
+              ]
+            }
+          ],
+          "source": "Escorteurs Impériaux V1.2Fr, page 6"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Équitation",
+          "description": "Compétence propre à un type de monture. Elle doit être réapprise pour une autre monture.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 7"
+        },
+        {
+          "titre": "Commandeur",
+          "description": "Un Chef monté augmente de 6 ps la portée d'utilisation de son Commandement.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 7"
+        },
+        {
+          "titre": "Sauter en selle",
+          "description": "À 2 ps ou moins de sa monture, le guerrier monte puis peut charger ou courir normalement.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 7"
+        },
+        {
+          "titre": "Saut au trot",
+          "description": "Après un déplacement égal au Mouvement normal de la monture, descend sans autre mouvement ni tir. Peut finir au contact comme une charge plongeante de 2 ps, puis combat à pied.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 7"
+        },
+        {
+          "titre": "Cavalier archer",
+          "description": "Arc de tir de 360 degrés monté. Peut tirer après un double mouvement avec -1 pour toucher en plus des autres modificateurs.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 7"
+        },
+        {
+          "titre": "Voltige",
+          "description": "Déclarée avant le mouvement, exige un test d'Initiative. En succès, -1 pour être touché au tir et mouvement normal. En échec, jet sur Holà, tout doux. Incompatible avec armure lourde, bouclier ou arme de tir car les deux mains sont requises.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 7"
+        },
+        {
+          "titre": "Feinte",
+          "description": "Monté, frappe toujours en premier contre les adversaires à pied. Face à une autre priorité de frappe, utilisez l'Initiative puis l'Expérience en cas d'égalité.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 7"
+        },
+        {
+          "titre": "Piétinement",
+          "description": "Monté, gagne une attaque supplémentaire de Force 4 lors d'une charge contre un ennemi à pied.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 7"
+        },
+        {
+          "titre": "Expert du combat monté",
+          "description": "Monté contre un adversaire monté, chaque blessure infligée ajoute +1 au jet adverse sur le tableau Holà, tout doux.",
+          "source": "Escorteurs Impériaux V1.2Fr, page 7"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "Le coût des profils comprend leur cheval de départ. Le document précise les améliorations en destrier, mais ne donne pas de ventilation supplémentaire du coût initial.",
+        "Les scénarios devraient comporter assez de terrain difficile pour empêcher une traversée entièrement montée. Le PDF présente ceci comme une recommandation de mise en place."
+      ]
+    }
+  }
+}

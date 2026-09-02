@@ -1,0 +1,3347 @@
+{
+  "bandes": {
+    "gardiens-de-chapelle-bretonniens": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Gardiens de Chapelle Bretonniens V1hFr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Chevalerie",
+          "description": "Un Chevalier n'utilise aucune arme de tir sauf l'eau bénite, aucun poison, aucune drogue et aucun sort. Les prières restent autorisées.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 1"
+        },
+        {
+          "titre": "Faveur du Seigneur",
+          "description": "À son recrutement, chaque Chevalier peut acheter une seule fois à moitié prix un destrier, une armure légère ou une armure lourde. Cet objet ne peut être donné, échangé ni vendu et disparaît avec le Chevalier s'il meurt.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 1"
+        },
+        {
+          "titre": "Vertu de Pureté",
+          "description": "Un Chevalier ne quitte jamais volontairement un combat, sauf s'il est terrassé. Il ignore seul contre tous et tout effet non magique qui le forcerait à quitter le combat, mais les effets magiques fonctionnent normalement.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "chevalier-de-la-quete",
+          "nom": "Chevalier de la Quête",
+          "categorie": "Héros",
+          "cout": 75,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins utilisent son Commandement."
+            },
+            {
+              "titre": "Chevalier",
+              "description": "Il applique Chevalerie, Faveur du Seigneur et Vertu de Pureté."
+            },
+            {
+              "titre": "Équitation",
+              "description": "Il commence avec Équitation: destrier."
+            },
+            {
+              "titre": "Vœu de pauvreté",
+              "description": "Il ne peut jamais utiliser de lance de cavalerie."
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 1, 3 et 5"
+        },
+        {
+          "id": "damoiselle",
+          "nom": "Damoiselle",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Prier la Dame",
+              "description": "Elle débute avec une Prière de la Dame tirée au hasard et peut en apprendre d'autres comme un jeteur de sorts."
+            },
+            {
+              "titre": "Équipement limité",
+              "description": "Elle ne choisit que les armes de corps à corps et l'équipement divers de la liste des Paysans Archers."
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 1, 3 et 5"
+        },
+        {
+          "id": "chevalier-errant",
+          "nom": "Chevalier Errant",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chevalier",
+              "description": "Il applique Chevalerie, Faveur du Seigneur et Vertu de Pureté."
+            },
+            { "titre": "Vaniteux", "description": "Il refuse tout casque." },
+            {
+              "titre": "Impétueux",
+              "description": "Après les déclarations de charge, s'il n'est pas engagé et n'a pas chargé, il doit charger un ennemi debout à portée. Il peut réussir un test de Commandement pour se déplacer normalement ou conserver une cible à terre ou sonnée; en cas d'échec, il charge l'ennemi debout le plus proche. Une charge forcée ignore peur et effets psychologiques qui l'empêcheraient de charger."
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 1, 3 et 5"
+        },
+        {
+          "id": "ecuyer",
+          "nom": "Écuyer",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Monture conditionnelle",
+              "description": "Il ne monte un cheval que si le Chevalier de la Quête et tous les Chevaliers Errants montent des destriers."
+            },
+            {
+              "titre": "Adoubement",
+              "description": "Avec Ce gars est doué, il peut rester Écuyer Héros et choisir deux catégories parmi Combat, Érudition, Force et Vitesse, ou devenir Chevalier Errant. Dans ce dernier cas, il reçoit Chevalier, Vaniteux et Impétueux à la place de son amélioration, obtient Spéciale plus deux catégories, adopte immédiatement la liste des Chevaliers et ne peut plus utiliser d'arme de tir. Cette promotion peut dépasser la limite de trois Chevaliers Errants."
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 6"
+        },
+        {
+          "id": "pelerin-du-graal",
+          "nom": "Pèlerin du Graal",
+          "categorie": "Hommes de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Basse caste",
+              "description": "Il progresse normalement mais relance toujours Ce gars est doué et ne devient jamais Héros."
+            },
+            { "titre": "Haine", "description": "Il hait tous ses ennemis." },
+            {
+              "titre": "Têtu",
+              "description": "Il relance une fois tout test de Commandement raté et garde le second résultat."
+            },
+            {
+              "titre": "Relique sacrée",
+              "description": "Il peut porter une relique sacrée malgré son statut d'Homme de main et devient frénétique. Si tout son groupe n'en possède pas, le porteur forme son propre groupe."
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 6"
+        },
+        {
+          "id": "paysan-archer",
+          "nom": "Paysan Archer",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Basse caste",
+              "description": "Il progresse normalement mais relance toujours Ce gars est doué et ne devient jamais Héros."
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Chevaliers",
+          "profils": ["chevalier-de-la-quete", "chevalier-errant"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Lance", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Épée bâtarde",
+                  "cout": 15,
+                  "note": "Force plus 1, frappe en dernier, interdit arme additionnelle et rondache mais permet un bouclier. Ne pare pas."
+                },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Morgenstern", "cout": 15 },
+                {
+                  "nom": "Lance de cavalerie",
+                  "cout": 20,
+                  "note": "Interdite au Chevalier de la Quête."
+                }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                {
+                  "nom": "Écu",
+                  "cout": 10,
+                  "note": "Sauvegarde 5+ à pied, 6+ monté; si une armure existe déjà, bonus respectif de 2 ou 1, sans dépasser 1+."
+                },
+                { "nom": "Caparaçon bretonnien", "cout": 30 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                { "nom": "Destrier", "cout": 80 },
+                { "nom": "Porte-bonheur", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 2 et 3"
+        },
+        {
+          "nom": "Pèlerins",
+          "profils": ["pelerin-du-graal", "ecuyer"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Épée courte",
+                  "cout": 7,
+                  "note": "Parade, mais l'ennemi gagne 1 à sa sauvegarde ou 6+ s'il n'en avait pas."
+                },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 5 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                {
+                  "nom": "Relique sacrée bretonnienne",
+                  "cout": 25,
+                  "note": "Pèlerin seulement."
+                }
+              ]
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 2, 3 et 6"
+        },
+        {
+          "nom": "Paysans Archers",
+          "profils": ["paysan-archer", "ecuyer", "damoiselle"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée courte", "cout": 7 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                {
+                  "nom": "Cheval",
+                  "cout": 40,
+                  "note": "Damoiselle et Écuyer seulement."
+                }
+              ]
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 2"
+        },
+        {
+          "nom": "Montures",
+          "profils": [
+            "chevalier-de-la-quete",
+            "chevalier-errant",
+            "damoiselle",
+            "ecuyer"
+          ],
+          "categories": [
+            {
+              "nom": "Montures",
+              "entrees": [
+                {
+                  "nom": "Destrier",
+                  "cout": 80,
+                  "note": "Rare 11, Humains. M8 CC3 CT0 F3 E3 PV1 I3 A1 Cd5. Le cavalier relance une fois chaque test de contrôle raté."
+                },
+                {
+                  "nom": "Cheval",
+                  "cout": 40,
+                  "note": "Rare 8, Humains. M8 CC1 CT0 F3 E3 PV1 I3 A0 Cd5."
+                }
+              ]
+            }
+          ],
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 8"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Vertu de renommée",
+          "description": "Une seule fois, le Chevalier peut apprendre une Vertu issue de la liste classique des Chevaliers Bretonniens reproduite dans la fiche.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        },
+        {
+          "titre": "Vertu de discipline",
+          "description": "Une fois par bataille, si le Héros n'est ni à terre, ni sonné, ni hors de combat, il peut relancer un test de déroute raté.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        },
+        {
+          "titre": "Vertu d'impétuosité",
+          "description": "Lorsqu'il charge, le Héros ajoute 1D3 ps à son Mouvement, le dé étant lancé avant son déplacement.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        },
+        {
+          "titre": "Vertu de pureté",
+          "description": "Tout sort qui cible le Héros est dissipé sur 4+.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        },
+        {
+          "titre": "Vertu de bravoure",
+          "description": "Au corps à corps contre une figurine de Force supérieure à la sienne, le Héros relance ses jets pour toucher ratés.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        },
+        {
+          "titre": "Vertu de noble dédain",
+          "description": "Le Héros hait tout ennemi équipé d'une arme de tir.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        },
+        {
+          "titre": "Vœu de la Quête",
+          "description": "Chevalier de la Quête seulement. Lorsqu'il charge, est chargé par ou combat un ennemi qui provoque la peur, il relance une fois tout test de Commandement, y compris de déroute, et garde le second résultat.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        },
+        {
+          "titre": "Coup de bouclier",
+          "description": "Chaque tour, le Chevalier effectue une attaque supplémentaire avec bouclier ou écu, à Force moins 1, traitée comme un coup de massue.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        },
+        {
+          "titre": "Muscles saillants",
+          "description": "Il conserve après le premier tour les bonus de Force des fléaux et morgensterns.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        },
+        {
+          "titre": "Infatigable",
+          "description": "À pied, il ignore la pénalité de Mouvement de l'armure. Les modificateurs non magiques ne réduisent jamais sa sauvegarde sous 5+ et ne peuvent l'ignorer.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Faveurs de la Dame",
+          "description": "Automatique. Pour cette bataille, chaque Héros compte comme ayant un porte-bonheur et ignore sa première touche sur 4+. Un Héros qui en possède déjà un relance une sauvegarde de porte-bonheur ratée et conserve le second résultat.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 7"
+        },
+        {
+          "titre": "Protection bénie",
+          "difficulte": 8,
+          "description": "La Damoiselle et les Bretonniens à 6 ps ou moins gagnent une sauvegarde spéciale non modifiable de 4+ contre sorts et prières. Au début de chaque phase de Tir, l'effet cesse sur 1 ou 2.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 7"
+        },
+        {
+          "titre": "Pas vifs",
+          "difficulte": 7,
+          "description": "Un allié à 12 ps ou moins qui a chargé ou raté une charge gagne plus 1 pour toucher jusqu'à la fin du tour. S'il n'est pas engagé, il peut aussi avancer de 1D6 ps vers un ennemi et compte comme ayant chargé s'il atteint le contact.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 7"
+        },
+        {
+          "titre": "Courroux de la Dame",
+          "difficulte": 5,
+          "description": "Jusqu'à la fin de la partie, quiconque veut tirer sur la Damoiselle doit réussir un test de Commandement ou perd son tir. L'effet couvre aussi les armes à zone ou trajectoire qui l'atteindraient.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 7"
+        },
+        {
+          "titre": "Élixir de vie",
+          "difficulte": 7,
+          "description": "La Damoiselle ou un allié à 4 ps ou moins récupère tous ses points de vie. Tous les alliés à 4 ps ou moins qui sont à terre ou sonnés se relèvent immédiatement.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 7"
+        },
+        {
+          "titre": "Vision inspirante",
+          "difficulte": 6,
+          "description": "Un allié à 8 ps ou moins peut, jusqu'au début de la prochaine phase de Tir, relancer un dé puis ajouter ou retrancher 1 au résultat.",
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 7"
+        }
+      ],
+      "ambiguites": [
+        "La liste des Chevaliers imprime deux lignes Casque à 10 CO, dont une marquée Pas Chevalier Errant, alors que le profil du Chevalier Errant interdit déjà tout casque. Une seule entrée Casque est conservée et la restriction Vaniteux prévaut."
+      ]
+    },
+    "gobelins-de-la-nuit": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 20,
+        "maximumHeros": 6,
+        "source": "Gobelins de la Nuit V1.2gFr, page 2"
+      },
+      "regles": [
+        {
+          "titre": "Animosité",
+          "description": "Au début du tour, chaque groupe de Guerriers Gobelins qui n'est ni au combat ni en fuite lance 1D6. Sur 1, il lance encore 1D6: sur 1 à 3, le groupe attaque à distance ou charge le Gobelin ami visible le plus proche, ou reste immobile s'il n'en existe aucun; sur 4 à 6, il insulte l'ennemi visible le plus proche, avance vers lui sans courir et ne peut rien faire d'autre. Les Héros et les autres profils n'effectuent pas ce test.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 1"
+        },
+        {
+          "titre": "Maîtres des champignons",
+          "description": "La stupidité permanente causée par un champignon bonnet de fou est ignorée tant que le Gobelin est frénétique grâce à un champignon consommé avant la bataille. S'il perd cette frénésie après avoir été mis à terre ou sonné, la stupidité s'applique jusqu'à la fin de la partie.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 2"
+        },
+        {
+          "titre": "Haine des Nains",
+          "description": "Tous les membres sauf les Fanatiques haïssent les Nains.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 2"
+        },
+        {
+          "titre": "Peur des Elfes",
+          "description": "Tous les membres sauf les Fanatiques craignent les Elfes.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 2"
+        },
+        {
+          "titre": "Francs-tireurs",
+          "description": "La bande ne recrute que le Gladiateur, le Garde du corps Ogre, le Mage et les francs-tireurs qui autorisent explicitement les Gobelins de la Nuit.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "chef-gobelin",
+          "nom": "Chef Gobelin",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 17,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins utilisent son Commandement."
+            },
+            {
+              "titre": "Autorité",
+              "description": "Seul le Chef actuel peut choisir les compétences de Force."
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 7"
+        },
+        {
+          "id": "chaman-gobelin",
+          "nom": "Chaman Gobelin",
+          "categorie": "Héros",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 6,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il connaît un sort gobelin tiré au hasard."
+            },
+            {
+              "titre": "Bière de champignons",
+              "description": "Avant la bataille, il peut administrer de un à trois champignons à un groupe de Guerriers Gobelins. Chaque champignon donne un effet tiré sur 1D6, mais tout doublon annule et gâche l'ensemble: Animosité sur 1 à 2, Initiative moins 1, immunité à la peur et à seul contre tous, sauvegarde améliorée de 1 avec minimum 6+, haine de tous les ennemis, ou frénésie suivie de stupidité si elle est perdue."
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 7 et 8"
+        },
+        {
+          "id": "homme-de-main-gobelin",
+          "nom": "Homme de main Gobelin",
+          "categorie": "Héros",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 4,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
+          "regles": [],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 7"
+        },
+        {
+          "id": "berger-de-squigs",
+          "nom": "Berger de Squigs",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 6,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Contrôle des Squigs",
+              "description": "Les Squigs à 6 ps ou moins, ou à 12 ps avec un aiguillon, utilisent son Commandement. Pendant la phase de ralliement, un Squig incontrôlé à portée redevient contrôlé si le Berger réussit un test de Commandement."
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 7 et 8"
+        },
+        {
+          "id": "guerrier-gobelin",
+          "nom": "Guerrier Gobelin",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animosité",
+              "description": "Il applique la règle d'Animosité tant qu'il reste Homme de main. Un Héros promu la perd."
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 9"
+        },
+        {
+          "id": "fanatique",
+          "nom": "Fanatique",
+          "categorie": "Hommes de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Fanatique",
+              "description": "Il doit consommer un champignon bonnet de fou avant chaque bataille ou ne participe pas. Il ignore l'Animosité et relance Ce gars est doué, sans jamais devenir Héros."
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 9"
+        },
+        {
+          "id": "squig-des-cavernes",
+          "nom": "Squig des Cavernes",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 0,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Mouvement aléatoire",
+              "description": "Il ne court ni ne déclare de charge. Il se déplace de 2D6 ps et tout contact ennemi compte comme une charge."
+            },
+            {
+              "titre": "Incontrôlable",
+              "description": "Hors de portée d'un Gobelin contrôleur, il part de 2D6 ps dans une direction aléatoire et tout contact avec un ami ou ennemi est résolu comme une charge. Un Squig incontrôlé ne compte que pour moitié lors des tests de déroute."
+            },
+            {
+              "titre": "Animal",
+              "description": "Il ne gagne pas d'expérience, ne grimpe pas aux échelles mais peut escalader et sauter."
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 9 et 10"
+        },
+        {
+          "id": "snotling",
+          "nom": "Snotling",
+          "categorie": "Hommes de main",
+          "cout": 10,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 2,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Petit",
+              "description": "Il reçoit une dague improvisée gratuite. Sur la table des blessures, 1 le met à terre, 2 à 3 le sonne et 4 à 6 le met hors de combat. Les attaques contre lui subissent moins 1 pour toucher et il n'est pas une cible prioritaire."
+            },
+            {
+              "titre": "Poids négligeable",
+              "description": "Tous les Snotlings ensemble comptent comme un seul membre pour la taille de bande et les tests de déroute. Chacun vaut une demi-unité d'expérience pour la valeur de bande, arrondie à l'inférieur, et ne gagne jamais d'expérience."
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, page 10"
+        },
+        {
+          "id": "squig-geant",
+          "nom": "Squig Géant",
+          "categorie": "Hommes de main",
+          "cout": 210,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 0,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 4,
+            "attaques": 3,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Mouvement aléatoire",
+              "description": "Il se déplace de 3D6 ps et applique les règles de contrôle des Squigs. S'il est incontrôlé, il se dirige vers la figurine visible la plus proche après détermination de la direction."
+            },
+            {
+              "titre": "Grande cible",
+              "description": "Il cause la peur, est une grande cible et ne gagne pas d'expérience. Il remplace l'option Troll, les deux ne pouvant coexister."
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 10"
+        },
+        {
+          "id": "troll",
+          "nom": "Troll",
+          "categorie": "Hommes de main",
+          "cout": 200,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 1,
+            "force": 5,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 1,
+            "attaques": 3,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Monstre",
+              "description": "Il cause la peur, est stupide, constitue une grande cible et ne gagne pas d'expérience."
+            },
+            {
+              "titre": "Régénération",
+              "description": "Chaque blessure non causée par le feu est annulée sur 4+. Il ne lance jamais sur le tableau des blessures graves."
+            },
+            {
+              "titre": "Entretien",
+              "description": "Après chaque bataille, il faut payer 15 CO ou lui sacrifier deux Gobelins ou Squigs, sinon il quitte la bande."
+            },
+            {
+              "titre": "Vomi",
+              "description": "Il peut remplacer ses attaques par une touche automatique de Force 5 qui ignore les sauvegardes d'armure."
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, page 11"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Héros Gobelins",
+          "profils": [
+            "chef-gobelin",
+            "chaman-gobelin",
+            "homme-de-main-gobelin",
+            "berger-de-squigs"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
+                { "nom": "Bâton", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Bâton de chef", "cout": 20 },
+                { "nom": "Dagues empoisonnées", "cout": 25 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Fronde", "cout": 2 },
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Couteaux de lancer", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Armure légère", "cout": 20 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                { "nom": "Filet", "cout": 5 },
+                { "nom": "Aiguillon à Squig", "cout": 15 },
+                { "nom": "Champignon bonnet de fou", "cout": 15 }
+              ]
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 3 à 6"
+        },
+        {
+          "nom": "Hommes de main Gobelins",
+          "profils": ["guerrier-gobelin"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2 },
+                { "nom": "Bâton", "cout": 3 },
+                { "nom": "Lance", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            { "nom": "Tir", "entrees": [{ "nom": "Arc court", "cout": 5 }] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Armure légère", "cout": 20 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                { "nom": "Filet", "cout": 5 },
+                { "nom": "Aiguillon à Squig", "cout": 15 },
+                { "nom": "Champignon bonnet de fou", "cout": 15 }
+              ]
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 3 à 6"
+        },
+        {
+          "nom": "Fanatiques",
+          "profils": ["fanatique"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Boulet et chaîne", "cout": 15 },
+                { "nom": "Dagues empoisonnées", "cout": 25 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [{ "nom": "Champignon bonnet de fou", "cout": 15 }]
+            }
+          ],
+          "source": "Gobelins de la Nuit V1.2gFr, pages 3, 5 et 6"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Cultivateur de champignons",
+          "description": "À la place d'une recherche rare, le Héros obtient 1D3 moins 1 champignons bonnets de fou, utilisables à la bataille suivante mais jamais vendables ni échangeables.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+        },
+        {
+          "titre": "Caché dans l'ombre",
+          "description": "L'Initiative utilisée pour repérer le Héros caché est divisée par deux, arrondie au supérieur.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+        },
+        {
+          "titre": "Poseur de filet",
+          "description": "S'il porte un filet lorsqu'il est chargé, le Héros peut le perdre pour réduire la distance de charge adverse de 1D6 ps. Si l'ennemi ne peut plus atteindre, la charge échoue.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+        },
+        {
+          "titre": "Sournois",
+          "description": "Le Héros peut charger depuis une cachette sans voir sa cible, sans test d'Initiative et sans limite de 4 ps. En cas de réussite, la CC et l'Initiative de la cible sont divisées par deux au premier round.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+        },
+        {
+          "titre": "Chevaucheur de Squig",
+          "description": "Le Héros peut être jumelé à un Squig des Cavernes ou Géant et se déplacer avec lui. Le cavalier et la monture attaquent séparément; les tirs touchent le cavalier sur 1 à 2 et le Squig sur 3 à 6. Une monture mise à terre ou hors de combat éjecte le cavalier avec une touche de Force 2 sans sauvegarde. Un cavalier neutralisé laisse ensuite le Squig agir normalement. Après un déplacement double ou triple, un jet supérieur à la Force du cavalier sur 1D6 l'éjecte avec la même touche.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+        },
+        {
+          "titre": "Infiltration",
+          "description": "Après le placement adverse, le Héros se déploie hors de vue à plus de 12 ps de tout ennemi. Si les deux camps infiltrent, le plus petit résultat sur 1D6 se place en premier.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+        },
+        {
+          "titre": "Squigs gazeux",
+          "description": "Lorsqu'un Squig des Cavernes non dressé est mis hors de combat, il explose sur 1. Toutes les figurines dans un rayon de 1D6 ps subissent une touche de Force 3 et le Squig meurt définitivement.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 8"
+        },
+        {
+          "titre": "Menacer",
+          "description": "Pendant le mouvement, le Berger peut tester son Commandement pour faire relancer le mouvement des Squigs à 6 ps, ou 12 ps avec un aiguillon.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 8"
+        },
+        {
+          "titre": "Dressage",
+          "description": "Un seul Squig devient dressé, gagne de l'expérience comme un Homme de main mais relance Ce gars est doué. Il est retiré si le Berger meurt. Si le Squig meurt, un nouveau peut être choisi. Un Squig dressé ne meurt après une mise hors de combat que sur 1 et transforme plusieurs résultats graves en récupération complète. Si le Berger tombe hors de combat, le Squig dressé est retiré de la bataille et est traité comme blessé grave.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 8"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Le pied de Gork",
+          "difficulte": 9,
+          "description": "Une figurine ennemie à 12 ps ou moins subit 1D3 touches de Force 4 sans sauvegarde d'armure.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 12"
+        },
+        {
+          "titre": "On y va",
+          "difficulte": 7,
+          "description": "Tous les Orques et Gobelins à 4 ps ou moins frappent avec plus 1 Attaque jusqu'à la prochaine phase de Tir du Chaman.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 12"
+        },
+        {
+          "titre": "Zzap",
+          "difficulte": 9,
+          "description": "La figurine ennemie visible la plus proche dans les 18 ps subit une touche de Force 5 sans sauvegarde d'armure, chaque figurine dans les 2 ps subissant une touche de Force 3 avec sauvegarde normale.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 12"
+        },
+        {
+          "titre": "Tête qui tourne",
+          "difficulte": 8,
+          "description": "Un ennemi à 12 ps doit réussir un test de Commandement. En cas d'échec, il est stupide jusqu'à sa prochaine phase de ralliement.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 12"
+        },
+        {
+          "titre": "Faim de Squig",
+          "difficulte": 7,
+          "description": "Un Squig à 18 ps ou moins se déplace immédiatement de 3D6 ps vers la figurine la plus proche, amie ou ennemie, et l'attaque s'il l'atteint.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 12"
+        },
+        {
+          "titre": "Feu de Gork",
+          "difficulte": 8,
+          "description": "Un ennemi à 8 ps ou moins subit 1D3 touches de Force 3. Sur un 6 pour toucher, une touche devient critique.",
+          "source": "Gobelins de la Nuit V1.2gFr, page 12"
+        }
+      ],
+      "ambiguites": [
+        "Le Mouvement aléatoire des Squigs est exprimé en dés dans la source. La valeur numérique est donc 0 et la règle porte 2D6 ou 3D6.",
+        "La fiche est une adaptation française rééquilibrée GLM et non la liste anglaise originale sans modification."
+      ]
+    },
+    "mangeurs-dhommes": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "Maneaters, Border Town Burning, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Peur",
+          "description": "Tous les Ogres sauf les Jeunes Sangs causent la peur.",
+          "source": "Maneaters, Border Town Burning, page 1"
+        },
+        {
+          "titre": "Grande cible",
+          "description": "Tous les Ogres sauf les Jeunes Sangs sont de grandes cibles et peuvent être pris pour cible sans priorité. Les tirs contre eux gagnent plus 1 pour toucher.",
+          "source": "Maneaters, Border Town Burning, page 1"
+        },
+        {
+          "titre": "Gloutonnerie",
+          "description": "Chaque Ogre compte comme deux figurines pour la vente de pierres magiques. Les captifs, membres, animaux ou montures peuvent être mangés avant la vente, chacun réduisant ce besoin d'une figurine, ou de deux s'il est grand. Chaque Ogre doit recevoir au moins une victime; le Héros qui mange gagne autant d'expérience que de victimes.",
+          "source": "Maneaters, Border Town Burning, page 1"
+        },
+        {
+          "titre": "Lents d'esprit",
+          "description": "Les Ogres ont besoin du double des points d'expérience habituels pour obtenir leurs progressions.",
+          "source": "Maneaters, Border Town Burning, page 1"
+        },
+        {
+          "titre": "Clients difficiles",
+          "description": "Les Héros subissent moins 1 aux recherches d'objets rares qui ne sont pas conçus pour les Ogres.",
+          "source": "Maneaters, Border Town Burning, page 1"
+        },
+        {
+          "titre": "Cannibales",
+          "description": "La bande ne recrute que les francs-tireurs Halflings, le Garde du corps Ogre et ceux qui l'autorisent explicitement. Un franc-tireur peut être dévoré après la fin de son contrat.",
+          "source": "Maneaters, Border Town Burning, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "capitaine-ogre",
+          "nom": "Capitaine Ogre",
+          "categorie": "Héros",
+          "cout": 145,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins utilisent son Commandement."
+            },
+            {
+              "titre": "Pas de dague",
+              "description": "Il ne reçoit pas de dague gratuite et ne se bat jamais avec une dague."
+            }
+          ],
+          "source": "Maneaters, Border Town Burning, pages 1 et 4"
+        },
+        {
+          "id": "jeune-sang",
+          "nom": "Jeune Sang",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 2,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [],
+          "source": "Maneaters, Border Town Burning, pages 1 et 4"
+        },
+        {
+          "id": "guide-ogre",
+          "nom": "Guide Ogre",
+          "categorie": "Héros",
+          "cout": 145,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Ranger",
+              "description": "S'il n'est pas hors de combat, il lance deux dés pour l'exploration et garde l'un des deux. Ce n'est pas une relance."
+            },
+            {
+              "titre": "Solitaire",
+              "description": "Il ne porte aucun Gnoblar, ignore seul contre tous et ne devient jamais chef."
+            }
+          ],
+          "source": "Maneaters, Border Town Burning, pages 1 et 4"
+        },
+        {
+          "id": "buffle-ogre",
+          "nom": "Buffle Ogre",
+          "categorie": "Hommes de main",
+          "cout": 140,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 2,
+            "attaques": 3,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Charge buffle",
+              "description": "Lors d'une charge, il peut remplacer une attaque par une attaque avec plus 1 pour toucher qui met automatiquement à terre si elle touche."
+            }
+          ],
+          "source": "Maneaters, Border Town Burning, page 5"
+        },
+        {
+          "id": "demi-portion",
+          "nom": "Demi-portion",
+          "categorie": "Hommes de main",
+          "cout": 85,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 2,
+            "initiative": 2,
+            "attaques": 2,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Maneaters, Border Town Burning, page 5"
+        },
+        {
+          "id": "dents-de-sabre",
+          "nom": "Dents de Sabre",
+          "categorie": "Hommes de main",
+          "cout": 125,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 8,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 2,
+            "initiative": 4,
+            "attaques": 3,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Bête dressée",
+              "description": "Il n'est disponible qu'avec un Guide. À 6 ps du Guide il utilise son Commandement. Sinon, au début du tour, un échec de Commandement permet à l'adversaire de le déplacer et de lui faire charger un allié."
+            },
+            {
+              "titre": "Animal",
+              "description": "Il ne gagne pas d'expérience et sa mise hors de combat ne compte pas pour les tests de déroute."
+            }
+          ],
+          "source": "Maneaters, Border Town Burning, page 5"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Ogres",
+          "profils": [
+            "capitaine-ogre",
+            "jeune-sang",
+            "buffle-ogre",
+            "demi-portion"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Couperet ou hache", "cout": 5 },
+                { "nom": "Gourdin ogre", "cout": 10 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Poing de fer", "cout": 15 },
+                {
+                  "nom": "Longue épée cathayenne",
+                  "cout": 75,
+                  "note": "Capitaine seulement."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Mortier portatif",
+                  "cout": 80,
+                  "formuleCout": "80 + 2D6 CO",
+                  "note": "Rare 12, portée 24 ps, Force 4, déplacement ou tir, préparation, dispersion sur un échec et incident de poudre sur tout résultat non Boum."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Gnoblars",
+              "entrees": [
+                {
+                  "nom": "Gnoblar combattant",
+                  "cout": 15,
+                  "note": "Règle détaillée absente de cette version du PDF."
+                },
+                {
+                  "nom": "Gnoblar guetteur",
+                  "cout": 20,
+                  "note": "Confère Esquive."
+                },
+                {
+                  "nom": "Gnoblar chanceux",
+                  "cout": 25,
+                  "note": "Relance un dé par bataille, sans relancer une relance."
+                },
+                {
+                  "nom": "Gnoblar épéiste",
+                  "cout": 30,
+                  "note": "Donne une attaque supplémentaire de Force 2 à la CC du porteur."
+                }
+              ]
+            }
+          ],
+          "source": "Maneaters, Border Town Burning, pages 2 à 4"
+        },
+        {
+          "nom": "Guide",
+          "profils": ["guide-ogre"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Couperet", "cout": 5 },
+                { "nom": "Gourdin", "cout": 10 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Arbalète harpon",
+                  "cout": 50,
+                  "note": "Rare 10, portée 30 ps, Force 5, déplacement ou tir et préparation."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Maneaters, Border Town Burning, pages 2 et 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Maître d'armes",
+          "description": "Le Héros peut combiner une arme difficile à manier et une arme à une main, mais jamais deux armes difficiles à manier.",
+          "source": "Maneaters, Border Town Burning, page 2"
+        },
+        {
+          "titre": "Rot grossier",
+          "description": "Une fois contre chaque nouvel ennemi engagé, tous les adversaires en contact ratant un test de Commandement subissent moins 1 pour toucher ce tour.",
+          "source": "Maneaters, Border Town Burning, page 2"
+        },
+        {
+          "titre": "Mangeur d'hommes",
+          "description": "Une seule fois et hors Guide, le Héros apprend immédiatement une compétence de Tir ou d'Érudition.",
+          "source": "Maneaters, Border Town Burning, page 2"
+        },
+        {
+          "titre": "Charge buffle",
+          "description": "Lors d'une charge, le Héros peut remplacer une attaque par une attaque avec plus 1 pour toucher qui met automatiquement à terre.",
+          "source": "Maneaters, Border Town Burning, page 2"
+        },
+        {
+          "titre": "Chien de guerre",
+          "description": "Réservée au chef, elle autorise les francs-tireurs mercenaires. À sa mort, ils quittent tous la bande.",
+          "source": "Maneaters, Border Town Burning, page 2"
+        },
+        {
+          "titre": "Rugissement",
+          "description": "Le chef peut relancer le premier test de déroute raté de chaque bataille.",
+          "source": "Maneaters, Border Town Burning, page 2"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "La liste d'équipement imprime le mortier à 70 CO alors que sa règle détaillée impose 80 plus 2D6 CO. La règle détaillée est conservée.",
+        "Le Gnoblar combattant figure dans la liste à 15 CO mais sa règle détaillée manque dans le PDF exploité.",
+        "La source est publiée en anglais; les libellés français sont des traductions fidèles et paraphrasées."
+      ]
+    },
+    "moines-guerriers-de-cathay": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Battle Monks of Cathay, Border Town Burning, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Strictures monastiques",
+          "description": "Les Dragons et Moines Guerriers ne portent aucune armure.",
+          "source": "Battle Monks of Cathay, Border Town Burning, page 1"
+        },
+        {
+          "titre": "Mépris du poison",
+          "description": "Les Dragons et Moines Guerriers n'utilisent aucun poison.",
+          "source": "Battle Monks of Cathay, Border Town Burning, page 1"
+        },
+        {
+          "titre": "Étrangers",
+          "description": "La bande ne recrute aucun franc-tireur ni personnage dramatique sauf autorisation expresse.",
+          "source": "Battle Monks of Cathay, Border Town Burning, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "emissaire",
+          "nom": "Émissaire",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Tir", "Érudition", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins utilisent son Commandement."
+            },
+            {
+              "titre": "Équitation",
+              "description": "Il commence avec Équitation: cheval."
+            },
+            {
+              "titre": "Décret impérial",
+              "description": "S'il meurt, un nouvel Émissaire doit être recruté au plus vite. D'ici là, la bande ne peut acheter ni guerriers ni équipement; le remplaçant devient chef."
+            }
+          ],
+          "source": "Battle Monks of Cathay, Border Town Burning, pages 1 et 3"
+        },
+        {
+          "id": "officier",
+          "nom": "Officier",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Vitesse"],
+          "regles": [],
+          "source": "Battle Monks of Cathay, Border Town Burning, pages 1 et 3"
+        },
+        {
+          "id": "dragon",
+          "nom": "Dragon",
+          "categorie": "Héros",
+          "cout": 55,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 15,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Arts martiaux",
+              "description": "À mains nues, il ne subit aucun malus et gagne une attaque. Les blessures non armées deviennent critiques sur 5 ou 6. Avec un bâton, seules ses attaques non armées en bénéficient."
+            }
+          ],
+          "source": "Battle Monks of Cathay, Border Town Burning, pages 1 et 3"
+        },
+        {
+          "id": "soldat",
+          "nom": "Soldat",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Battle Monks of Cathay, Border Town Burning, page 4"
+        },
+        {
+          "id": "moine-guerrier",
+          "nom": "Moine Guerrier",
+          "categorie": "Hommes de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Arts martiaux",
+              "description": "À mains nues, il ne subit aucun malus et gagne une attaque."
+            }
+          ],
+          "source": "Battle Monks of Cathay, Border Town Burning, page 4"
+        },
+        {
+          "id": "paysan-enrage",
+          "nom": "Paysan Enragé",
+          "categorie": "Hommes de main",
+          "cout": 10,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Arme improvisée",
+              "description": "Il combat à mains nues sans malus."
+            },
+            {
+              "titre": "Foule",
+              "description": "Il gagne plus 1 en Commandement pour chaque autre Paysan allié à 3 ps, mais n'utilise jamais le Commandement du chef."
+            },
+            {
+              "titre": "Sacrifiable",
+              "description": "Il ne gagne pas d'expérience, ne compte pas pour la déroute lorsqu'il tombe et toute blessure le met immédiatement hors de combat."
+            }
+          ],
+          "source": "Battle Monks of Cathay, Border Town Burning, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Soldats",
+          "profils": ["emissaire", "officier", "soldat"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Katana", "cout": 20 },
+                {
+                  "nom": "Longue épée cathayenne",
+                  "cout": 75,
+                  "note": "Émissaire seulement."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Pistolet de duel", "cout": 30 },
+                { "nom": "Paire de pistolets de duel", "cout": 60 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arbalète", "cout": 25 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                { "nom": "Cape de soie", "cout": 40 },
+                { "nom": "Cheval", "cout": 30, "note": "Émissaire seulement." }
+              ]
+            }
+          ],
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+        },
+        {
+          "nom": "Moines",
+          "profils": ["dragon", "moine-guerrier"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Bâton de combat",
+                  "cout": 15,
+                  "note": "Plus 1 Initiative et parade; ne se combine pas avec une autre arme, un bouclier ou une rondache, mais permet une attaque non armée."
+                },
+                { "nom": "Katana", "cout": 20 },
+                {
+                  "nom": "Bâtons enchaînés",
+                  "cout": 20,
+                  "note": "Plus 2 Attaques au premier round, puis compte comme deux armes."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Crochet de pêche",
+                  "cout": 10,
+                  "note": "Rare 7, portée 3 ps, Force 3; peut tenter de mettre à terre avec un test de Force modifié."
+                },
+                { "nom": "Étoiles de lancer", "cout": 15 }
+              ]
+            },
+            { "nom": "Armures", "entrees": [] }
+          ],
+          "source": "Battle Monks of Cathay, Border Town Burning, pages 2 et 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Concentration de l'énergie",
+          "description": "À mains nues, le Héros peut sacrifier autant d'Attaques qu'il veut pour gagner plus 1 Force par attaque sacrifiée.",
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+        },
+        {
+          "titre": "Vitesse de l'éclair",
+          "description": "Le Héros peut courir ou charger jusqu'à trois fois son Mouvement et peut courir à moins de 8 ps d'un ennemi.",
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+        },
+        {
+          "titre": "Saut de la foi",
+          "description": "Sa charge ne peut pas être interceptée. Il peut quitter un combat sans test de Commandement et charger pendant ce même tour.",
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+        },
+        {
+          "titre": "Bouclier humain",
+          "description": "Avec au moins deux ennemis au contact, après l'attaque du premier et avant celle du second, un test d'Initiative réussi fait subir au premier les attaques du second. Il est libéré après la phase; un échec n'a aucun effet.",
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+        },
+        {
+          "titre": "Belliciste",
+          "description": "Seul l'Émissaire peut choisir cette compétence. Avant la bataille, un test de Commandement réussi recrute 1D3 plus 1 Paysans Enragés temporaires, même au-delà du maximum, chacun avec la haine.",
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "La source est publiée en anglais; les libellés français sont des traductions fidèles et paraphrasées."
+      ]
+    },
+    "morts-tourmentes": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "Restless Dead, Border Town Burning, page 2"
+      },
+      "regles": [
+        {
+          "titre": "Morts-vivants",
+          "description": "Les profils indiqués causent la peur, sont immunisés à la psychologie, ne quittent jamais volontairement un combat, ignorent le poison et transforment tout résultat sonné en mise à terre.",
+          "source": "Restless Dead, Border Town Burning, pages 4 à 6"
+        }
+      ],
+      "profils": [
+        {
+          "id": "liche",
+          "nom": "Liche",
+          "categorie": "Héros",
+          "cout": 125,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 2,
+            "endurance": 2,
+            "pointsVie": 4,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Érudition", "Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il connaît deux sorts de Nécromancie tirés au hasard."
+            },
+            {
+              "titre": "Corps immatériel",
+              "description": "Il n'utilise aucune arme non magique et combat sans malus à mains nues. Il peut porter une armure et lancer des sorts."
+            },
+            {
+              "titre": "Éternel",
+              "description": "Après une blessure grave autre que Tué, il peut l'ignorer en perdant définitivement 1 point de Vie initial. Un résultat Tué retire 1D3 points de Vie initiale; à zéro il meurt."
+            },
+            {
+              "titre": "Nourrir la magie",
+              "description": "Entre deux batailles, s'il n'était pas hors de combat et renonce à chercher un objet rare, il peut consumer 1D3 trésors pour récupérer 1 point de Vie initial. Si la réserve ne suffit pas, rien n'est gagné ni consommé."
+            },
+            {
+              "titre": "Mort-vivant",
+              "description": "Il cause la peur, ignore psychologie et poison, ne quitte pas le combat et transforme sonné en à terre."
+            }
+          ],
+          "source": "Restless Dead, Border Town Burning, pages 2 et 4"
+        },
+        {
+          "id": "necromancien",
+          "nom": "Nécromancien",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Apprenti",
+              "description": "Il commence avec l'un des deux sorts de la Liche et n'apprend ensuite que les sorts qu'elle connaît. Si la Liche est tuée, il progresse normalement."
+            },
+            {
+              "titre": "Coursier",
+              "description": "Pour rechercher un objet rare, il lance 3D6 et conserve les deux meilleurs dés."
+            }
+          ],
+          "source": "Restless Dead, Border Town Burning, pages 2 et 4"
+        },
+        {
+          "id": "garde-des-tombes",
+          "nom": "Garde des Tombes",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 6,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Force"],
+          "regles": [
+            {
+              "titre": "Lames de revenant",
+              "description": "Un 6 naturel pour toucher avec une arme de corps à corps blesse automatiquement. Le jet de blessure peut quand même être lancé pour rechercher un critique."
+            },
+            {
+              "titre": "Mort-vivant",
+              "description": "Il cause la peur, ignore psychologie et poison, ne court pas, ne cherche pas d'objet rare et transforme sonné en à terre."
+            }
+          ],
+          "source": "Restless Dead, Border Town Burning, pages 2 et 5"
+        },
+        {
+          "id": "zombie",
+          "nom": "Zombie",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 1,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Mort-vivant",
+              "description": "Il ne porte aucun équipement, cause la peur, ne court pas, ignore psychologie et poison, transforme sonné en à terre et ne gagne pas d'expérience."
+            }
+          ],
+          "source": "Restless Dead, Border Town Burning, page 5"
+        },
+        {
+          "id": "squelette",
+          "nom": "Squelette",
+          "categorie": "Hommes de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 8,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Mort-vivant",
+              "description": "Il cause la peur, ne court pas, ignore psychologie et poison, transforme sonné en à terre et ne gagne pas d'expérience."
+            }
+          ],
+          "source": "Restless Dead, Border Town Burning, page 5"
+        },
+        {
+          "id": "revenant",
+          "nom": "Revenant",
+          "categorie": "Hommes de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Mort-vivant",
+              "description": "Il cause la peur, ne court pas, ignore psychologie et poison et transforme sonné en à terre."
+            },
+            {
+              "titre": "Progression",
+              "description": "Il gagne de l'expérience. Promu Héros, il ne cherche pas d'objet rare, choisit Combat ou Force et obtient Lames de revenant."
+            }
+          ],
+          "source": "Restless Dead, Border Town Burning, page 5"
+        },
+        {
+          "id": "epouvantail",
+          "nom": "Épouvantail",
+          "categorie": "Hommes de main",
+          "cout": 65,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 10
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Sans substance",
+              "description": "Son Endurance vaut 6 contre tirs et projectiles magiques. Il ignore les critiques à distance sauf ceux du feu."
+            },
+            {
+              "titre": "Inflammable",
+              "description": "Une touche de feu l'embrase sur 3+."
+            },
+            {
+              "titre": "Construction",
+              "description": "Il relance ses jets de blessures graves sauf celles dues au feu."
+            },
+            {
+              "titre": "Contrôle",
+              "description": "Chaque lanceur de sorts contrôle un Épouvantail. Sans son contrôleur il ne participe pas. Si le contrôleur perd un point de Vie, un test de Commandement non modifié raté met l'Épouvantail hors de combat."
+            },
+            {
+              "titre": "Mort-vivant",
+              "description": "Il cause la peur, ignore psychologie et poison, transforme sonné en à terre et ne gagne pas d'expérience."
+            }
+          ],
+          "source": "Restless Dead, Border Town Burning, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Morts Tourmentés",
+          "profils": [
+            "liche",
+            "necromancien",
+            "garde-des-tombes",
+            "squelette",
+            "revenant"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Restless Dead, Border Town Burning, page 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Cadavre explosif",
+          "description": "Avant la bataille, désignez secrètement un Zombie. Lorsqu'il charge ou est chargé, il est retiré définitivement et toutes les figurines dans un rayon de 1D6 ps subissent 1D3 touches de Force 4. Tué à distance, il n'explose pas. Un seul cadavre peut être actif.",
+          "source": "Restless Dead, Border Town Burning, page 3"
+        },
+        {
+          "titre": "Parleur aux morts",
+          "description": "Avant chaque bataille, ajoutez 1D3 Zombies gratuits et temporaires. Ils dépassent le maximum mais comptent normalement pour la valeur de bande et ne deviennent pas explosifs.",
+          "source": "Restless Dead, Border Town Burning, page 3"
+        },
+        {
+          "titre": "Toucher spectral",
+          "description": "À la place de ses attaques, le Héros effectue une attaque non armée. Une touche blesse automatiquement; la Liche récupère aussi un point de Vie perdu sans dépasser son total initial. Aucun effet sur Possédés et Morts-vivants.",
+          "source": "Restless Dead, Border Town Burning, page 3"
+        },
+        {
+          "titre": "Rite interdit",
+          "description": "Si le Héros renonce à sa recherche rare, la prochaine bataille fournit une réserve de 1D3 plus 1 modificateurs de plus 1 aux jets d'incantation, répartis librement.",
+          "source": "Restless Dead, Border Town Burning, page 3"
+        },
+        {
+          "titre": "Invocateur",
+          "description": "La taille maximale de la bande augmente de 1.",
+          "source": "Restless Dead, Border Town Burning, page 3"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Éveil",
+          "description": "Après la bataille, un Héros ennemi qui obtient 11 à 15 sur les blessures graves peut être relevé comme Zombie. Il conserve caractéristiques et équipement mais n'utilise ni équipement ni compétences, ne court pas et ne gagne pas d'expérience.",
+          "source": "Restless Dead, Border Town Burning, page 7"
+        },
+        {
+          "titre": "Voleur de vie",
+          "difficulte": 10,
+          "description": "Une cible à 6 ps perd un point de Vie sans sauvegarde et le lanceur en gagne un pour la bataille. Le Nécromancien peut dépasser son maximum; la Liche ne fait que récupérer une perte. Aucun effet sur Possédés et Morts-vivants.",
+          "source": "Restless Dead, Border Town Burning, page 7"
+        },
+        {
+          "titre": "Réanimation",
+          "difficulte": 5,
+          "description": "Un Zombie mis hors de combat au dernier corps à corps revient à 6 ps hors de tout combat. Sur Garde des Tombes ou Revenant encore en jeu, le sort rend un point de Vie perdu; il ne ranime pas leurs pertes ni celles des Squelettes et Épouvantails.",
+          "source": "Restless Dead, Border Town Burning, page 7"
+        },
+        {
+          "titre": "Malédiction",
+          "difficulte": 9,
+          "description": "Une cible à 12 ps doit obtenir au plus sa Force sur 1D6 ou effectuer immédiatement un jet de blessure.",
+          "source": "Restless Dead, Border Town Burning, page 7"
+        },
+        {
+          "titre": "Danse macabre de Vanhel",
+          "difficulte": 6,
+          "description": "Un Zombie, Squelette, Revenant ou Garde à 6 ps effectue immédiatement son mouvement maximal. Un contact ennemi compte comme une charge et les tests d'Initiative du déplacement réussissent automatiquement.",
+          "source": "Restless Dead, Border Town Burning, page 7"
+        },
+        {
+          "titre": "Visage de la mort",
+          "difficulte": 6,
+          "description": "Réservé au Nécromancien: il cause la peur et devient immunisé à la peur pour la bataille. Ce sort ne peut être choisi au départ si la Liche connaît Horreur vivante.",
+          "source": "Restless Dead, Border Town Burning, page 7"
+        },
+        {
+          "titre": "Horreur vivante",
+          "difficulte": 8,
+          "description": "Réservé à la Liche: une cible à 8 ps subit une blessure sans armure si 1D6 plus 3 atteint son Commandement. Si elle survit, elle doit tester son Commandement au tour suivant ou ne peut ni bouger, ni tirer, ni lancer. Aucun effet sur Possédés, Morts-vivants ou immunisés à la peur.",
+          "source": "Restless Dead, Border Town Burning, page 7"
+        }
+      ],
+      "ambiguites": [
+        "La formulation typographique de Rite interdit est condensée dans la source; elle est conservée comme une réserve de 1D3 plus 1 bonus unitaires.",
+        "La source est publiée en anglais; les libellés français sont des traductions fidèles et paraphrasées."
+      ]
+    },
+    "nains-du-chaos": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 4,
+        "source": "Nains du Chaos V1gFr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Difficiles à tuer",
+          "description": "Pour un Nain du Chaos, 1 à 2 met à terre, 3 à 5 sonne et 6 met hors de combat.",
+          "source": "Nains du Chaos V1gFr, page 1"
+        },
+        {
+          "titre": "Crâne épais",
+          "description": "Les Nains du Chaos ignorent la règle commotion des armes contondantes.",
+          "source": "Nains du Chaos V1gFr, page 1"
+        },
+        {
+          "titre": "Armure naine",
+          "description": "Porter une armure ne réduit jamais leur Mouvement.",
+          "source": "Nains du Chaos V1gFr, page 1"
+        },
+        {
+          "titre": "Francs-tireurs",
+          "description": "La bande peut recruter Garde du corps Ogre, Gladiateur, Mage, Assassin impérial, Éclaireur Hobgobelin et tout franc-tireur autorisant les Orques ou le Chaos, mais aucun Elfe.",
+          "source": "Nains du Chaos V1gFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "hierogrammate",
+          "nom": "Hiérogrammate",
+          "categorie": "Héros",
+          "cout": 85,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Force",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins utilisent son Commandement."
+            },
+            {
+              "titre": "Sorcier de Hashut",
+              "description": "Il commence avec Sacrifice rituel et un sort de Hashut aléatoire."
+            }
+          ],
+          "source": "Nains du Chaos V1gFr, pages 1 et 7"
+        },
+        {
+          "id": "geolier",
+          "nom": "Geôlier",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Mauvaise réputation",
+              "description": "Il cause la peur aux Humains."
+            }
+          ],
+          "source": "Nains du Chaos V1gFr, pages 1 et 7"
+        },
+        {
+          "id": "centaure-taureau",
+          "nom": "Centaure Taureau",
+          "categorie": "Héros",
+          "cout": 100,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 10,
+          "statistiques": {
+            "mouvement": 8,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Force"],
+          "regles": [
+            {
+              "titre": "Grande cible",
+              "description": "Il ne porte aucune arme de tir et ajoute 20 à sa valeur de bande."
+            }
+          ],
+          "source": "Nains du Chaos V1gFr, pages 1 et 7"
+        },
+        {
+          "id": "mouchard",
+          "nom": "Mouchard",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Lâche",
+              "description": "Il relance toujours Ce gars est doué et ne devient jamais Héros."
+            }
+          ],
+          "source": "Nains du Chaos V1gFr, page 8"
+        },
+        {
+          "id": "guerrier-nain-du-chaos",
+          "nom": "Guerrier Nain du Chaos",
+          "categorie": "Hommes de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Nains du Chaos V1gFr, page 8"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Nains du Chaos",
+          "profils": [
+            "hierogrammate",
+            "geolier",
+            "centaure-taureau",
+            "guerrier-nain-du-chaos"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Fouet d'acier",
+                  "cout": 10,
+                  "note": "Geôlier seulement; plus 1 Attaque en charge ou contre le chargeur et frappe en premier."
+                },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Pince",
+                  "cout": 25,
+                  "note": "Rare 10, Geôlier, deux mains; un ennemi mis hors de combat est capturé sauf grande cible ou animal."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Pistolet", "cout": 15 },
+                { "nom": "Paire de pistolets", "cout": 30 },
+                { "nom": "Tromblon", "cout": 30 },
+                { "nom": "Arquebuse", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                {
+                  "nom": "Exosquelette",
+                  "cout": 225,
+                  "note": "Rare 14, sauvegarde 4+, plus 3 Mouvement, coût réduit de 1 CO par point d'expérience, lié au porteur et compatible avec la magie mais pas avec bouclier ou rondache."
+                },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Machines",
+              "entrees": [
+                {
+                  "nom": "Machine du Chaos",
+                  "cout": 195,
+                  "note": "Rare 10, char démoniaque transportant jusqu'à six captifs, les grandes cibles comptant double."
+                }
+              ]
+            }
+          ],
+          "source": "Nains du Chaos V1gFr, pages 2 à 5"
+        },
+        {
+          "nom": "Mouchards",
+          "profils": ["mouchard"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Fronde", "cout": 2 },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Nains du Chaos V1gFr, page 2"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Dur à cuire",
+          "description": "Le Héros relance son résultat de blessure grave.",
+          "source": "Nains du Chaos V1gFr, page 6"
+        },
+        {
+          "titre": "Ingénieur du Chaos",
+          "description": "Le Héros gagne plus 3 pour trouver armure du Chaos, exosquelette ou arme d'obsidienne, ignore leurs restrictions de découverte et de don, mais ne gagne pas automatiquement le droit de les porter.",
+          "source": "Nains du Chaos V1gFr, page 6"
+        },
+        {
+          "titre": "Très résistant",
+          "description": "Sur la table des blessures, 1 à 3 met à terre, 4 à 5 sonne et 6 met hors de combat.",
+          "source": "Nains du Chaos V1gFr, page 6"
+        },
+        {
+          "titre": "Crâne très épais",
+          "description": "Sur 3+, un résultat sonné devient à terre; avec un casque, la sauvegarde passe à 2+.",
+          "source": "Nains du Chaos V1gFr, page 6"
+        },
+        {
+          "titre": "Chercheur de ressources",
+          "description": "Le Héros peut modifier de plus ou moins 1 un dé d'exploration.",
+          "source": "Nains du Chaos V1gFr, page 6"
+        },
+        {
+          "titre": "Tyran",
+          "description": "Réservée au chef: s'il n'est ni à terre ni sonné, il relance les tests de déroute ratés. S'il tombe hors de combat, la bande teste immédiatement.",
+          "source": "Nains du Chaos V1gFr, page 6"
+        },
+        {
+          "titre": "Arme d'obsidienne",
+          "description": "Option d'équipement à quatre fois le prix normal, Rare 12. Elle donne plus 1 Force mais corrompt son porteur et est interdite aux Nains, Elfes, Sœurs, Répurgateurs et prêtres. Le porteur frappe en dernier.",
+          "source": "Nains du Chaos V1gFr, page 3"
+        },
+        {
+          "titre": "Armure du Chaos",
+          "description": "185 CO, Rare 13, sauvegarde 4+, coût réduit de 1 CO par point d'expérience, liée au porteur, compatible avec les sorts, incompatible avec bouclier et rondache. Sa rareté augmente de 1 par précédente mise hors de combat du porteur.",
+          "source": "Nains du Chaos V1gFr, page 4"
+        },
+        {
+          "titre": "Machine du Chaos",
+          "description": "Char doté d'une machine E8 PV4, de roues E6 PV1 et d'un démon M6 E6 PV3. Un Nain du Chaos conduit; seuls des captifs voyagent, six places et deux pour une grande cible. Une perte de contrôle utilise la table des chars; un résultat 5 libère le démon puis la machine avance droit et s'immobilise. Les captifs proviennent des blessures Capturé ou des pinces, peuvent être libérés en détruisant la machine ou avec les clés d'un Geôlier hors de combat. Envoyer tous les captifs à Hashut immobilise la machine et un Héros pour une bataille puis accorde expérience au chef, à plusieurs Héros, ou 2D3 expérience et 1D6 fois 5 CO selon 1D6.",
+          "source": "Nains du Chaos V1gFr, page 5"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Sacrifice rituel",
+          "difficulte": 10,
+          "description": "Au contact de la Machine du Chaos, retirez un captif. Chaque captif supplémentaire sacrifié avant le jet réduit la difficulté de 1; un succès donne 1D3 expérience au sorcier.",
+          "source": "Nains du Chaos V1gFr, page 9"
+        },
+        {
+          "titre": "Esprit de Hashut",
+          "difficulte": 9,
+          "description": "Une ligne de 18 ps frappe chaque figurine traversée avec une touche de Force 4.",
+          "source": "Nains du Chaos V1gFr, page 9"
+        },
+        {
+          "titre": "Rugissement du destin",
+          "difficulte": 8,
+          "description": "Tous les ennemis en contact doivent réussir un test de Commandement ou fuir.",
+          "source": "Nains du Chaos V1gFr, page 9"
+        },
+        {
+          "titre": "Fumées d'Azgorh",
+          "difficulte": 7,
+          "description": "Une ligne de 8 ps touche chaque figurine sur 4+ avec Force 4, sans sauvegarde d'armure.",
+          "source": "Nains du Chaos V1gFr, page 9"
+        },
+        {
+          "titre": "Peau chatoyante",
+          "difficulte": 10,
+          "description": "Le sorcier ou un allié à 6 ps annule chaque blessure sur 4+; chaque touche de corps à corps inflige aussi une touche de Force 3 à l'attaquant jusqu'à la prochaine phase de Tir.",
+          "source": "Nains du Chaos V1gFr, page 9"
+        },
+        {
+          "titre": "Coulée de lave",
+          "difficulte": 7,
+          "description": "Le sorcier se déplace de 12 ps dans toute direction, peut ainsi charger et doit réapparaître sur une surface praticable.",
+          "source": "Nains du Chaos V1gFr, page 9"
+        },
+        {
+          "titre": "Tremblement de terre",
+          "difficulte": 9,
+          "description": "Toutes les figurines amies et ennemies à 3 ps testent leur Initiative ou subissent 1D3 touches de Force 4.",
+          "source": "Nains du Chaos V1gFr, page 9"
+        }
+      ],
+      "ambiguites": [
+        "La liste imprime l'exosquelette à 175 CO, mais sa règle détaillée indique 225 CO. La valeur détaillée est conservée.",
+        "La liste imprime la Machine du Chaos à 125 CO, mais sa règle détaillée indique 195 CO. La valeur détaillée est conservée.",
+        "Cette liste Nains du Chaos est distincte de la liste Fils de Hashut."
+      ]
+    },
+    "arpenteurs-fimirs": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "Arpenteurs Fimirs V1.6fFr, page 3"
+      },
+      "regles": [
+        {
+          "titre": "Nés dans la brume",
+          "description": "Les Fimirs voient et se déplacent dans tout brouillard, même magique, sans pénalité.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 3"
+        },
+        {
+          "titre": "Brouillard mystique",
+          "description": "La bataille commence sous un brouillard donnant un malus supplémentaire de moins 1 aux tirs contre la bande. Il agit comme un sort de difficulté 7 qui peut être dissipé. Pendant sa phase de Tir, la bande peut le rétablir jusqu'au tour suivant grâce à ses talismans collectifs.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 3"
+        },
+        {
+          "titre": "Mutations",
+          "description": "À sa création, chaque Héros peut acheter une mutation de l'annexe.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 3"
+        },
+        {
+          "titre": "Sang-froid",
+          "description": "Pour les tests de Commandement, lancez 3D6 et écartez le plus élevé.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 3"
+        },
+        {
+          "titre": "Aquatiques et coureurs des marais",
+          "description": "Les Fimirs ignorent les pénalités de l'eau et des marais et bénéficient normalement de leurs couverts.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 3"
+        },
+        {
+          "titre": "Peau écailleuse",
+          "description": "Tous ont une sauvegarde naturelle de 6+ qui n'est pas modifiée par la Force, sauf les critiques ignorant les sauvegardes. Elle se combine aux armures. Les Guerriers Fimirs commencent à 5+.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 3"
+        },
+        {
+          "titre": "Cyclopes",
+          "description": "Les Héros relancent Œil crevé sur la table des blessures graves; obtenir encore ce résultat les rend borgnes.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 3"
+        },
+        {
+          "titre": "Francs-tireurs",
+          "description": "La bande recrute Esclavagiste, Bandit de grand chemin, Bretteur, Chasseur des marais et Baleinier.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 3"
+        }
+      ],
+      "profils": [
+        {
+          "id": "matriarche-fimir",
+          "nom": "Matriarche Fimir",
+          "categorie": "Héros",
+          "cout": 110,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Érudition"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins utilisent son Commandement."
+            },
+            {
+              "titre": "Sorcier",
+              "description": "Elle commence avec un Rituel du Chaos et un sort de Dhar, tous deux tirés au hasard."
+            },
+            {
+              "titre": "Concentration mentale",
+              "description": "Elle relance un dé lors d'un jet d'incantation."
+            },
+            {
+              "titre": "Grande créature",
+              "description": "Elle cause la peur et est une grande cible."
+            },
+            {
+              "titre": "Crainte hors brume",
+              "description": "En l'absence du brouillard mystique, elle craint tous les ennemis."
+            }
+          ],
+          "source": "Arpenteurs Fimirs V1.6fFr, pages 3 et 6"
+        },
+        {
+          "id": "fimir-demoniaque",
+          "nom": "Fimir Démoniaque",
+          "categorie": "Héros",
+          "cout": 100,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 2,
+            "initiative": 4,
+            "attaques": 2,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Combat naturel",
+              "description": "Il n'utilise aucune arme mais peut porter une armure."
+            },
+            { "titre": "Peur", "description": "Il cause la peur." },
+            {
+              "titre": "Âme démoniaque",
+              "description": "Il bénéficie d'une sauvegarde de 4+ contre les sorts et prières."
+            }
+          ],
+          "source": "Arpenteurs Fimirs V1.6fFr, pages 3 et 6"
+        },
+        {
+          "id": "jeune-noble-fimir",
+          "nom": "Jeune Noble Fimir",
+          "categorie": "Héros",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 4,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 1,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Queue",
+              "description": "Il effectue une attaque supplémentaire avec plus 1 Force."
+            },
+            {
+              "titre": "Instable",
+              "description": "Sans brouillard mystique, il craint tous les ennemis et devient stupide."
+            }
+          ],
+          "source": "Arpenteurs Fimirs V1.6fFr, pages 3 et 6"
+        },
+        {
+          "id": "shearl",
+          "nom": "Shearl",
+          "categorie": "Hommes de main",
+          "cout": 55,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 1,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 2,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Instable",
+              "description": "Il cause la peur. Sans brouillard mystique, il craint tous les ennemis et devient stupide."
+            }
+          ],
+          "source": "Arpenteurs Fimirs V1.6fFr, page 7"
+        },
+        {
+          "id": "guerrier-fimir",
+          "nom": "Guerrier Fimir",
+          "categorie": "Hommes de main",
+          "cout": 180,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 2,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 2,
+            "attaques": 3,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Monstre",
+              "description": "Il cause la peur, est une grande cible et est stupide."
+            },
+            {
+              "titre": "Queue",
+              "description": "Il effectue une attaque supplémentaire avec plus 1 Force."
+            },
+            {
+              "titre": "Peau écailleuse",
+              "description": "Sa sauvegarde naturelle est de 5+."
+            },
+            {
+              "titre": "Monstrueux",
+              "description": "Il compte pour deux membres. Après une blessure grave, 1 le tue et 2 à 6 ne lui inflige aucune séquelle. Promu Héros, il perd Stupidité et Monstrueux puis utilise le tableau normal."
+            }
+          ],
+          "source": "Arpenteurs Fimirs V1.6fFr, page 7"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Héros Fimirs",
+          "profils": [
+            "matriarche-fimir",
+            "fimir-demoniaque",
+            "jeune-noble-fimir"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2 },
+                { "nom": "Masse ou bâton", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Fléau", "cout": 15 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Pince",
+                  "cout": 25,
+                  "note": "Rare 10, deux mains; capture une cible hors de combat sauf grande cible ou animal."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                {
+                  "nom": "Pendule de pierre magique",
+                  "cout": 25,
+                  "formuleCout": "25 + 3D6 CO",
+                  "note": "Rare 9; après la bataille, un test de Commandement réussi permet de relancer un dé d'exploration, sans relancer une relance."
+                }
+              ]
+            }
+          ],
+          "source": "Arpenteurs Fimirs V1.6fFr, pages 4 et 5"
+        },
+        {
+          "nom": "Hommes de main Fimirs",
+          "profils": ["shearl", "guerrier-fimir"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 }
+              ]
+            }
+          ],
+          "source": "Arpenteurs Fimirs V1.6fFr, page 4"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Mutations disponibles",
+          "description": "Âme démoniaque 20: sauvegarde 4+ contre magie; pince 50: un bras devient une attaque supplémentaire à Force plus 1; tentacule 35: retire une Attaque à un adversaire, minimum 1; sabots fendus 40: plus 1 Mouvement; sang acide 30: chaque blessure reçue au corps à corps inflige une touche de Force 3 aux contacts; épines 35: touche automatique de Force 1 aux contacts au début du combat; queue de scorpion 40: attaque supplémentaire de Force 5, Force 2 contre immunisés au poison; bras supplémentaire 40: main, bouclier ou rondache en plus; hideux 40: peur; corps cristallin 60: Endurance 6 et un seul point de Vie, sans progression de ces caractéristiques; massif 50: plus 2 Force et moins 4 Commandement; morsure venimeuse 50: attaque de Force 5, ou améliore une morsure existante, Force 2 contre immunisés; queue préhensile 50: attaque supplémentaire ou port d'un objet à une main; peau écailleuse 60: sauvegarde naturelle 5+; ailes 45: vol plané de 2 ps horizontal par 1 ps de chute.",
+          "source": "Arpenteurs Fimirs V1.6fFr, pages 8 et 9"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Vision d'horreur",
+          "difficulte": 10,
+          "description": "Une cible visible à 12 ps doit tester son Commandement; en cas d'échec elle fuit de 2D6 ps et continue à fuir jusqu'à réussir un ralliement.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 10"
+        },
+        {
+          "titre": "Œil divin",
+          "difficulte": 7,
+          "description": "Jusqu'au prochain tour, le lanceur relance tous ses jets pour toucher et pour blesser, mais doit accepter les seconds résultats.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 10"
+        },
+        {
+          "titre": "Sang de feu",
+          "difficulte": 8,
+          "description": "Toutes les figurines en contact subissent une touche de Force 3; celles qui blessent le lanceur au corps à corps avant sa prochaine phase de Tir en subissent une autre.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 10"
+        },
+        {
+          "titre": "Tentacules",
+          "difficulte": 7,
+          "description": "Une cible à 6 ps doit réussir un test de Force ou est immobilisée jusqu'à la prochaine phase de Tir du lanceur.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 10"
+        },
+        {
+          "titre": "Sombre sang",
+          "difficulte": 8,
+          "description": "Le lanceur gagne plus 1 Force, plus 1 Endurance et frénésie jusqu'à sa prochaine phase de Tir.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 10"
+        },
+        {
+          "titre": "Malédiction du Chaos",
+          "difficulte": 9,
+          "description": "Une cible à 12 ps doit réussir un test sous son Endurance ou perdre un point de Vie sans sauvegarde.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 10"
+        },
+        {
+          "titre": "Dhar, Éclair noir",
+          "difficulte": 7,
+          "description": "Une cible visible à 18 ps subit une touche de Force 5; une sauvegarde d'armure subit moins 2.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 11"
+        },
+        {
+          "titre": "Dhar, Vol d'âme",
+          "difficulte": 9,
+          "description": "Une cible à 6 ps perd un point de Vie sans sauvegarde et le lanceur en gagne un jusqu'à la fin de la bataille.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 11"
+        },
+        {
+          "titre": "Dhar, Vents de mort",
+          "difficulte": 9,
+          "description": "Toutes les figurines ennemies à 6 ps subissent une touche de Force 3 sans sauvegarde d'armure.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 11"
+        },
+        {
+          "titre": "Dhar, Portail des ténèbres",
+          "difficulte": 8,
+          "description": "Le lanceur se téléporte jusqu'à 12 ps vers un point visible et peut entrer au combat, ce qui compte comme une charge.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 11"
+        },
+        {
+          "titre": "Dhar, Main de poussière",
+          "difficulte": 8,
+          "description": "Une attaque de corps à corps du lanceur qui touche avant son prochain tour blesse automatiquement sans sauvegarde d'armure.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 11"
+        },
+        {
+          "titre": "Dhar, Domination",
+          "difficulte": 9,
+          "description": "Une cible ennemie à 12 ps doit réussir un test de Commandement ou est contrôlée par le lanceur jusqu'à sa prochaine phase de Tir.",
+          "source": "Arpenteurs Fimirs V1.6fFr, page 11"
+        }
+      ],
+      "ambiguites": [
+        "La règle Bras supplémentaire distingue imparfaitement attaque, arme, bouclier et rondache dans sa formulation française; aucune interprétation supplémentaire n'est ajoutée.",
+        "La liste est une publication fan adaptée à Mordheim et requiert l'accord du groupe de jeu."
+      ]
+    },
+    "maraudeurs-du-chaos": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Maraudeurs du Chaos V1.11bFr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Œil des Dieux Sombres",
+          "description": "Après une défaite, lancez 2D6 avec plus 1 par Héros hors de combat; sur 12+, le Chef devient Enfant du Chaos et perd expérience, compétences, blessures et équipement, ou est retiré si la bande en possède déjà un. Après une victoire, ajoutez plus 1 par ennemi mis hors de combat par le Chef; sur 12+, choisissez une Marque. Un Chef marqué ne relance plus ce test jusqu'à sa mort. Sans Chef, aucun jet.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 1"
+        },
+        {
+          "titre": "Francs-tireurs",
+          "description": "La bande ne recrute que Gladiateur, Garde du corps Ogre, Chaman Norse, Assassin impérial et profils l'autorisant explicitement. Un jeteur de sorts reste permis sauf lorsque la Marque d'Arkhar l'interdit.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 1"
+        },
+        {
+          "titre": "Tribus de l'Ombre",
+          "description": "À sa création, choisissez Norse, Kurgan ou Hung. Les Norses subissent plus 1 aux raretés et leur Œil exige 13; les Kurgans ont des Chiens illimités, des arcs à 10 CO pour Héros et Maraudeurs et moins 1 aux raretés sauf grandes haches et fouets; les Hungs sont limités à 12 membres, achètent toujours des destriers à 40 CO et tous leurs Héros ont Équitation: destrier.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 9"
+        },
+        {
+          "titre": "Marques du Chaos",
+          "description": "Une Marque modifie le Chef et le Devin: Arkhar rend le Chef frénétique et annule sur 4+ les sorts le ciblant, tandis que le Devin perd la magie et accède à Force; Shornaal protège le Chef par un test de Commandement à 3D6 en gardant les deux plus élevés et donne ses rituels au Devin; Tchar transforme le Chef en sorcier de Tchar et donne deux sorts au Devin; Onogal donne plus 1 Endurance au Chef, relance de blessure grave et immunité au poison, tandis que le Devin apprend Onogal; le Chaos Universel fait relancer les tests de Commandement dans le rayon du Chef et permet jusqu'à trois Gors, tandis que le Devin utilise les Rituels du Chaos.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 10"
+        }
+      ],
+      "profils": [
+        {
+          "id": "chef-maraudeur",
+          "nom": "Chef Maraudeur",
+          "categorie": "Héros",
+          "cout": 95,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins utilisent son Commandement."
+            }
+          ],
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 5"
+        },
+        {
+          "id": "devin",
+          "nom": "Devin",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Érudition", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il utilise l'école déterminée par sa Marque des Dieux Sombres."
+            },
+            {
+              "titre": "Marque initiale",
+              "description": "À son recrutement, choisissez Serpent, Corbeau, Chien, Aigle ou Chaos Universel."
+            }
+          ],
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 5"
+        },
+        {
+          "id": "damne",
+          "nom": "Damné",
+          "categorie": "Héros",
+          "cout": 55,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 0,
+            "capaciteTir": 3,
+            "force": 0,
+            "endurance": 0,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 0,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Inconstance",
+              "description": "Sa CC, Force et Endurance valent chacune 1D6 et ses Attaques 1D3. Chaque valeur est relancée une fois par tour au besoin."
+            },
+            { "titre": "Peur", "description": "Il cause la peur." },
+            {
+              "titre": "Progression variable",
+              "description": "Lorsqu'une caractéristique variable progresse, lancez son dé. Le résultat peut remplacer définitivement la valeur; sinon la progression est perdue, sans appliquer les maxima habituels."
+            },
+            {
+              "titre": "Destin",
+              "description": "Une fois toutes ses caractéristiques fixées, il peut s'équiper normalement. À 90 expérience, toute caractéristique encore variable le transforme en Enfant du Chaos, ou le fait quitter la bande si elle en possède déjà un."
+            }
+          ],
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 6"
+        },
+        {
+          "id": "champion",
+          "nom": "Champion",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [],
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 6"
+        },
+        {
+          "id": "maraudeur",
+          "nom": "Maraudeur du Chaos",
+          "categorie": "Hommes de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Maraudeurs du Chaos V1.11bFr, page 7"
+        },
+        {
+          "id": "chien-du-chaos",
+          "nom": "Chien du Chaos",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 7,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animal",
+              "description": "Il n'utilise aucun équipement, combat sans malus et ne gagne pas d'expérience."
+            }
+          ],
+          "source": "Maraudeurs du Chaos V1.11bFr, page 7"
+        },
+        {
+          "id": "enfant-du-chaos",
+          "nom": "Enfant du Chaos",
+          "categorie": "Hommes de main",
+          "cout": 180,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 0,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 2,
+            "attaques": 0,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Mouvement aléatoire",
+              "description": "Il avance de 2D6 ps en ligne droite dans l'orientation choisie, sans doubler en charge. Tout contact devient une charge."
+            },
+            {
+              "titre": "Attaques aléatoires",
+              "description": "Il possède 1D6 plus 1 Attaques, déterminées au début de chaque phase de corps à corps."
+            },
+            {
+              "titre": "Abomination",
+              "description": "Il cause la peur, réussit automatiquement tout test de Commandement, ne gagne pas d'expérience et est une grande cible."
+            }
+          ],
+          "source": "Maraudeurs du Chaos V1.11bFr, page 7"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Héros Maraudeurs",
+          "profils": ["chef-maraudeur", "devin", "champion", "damne"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                {
+                  "nom": "Fouet barbelé",
+                  "cout": 15,
+                  "note": "Rare 9; interdit la parade, donne plus 1 Attaque de claquement et peut donner plus 1 Attaque aux Chiens à 4 ps."
+                },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Fléau", "cout": 15 },
+                {
+                  "nom": "Grande hache du Chaos",
+                  "cout": 25,
+                  "note": "Rare 8 et Choisi par le Chaos; Force plus 2, deux mains, frappe en dernier, modificateur d'armure supplémentaire de moins 1."
+                }
+              ]
+            },
+            { "nom": "Tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 },
+                {
+                  "nom": "Armure du Chaos",
+                  "cout": 185,
+                  "note": "Rare 13, sauvegarde 4+, coût réduit de 1 CO par expérience, liée au porteur et compatible avec la magie mais pas avec bouclier ou rondache."
+                }
+              ]
+            }
+          ],
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 2 à 4"
+        },
+        {
+          "nom": "Hommes de main Maraudeurs",
+          "profils": ["maraudeur"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Fléau", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Haches de lancer",
+                  "cout": 15,
+                  "note": "Traitées comme couteaux de lancer."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Maraudeurs du Chaos V1.11bFr, page 2"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Mutant",
+          "description": "Le Héros peut acheter une mutation. Avec la Marque d'Onogal, il peut choisir une Bénédiction de Nurgle. Cette compétence est répétable.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 3"
+        },
+        {
+          "titre": "Corps tatoué",
+          "description": "Réservée au Chef: l'Œil des Dieux se déclenche sur 10+, ou 11+ pour un Norse.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 3"
+        },
+        {
+          "titre": "Courage du guerrier",
+          "description": "Réservée au Chef: il relance les tests de déroute et devient immunisé à la peur et à seul contre tous.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 3"
+        },
+        {
+          "titre": "Balayage",
+          "description": "Avec Homme fort, chaque mise hors de combat par arme à deux mains autorise une attaque immédiate contre un autre ennemi au contact.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 3"
+        },
+        {
+          "titre": "Choisi par le Chaos",
+          "description": "Le Héros adopte le profil maximal des Guerriers du Chaos et la liste d'équipement des Héros.",
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 2 et 3"
+        },
+        {
+          "titre": "Mutations",
+          "description": "Les mutations disponibles sont Âme démoniaque 20, Pince 50, Tentacule 35, Sabots fendus 40, Sang acide 30, Épines 35, Queue de scorpion 40, Bras supplémentaire 40, Hideux 40, Corps cristallin 60, Massif 50, Morsure venimeuse 50, Queue préhensile 50, Peau écailleuse 60 et Ailes 45. Leurs effets sont sauvegarde magique, attaques ou membres supplémentaires, modifications de caractéristiques, touches de riposte, peur, armure naturelle ou vol plané selon l'entrée.",
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 11 et 12"
+        },
+        {
+          "titre": "Bénédictions d'Onogal",
+          "description": "Courant de corruption 25 donne un tir de portée 6 ps et Force 3 sans sauvegarde; Nuage de mouches 25 impose moins 1 aux touches de corps à corps; Hideux 40 cause la peur; Pourriture d'Onogal 50 immunise au poison et transmet une maladie sur un 6 pour blesser, avec perte permanente d'Endurance; Marque d'Onogal 35 donne plus 1 point de Vie et immunité au poison; Horreur boursouflée 40 donne plus 1 Vie et Endurance mais moins 1 Mouvement.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 13"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Rituels du Chaos",
+          "description": "La table comprend Vision d'horreur difficulté 10, Œil divin 7, Sang de feu 8, Tentacules 7, Sombre sang 8 et Malédiction du Chaos 9. Ils font fuir, accordent des relances ou bonus temporaires, infligent des touches aux contacts, immobilisent ou retirent un point de Vie après un test d'Endurance.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 15"
+        },
+        {
+          "titre": "Délicieuse souffrance",
+          "difficulte": 8,
+          "description": "Toutes les figurines, sauf le Devin, dans un rayon de 3 ps testent leur Commandement ou sont mises à terre.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 16"
+        },
+        {
+          "titre": "Danse du serpent",
+          "difficulte": 8,
+          "description": "Jusqu'à sa prochaine phase de Tir, les ennemis non immunisés subissent moins 1 pour toucher le Devin au corps à corps.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 16"
+        },
+        {
+          "titre": "Tourment sans fin",
+          "difficulte": 9,
+          "description": "Une cible à 8 ps soustrait 1 à ses jets de blessure après chaque phase de ralliement. Le Devin ne fait rien tant qu'il maintient le sort; une attaque de corps à corps contre lui touche automatiquement et rompt l'effet.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 16"
+        },
+        {
+          "titre": "Consternation",
+          "difficulte": 8,
+          "description": "Une cible à 8 ps tombe à Initiative 1 et frappe en dernier jusqu'à réussir un test de Commandement pendant une phase de ralliement.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 16"
+        },
+        {
+          "titre": "Mille voix",
+          "difficulte": 8,
+          "description": "Une cible non immunisée à 12 ps perd 1D3 plus 1 Commandement, minimum 2, jusqu'à réussir un test au début d'un tour ou jusqu'à ce que le Devin soit blessé. Une seule cible à la fois.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 16"
+        },
+        {
+          "titre": "Tentation",
+          "difficulte": 7,
+          "description": "Une cible non immunisée à 8 ps ratant son Commandement est contrôlée. Elle reteste au début de chaque tour; si le Devin est touché, il doit tester son Commandement pour maintenir l'effet. Une cible à la fois.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 16"
+        },
+        {
+          "titre": "Bénédiction de Tchar",
+          "description": "Avant la bataille, le Devin renonce à lancer des sorts pendant la partie et gagne 1D3 expérience après la bataille s'il n'est pas hors de combat.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 17"
+        },
+        {
+          "titre": "Dissipation",
+          "difficulte": 7,
+          "description": "Tous les sorts actuellement actifs prennent fin.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 17"
+        },
+        {
+          "titre": "Clairvoyance",
+          "difficulte": 10,
+          "description": "Avant la bataille, désignez une bande; un de ses Héros tiré au hasard ne participe pas. Les lanceurs de sorts et utilisateurs de prières sont immunisés.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 17"
+        },
+        {
+          "titre": "Courroux de Tchar",
+          "difficulte": 9,
+          "description": "Une cible à 12 ps subit une touche dont la Force égale la différence d'expérience avec le Devin, plafonnée à 10. Si la cible est plus expérimentée, le Devin est touché à la place.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 17"
+        },
+        {
+          "titre": "Récompense de Tchar",
+          "difficulte": 8,
+          "description": "La cible gagne plus 1 dans une caractéristique par tranche de 10 expérience, chaque caractéristique une fois, jusqu'à la prochaine phase de Tir du Devin.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 17"
+        },
+        {
+          "titre": "Esclave du Chaos",
+          "difficulte": 9,
+          "description": "Une cible à 12 ps subit une touche de Force 2 sans sauvegarde. Mise hors de combat, elle lance immédiatement sa blessure grave; si elle meurt, elle est remplacée par une Horreur jusqu'à la fin de la bataille, laquelle disparaît si le Devin est sonné ou hors de combat.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 17"
+        },
+        {
+          "titre": "Toucher d'Onogal",
+          "difficulte": 10,
+          "description": "Une cible au contact mise hors de combat lance immédiatement sa blessure grave; si elle meurt, un Porte-peste la remplace jusqu'à la fin, mais il disparaît si le Devin est sonné ou hors de combat.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 18"
+        },
+        {
+          "titre": "Furoncles",
+          "difficulte": 7,
+          "description": "Une cible à 8 ps teste son Endurance ou perd un point de Vie sans sauvegarde.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 18"
+        },
+        {
+          "titre": "Miasmes",
+          "difficulte": 8,
+          "description": "Tous les vivants à 6 ps testent leur Endurance ou perdent une Attaque pour le reste du tour.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 18"
+        },
+        {
+          "titre": "Pestilence",
+          "difficulte": 10,
+          "description": "Tous les ennemis à 12 ps subissent une touche de Force 3 sans sauvegarde d'armure.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 18"
+        },
+        {
+          "titre": "Peau verruqueuse",
+          "difficulte": 8,
+          "description": "Le Devin obtient une sauvegarde de 2+ qui remplace toute sauvegarde existante jusqu'à sa prochaine phase de Tir.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 18"
+        },
+        {
+          "titre": "Pourriture d'Onogal",
+          "difficulte": 9,
+          "description": "Chaque ennemi en contact teste son Endurance ou contracte la Pourriture, maladie permanente pouvant réduire l'Endurance avant chaque bataille et contaminer un allié.",
+          "source": "Maraudeurs du Chaos V1.11bFr, page 18"
+        }
+      ],
+      "ambiguites": [
+        "Les caractéristiques aléatoires du Damné et de l'Enfant du Chaos sont représentées par 0 dans les champs numériques et intégralement décrites dans leurs règles.",
+        "La date de révision affichée dans l'historique du PDF comporte une coquille, 2022-06-272.",
+        "Les deux créatures démoniaques optionnelles évoquées par certains sorts ne sont pas recrutables dans la composition et ne sont donc pas ajoutées comme profils de bande."
+      ]
+    }
+  }
+}

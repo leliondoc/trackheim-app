@@ -1,0 +1,2718 @@
+{
+  "bandes": {
+    "mercenaires-reiklanders": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/mercenaires-reiklanders",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Mercenaires V2LRBFr, pages 1, 2 et 4"
+      },
+      "regles": [
+        {
+          "titre": "Discipline militaire",
+          "description": "Les guerriers peuvent utiliser le Commandement du Capitaine à 12 ps ou moins au lieu des 6 ps habituels.",
+          "source": "Mercenaires V2LRBFr, page 1"
+        },
+        {
+          "titre": "Excellents tireurs",
+          "description": "Tous les Tireurs gagnent +1 en Capacité de Tir, qu'ils soient recrutés à la création ou plus tard.",
+          "source": "Mercenaires V2LRBFr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "capitaine-mercenaire",
+          "nom": "Capitaine mercenaire",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Normalement, les alliés à 6 ps ou moins utilisent son Commandement. La règle reiklander porte cette distance à 12 ps."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+        },
+        {
+          "id": "champion",
+          "nom": "Champion",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force"],
+          "regles": [],
+          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+        },
+        {
+          "id": "recrue",
+          "nom": "Recrue",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
+          "regles": [],
+          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+        },
+        {
+          "id": "guerrier",
+          "nom": "Guerrier",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 4"
+        },
+        {
+          "id": "tireur",
+          "nom": "Tireur",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            },
+            {
+              "titre": "Excellents tireurs",
+              "description": "La CT de base 3 est portée à 4 par la règle reiklander."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, pages 1 et 4"
+        },
+        {
+          "id": "bretteur",
+          "nom": "Bretteur",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            },
+            {
+              "titre": "Expert à l'épée",
+              "description": "Lorsqu'il charge avec des épées normales, il relance ses jets pour toucher ratés. Aucun effet avec une arme à deux mains ou une autre arme."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Mercenaires",
+          "profils": [
+            "capitaine-mercenaire",
+            "champion",
+            "recrue",
+            "guerrier",
+            "bretteur"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 25,
+                  "formuleCout": "50 CO la paire"
+                },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 3"
+        },
+        {
+          "nom": "Tireurs",
+          "profils": ["tireur"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 },
+                { "nom": "Tromblon", "cout": 30 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Long fusil d'Hochland", "cout": 200 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 3"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [],
+      "ambiguites": []
+    },
+    "mercenaires-middenheimers": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/mercenaires-middenheimers",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Mercenaires V2LRBFr, pages 2 et 4"
+      },
+      "regles": [
+        {
+          "titre": "Force du Nord",
+          "description": "Le Capitaine et les Champions commencent avec Force 4 au lieu de Force 3.",
+          "source": "Mercenaires V2LRBFr, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "capitaine-mercenaire",
+          "nom": "Capitaine mercenaire",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Force du Nord",
+              "description": "La Force de base 3 est portée à 4."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, pages 2 à 4"
+        },
+        {
+          "id": "champion",
+          "nom": "Champion",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Force du Nord",
+              "description": "La Force de base 3 est portée à 4."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, pages 2 à 4"
+        },
+        {
+          "id": "recrue",
+          "nom": "Recrue",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [],
+          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+        },
+        {
+          "id": "guerrier",
+          "nom": "Guerrier",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 4"
+        },
+        {
+          "id": "tireur",
+          "nom": "Tireur",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 4"
+        },
+        {
+          "id": "bretteur",
+          "nom": "Bretteur",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            },
+            {
+              "titre": "Expert à l'épée",
+              "description": "En charge avec des épées normales, relance les jets pour toucher ratés. Aucun effet avec une arme à deux mains ou une autre arme."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Mercenaires",
+          "profils": [
+            "capitaine-mercenaire",
+            "champion",
+            "recrue",
+            "guerrier",
+            "bretteur"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 25,
+                  "formuleCout": "50 CO la paire"
+                },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 3"
+        },
+        {
+          "nom": "Tireurs",
+          "profils": ["tireur"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 },
+                { "nom": "Tromblon", "cout": 30 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Long fusil d'Hochland", "cout": 200 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 3"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [],
+      "ambiguites": []
+    },
+    "mercenaires-marienburgers": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/mercenaires-marienburgers",
+      "composition": {
+        "budgetInitial": 600,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Mercenaires V2LRBFr, pages 2 et 4"
+      },
+      "regles": [
+        {
+          "titre": "Réseau marchand",
+          "description": "La bande ajoute +1 à ses jets pour acquérir des objets rares.",
+          "source": "Mercenaires V2LRBFr, page 2"
+        },
+        {
+          "titre": "Cité de l'Or",
+          "description": "Elle commence une campagne avec 600 CO. En partie simple, son budget est augmenté de 20 pour cent.",
+          "source": "Mercenaires V2LRBFr, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "capitaine-mercenaire",
+          "nom": "Capitaine mercenaire",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+        },
+        {
+          "id": "champion",
+          "nom": "Champion",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
+          "regles": [],
+          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+        },
+        {
+          "id": "recrue",
+          "nom": "Recrue",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
+          "regles": [],
+          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+        },
+        {
+          "id": "guerrier",
+          "nom": "Guerrier",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 4"
+        },
+        {
+          "id": "tireur",
+          "nom": "Tireur",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 4"
+        },
+        {
+          "id": "bretteur",
+          "nom": "Bretteur",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            },
+            {
+              "titre": "Expert à l'épée",
+              "description": "En charge avec des épées normales, relance les jets pour toucher ratés. Aucun effet avec une arme à deux mains ou une autre arme."
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Mercenaires",
+          "profils": [
+            "capitaine-mercenaire",
+            "champion",
+            "recrue",
+            "guerrier",
+            "bretteur"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 25,
+                  "formuleCout": "50 CO la paire"
+                },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 3"
+        },
+        {
+          "nom": "Tireurs",
+          "profils": ["tireur"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 },
+                { "nom": "Tromblon", "cout": 30 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Long fusil d'Hochland", "cout": 200 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Mercenaires V2LRBFr, page 3"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [],
+      "ambiguites": []
+    },
+    "culte-des-possedes": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/culte-des-possedes",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Culte des Possédés V2.2aFr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Mutations au recrutement",
+          "description": "Possédés et Mutants n'achètent des mutations qu'au recrutement. La première mutation d'une figurine coûte son prix normal et toutes les suivantes coûtent le double.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        }
+      ],
+      "profils": [
+        {
+          "id": "magister",
+          "nom": "Magister",
+          "categorie": "Héros",
+          "cout": 70,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Sorcier",
+              "description": "Utilise les Rituels du Chaos."
+            }
+          ],
+          "source": "Culte des Possédés V2.2aFr, pages 2 et 3"
+        },
+        {
+          "id": "possede",
+          "nom": "Possédé",
+          "categorie": "Héros",
+          "cout": 90,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 2,
+            "initiative": 4,
+            "attaques": 2,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Équipement",
+              "description": "N'utilise jamais ni arme ni armure."
+            },
+            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Mutations",
+              "description": "Peut commencer avec une ou plusieurs mutations, payées en plus du coût du profil."
+            }
+          ],
+          "source": "Culte des Possédés V2.2aFr, pages 2, 3 et 5"
+        },
+        {
+          "id": "mutant",
+          "nom": "Mutant",
+          "categorie": "Héros",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Mutation obligatoire",
+              "description": "Doit commencer avec au moins une mutation, payée en plus du coût du profil."
+            }
+          ],
+          "source": "Culte des Possédés V2.2aFr, pages 2, 3 et 5"
+        },
+        {
+          "id": "damne",
+          "nom": "Damné",
+          "categorie": "Homme de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Dément",
+              "description": "Réussit automatiquement tous ses tests de Commandement."
+            },
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Culte des Possédés V2.2aFr, page 4"
+        },
+        {
+          "id": "initie",
+          "nom": "Initié",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Culte des Possédés V2.2aFr, page 4"
+        },
+        {
+          "id": "homme-bete",
+          "nom": "Homme-Bête",
+          "categorie": "Homme de main",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 2,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Culte des Possédés V2.2aFr, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Possédés",
+          "profils": ["magister", "mutant", "initie"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc court", "cout": 10 },
+                { "nom": "Arc", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Culte des Possédés V2.2aFr, page 2"
+        },
+        {
+          "nom": "Damnés",
+          "profils": ["damne", "homme-bete"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Fléau", "cout": 15 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Culte des Possédés V2.2aFr, page 2"
+        },
+        {
+          "nom": "Équipement spécial du Culte",
+          "profils": ["magister", "mutant", "initie", "damne", "homme-bete"],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Arme en obsidienne",
+                  "cout": 0,
+                  "formuleCout": "Quatre fois le prix de l'arme normale",
+                  "note": "Rare 12. +1 Force au corps à corps, frappe toujours en dernier et ne peut pas être utilisée par Nains, Elfes, Sœurs de Sigmar, Répurgateurs ou Prêtres."
+                },
+                {
+                  "nom": "Armure du Chaos",
+                  "cout": 185,
+                  "note": "Rare 13, sauvegarde 4+. Réduit de 1 CO par point d'expérience. Fusionne au Héros et ne peut être retirée ni transmise. N'empêche pas de lancer des sorts, mais un lanceur ne peut la combiner avec bouclier ou rondache. +1 au jet de rareté par ennemi mis hors de combat à la partie précédente."
+                }
+              ]
+            }
+          ],
+          "source": "Culte des Possédés V2.2aFr, page 7"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Âme démoniaque",
+          "description": "Mutation, 20 CO. Sauvegarde spéciale de 4+ contre les sorts et prières.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        },
+        {
+          "titre": "Pince",
+          "description": "Mutation, 50 CO. Le bras ne porte pas d'arme et donne une attaque supplémentaire à Force +1.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        },
+        {
+          "titre": "Tentacule",
+          "description": "Mutation, 35 CO. Au corps à corps, retire 1 Attaque à un adversaire choisi, jusqu'à un minimum de 1.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        },
+        {
+          "titre": "Sabots fendus",
+          "description": "Mutation, 40 CO. +1 Mouvement.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        },
+        {
+          "titre": "Sang acide",
+          "description": "Mutation, 30 CO. Après chaque blessure subie au corps à corps, toutes les figurines au contact subissent une touche F3 sans coup critique.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        },
+        {
+          "titre": "Épines",
+          "description": "Mutation, 35 CO. Au début de chaque phase de corps à corps, toute figurine au contact subit une touche automatique F1 sans coup critique.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        },
+        {
+          "titre": "Queue de scorpion",
+          "description": "Mutation, 40 CO. Une attaque supplémentaire F5 à chaque phase de corps à corps, réduite à F2 contre une cible immunisée au poison.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        },
+        {
+          "titre": "Bras supplémentaire",
+          "description": "Mutation, 40 CO. Le bras porte une arme à une main et donne une attaque supplémentaire, ou porte un bouclier ou une rondache. Dans ce dernier cas, l'Attaque supplémentaire est conservée mais aucune arme supplémentaire ne peut être portée.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        },
+        {
+          "titre": "Hideux",
+          "description": "Mutation, 40 CO. Provoque la peur.",
+          "source": "Culte des Possédés V2.2aFr, page 5"
+        },
+        {
+          "titre": "Corps cristallin",
+          "description": "Mutation, 60 CO. Fixe Endurance à 6 et PV à 1. Ces valeurs ne progressent plus et les augmentations correspondantes sont relancées.",
+          "source": "Culte des Possédés V2.2aFr, page 6"
+        },
+        {
+          "titre": "Brute épaisse",
+          "description": "Mutation, 50 CO. +2 Force et -4 Commandement.",
+          "source": "Culte des Possédés V2.2aFr, page 6"
+        },
+        {
+          "titre": "Morsure venimeuse",
+          "description": "Mutation, 50 CO. Donne une attaque de morsure F5, F2 contre une cible immunisée au poison. Si une morsure existe déjà, elle reçoit seulement cet effet.",
+          "source": "Culte des Possédés V2.2aFr, page 6"
+        },
+        {
+          "titre": "Queue préhensile",
+          "description": "Mutation, 50 CO. Donne une attaque de queue pouvant employer une arme à une main, un bouclier ou une rondache autorisés. Une figurine incapable d'utiliser des armes le reste. Avec plusieurs queues, une seule est choisie à chaque phase.",
+          "source": "Culte des Possédés V2.2aFr, page 6"
+        },
+        {
+          "titre": "Peau écailleuse",
+          "description": "Mutation, 60 CO. Sauvegarde naturelle 5+, jamais réduite au-delà de 6+ par les modificateurs. Un critique sans sauvegarde l'annule. Les autres protections peuvent l'améliorer.",
+          "source": "Culte des Possédés V2.2aFr, page 6"
+        },
+        {
+          "titre": "Ailes",
+          "description": "Mutation, 45 CO. Permet de planer depuis une hauteur: pour chaque 1 ps descendu, avance de 2 ps horizontalement.",
+          "source": "Culte des Possédés V2.2aFr, page 6"
+        },
+        {
+          "titre": "Récompenses du Seigneur des Ombres",
+          "description": "Au lieu d'une compétence, Magister ou Mutant lance 2D6: 2, il quitte la bande; 3 à 6, rien; 7 à 8, mutation, avec perte d'une caractéristique au choix sur 1 ou choix d'une mutation sur 2+; 9 à 10, Armure du Chaos 4+ sans pénalité ni blocage magique; 11, arme démon +1 F et +1 pour toucher sans règle de son type; 12, possession donnant +1 CC, +1 F, +1 A et +1 PV hors maxima, perte de 1D3 compétences, plus aucune arme ou armure sauf dons du Chaos.",
+          "source": "Culte des Possédés V2.2aFr, page 8"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Vision d'Horreur",
+          "difficulte": 10,
+          "description": "L'ennemi le plus proche à 6 ps, ou une cible au contact si le sorcier est engagé, est immédiatement sonné, ou mis à terre s'il ne peut pas être sonné.",
+          "source": "Culte des Possédés V2.2aFr, page 10"
+        },
+        {
+          "titre": "Œil Divin",
+          "difficulte": 7,
+          "description": "Une fois par bataille, choisissez une figurine à 6 ps. Sur 1 elle est hors de combat sans blessure grave; sur 2 à 5 elle gagne +1 dans une caractéristique choisie; sur 6 elle gagne +1 à toutes ses caractéristiques pour la bataille.",
+          "source": "Culte des Possédés V2.2aFr, page 10"
+        },
+        {
+          "titre": "Sang Noir",
+          "difficulte": 8,
+          "description": "La première figurine sur une ligne de 8 ps subit 1D3 touches F5. Le lanceur fait ensuite un jet de Dégâts, mais hors de combat devient sonné.",
+          "source": "Culte des Possédés V2.2aFr, page 10"
+        },
+        {
+          "titre": "Tentation du Chaos",
+          "difficulte": 9,
+          "description": "Cible l'ennemi le plus proche à 12 ps. Chaque camp lance 1D6 + Commandement. Si le lanceur gagne, il contrôle la cible jusqu'à ce qu'elle réussisse un test de Commandement en phase de ralliement adverse. Elle ne peut se suicider, peut attaquer son camp et ne combat pas la bande du lanceur.",
+          "source": "Culte des Possédés V2.2aFr, page 10"
+        },
+        {
+          "titre": "Ailes Ténébreuses",
+          "difficulte": 7,
+          "description": "Déplace immédiatement le sorcier jusqu'à 12 ps, avec charge possible. Contre un fuyard, inflige une touche automatique puis la cible reprend sa fuite si elle survit.",
+          "source": "Culte des Possédés V2.2aFr, page 10"
+        },
+        {
+          "titre": "Mot de Souffrance",
+          "difficulte": 7,
+          "description": "Toutes les figurines à 3 ps ou moins, amies ou ennemies, subissent une touche F3 sans sauvegarde.",
+          "source": "Culte des Possédés V2.2aFr, page 10"
+        }
+      ],
+      "ambiguites": [
+        "Les montures de la page 9 sont une annexe optionnelle et ne sont pas fusionnées au cœur sans choix de règles."
+      ]
+    },
+    "repurgateurs": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/repurgateurs",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 5,
+        "source": "Répurgateurs V2LRBFr, page 1"
+      },
+      "regles": [],
+      "profils": [
+        {
+          "id": "capitaine-repurgateur",
+          "nom": "Capitaine répurgateur",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Au Bûcher",
+              "description": "Il hait tous les lanceurs de sorts."
+            }
+          ],
+          "source": "Répurgateurs V2LRBFr, pages 2 et 3"
+        },
+        {
+          "id": "repurgateur",
+          "nom": "Répurgateur",
+          "categorie": "Héros",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Érudition", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Au Bûcher",
+              "description": "Il hait tous les lanceurs de sorts."
+            }
+          ],
+          "source": "Répurgateurs V2LRBFr, pages 2 et 3"
+        },
+        {
+          "id": "pretre-guerrier",
+          "nom": "Prêtre-guerrier",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Érudition", "Force"],
+          "regles": [
+            {
+              "titre": "Prières",
+              "description": "Utilise les Prières de Sigmar. Elles ne sont pas des sorts, fonctionnent en armure et ignorent les protections spéciales contre les sorts."
+            }
+          ],
+          "source": "Répurgateurs V2LRBFr, pages 2, 3 et 5"
+        },
+        {
+          "id": "chien-de-guerre",
+          "nom": "Chien de guerre",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animal",
+              "description": "N'utilise ni arme ni armure et ne gagne jamais d'expérience."
+            }
+          ],
+          "source": "Répurgateurs V2LRBFr, page 4"
+        },
+        {
+          "id": "flagellant",
+          "nom": "Flagellant",
+          "categorie": "Homme de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 10
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Restriction",
+              "description": "N'utilise aucune armure ni arme de tir, même après avoir acquis une compétence qui l'autoriserait."
+            },
+            {
+              "titre": "Fanatique",
+              "description": "Réussit automatiquement tous ses tests de Commandement et ne peut jamais devenir Chef."
+            },
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Répurgateurs V2LRBFr, pages 2 et 4"
+        },
+        {
+          "id": "seide",
+          "nom": "Séide",
+          "categorie": "Homme de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Répurgateurs V2LRBFr, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Répurgateurs",
+          "profils": [
+            "capitaine-repurgateur",
+            "repurgateur",
+            "pretre-guerrier"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                { "nom": "Arbalète de poing", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Répurgateurs V2LRBFr, page 2"
+        },
+        {
+          "nom": "Flagellants",
+          "profils": ["flagellant"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                { "nom": "Fléau", "cout": 15 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            { "nom": "Armures", "entrees": [] }
+          ],
+          "source": "Répurgateurs V2LRBFr, page 2"
+        },
+        {
+          "nom": "Séides",
+          "profils": ["seide"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc court", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Répurgateurs V2LRBFr, page 2"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [
+        {
+          "titre": "Le Marteau de Sigmar",
+          "difficulte": 7,
+          "description": "Le lanceur gagne +2 Force au corps à corps et chaque touche inflige le double de blessures. Il doit relancer la prière à chaque phase de Tir pour prolonger l'effet.",
+          "source": "Répurgateurs V2LRBFr, page 5"
+        },
+        {
+          "titre": "Cœur d'Acier",
+          "difficulte": 8,
+          "description": "Les alliés à 8 ps deviennent immunisés à la peur et à Seul contre tous. Toute la bande gagne +1 aux tests de Déroute. Non cumulable et dure jusqu'à la mise hors de combat du lanceur.",
+          "source": "Répurgateurs V2LRBFr, page 5"
+        },
+        {
+          "titre": "Feu de l'Âme",
+          "difficulte": 9,
+          "description": "Chaque ennemi à 4 ps subit une touche F3 sans sauvegarde, F5 s'il est Mort-Vivant ou Possédé.",
+          "source": "Répurgateurs V2LRBFr, page 5"
+        },
+        {
+          "titre": "Bouclier de Sigmar",
+          "difficulte": 6,
+          "description": "Le lanceur devient immunisé à tous les sorts. Au début de chaque phase de ralliement, l'effet disparaît sur 1 ou 2.",
+          "source": "Répurgateurs V2LRBFr, page 5"
+        },
+        {
+          "titre": "Imposition des Mains",
+          "difficulte": 5,
+          "description": "Une figurine à 2 ps, lanceur compris, récupère tous ses PV. Tous les alliés à 2 ps sonnés ou à terre se relèvent immédiatement et agissent normalement.",
+          "source": "Répurgateurs V2LRBFr, page 5"
+        },
+        {
+          "titre": "Armure du Juste",
+          "difficulte": 9,
+          "description": "Le lanceur reçoit une sauvegarde 2+ remplaçant son armure, provoque la peur et y devient immunisé jusqu'au début de sa prochaine phase de Tir.",
+          "source": "Répurgateurs V2LRBFr, page 5"
+        }
+      ],
+      "ambiguites": []
+    },
+    "soeurs-de-sigmar": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/soeurs-de-sigmar",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Sœurs de Sigmar V2LRBFr, page 1"
+      },
+      "regles": [],
+      "profils": [
+        {
+          "id": "matriarche",
+          "nom": "Matriarche sigmarite",
+          "categorie": "Héros",
+          "cout": 70,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliées à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Prières",
+              "description": "Utilise les Prières de Sigmar."
+            }
+          ],
+          "source": "Sœurs de Sigmar V2LRBFr, pages 2, 3 et 5"
+        },
+        {
+          "id": "soeur-superieure",
+          "nom": "Sœur supérieure",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [],
+          "source": "Sœurs de Sigmar V2LRBFr, pages 2 et 3"
+        },
+        {
+          "id": "augure",
+          "nom": "Augure",
+          "categorie": "Héros",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sans armure",
+              "description": "Ne porte jamais d'armure."
+            },
+            {
+              "titre": "Vision sacrée",
+              "description": "Relance ses tests de caractéristiques ratés et ses jets pour toucher au tir ou au corps à corps, en gardant le second résultat. Si elle n'est pas hors de combat, lancez deux dés supplémentaires indiqués par la règle pendant l'Exploration."
+            }
+          ],
+          "source": "Sœurs de Sigmar V2LRBFr, pages 2 et 3"
+        },
+        {
+          "id": "novice",
+          "nom": "Novice",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 10,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetées par groupes de 1 à 5."
+            }
+          ],
+          "source": "Sœurs de Sigmar V2LRBFr, page 4"
+        },
+        {
+          "id": "soeur",
+          "nom": "Sœur",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetées par groupes de 1 à 5."
+            }
+          ],
+          "source": "Sœurs de Sigmar V2LRBFr, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Sœurs de Sigmar",
+          "profils": [
+            "matriarche",
+            "soeur-superieure",
+            "augure",
+            "novice",
+            "soeur"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Marteau de guerre sigmarite", "cout": 15 },
+                { "nom": "Fléau", "cout": 15 },
+                { "nom": "Fouet d'acier", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [{ "nom": "Fronde", "cout": 2 }]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Divers, Héroïnes seulement",
+              "entrees": [
+                { "nom": "Livre Saint", "cout": 120 },
+                { "nom": "Eau bénite", "cout": 10 },
+                { "nom": "Relique sacrée", "cout": 15 }
+              ]
+            }
+          ],
+          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+        },
+        {
+          "nom": "Armes spéciales",
+          "profils": [
+            "matriarche",
+            "soeur-superieure",
+            "augure",
+            "novice",
+            "soeur"
+          ],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Marteau de guerre sigmarite",
+                  "cout": 15,
+                  "note": "Commun, Sœurs seulement. Force utilisateur +1. Un dégât de 2 à 4 devient sonné. +1 pour blesser Possédés et Morts-Vivants, mais un critique exige toujours un 6 naturel. Seules Matriarche et Sœurs supérieures peuvent en porter deux."
+                },
+                {
+                  "nom": "Fouet d'acier",
+                  "cout": 10,
+                  "note": "Commun, Sœurs seulement. Ne peut pas être paré. Donne +1 Attaque en charge et +1 Attaque frappant en premier contre un chargeur. Le bonus reste +1 contre plusieurs chargeurs. Deux fouets donnent l'attaque d'arme additionnelle, mais un seul bonus de claquement."
+                }
+              ]
+            }
+          ],
+          "source": "Sœurs de Sigmar V2LRBFr, page 4"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Signe de Sigmar",
+          "description": "Au premier tour de corps à corps, chaque adversaire Possédé ou Mort-Vivant perd 1 Attaque contre la Sœur, minimum 1.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+        },
+        {
+          "titre": "Protection de Sigmar",
+          "description": "Tout sort lancé sur elle est dissipé sur 4+. Un sort dissipé n'affecte aucune autre figurine.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+        },
+        {
+          "titre": "Farouche détermination",
+          "description": "Matriarche seulement. Permet de relancer les tests de Déroute ratés.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+        },
+        {
+          "titre": "Fureur du juste",
+          "description": "La Sœur hait les bandes de Skavens, Possédés et Morts-Vivants.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+        },
+        {
+          "titre": "Foi inébranlable",
+          "description": "Relance les tests de peur et ignore Seul contre tous lorsqu'elle combat plusieurs adversaires.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Le Marteau de Sigmar",
+          "difficulte": 7,
+          "description": "Le lanceur gagne +2 Force au corps à corps et chaque touche inflige le double de blessures. Il teste à chaque phase de Tir pour maintenir l'effet.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 5"
+        },
+        {
+          "titre": "Cœur d'Acier",
+          "difficulte": 8,
+          "description": "Les alliées à 8 ps deviennent immunisées à la peur et à Seul contre tous. Toute la bande gagne +1 aux tests de Déroute. Non cumulable et dure jusqu'à la mise hors de combat de la lanceuse.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 5"
+        },
+        {
+          "titre": "Feu de l'Âme",
+          "difficulte": 9,
+          "description": "Chaque ennemi à 4 ps subit une touche F3 sans sauvegarde, F5 s'il est Mort-Vivant ou Possédé.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 5"
+        },
+        {
+          "titre": "Bouclier de Sigmar",
+          "difficulte": 6,
+          "description": "La lanceuse devient immunisée aux sorts. Au début de chaque phase de ralliement, l'effet disparaît sur 1 ou 2.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 5"
+        },
+        {
+          "titre": "Imposition des Mains",
+          "difficulte": 5,
+          "description": "Une figurine à 2 ps, lanceuse comprise, récupère tous ses PV. Tous les alliés à 2 ps sonnés ou à terre se relèvent et agissent normalement.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 5"
+        },
+        {
+          "titre": "Armure du Juste",
+          "difficulte": 9,
+          "description": "La lanceuse reçoit une sauvegarde 2+ remplaçant son armure, provoque la peur et y devient immunisée jusqu'au début de sa prochaine phase de Tir.",
+          "source": "Sœurs de Sigmar V2LRBFr, page 5"
+        }
+      ],
+      "ambiguites": []
+    },
+    "morts-vivants": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/morts-vivants",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Morts-Vivants V2LRBFr, page 1"
+      },
+      "regles": [],
+      "profils": [
+        {
+          "id": "vampire",
+          "nom": "Vampire",
+          "categorie": "Héros",
+          "cout": 110,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 2,
+            "initiative": 5,
+            "attaques": 2,
+            "commandement": 8
+          },
+          "competencesDisponibles": ["Combat", "Érudition", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            },
+            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Immunité à la psychologie",
+              "description": "Ignore toute psychologie et n'abandonne jamais un combat."
+            },
+            {
+              "titre": "Immunité aux poisons",
+              "description": "Aucun poison ne l'affecte."
+            },
+            {
+              "titre": "Insensible",
+              "description": "Tout résultat sonné devient à terre."
+            }
+          ],
+          "source": "Morts-Vivants V2LRBFr, pages 2 et 3"
+        },
+        {
+          "id": "necromancien",
+          "nom": "Nécromancien",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse"],
+          "regles": [
+            { "titre": "Sorcier", "description": "Utilise la Nécromancie." }
+          ],
+          "source": "Morts-Vivants V2LRBFr, pages 2, 3 et 5"
+        },
+        {
+          "id": "paria",
+          "nom": "Paria",
+          "categorie": "Héros",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force"],
+          "regles": [],
+          "source": "Morts-Vivants V2LRBFr, pages 2 et 3"
+        },
+        {
+          "id": "zombie",
+          "nom": "Zombie",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 1,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Sans équipement",
+              "description": "Ne peut recevoir ni arme ni armure."
+            },
+            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Apathie",
+              "description": "Ne peut pas courir, mais charge normalement."
+            },
+            {
+              "titre": "Immunité à la psychologie",
+              "description": "Ignore la psychologie et ne quitte jamais un combat."
+            },
+            {
+              "titre": "Immunité aux poisons",
+              "description": "Aucun poison ne l'affecte."
+            },
+            {
+              "titre": "Insensible",
+              "description": "Tout résultat sonné devient à terre."
+            },
+            {
+              "titre": "Pas de cerveau",
+              "description": "Ne gagne jamais d'expérience."
+            }
+          ],
+          "source": "Morts-Vivants V2LRBFr, page 4"
+        },
+        {
+          "id": "goule",
+          "nom": "Goule",
+          "categorie": "Homme de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Sans équipement",
+              "description": "N'utilise aucun équipement, hormis ses os comme armes contondantes."
+            },
+            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Groupe",
+              "description": "Achetées par groupes de 1 à 5."
+            }
+          ],
+          "source": "Morts-Vivants V2LRBFr, page 4"
+        },
+        {
+          "id": "loup-funeste",
+          "nom": "Loup funeste",
+          "categorie": "Homme de main",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 9,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Sans équipement",
+              "description": "Ne peut recevoir ni arme ni armure."
+            },
+            {
+              "titre": "Charge",
+              "description": "Possède 2 Attaques au tour où il charge."
+            },
+            {
+              "titre": "Apathie",
+              "description": "Ne peut pas courir, mais charge normalement."
+            },
+            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Immunité à la psychologie",
+              "description": "Ignore la psychologie et ne quitte jamais un combat."
+            },
+            {
+              "titre": "Immunité aux poisons",
+              "description": "Aucun poison ne l'affecte."
+            },
+            {
+              "titre": "Cadavre",
+              "description": "Ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Insensible",
+              "description": "Tout résultat sonné devient à terre."
+            }
+          ],
+          "source": "Morts-Vivants V2LRBFr, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Morts-Vivants",
+          "profils": ["vampire", "necromancien", "paria"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc court", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Morts-Vivants V2LRBFr, page 2"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [
+        {
+          "titre": "Drain de Vie",
+          "difficulte": 10,
+          "description": "Une cible à 6 ps subit 1 blessure sans sauvegarde et le Nécromancien gagne 1 PV pour la bataille, au-delà de son profil initial si nécessaire. Sans effet sur Possédés et Morts-Vivants.",
+          "source": "Morts-Vivants V2LRBFr, page 5"
+        },
+        {
+          "titre": "Réanimation",
+          "difficulte": 5,
+          "description": "Un Zombie mis hors de combat pendant la dernière phase de Tir ou de corps à corps revient à 6 ps ou moins du Nécromancien, jamais directement au contact d'un ennemi.",
+          "source": "Morts-Vivants V2LRBFr, page 5"
+        },
+        {
+          "titre": "Vision de Mort",
+          "difficulte": 6,
+          "description": "Le Nécromancien provoque la peur pour le reste de la bataille.",
+          "source": "Morts-Vivants V2LRBFr, page 5"
+        },
+        {
+          "titre": "Fatalité",
+          "difficulte": 9,
+          "description": "Une cible à 12 ps doit obtenir sur 1D6 un résultat inférieur ou égal à sa Force. En cas d'échec, elle fait immédiatement un jet de Dégâts.",
+          "source": "Morts-Vivants V2LRBFr, page 5"
+        },
+        {
+          "titre": "Appel de Vanhel",
+          "difficulte": 6,
+          "description": "Un Zombie ou Loup funeste à 6 ps peut se déplacer de nouveau jusqu'à son Mouvement maximal. S'il atteint un ennemi, il compte comme ayant chargé.",
+          "source": "Morts-Vivants V2LRBFr, page 5"
+        },
+        {
+          "titre": "Incantation de Réveil",
+          "description": "Réussite automatique après la bataille. Un Héros ennemi tué sur 11 à 16 aux Blessures graves devient un Zombie servile. Il garde ses caractéristiques, armure et armes, mais suit les règles des Zombies, ne peut utiliser aucun autre équipement ni compétence, ne court plus, forme seul un groupe d'Hommes de main et ne gagne plus d'expérience.",
+          "source": "Morts-Vivants V2LRBFr, page 5"
+        }
+      ],
+      "ambiguites": []
+    },
+    "skavens-du-clan-eshin": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/skavens-du-clan-eshin",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 20,
+        "maximumHeros": 6,
+        "source": "Skavens du Clan Eshin V2LRBFr, page 2"
+      },
+      "regles": [],
+      "profils": [
+        {
+          "id": "adepte-assassin",
+          "nom": "Adepte assassin",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
+            },
+            {
+              "titre": "Machine à Tuer",
+              "description": "Chaque blessure infligée, au tir ou au corps à corps, impose -1 supplémentaire à la sauvegarde ennemie."
+            }
+          ],
+          "source": "Skavens du Clan Eshin V2LRBFr, pages 4 et 5"
+        },
+        {
+          "id": "skaven-noir",
+          "nom": "Skaven noir",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 5,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [],
+          "source": "Skavens du Clan Eshin V2LRBFr, pages 4 et 5"
+        },
+        {
+          "id": "sorcier-eshin",
+          "nom": "Sorcier Eshin",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Érudition", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Utilise la Magie du Rat Cornu."
+            }
+          ],
+          "source": "Skavens du Clan Eshin V2LRBFr, pages 4, 5 et 7"
+        },
+        {
+          "id": "coureur-nocturne",
+          "nom": "Coureur nocturne",
+          "categorie": "Héros",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Spéciale"],
+          "regles": [],
+          "source": "Skavens du Clan Eshin V2LRBFr, pages 4 et 5"
+        },
+        {
+          "id": "vermineux",
+          "nom": "Vermineux",
+          "categorie": "Homme de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Groupe",
+              "description": "Achetés par groupes de 1 à 5."
+            }
+          ],
+          "source": "Skavens du Clan Eshin V2LRBFr, page 6"
+        },
+        {
+          "id": "rat-geant",
+          "nom": "Rat géant",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 2,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Sans équipement",
+              "description": "Ne porte ni arme ni armure."
+            },
+            {
+              "titre": "Animal",
+              "description": "Ne gagne jamais d'expérience."
+            }
+          ],
+          "source": "Skavens du Clan Eshin V2LRBFr, page 6"
+        },
+        {
+          "id": "rat-ogre",
+          "nom": "Rat ogre",
+          "categorie": "Homme de main",
+          "cout": 210,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 4,
+            "attaques": 3,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Sans équipement",
+              "description": "N'utilise ni arme ni armure."
+            },
+            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Stupidité",
+              "description": "Suit la stupidité sauf si un Héros Skaven est à 6 ps ou moins."
+            },
+            {
+              "titre": "Expérience",
+              "description": "Ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Grande cible",
+              "description": "Suit la règle Grande cible pour les tirs."
+            }
+          ],
+          "source": "Skavens du Clan Eshin V2LRBFr, page 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Héros Skavens",
+          "profils": ["adepte-assassin", "skaven-noir", "sorcier-eshin"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Fléau", "cout": 15 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lames suintantes", "cout": 50 },
+                { "nom": "Griffes de combat", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Fronde", "cout": 2 },
+                { "nom": "Étoiles de jet", "cout": 15 },
+                { "nom": "Sarbacane", "cout": 25 },
+                {
+                  "nom": "Pistolet à malepierre",
+                  "cout": 35,
+                  "formuleCout": "70 CO la paire"
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Skavens du Clan Eshin V2LRBFr, page 2"
+        },
+        {
+          "nom": "Hommes de main Skavens",
+          "profils": ["coureur-nocturne", "vermineux"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Gourdin", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [{ "nom": "Fronde", "cout": 2 }]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "Skavens du Clan Eshin V2LRBFr, page 2"
+        },
+        {
+          "nom": "Équipement spécial",
+          "profils": ["adepte-assassin", "skaven-noir", "sorcier-eshin"],
+          "categories": [
+            {
+              "nom": "Objets",
+              "entrees": [
+                {
+                  "nom": "Sarbacane",
+                  "cout": 25,
+                  "note": "Rare 7, portée 8 ps, F1, sauvegarde ennemie +1. Sur un 6 pour toucher, blesse automatiquement comme Lotus noir, sans critique. Peut tirer caché; la cible révèle le tireur sur un test d'Initiative réussi."
+                },
+                {
+                  "nom": "Pistolet à malepierre",
+                  "cout": 35,
+                  "formuleCout": "70 CO la paire",
+                  "note": "Rare 11, portée 8 ps, F5, sauvegarde -3, tire un tour sur deux."
+                },
+                {
+                  "nom": "Griffes de combat",
+                  "cout": 35,
+                  "note": "Rare 7. Paire donnant +1 Attaque, +1 Initiative pour escalader, parade avec une relance comme épée et rondache. Interdit toute autre arme pendant la partie."
+                },
+                {
+                  "nom": "Lames suintantes",
+                  "cout": 50,
+                  "note": "Rare 9, paire donnant +1 Attaque et parade. Effet Lotus noir permanent, aucun autre poison ne peut être ajouté."
+                }
+              ]
+            }
+          ],
+          "source": "Skavens du Clan Eshin V2LRBFr, page 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Frénésie mortelle",
+          "description": "Au début du tour, déclarez l'usage. Pour ce tour, +1 Attaque et +1D3 ps de Mouvement. À la fin du tour, subit 1D3 touches F3 sans sauvegarde.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+        },
+        {
+          "titre": "Queue de combat",
+          "description": "La queue tient un bouclier, une épée ou une dague, donnant une attaque supplémentaire avec l'arme ou +1 sauvegarde avec le bouclier.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+        },
+        {
+          "titre": "Grimpeur né",
+          "description": "Réussit automatiquement les escalades sans test d'Initiative.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+        },
+        {
+          "titre": "Infiltration",
+          "description": "Se déploie après l'adversaire, hors de vue et à plus de 12 ps de tout ennemi. Si les deux camps infiltrent, le plus faible résultat sur 1D6 se place d'abord.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+        },
+        {
+          "titre": "Art de la mort silencieuse",
+          "description": "Combat à mains nues sans pénalité comme avec deux armes, donc +1 Attaque. Les critiques surviennent sur 5 ou 6 pour blesser, sauf si 5+ est requis, auquel cas seulement sur 6. Avec des griffes de combat, donne +2 Attaques au lieu de +1.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Maleflamme",
+          "difficulte": 8,
+          "description": "La première figurine sur une ligne de 8 ps subit 1D3 touches F4. Chaque figurine à 2 ps d'elle subit une touche F3.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 7"
+        },
+        {
+          "titre": "Rejetons du Rat Cornu",
+          "description": "Réussite automatique, une fois avant chaque partie. Invoque 1D3 Rats géants à 6 ps ou moins du Sorcier, sans les compter dans l'effectif maximal.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 7"
+        },
+        {
+          "titre": "Rongeviande",
+          "difficulte": 7,
+          "description": "Une cible à 8 ps subit 2D6 touches F1.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 7"
+        },
+        {
+          "titre": "Fureur Noire",
+          "difficulte": 8,
+          "description": "Le Sorcier charge immédiatement une cible à 12 ps en ignorant terrain et figurines. Il gagne +2 Attaques et +1 Force pour la phase de corps à corps de ce tour.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 7"
+        },
+        {
+          "titre": "Œil du Warp",
+          "difficulte": 8,
+          "description": "Toutes les figurines debout au contact testent leur Commandement. En cas d'échec, elles subissent une touche F3 et fuient de 2D6 ps à l'opposé du Sorcier.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 7"
+        },
+        {
+          "titre": "Malédiction du Sorcier",
+          "difficulte": 6,
+          "description": "Une cible à 12 ps relance ses jets réussis pour toucher et ses sauvegardes réussies pendant la prochaine phase de corps à corps Skaven, puis pendant ses propres phases de Tir et de corps à corps suivantes.",
+          "source": "Skavens du Clan Eshin V2LRBFr, page 7"
+        }
+      ],
+      "ambiguites": []
+    }
+  }
+}

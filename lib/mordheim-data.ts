@@ -2,6 +2,10 @@ import {
   definitionsBandesCore,
   equipementsBandesCore,
 } from './core-warbandes.ts';
+import catalogueBandesJson from './warbands/catalogue.json' with { type: 'json' };
+import type { CatalogueBandes } from './warbands/schema.ts';
+
+const catalogueBandes = catalogueBandesJson as CatalogueBandes;
 
 export type Statistiques = {
   mouvement: number;
@@ -286,6 +290,11 @@ export type BandeBibliotheque = {
   nom: string;
   slug: string;
   grade: '1a' | '1b' | '1c' | '2';
+  presentation: string;
+  publication: string;
+  langueDocument: 'français' | 'anglais';
+  pagesPdf: number;
+  avertissements: string[];
   pdfUrl?: string;
 };
 
@@ -378,7 +387,8 @@ export const profilsReiklanders: ProfilRecrue[] = [
     experienceInitiale: 0,
     statistiques: stats(4, 4, 3, 3, 3, 1, 3, 1, 7),
     listesEquipement: ['mercenaires'],
-    regleSpeciale: 'Expert à l’épée : relance les touches ratées en charge.',
+    regleSpeciale:
+      'Expert à l’épée : lorsqu’il combat avec une épée normale, relance ses jets pour toucher ratés pendant le tour où il charge.',
   },
 ];
 
@@ -868,7 +878,7 @@ export const definitionsBandes: DefinitionBande[] = [
       {
         titre: 'Cité de l’Or',
         description:
-          'La bande commence une campagne avec 600 CO au lieu de 500 CO.',
+          'La bande commence une campagne avec 600 CO au lieu de 500 CO. Pour une partie unique hors campagne, elle dispose aussi de 20 % de CO supplémentaires.',
       },
       {
         titre: 'Réseau marchand',
@@ -1066,5 +1076,21 @@ function bandes(
   grade: BandeBibliotheque['grade'],
   entrees: Array<[string, string, string?]>,
 ): BandeBibliotheque[] {
-  return entrees.map(([nom, slug, pdfUrl]) => ({ nom, slug, grade, pdfUrl }));
+  return entrees.map(([nom, slug]) => {
+    const notice = catalogueBandes.bandes[slug];
+    if (!notice) {
+      throw new Error(`Notice de bande manquante : ${slug}`);
+    }
+    return {
+      nom,
+      slug,
+      grade,
+      presentation: notice.presentation,
+      publication: notice.publication,
+      langueDocument: notice.langueDocument,
+      pagesPdf: notice.pagesPdf,
+      avertissements: notice.avertissements,
+      pdfUrl: notice.pdfUrl,
+    };
+  });
 }

@@ -59,6 +59,56 @@ describe('navigation principale', () => {
       await screen.findByRole('heading', { name: /Bibliothèque/i }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(
+      screen.getAllByRole('button', {
+        name: /^Consulter les informations de /,
+      }),
+    ).toHaveLength(49);
+    expect(screen.getAllByText(/Fiche complète/)).toHaveLength(49);
+  });
+
+  it('ouvre une fiche de bande détaillée avec une URL partageable', async () => {
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    await utilisateur.click(
+      await screen.findByRole('link', { name: /^Bibliothèque$/ }),
+    );
+    await utilisateur.click(
+      screen.getByRole('button', {
+        name: 'Consulter les informations de Culte des Possédés',
+      }),
+    );
+
+    expect(
+      await screen.findByRole('heading', { name: 'Culte des Possédés' }),
+    ).toBeInTheDocument();
+    expect(location.hash).toBe('#/library/culte-des-possedes');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByText('Budget initial')).toBeInTheDocument();
+    expect(screen.getByText('Magister')).toBeInTheDocument();
+    expect(screen.getByText('Arsenal')).toBeInTheDocument();
+
+    await utilisateur.click(
+      screen.getByRole('button', { name: 'Toutes les bandes' }),
+    );
+    expect(location.hash).toBe('#/library');
+  });
+
+  it('ouvre directement une fiche de bibliothèque depuis son URL', async () => {
+    history.replaceState(null, '', '#/library/chasseurs-de-tresors-nains');
+    render(<MordheimApp />);
+
+    expect(
+      await screen.findByRole('heading', {
+        name: 'Chasseurs de Trésors Nains',
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Town Cryer 4/i)).toBeInTheDocument();
+    expect(screen.getByText(/5 pages en français/i)).toBeInTheDocument();
+    expect(screen.getByText('Difficiles à tuer')).toBeInTheDocument();
+    expect(screen.getByText('Tueur de Trolls Nain')).toBeInTheDocument();
+    expect(screen.getByText('Maître des lames')).toBeInTheDocument();
   });
 
   it('présente un contenu utile dans chaque vue sans bande', async () => {

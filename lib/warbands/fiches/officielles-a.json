@@ -1,0 +1,1693 @@
+{
+  "bandes": {
+    "chasseurs-de-tresors-nains": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/chasseurs-de-tresors-nains",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 12,
+        "maximumHeros": 4,
+        "source": "PDF Chasseurs de Trésors Nains VF, page 2, https://drive.google.com/file/d/12R4_kYLxzjnV6-sY-iiHJzy_186TYsfd/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Difficiles à tuer",
+          "description": "Lors d'un jet de dégâts contre un Nain, 1 ou 2 le met à terre, 3 à 5 le sonne et seul un 6 le met hors de combat.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 1"
+        },
+        {
+          "titre": "Tête dure",
+          "description": "Les Nains ignorent les effets spéciaux des masses, marteaux et armes équivalentes qui facilitent le résultat sonné.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 1"
+        },
+        {
+          "titre": "Armure",
+          "description": "Le port d'une armure ne réduit pas le Mouvement d'un Nain.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 1"
+        },
+        {
+          "titre": "Haine des Orques et des Gobelins",
+          "description": "Tous les Nains sont sujets à la haine contre les Orques et les Gobelins.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 1"
+        },
+        {
+          "titre": "Rancuniers",
+          "description": "La bande ne peut jamais recruter de Franc-Tireur elfe, quelle que soit son origine.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 1"
+        },
+        {
+          "titre": "Mineurs sans égaux",
+          "description": "Après la bataille, ajoutez 1 au nombre de fragments de pierre magique obtenus par le jet de revenus.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "noble-nain",
+          "nom": "Noble Nain",
+          "categorie": "Héros",
+          "cout": 85,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 5,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Spécial"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout membre de la bande situé à 6 ps ou moins peut utiliser le Commandement du Noble pour ses tests."
+            }
+          ],
+          "source": "PDF Chasseurs de Trésors Nains VF, pages 2 et 3"
+        },
+        {
+          "id": "ingenieur-nain",
+          "nom": "Ingénieur Nain",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 10,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Spécial"],
+          "regles": [
+            {
+              "titre": "Maître armurier",
+              "description": "Tant que l'Ingénieur participe à la bataille, même s'il n'est pas encore entré en jeu ou a été mis hors de combat, les pistolets achetés dans les listes naines gagnent 3 ps de portée et les arbalètes et arquebuses gagnent 6 ps. Cet avantage ne s'applique pas à l'équipement des Francs-Tireurs."
+            }
+          ],
+          "source": "PDF Chasseurs de Trésors Nains VF, pages 2 et 3"
+        },
+        {
+          "id": "tueur-de-trolls-nain",
+          "nom": "Tueur de Trolls Nain",
+          "categorie": "Héros",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spécial", "Tueur"],
+          "regles": [
+            {
+              "titre": "Vœu de mort",
+              "description": "Le Tueur est immunisé à la psychologie et ne fait jamais de test de Seul contre tous."
+            },
+            {
+              "titre": "Compétences de Tueur",
+              "description": "Lorsqu'il gagne une nouvelle compétence, il peut choisir dans la liste de Tueur à la place des listes ordinaires."
+            },
+            {
+              "titre": "Restrictions d'équipement",
+              "description": "Il choisit ses armes dans la liste des Guerriers Nains, mais ne peut utiliser ni arme de tir ni armure."
+            }
+          ],
+          "source": "PDF Chasseurs de Trésors Nains VF, pages 2 et 3"
+        },
+        {
+          "id": "guerrier-nain",
+          "nom": "Guerrier Nain",
+          "categorie": "Homme de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Chasseurs de Trésors Nains VF, pages 2 et 4"
+        },
+        {
+          "id": "tireur-nain",
+          "nom": "Tireur Nain",
+          "categorie": "Homme de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 9
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Chasseurs de Trésors Nains VF, pages 2 et 4"
+        },
+        {
+          "id": "poil-au-menton",
+          "nom": "Poil-au-Menton",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Chasseurs de Trésors Nains VF, pages 2 et 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Guerriers Nains",
+          "profils": [
+            "noble-nain",
+            "tueur-de-trolls-nain",
+            "guerrier-nain",
+            "poil-au-menton"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Hache naine",
+                  "cout": 15,
+                  "note": "Tranchante et Parade. Elle inflige un malus de sauvegarde supplémentaire de 1. Elle permet une parade, et une seconde arme de parade autorise à relancer la parade ratée."
+                },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                {
+                  "nom": "Arme en Gromril",
+                  "cout": 0,
+                  "formuleCout": "3 fois le coût de l'arme",
+                  "note": "Toute arme accessible au Nain peut être achetée en Gromril à la création. Les achats ultérieurs utilisent les règles et prix normaux du marché."
+                }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                {
+                  "nom": "Armure en Gromril",
+                  "cout": 75,
+                  "note": "Prix réservé à la bande débutante. Les achats ultérieurs utilisent le tableau de prix normal."
+                },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF Chasseurs de Trésors Nains VF, pages 2 et 5"
+        },
+        {
+          "nom": "Équipement des Tireurs Nains",
+          "profils": ["ingenieur-nain", "tireur-nain"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF Chasseurs de Trésors Nains VF, page 2"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Maître des lames",
+          "description": "Avec une arme de Parade, le Héros pare si son dé égale ou dépasse le meilleur jet pour toucher adverse. Avec deux armes de Parade, il peut annuler deux attaques si ses deux dés atteignent les deux meilleurs jets adverses. Avec deux haches naines, les jets de parade ratés peuvent en plus être relancés.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 5"
+        },
+        {
+          "titre": "Increvable",
+          "description": "Après une bataille où le Héros a été mis hors de combat, son jet de Blessure Grave peut être relancé une fois. Le second résultat est obligatoire.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 5"
+        },
+        {
+          "titre": "Prospecteur",
+          "description": "Pendant l'Exploration, le Héros peut modifier un de ses dés de plus ou moins 1.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 5"
+        },
+        {
+          "titre": "Très coriace",
+          "description": "Pour ce Héros, un jet de dégâts de 1 à 3 donne à terre, 4 ou 5 donne sonné et 6 donne hors de combat.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 5"
+        },
+        {
+          "titre": "Crâne épais",
+          "description": "Le Héros transforme sonné en à terre sur 3+. Avec un casque, la sauvegarde devient 2+ et remplace la règle normale du casque.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 5"
+        },
+        {
+          "titre": "Tueur: Charge furieuse",
+          "description": "Au tour où il charge, le Tueur peut doubler ses Attaques, mais subit un malus de 1 pour toucher.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 3"
+        },
+        {
+          "titre": "Tueur: Tueur de monstres",
+          "description": "Le Tueur blesse toujours sur 4+, sauf si sa Force modifiée lui permet déjà de blesser sur un meilleur résultat.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 3"
+        },
+        {
+          "titre": "Tueur: Berserk",
+          "description": "Le Tueur gagne 1 à ses jets pour toucher au corps à corps pendant le tour où il charge.",
+          "source": "PDF Chasseurs de Trésors Nains VF, page 3"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "La liste d'équipement des Guerriers inclut les Tueurs, mais leur profil interdit explicitement les armes de tir et toute armure.",
+        "La règle d'arme en Gromril ne fixe pas un prix autonome: elle multiplie par trois le coût de l'arme choisie."
+      ]
+    },
+    "horde-orque": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/horde-orque",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 20,
+        "maximumHeros": 4,
+        "source": "PDF Horde Orque VF V1.1bFr, page 2, https://drive.google.com/file/d/1mCxyUQtLWLRD7EHzh3z_aPGXdr3viUOI/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Des gens peu recommandables",
+          "description": "La bande ne peut recruter comme Francs-Tireurs que des Gladiateurs, des Gardes du Corps Ogres ou des Mages.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 1"
+        },
+        {
+          "titre": "Animosité",
+          "description": "Au début de chaque tour orque, chaque Homme de main Orque ou Gobelin non engagé lance 1D6. Sur 1, lancez encore 1D6. Sur 1, il charge immédiatement l'Homme de main Orque ou Gobelin ou le Franc-Tireur allié le plus proche à portée, ou lui tire dessus si aucune charge n'est possible. Un Héros ne peut pas être pris pour cible et, faute de cible valable, appliquez le résultat 2 à 5. Après ce combat imposé, séparez les figurines de 1 ps. Sur 2 à 5, il passe le tour à invectiver ses alliés. Sur 6, il avance au plus vite vers l'ennemi le plus proche, le charge si possible, ou effectue un Mouvement normal supplémentaire si aucun ennemi n'est visible. Dans tous les cas, il se défend normalement s'il est attaqué.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 1"
+        },
+        {
+          "titre": "Limite de Gobelins",
+          "description": "Le nombre de Guerriers Gobelins ne peut jamais dépasser deux fois le nombre d'Orques, Héros compris.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 2"
+        },
+        {
+          "titre": "Limite de Squigs",
+          "description": "La bande peut compter au plus cinq Squigs et jamais plus de Squigs que de Guerriers Gobelins.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "chef-orque",
+          "nom": "Chef Orque",
+          "categorie": "Héros",
+          "cout": 80,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout membre de la bande à 6 ps ou moins peut utiliser son Commandement."
+            }
+          ],
+          "source": "PDF Horde Orque VF V1.1bFr, pages 2, 5 et 6"
+        },
+        {
+          "id": "chamane-orque",
+          "nom": "Chamane Orque",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 10,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Le Chamane utilise la Magie Waaagh."
+            },
+            {
+              "titre": "Restriction d'armure",
+              "description": "Il choisit ses armes dans la liste orque mais ne porte jamais d'armure."
+            }
+          ],
+          "source": "PDF Horde Orque VF V1.1bFr, pages 2, 5, 6 et 10"
+        },
+        {
+          "id": "kosto",
+          "nom": "Kosto",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 15,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Spéciale"],
+          "regles": [],
+          "source": "PDF Horde Orque VF V1.1bFr, pages 2, 5 et 6"
+        },
+        {
+          "id": "boy-orque",
+          "nom": "Boy Orque",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animosité",
+              "description": "Le Boy est soumis à la règle d'Animosité de la bande."
+            }
+          ],
+          "source": "PDF Horde Orque VF V1.1bFr, pages 2 et 7"
+        },
+        {
+          "id": "guerrier-gobelin",
+          "nom": "Guerrier Gobelin",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Animosité",
+              "description": "Le Gobelin est soumis à l'Animosité. Sur le résultat agressif, il ne charge jamais un Orque mais peut lui tirer dessus. Sa présence reste limitée à deux Gobelins par Orque, Héros compris."
+            },
+            {
+              "titre": "Pas des Orques",
+              "description": "Pour le seuil de Déroute, chaque Gobelin ou Squig hors de combat compte comme une demi-figurine."
+            },
+            {
+              "titre": "Moins que rien",
+              "description": "Si un Gobelin obtient Ce gars est doué, le Chef le tue immédiatement et il est rayé de la feuille de bande."
+            }
+          ],
+          "source": "PDF Horde Orque VF V1.1bFr, pages 2 et 7"
+        },
+        {
+          "id": "squig",
+          "nom": "Squig des cavernes",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": "2D6",
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Mouvement",
+              "description": "À chaque déplacement, lancez 2D6. Le Squig ne court pas et ne déclare pas de charge. S'il atteint un ennemi, il compte comme ayant chargé."
+            },
+            {
+              "titre": "Au pied",
+              "description": "Il doit rester à 6 ps ou moins d'un Guerrier Gobelin. S'il commence une phase de Mouvement hors de ce rayon, il se déplace ensuite de 2D6 dans une direction aléatoire et engage toute figurine rencontrée. Il ne peut plus être repris en main."
+            },
+            {
+              "titre": "Pas des Orques",
+              "description": "Pour le seuil de Déroute, chaque Gobelin ou Squig hors de combat compte comme une demi-figurine."
+            },
+            {
+              "titre": "Animal",
+              "description": "Le Squig ne gagne jamais d'expérience."
+            }
+          ],
+          "source": "PDF Horde Orque VF V1.1bFr, pages 2 et 8"
+        },
+        {
+          "id": "troll",
+          "nom": "Troll",
+          "categorie": "Homme de main",
+          "cout": 200,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 1,
+            "force": 5,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 1,
+            "attaques": 3,
+            "commandement": 4
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Équipement",
+              "description": "Le Troll ne peut recevoir ni arme ni armure."
+            },
+            { "titre": "Peur", "description": "Le Troll cause la peur." },
+            {
+              "titre": "Stupidité",
+              "description": "Le Troll est soumis à la stupidité."
+            },
+            {
+              "titre": "Régénération",
+              "description": "Chaque blessure est ignorée sur 4+, sauf si elle provient du feu ou d'un sort fondé sur le feu. Le Troll ne fait pas de jet de Blessure Grave."
+            },
+            {
+              "titre": "Zéro de QI",
+              "description": "Le Troll ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Toujours faim",
+              "description": "Après chaque bataille, payez 15 CO pour le nourrir. À défaut, le Chef peut sacrifier deux Gobelins ou Squigs. Sans paiement ni sacrifice, le Troll quitte définitivement la bande."
+            },
+            {
+              "titre": "Vomi",
+              "description": "À la place de ses attaques, le Troll peut effectuer une unique touche automatique de Force 5 qui ignore les sauvegardes d'armure."
+            },
+            {
+              "titre": "Grande cible",
+              "description": "Le Troll suit la règle de Grande cible du chapitre Tir."
+            }
+          ],
+          "source": "PDF Horde Orque VF V1.1bFr, page 8"
+        },
+        {
+          "id": "sanglier-de-guerre",
+          "nom": "Sanglier de guerre",
+          "categorie": "Monture optionnelle",
+          "cout": 90,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 7,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 3
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Disponibilité",
+              "description": "Rare 11, réservé aux Orques. Dans Mordheim ou Lustrie, le total de montures est limité à deux par bande."
+            },
+            {
+              "titre": "Charge furieuse",
+              "description": "Le Sanglier gagne 2 en Force lorsqu'il charge. Le bonus ne s'applique pas au cavalier."
+            },
+            {
+              "titre": "Peau épaisse",
+              "description": "La monture ajoute 2, et non 1, à la sauvegarde d'armure de son cavalier."
+            }
+          ],
+          "source": "PDF Horde Orque VF V1.1bFr, page 9"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Orques",
+          "profils": ["chef-orque", "chamane-orque", "kosto", "boy-orque"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Massue", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "PDF Horde Orque VF V1.1bFr, page 2"
+        },
+        {
+          "nom": "Équipement des Gobelins",
+          "profils": ["guerrier-gobelin"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Massue", "cout": 3 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [{ "nom": "Arc court", "cout": 5 }]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            },
+            {
+              "nom": "Divers",
+              "entrees": [
+                {
+                  "nom": "Aiguillon à squigs",
+                  "cout": 15,
+                  "note": "Commun, Gobelins uniquement. Il augmente à 12 ps le rayon de contrôle des Squigs et compte comme une lance au corps à corps."
+                },
+                {
+                  "nom": "Chaîne et boulet",
+                  "cout": 15,
+                  "note": "Commune, Gobelins uniquement. Force de l'utilisateur plus 2, arme à deux mains. Elle interdit tout autre équipement et exige des bonnets de fou. Les blessures ignorent l'armure et infligent 1D3 PV. Après usage, le porteur fait un jet de Blessure Grave. Son déplacement devient imprévisible: 2D6 ps, avec risque de s'étrangler, de partir au hasard ou de heurter un obstacle. Les adversaires ont 1 de malus pour le toucher, le porteur n'est jamais bloqué au corps à corps et ignore l'Animosité."
+                },
+                {
+                  "nom": "Champignons bonnets de fou",
+                  "cout": 25,
+                  "note": "Communs si la bande compte au moins un Gobelin. Un Gobelin peut en consommer au début d'un tour, devient frénétique, puis devient définitivement stupide sur 1 après la bataille."
+                }
+              ]
+            }
+          ],
+          "source": "PDF Horde Orque VF V1.1bFr, pages 2 à 4"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Têt'dure",
+          "description": "Le Héros transforme sonné en à terre sur 3+. Avec un casque, la sauvegarde devient 2+ et remplace la règle normale du casque.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 5"
+        },
+        {
+          "titre": "Dur à cuire",
+          "description": "La peau épaisse du Héros améliore sa sauvegarde d'armure de 1.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 5"
+        },
+        {
+          "titre": "Coup d'boule",
+          "description": "Toute figurine mise à terre par ce Héros au corps à corps est sonnée à la place.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 5"
+        },
+        {
+          "titre": "Waaagh!",
+          "description": "Le Héros ajoute 1D3 ps à sa portée de charge.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 5"
+        },
+        {
+          "titre": "On y va!",
+          "description": "Le Héros ne fait pas de test de peur lorsqu'il charge.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 5"
+        },
+        {
+          "titre": "Rev'nez ici!",
+          "description": "Réservée au Chef. Tant qu'il n'est pas hors de combat, la bande peut relancer ses tests de Déroute ratés.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 5"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Z'y va!",
+          "difficulte": 9,
+          "description": "Jusqu'à ce que le Chamane soit à terre, sonné ou hors de combat, tout Orque ou Gobelin à 4 ps ou moins frappe automatiquement en premier au corps à corps.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 10"
+        },
+        {
+          "titre": "Bouge de là!",
+          "difficulte": 7,
+          "description": "À 8 ps, repoussez un ennemi de 1D6 ps à l'opposé du Chamane. S'il heurte une figurine ou un bâtiment, les deux subissent une touche de Force 3. Le sort ne vise pas une figurine engagée.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 10"
+        },
+        {
+          "titre": "Zzzap!",
+          "difficulte": 9,
+          "description": "L'ennemi le plus proche à 12 ps ou moins subit 1D3 touches de Force 4 sans sauvegarde d'armure.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 10"
+        },
+        {
+          "titre": "Bouffon, va!",
+          "difficulte": 6,
+          "description": "Aucun ennemi ne peut charger le Chamane au prochain tour. S'il est engagé, il peut immédiatement être déplacé de 4 ps.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 10"
+        },
+        {
+          "titre": "Ramèn' ta fraise!",
+          "difficulte": 7,
+          "description": "Une massue magique donne au Chamane 2 en Force et 1 Attaque. Elle compte comme un gourdin et disparaît dès qu'il subit une blessure.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 10"
+        },
+        {
+          "titre": "Feu de Gork",
+          "difficulte": 8,
+          "description": "Deux éclairs à 12 ps infligent chacun 1D3 touches de Force 3. Ils peuvent viser ensemble l'ennemi le plus proche ou être répartis entre les deux ennemis les plus proches.",
+          "source": "PDF Horde Orque VF V1.1bFr, page 10"
+        }
+      ],
+      "ambiguites": [
+        "Le Sanglier de guerre provient de l'annexe optionnelle Guerriers Montés. Sa limite est de deux montures par bande dans Mordheim ou Lustrie, mais il n'existe pas de limite dans un cadre ouvert.",
+        "La chaîne et boulet indique un jet de Blessure après la bataille. Si le porteur a aussi été hors de combat, un seul jet total est effectué.",
+        "Le tableau imprimé accorde au Chamane les listes Force et Spéciale seulement, sans accès à Érudition."
+      ]
+    },
+    "kermesse-du-chaos": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/kermesse-du-chaos",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "PDF Kermesse du Chaos VF, page 2, https://drive.google.com/file/d/1QBrTaetz_LiTXuXrnD7J95Pjssw90EJi/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Sinistre réputation",
+          "description": "La Kermesse ne peut recruter aucun Franc-Tireur.",
+          "source": "PDF Kermesse du Chaos VF, page 1"
+        },
+        {
+          "titre": "Corrompu",
+          "description": "Pour les règles d'Exploration et de Blessures Graves, la Kermesse est considérée comme une bande de Possédés.",
+          "source": "PDF Kermesse du Chaos VF, page 1"
+        },
+        {
+          "titre": "Bénédictions des Impurs",
+          "description": "Chaque Impur doit acheter au moins une Bénédiction de Nurgle au recrutement. Il peut en recevoir plusieurs uniquement à cet instant. La première coûte son prix indiqué, les suivantes coûtent chacune le double de leur prix indiqué.",
+          "source": "PDF Kermesse du Chaos VF, pages 3 et 7"
+        }
+      ],
+      "profils": [
+        {
+          "id": "maitre-de-ceremonie",
+          "nom": "Maître de Cérémonie",
+          "categorie": "Héros",
+          "cout": 70,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout membre de la Kermesse à 6 ps ou moins peut utiliser son Commandement."
+            },
+            {
+              "titre": "Sorcier",
+              "description": "Il utilise les Rituels de Nurgle."
+            }
+          ],
+          "source": "PDF Kermesse du Chaos VF, pages 2, 3 et 6"
+        },
+        {
+          "id": "colosse",
+          "nom": "Colosse",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 2,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Force surnaturelle",
+              "description": "Le Colosse commence avec la compétence de Force Homme Fort."
+            }
+          ],
+          "source": "PDF Kermesse du Chaos VF, pages 2 et 3"
+        },
+        {
+          "id": "impur",
+          "nom": "Impur",
+          "categorie": "Héros",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Bénédictions de Nurgle",
+              "description": "Son coût final est 25 CO plus le coût de ses Bénédictions. Il doit en acheter au moins une à son recrutement."
+            }
+          ],
+          "source": "PDF Kermesse du Chaos VF, pages 2, 3 et 7"
+        },
+        {
+          "id": "portepeste",
+          "nom": "Portepeste",
+          "categorie": "Homme de main",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 2,
+            "commandement": 10
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Équipement",
+              "description": "Il utilise ses griffes et ne peut recevoir ni arme ni armure."
+            },
+            {
+              "titre": "Nuage de mouches",
+              "description": "Ses adversaires ont un malus de 1 pour le toucher au corps à corps."
+            },
+            {
+              "titre": "Flot de corruption",
+              "description": "Attaque de tir à 6 ps, Force 3, sans sauvegarde d'armure."
+            },
+            {
+              "titre": "Démon",
+              "description": "Il ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Immunité au poison",
+              "description": "Il ignore tous les poisons et maladies."
+            },
+            {
+              "titre": "Immunité à la psychologie",
+              "description": "Il réussit automatiquement tous ses tests de Commandement."
+            },
+            {
+              "titre": "Cause la peur",
+              "description": "Le Portepeste cause la peur."
+            },
+            {
+              "titre": "Aura démoniaque",
+              "description": "Sauvegarde spéciale de 5+, modifiée par la Force, mais annulée par les armes magiques et les sorts. Ses attaques sont magiques."
+            },
+            {
+              "titre": "Instabilité démoniaque",
+              "description": "S'il est hors de combat, il est détruit sur 1 à 3 sur 1D6, sans jet sur le tableau de blessures. Après un test de Déroute raté, il doit réussir un test de Commandement ou être détruit."
+            }
+          ],
+          "source": "PDF Kermesse du Chaos VF, page 4"
+        },
+        {
+          "id": "nurgling",
+          "nom": "Nurgling",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 3,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 10
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Équipement",
+              "description": "Il n'utilise ni arme ni armure."
+            },
+            {
+              "titre": "Nuage de mouches",
+              "description": "Ses adversaires ont un malus de 1 pour le toucher au corps à corps."
+            },
+            {
+              "titre": "Nuées",
+              "description": "Le groupe peut compter plus de cinq Nurglings."
+            },
+            {
+              "titre": "Démon",
+              "description": "Il ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Immunité au poison",
+              "description": "Il ignore tous les poisons et maladies."
+            },
+            {
+              "titre": "Immunité à la psychologie",
+              "description": "Il réussit automatiquement tous ses tests de Commandement."
+            },
+            {
+              "titre": "Aura démoniaque",
+              "description": "Sauvegarde spéciale de 5+, modifiée par la Force, mais annulée par les armes magiques et les sorts. Ses attaques sont magiques."
+            },
+            {
+              "titre": "Instabilité démoniaque",
+              "description": "S'il est hors de combat, il est détruit sur 1 à 3 sur 1D6, sans jet sur le tableau de blessures. Après un test de Déroute raté, il doit réussir un test de Commandement ou être détruit."
+            }
+          ],
+          "source": "PDF Kermesse du Chaos VF, pages 4 et 5"
+        },
+        {
+          "id": "frere",
+          "nom": "Frère",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Kermesse du Chaos VF, pages 2 et 5"
+        },
+        {
+          "id": "roulotte-de-la-peste",
+          "nom": "Roulotte de la Peste",
+          "categorie": "Véhicule",
+          "cout": 120,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": null,
+            "capaciteCombat": null,
+            "capaciteTir": null,
+            "force": null,
+            "endurance": 8,
+            "pointsVie": 4,
+            "initiative": null,
+            "attaques": null,
+            "commandement": null
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Profil composite",
+              "description": "Corps de la Roulotte: E8, 4 PV. Chaque roue: E6, 1 PV. Cheval: M8, F3, E3, 1 PV, I3. Gardien: CC3, F3, E3, I3, A1."
+            },
+            {
+              "titre": "Roulotte de la Peste",
+              "description": "Elle augmente de 2 la limite de guerriers de la bande. Les Portepestes et Nurglings relancent les tests de Commandement ratés dus à l'Instabilité et gagnent 1 sur leur jet de destruction après mise hors de combat."
+            },
+            {
+              "titre": "Cocher",
+              "description": "Inclus dans le prix, il ne peut jamais descendre ni être blessé séparément. Il est détruit avec la Roulotte, ne gagne pas d'expérience et ses attaques transmettent la Pourriture de Nurgle."
+            },
+            {
+              "titre": "Immunité à la psychologie",
+              "description": "La Roulotte et son Cocher réussissent automatiquement leurs tests de Commandement."
+            },
+            {
+              "titre": "Équipement",
+              "description": "Le Cocher ne peut recevoir ni arme ni armure."
+            }
+          ],
+          "source": "PDF Kermesse du Chaos VF, pages 5 et 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement de la Kermesse",
+          "profils": ["maitre-de-ceremonie", "impur", "frere"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 15 },
+                { "nom": "Arc court", "cout": 10 },
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF Kermesse du Chaos VF, page 2"
+        },
+        {
+          "nom": "Équipement des Colosses",
+          "profils": ["colosse"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Fléau", "cout": 10 }
+              ]
+            }
+          ],
+          "source": "PDF Kermesse du Chaos VF, page 2"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Bénédiction: Flot de corruption",
+          "description": "Coût 25 CO. L'Impur gagne une attaque de tir à 6 ps, Force 3, sans sauvegarde d'armure.",
+          "source": "PDF Kermesse du Chaos VF, page 7"
+        },
+        {
+          "titre": "Bénédiction: Pourriture de Nurgle",
+          "description": "Coût 50 CO. L'Impur est immunisé au poison. Sur un 6 pour blesser réussi au corps à corps, une cible vivante contracte la maladie. Au début de chaque bataille suivante, elle teste son Endurance. Un échec retire définitivement 1 en Endurance et tue à E0. Un 6 au test transmet aussi la maladie à un membre aléatoire de sa bande.",
+          "source": "PDF Kermesse du Chaos VF, page 7"
+        },
+        {
+          "titre": "Bénédiction: Nuage de mouches",
+          "description": "Coût 25 CO. Les adversaires ont un malus de 1 pour toucher l'Impur au corps à corps.",
+          "source": "PDF Kermesse du Chaos VF, page 7"
+        },
+        {
+          "titre": "Bénédiction: Horreur enflée",
+          "description": "Coût 40 CO. L'Impur gagne 1 PV et 1 en Endurance, mais perd 1 en Mouvement.",
+          "source": "PDF Kermesse du Chaos VF, page 7"
+        },
+        {
+          "titre": "Bénédiction: Marque de Nurgle",
+          "description": "Coût 35 CO. L'Impur gagne 1 PV et devient immunisé à tous les poisons.",
+          "source": "PDF Kermesse du Chaos VF, page 7"
+        },
+        {
+          "titre": "Bénédiction: Hideux",
+          "description": "Coût 40 CO. L'Impur cause la peur.",
+          "source": "PDF Kermesse du Chaos VF, page 7"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Vigueur démoniaque",
+          "difficulte": 8,
+          "description": "Jusqu'au début du prochain tour du Maître, les Portepestes et Nurglings à 8 ps ou moins améliorent leur sauvegarde démoniaque à 4+.",
+          "source": "PDF Kermesse du Chaos VF, page 6"
+        },
+        {
+          "titre": "Bubons",
+          "difficulte": 7,
+          "description": "Un ennemi à 8 ps ou moins teste son Endurance. En cas d'échec, il perd 1 PV sans sauvegarde d'armure.",
+          "source": "PDF Kermesse du Chaos VF, page 6"
+        },
+        {
+          "titre": "Miasmes nurglesques",
+          "difficulte": 8,
+          "description": "Toutes les créatures vivantes, alliées ou ennemies, à 6 ps ou moins testent leur Endurance. Chaque échec retire 1 Attaque jusqu'à la fin du tour.",
+          "source": "PDF Kermesse du Chaos VF, page 6"
+        },
+        {
+          "titre": "Pestilence",
+          "difficulte": 10,
+          "description": "Chaque ennemi à 12 ps ou moins subit une touche de Force 3 sans sauvegarde d'armure.",
+          "source": "PDF Kermesse du Chaos VF, page 6"
+        },
+        {
+          "titre": "Peau verruqueuse",
+          "difficulte": 8,
+          "description": "Le Maître obtient une sauvegarde d'armure de 2+ qui remplace sa sauvegarde actuelle jusqu'au début de sa prochaine phase de tir.",
+          "source": "PDF Kermesse du Chaos VF, page 6"
+        },
+        {
+          "titre": "Pourriture de Nurgle",
+          "difficulte": 9,
+          "description": "Chaque ennemi en contact avec le Maître teste immédiatement son Endurance. Un échec lui transmet la Pourriture de Nurgle.",
+          "source": "PDF Kermesse du Chaos VF, page 6"
+        }
+      ],
+      "ambiguites": [
+        "La limite normale est de 15 guerriers, mais posséder la Roulotte de la Peste la porte à 17.",
+        "La Roulotte utilise quatre sous-profils. Les statistiques principales de cette fiche décrivent son corps, les roues, le cheval et le gardien étant consignés dans sa règle Profil composite.",
+        "Le PDF écrit Arc à 15 CO et Arc court à 10 CO dans la liste de la Kermesse. Ces prix diffèrent des prix usuels et doivent être conservés tels quels."
+      ]
+    },
+    "kislevites": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/kislevites",
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "PDF Kislévites VF, page 2, https://drive.google.com/file/d/1xuOXK7nWEa1b9nE8vyXrZnBVwIIBSFYj/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Francs-Tireurs",
+          "description": "La bande peut engager les mêmes Francs-Tireurs qu'une bande de Mercenaires humains du livre de règles.",
+          "source": "PDF Kislévites VF, page 1"
+        },
+        {
+          "titre": "Vieux ennemis",
+          "description": "La bande ne peut jamais s'allier avec le Chaos. Le PDF cite les Possédés, Hommes-Bêtes, Skavens, Elfes Noirs et Nains du Chaos, ainsi que toute autre bande que les joueurs jugent trop chaotique.",
+          "source": "PDF Kislévites VF, page 2"
+        },
+        {
+          "titre": "Condition de l'Ours",
+          "description": "Un Ours Apprivoisé ne peut être recruté que si la bande possède déjà un Dompteur d'Ours.",
+          "source": "PDF Kislévites VF, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "capitaine-de-druzhina",
+          "nom": "Capitaine de Druzhina",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout guerrier à 6 ps ou moins peut utiliser son Commandement."
+            },
+            {
+              "titre": "Héritage",
+              "description": "À la création, il achète un objet de la liste des Guerriers à moitié prix. S'il le perd, il doit racheter le même objet à 150% du prix normal. Jusqu'au remplacement, il subit un malus de 1 à tous ses tests et jets pour toucher."
+            }
+          ],
+          "source": "PDF Kislévites VF, pages 2 à 4"
+        },
+        {
+          "id": "dompteur-dours",
+          "nom": "Dompteur d'Ours",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 10,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Dompteur d'Ours",
+              "description": "Sa présence autorise le recrutement d'un Ours Apprivoisé. À 6 ps ou moins du Dompteur, même à terre ou sonné, l'Ours réussit automatiquement ses tests de stupidité."
+            }
+          ],
+          "source": "PDF Kislévites VF, pages 2 à 4"
+        },
+        {
+          "id": "esaul",
+          "nom": "Esaul",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
+          "regles": [],
+          "source": "PDF Kislévites VF, pages 2 à 4"
+        },
+        {
+          "id": "recrue-kislevite",
+          "nom": "Recrue",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [],
+          "source": "PDF Kislévites VF, pages 2 à 4"
+        },
+        {
+          "id": "guerrier-kislevite",
+          "nom": "Guerrier",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Kislévites VF, pages 2 et 5"
+        },
+        {
+          "id": "cosaque",
+          "nom": "Cosaque",
+          "categorie": "Homme de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Haine du Chaos",
+              "description": "Le Cosaque hait toutes les bandes visées par Vieux ennemis."
+            }
+          ],
+          "source": "PDF Kislévites VF, pages 2 et 5"
+        },
+        {
+          "id": "streltsi",
+          "nom": "Streltsi",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Arquebusier",
+              "description": "Seul le Streltsi peut utiliser une arquebuse dans cette bande."
+            },
+            {
+              "titre": "Appui",
+              "description": "S'il porte une hallebarde et une arquebuse et ne se déplace pas du tout pendant la phase de Mouvement, il gagne 1 pour toucher avec son arquebuse. Une compétence permettant de bouger et tirer ne contourne pas cette immobilité obligatoire."
+            }
+          ],
+          "source": "PDF Kislévites VF, pages 2, 5 et 6"
+        },
+        {
+          "id": "ours-apprivoise",
+          "nom": "Ours Apprivoisé",
+          "categorie": "Homme de main",
+          "cout": 125,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 0,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 2,
+            "initiative": 2,
+            "attaques": 2,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Crocs et griffes",
+              "description": "L'Ours n'utilise aucun équipement."
+            },
+            {
+              "titre": "Apprivoisé",
+              "description": "Il est stupide, n'utilise jamais le Commandement du Chef et réussit automatiquement ses tests à 6 ps ou moins du Dompteur, dont il peut aussi utiliser le Commandement. Il ne participe pas aux batailles sans Dompteur."
+            },
+            { "titre": "Effrayant", "description": "L'Ours cause la peur." },
+            {
+              "titre": "Étreinte",
+              "description": "S'il touche la même cible avec ses deux Attaques, il peut remplacer ces touches par une étreinte. Chaque joueur lance 1D6 et ajoute la Force de sa figurine. Si l'Ours égale ou dépasse l'adversaire, celui-ci perd 1 PV sans sauvegarde d'armure."
+            },
+            {
+              "titre": "Férocement loyal",
+              "description": "Si l'Ours n'est pas hors de combat à la fin de la partie, le Dompteur traite Dépouillé, Capturé, Vendu aux Arènes et leurs équivalents comme Récupération totale."
+            },
+            {
+              "titre": "Animal",
+              "description": "L'Ours ne gagne jamais d'expérience."
+            },
+            {
+              "titre": "Grande cible",
+              "description": "L'Ours suit la règle de Grande cible du chapitre Tir."
+            }
+          ],
+          "source": "PDF Kislévites VF, pages 2 et 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement des Guerriers Kislévites",
+          "profils": [
+            "capitaine-de-druzhina",
+            "dompteur-dours",
+            "esaul",
+            "recrue-kislevite",
+            "guerrier-kislevite",
+            "cosaque"
+          ],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Couteau de lancer", "cout": 15 },
+                { "nom": "Arc court", "cout": 5 },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arbalète", "cout": 25 },
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 25,
+                  "note": "50 CO la paire."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 }
+              ]
+            }
+          ],
+          "source": "PDF Kislévites VF, page 3"
+        },
+        {
+          "nom": "Équipement des Streltsi",
+          "profils": ["streltsi"],
+          "categories": [
+            {
+              "nom": "Corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première dague est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arbalète", "cout": 25 },
+                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 25,
+                  "note": "50 CO la paire."
+                },
+                { "nom": "Arquebuse", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Armure légère", "cout": 20 }
+              ]
+            }
+          ],
+          "source": "PDF Kislévites VF, page 3"
+        },
+        {
+          "nom": "Équipement spécial kislévite",
+          "profils": [
+            "capitaine-de-druzhina",
+            "dompteur-dours",
+            "esaul",
+            "recrue-kislevite"
+          ],
+          "categories": [
+            {
+              "nom": "Objets rares",
+              "entrees": [
+                {
+                  "nom": "Vodka",
+                  "cout": 35,
+                  "formuleCout": "35 + 2D6 CO",
+                  "note": "Rare 8, usage unique, Héros kislévite uniquement. Avant une bataille, toute la bande gagne 1 en Commandement, maximum 10. Chaque membre teste son Endurance et perd 1 en Initiative pour la bataille en cas d'échec."
+                },
+                {
+                  "nom": "Collier de griffes d'ours",
+                  "cout": 75,
+                  "formuleCout": "75 + 3D6 CO",
+                  "note": "Rare 9, Héros kislévite uniquement. Le porteur devient frénétique."
+                }
+              ]
+            }
+          ],
+          "source": "PDF Kislévites VF, page 2"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [],
+      "ambiguites": [
+        "La règle Vieux ennemis laisse aux joueurs le soin de décider quelles autres bandes sont trop chaotiques. L'application doit distinguer la liste explicitement interdite de cette décision de table.",
+        "La Vodka affiche un coût variable de 35 + 2D6 CO et le Collier 75 + 3D6 CO. Le champ cout conserve seulement la base de la formule.",
+        "Le PDF réserve l'arquebuse aux Streltsi, même si d'autres guerriers pourraient normalement accéder à des armes à feu par des règles externes."
+      ]
+    }
+  }
+}

@@ -1,0 +1,1657 @@
+{
+  "bandes": {
+    "mercenaires-averlanders": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Mercenaires Averlanders V1.2gFr, page 2"
+      },
+      "regles": [],
+      "profils": [
+        {
+          "id": "capitaine",
+          "nom": "Capitaine",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Toute figurine alliée située à 6 ps ou moins peut employer son Commandement pour ses tests."
+            }
+          ],
+          "source": "Mercenaires Averlanders V1.2gFr, pages 2, 3 et 4"
+        },
+        {
+          "id": "sergent",
+          "nom": "Sergent",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse"],
+          "regles": [],
+          "source": "Mercenaires Averlanders V1.2gFr, pages 2, 3 et 4"
+        },
+        {
+          "id": "bergjaeger",
+          "nom": "Bergjaeger",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 4,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Tir", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Pièges",
+              "description": "S’il passe un tour sans autre action, sauf le tour où il vient de se relever, le Bergjaeger pose un marqueur à son contact. Toute figurine arrivant à 2 ps ou moins déclenche le piège sur 3+ et subit une touche de Force 4. Le poseur ne déclenche jamais ses propres pièges. Une victime blessée est placée à terre ou sonnée à 2 ps du marqueur. Si elle n’est pas blessée ou si le piège ne part pas, elle termine son mouvement. Le marqueur est ensuite retiré dans tous les cas."
+            }
+          ],
+          "source": "Mercenaires Averlanders V1.2gFr, pages 2, 3 et 4"
+        },
+        {
+          "id": "recrue",
+          "nom": "Recrue",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
+          "regles": [],
+          "source": "Mercenaires Averlanders V1.2gFr, pages 2, 3 et 4"
+        },
+        {
+          "id": "garde-des-montagnes",
+          "nom": "Garde des montagnes",
+          "categorie": "Hommes de main",
+          "cout": 30,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Mercenaires Averlanders V1.2gFr, pages 2 et 5"
+        },
+        {
+          "id": "tireur",
+          "nom": "Tireur",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Mercenaires Averlanders V1.2gFr, pages 2 et 5"
+        },
+        {
+          "id": "eclaireur-halfling",
+          "nom": "Éclaireur Halfling",
+          "categorie": "Hommes de main",
+          "cout": 20,
+          "minimum": 0,
+          "maximum": 3,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 4,
+            "force": 2,
+            "endurance": 2,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Promotion",
+              "description": "S’il devient Héros grâce à Ce gars est doué, il ne peut pas choisir Force parmi ses deux catégories de compétences."
+            }
+          ],
+          "source": "Mercenaires Averlanders V1.2gFr, pages 2 et 5"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Éclaireurs",
+          "profils": ["bergjaeger", "eclaireur-halfling"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse ou marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Mercenaires Averlanders V1.2gFr, page 3"
+        },
+        {
+          "nom": "Tireurs",
+          "profils": ["tireur"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse ou marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Tromblon", "cout": 30 },
+                { "nom": "Long fusil d’Hochland", "cout": 200 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Mercenaires Averlanders V1.2gFr, page 3"
+        },
+        {
+          "nom": "Gardes des montagnes",
+          "profils": ["capitaine", "sergent", "recrue", "garde-des-montagnes"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse ou marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 25,
+                  "formuleCout": "50 CO la paire"
+                },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Mercenaires Averlanders V1.2gFr, page 3"
+        }
+      ],
+      "competencesSpeciales": [],
+      "magie": [],
+      "ambiguites": [
+        "Le document n’énonce aucune règle globale propre à la bande en dehors de sa composition, de ses profils et de leurs règles individuelles."
+      ]
+    },
+    "mercenaires-ostermarkers": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Mercenaires Ostermarkers V1dFr, page 1"
+      },
+      "regles": [
+        {
+          "titre": "Tenaces",
+          "description": "Chaque Héros ou Homme de main peut relancer un test de Commandement raté lorsqu’il est seul contre tous ou lors d’un test de Déroute. Le second résultat doit être conservé.",
+          "source": "Mercenaires Ostermarkers V1dFr, page 1"
+        },
+        {
+          "titre": "Chien de ferme",
+          "description": "À la création de la bande, le Capitaine reçoit gratuitement un chien de guerre dans son équipement de départ.",
+          "source": "Mercenaires Ostermarkers V1dFr, page 1"
+        },
+        {
+          "titre": "Ensemble de compétences",
+          "description": "À la création, le joueur choisit définitivement l’un des trois tableaux proposés pour les Héros Ostermarkers.",
+          "source": "Mercenaires Ostermarkers V1dFr, pages 1 et 3"
+        }
+      ],
+      "profils": [
+        {
+          "id": "capitaine-mercenaire",
+          "nom": "Capitaine Mercenaire",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Érudition",
+            "Force",
+            "Vitesse"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Toute figurine alliée située à 6 ps ou moins peut employer son Commandement pour ses tests."
+            }
+          ],
+          "source": "Mercenaires Ostermarkers V1dFr, pages 1, 3 et 4"
+        },
+        {
+          "id": "champion",
+          "nom": "Champion",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Choix du tableau",
+              "description": "Ses catégories réelles dépendent du tableau choisi pour toute la bande. Voir la règle Ensemble de compétences."
+            }
+          ],
+          "source": "Mercenaires Ostermarkers V1dFr, pages 1, 3 et 4"
+        },
+        {
+          "id": "recrue",
+          "nom": "Recrue",
+          "categorie": "Héros",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Tir", "Force", "Vitesse"],
+          "regles": [
+            {
+              "titre": "Choix du tableau",
+              "description": "Ses catégories réelles dépendent du tableau choisi pour toute la bande. Voir la règle Ensemble de compétences."
+            }
+          ],
+          "source": "Mercenaires Ostermarkers V1dFr, pages 1, 3 et 4"
+        },
+        {
+          "id": "guerrier",
+          "nom": "Guerrier",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Mercenaires Ostermarkers V1dFr, pages 1 et 4"
+        },
+        {
+          "id": "tireur",
+          "nom": "Tireur",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Mercenaires Ostermarkers V1dFr, pages 1 et 4"
+        },
+        {
+          "id": "bretteur",
+          "nom": "Bretteur",
+          "categorie": "Hommes de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Expert à l’épée",
+              "description": "Lorsqu’il charge avec une épée ordinaire, il peut relancer ses jets pour toucher ratés. Cette règle ne fonctionne pas avec une épée à deux mains ni avec une autre arme."
+            }
+          ],
+          "source": "Mercenaires Ostermarkers V1dFr, pages 1 et 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Mercenaires",
+          "profils": [
+            "capitaine-mercenaire",
+            "champion",
+            "recrue",
+            "guerrier",
+            "bretteur"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Lance", "cout": 10 },
+                { "nom": "Morgenstern", "cout": 15 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                { "nom": "Arc", "cout": 10 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 25,
+                  "formuleCout": "50 CO la paire"
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 },
+                { "nom": "Rondache", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Mercenaires Ostermarkers V1dFr, page 2"
+        },
+        {
+          "nom": "Tireurs",
+          "profils": ["tireur"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arbalète", "cout": 25 },
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arc long", "cout": 15 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                { "nom": "Tromblon", "cout": 30 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Long fusil d’Hochland", "cout": 200 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Mercenaires Ostermarkers V1dFr, page 2"
+        },
+        {
+          "nom": "Montures humaines, annexe",
+          "profils": ["capitaine-mercenaire", "champion", "recrue"],
+          "categories": [
+            {
+              "nom": "Montures",
+              "entrees": [
+                {
+                  "nom": "Mule",
+                  "cout": 30,
+                  "note": "Rare 7. Monture pacifique et obstinée, Mouvement 6, CC 2, CT 0, F 3, E 3, PV 1, I 2, A 0, Cd 4."
+                },
+                {
+                  "nom": "Cheval",
+                  "cout": 40,
+                  "note": "Rare 8. Mouvement 8, CC 1, CT 0, F 3, E 3, PV 1, I 3, A 0, Cd 5."
+                },
+                {
+                  "nom": "Destrier",
+                  "cout": 80,
+                  "note": "Rare 11. Monture entraînée, Mouvement 8, CC 3, CT 0, F 3, E 3, PV 1, I 3, A 1, Cd 5. Le cavalier peut relancer un test de contrôle raté, une seule fois par test."
+                }
+              ]
+            }
+          ],
+          "source": "Mercenaires Ostermarkers V1dFr, page 5, annexe Guerriers Montés"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Tableau 1",
+          "description": "Capitaine: Combat, Tir, Érudition, Force, Vitesse. Champion: Combat, Force. Recrue: Combat, Tir, Vitesse.",
+          "source": "Mercenaires Ostermarkers V1dFr, page 3"
+        },
+        {
+          "titre": "Tableau 2",
+          "description": "Capitaine: Combat, Tir, Érudition, Force, Vitesse. Champion: Combat, Force, Vitesse. Recrue: Combat, Force, Vitesse.",
+          "source": "Mercenaires Ostermarkers V1dFr, page 3"
+        },
+        {
+          "titre": "Tableau 3",
+          "description": "Capitaine: Combat, Tir, Érudition, Force, Vitesse. Champion: Combat, Tir, Vitesse. Recrue: Combat, Tir, Vitesse.",
+          "source": "Mercenaires Ostermarkers V1dFr, page 3"
+        }
+      ],
+      "magie": [],
+      "ambiguites": [
+        "Le schéma impose une seule liste competencesDisponibles par profil. Pour Champion et Recrue, cette liste contient donc l’union des catégories possibles. Les trois combinaisons exactes sont conservées dans competencesSpeciales.",
+        "Le document annexe les montures humaines, mais ne dit pas explicitement quels Héros de cette bande les achètent. Leur usage dépend de l’article Guerriers Montés et du cadre de campagne."
+      ]
+    },
+    "mercenaires-ostlanders": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 4,
+        "source": "Mercenaires Ostlanders V1.4Fr, page 2"
+      },
+      "regles": [
+        {
+          "titre": "Autonome",
+          "description": "La bande ne peut jamais recruter de Francs-Tireurs, sauf les Ogres.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 1"
+        }
+      ],
+      "profils": [
+        {
+          "id": "doyen",
+          "nom": "Doyen",
+          "categorie": "Héros",
+          "cout": 60,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Toute figurine alliée située à 6 ps ou moins peut employer son Commandement pour ses tests."
+            }
+          ],
+          "source": "Mercenaires Ostlanders V1.4Fr, pages 2, 3 et 5"
+        },
+        {
+          "id": "frere-de-sang",
+          "nom": "Frère de sang",
+          "categorie": "Héros",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [],
+          "source": "Mercenaires Ostlanders V1.4Fr, pages 2, 3 et 5"
+        },
+        {
+          "id": "pretre-de-taal",
+          "nom": "Prêtre de Taal",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Érudition",
+            "Force",
+            "Vitesse",
+            "Spéciale"
+          ],
+          "regles": [
+            {
+              "titre": "Prières",
+              "description": "Il utilise les Prières de Taal."
+            },
+            {
+              "titre": "Frêle",
+              "description": "Il ne peut jamais porter d’armure lourde."
+            }
+          ],
+          "source": "Mercenaires Ostlanders V1.4Fr, pages 2, 3 et 5"
+        },
+        {
+          "id": "proche",
+          "nom": "Proche",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Mercenaires Ostlanders V1.4Fr, pages 2 et 6"
+        },
+        {
+          "id": "jaeger",
+          "nom": "Jaeger",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 7,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Mercenaires Ostlanders V1.4Fr, pages 2 et 6"
+        },
+        {
+          "id": "vaurien",
+          "nom": "Vaurien",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 10
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Ivres",
+              "description": "Ils réussissent automatiquement tous leurs tests de Commandement."
+            },
+            {
+              "titre": "Irrespectable",
+              "description": "Ils ne peuvent jamais devenir Chef de bande."
+            }
+          ],
+          "source": "Mercenaires Ostlanders V1.4Fr, pages 2 et 6"
+        },
+        {
+          "id": "ogre",
+          "nom": "Ogre",
+          "categorie": "Hommes de main",
+          "cout": 160,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 3,
+            "capaciteTir": 2,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            { "titre": "Peur", "description": "Il provoque la peur." },
+            {
+              "titre": "Grande cible",
+              "description": "Il est traité comme une grande cible pour les règles de tir."
+            },
+            {
+              "titre": "Compétences",
+              "description": "S’il devient Héros grâce à Ce gars est doué, il choisit ses compétences dans Combat et Force."
+            },
+            {
+              "titre": "Lent d’esprit",
+              "description": "Il accumule normalement l’expérience, mais il lui faut deux fois plus de points que la normale pour obtenir chaque progression."
+            }
+          ],
+          "source": "Mercenaires Ostlanders V1.4Fr, pages 2 et 6"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Ostlanders",
+          "profils": ["doyen", "frere-de-sang", "pretre-de-taal", "proche"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse ou marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Lance", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                { "nom": "Arc", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Mercenaires Ostlanders V1.4Fr, page 3"
+        },
+        {
+          "nom": "Vauriens",
+          "profils": ["vaurien"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Masse ou marteau", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [{ "nom": "Armure légère", "cout": 20 }]
+            }
+          ],
+          "source": "Mercenaires Ostlanders V1.4Fr, page 3"
+        },
+        {
+          "nom": "Jaegers",
+          "profils": ["jaeger"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Lance", "cout": 5 },
+                { "nom": "Épée", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                { "nom": "Arc", "cout": 10 },
+                { "nom": "Arquebuse", "cout": 35 },
+                { "nom": "Tromblon", "cout": 30 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                {
+                  "nom": "Pistolet à double canon",
+                  "cout": 30,
+                  "formuleCout": "60 CO la paire",
+                  "note": "Rare 10. Un tir réussi inflige deux touches de Force 4. Chaque canon demande un tour entier de rechargement. Une paire peut tirer tous les deux tours."
+                },
+                { "nom": "Long fusil d’Hochland", "cout": 200 },
+                {
+                  "nom": "Long fusil d’Hochland à double canon",
+                  "cout": 300,
+                  "note": "Rare 12. Un tir réussi inflige deux touches. Chaque canon demande un tour entier de rechargement."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Mercenaires Ostlanders V1.4Fr, pages 2 et 3"
+        },
+        {
+          "nom": "Ogres",
+          "profils": ["ogre"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                { "nom": "Bâton", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [{ "nom": "Armure légère", "cout": 20 }]
+            }
+          ],
+          "source": "Mercenaires Ostlanders V1.4Fr, page 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Ruée du taureau",
+          "description": "Lors d’une charge, le Héros peut remplacer ses attaques par une unique tentative de renversement. Il effectue un jet pour toucher avec +1. En cas de réussite, la cible est mise à terre sans jet pour blesser.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 4"
+        },
+        {
+          "titre": "Odeur nauséabonde",
+          "description": "Les ennemis vivants subissent -1 pour le toucher au corps à corps contre ce Héros. Il ne peut porter aucun objet enflammé et les attaques de feu dirigées contre lui gagnent +1 en Force.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 4"
+        },
+        {
+          "titre": "Serment de sang",
+          "description": "Réservée au Chef de bande. Elle autorise une seule relance de test de Déroute par partie.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 4"
+        },
+        {
+          "titre": "Narguer",
+          "description": "Pendant la phase de tir, au lieu de tirer ou lancer un sort, le Héros cible selon les règles du tir un ennemi visible et l’insulte. Si la cible rate un test de Commandement, elle doit consacrer sa prochaine phase de mouvement à tenter d’engager le provocateur au corps à corps.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 4"
+        },
+        {
+          "titre": "Amis des bêtes",
+          "description": "Les animaux normaux ne l’attaquent jamais. Jusqu’à deux chiens de guerre lui appartenant ne comptent pas dans l’effectif maximal de la bande.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 4"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Saut du Cerf",
+          "difficulte": 7,
+          "description": "Le Prêtre se déplace immédiatement jusqu’à 9 ps, y compris au contact. Ce contact compte comme une charge et lui donne +1 Force pendant le premier tour. Contre un ennemi en fuite, il inflige une touche automatique avec ce bonus, puis la cible survivante fuit encore.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 7"
+        },
+        {
+          "titre": "Bière Bénite",
+          "difficulte": 5,
+          "description": "Le Prêtre ou une figurine à 2 ps ou moins récupère tous ses Points de Vie. Jusqu’à la prochaine phase de combat, chaque ennemi vivant situé à 2 ps ou moins perd une Attaque.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 7"
+        },
+        {
+          "titre": "Patte d’Ours",
+          "difficulte": 7,
+          "description": "Le Prêtre ou une figurine amie située à 6 ps ou moins gagne +2 Force jusqu’au prochain tour du Prêtre.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 7"
+        },
+        {
+          "titre": "Tremblement de Terre",
+          "difficulte": 9,
+          "description": "Un bâtiment situé à 4 ps ou moins s’effondre. Chaque ennemi à son contact subit une touche de Force 3 et toute figurine à l’intérieur applique les règles de chute selon sa hauteur. Le bâtiment est retiré pour le reste de la partie.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 7"
+        },
+        {
+          "titre": "Entraves",
+          "difficulte": 8,
+          "description": "Toutes les figurines, amies ou ennemies, à 12 ps ou moins ne se déplacent qu’à la moitié de leur Mouvement jusqu’à la prochaine phase de tir. Les Jaegers Ostlanders sont immunisés.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 7"
+        },
+        {
+          "titre": "Invocation d’Écureuils",
+          "difficulte": 7,
+          "description": "Un ennemi situé à 12 ps ou moins subit 2D6 touches de Force 1 sans aucune sauvegarde d’armure.",
+          "source": "Mercenaires Ostlanders V1.4Fr, page 7"
+        }
+      ],
+      "ambiguites": [
+        "Le maximum de quatre Héros correspond aux profils recrutables au départ. Un Ogre promu par Ce gars est doué peut ensuite devenir Héros.",
+        "Le texte du pistolet à double canon précise deux touches de Force 4, tandis que le long fusil à double canon est décrit par renvoi au fonctionnement de l’arme normale sans répéter sa Force."
+      ]
+    },
+    "pillards-hommes-betes": {
+      "composition": {
+        "budgetInitial": 500,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "Pillards Hommes-Bêtes V2.3dFr, page 4"
+      },
+      "regles": [
+        {
+          "titre": "Bestiaux",
+          "description": "La bande ne peut pas recruter de Francs-Tireurs, sauf lorsque la description d’un Franc-Tireur l’autorise explicitement.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 4"
+        }
+      ],
+      "profils": [
+        {
+          "id": "chef-homme-bete",
+          "nom": "Chef Homme-Bête",
+          "categorie": "Héros",
+          "cout": 65,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Toute figurine alliée située à 6 ps ou moins peut employer son Commandement pour ses tests."
+            }
+          ],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 4, 5 et 6"
+        },
+        {
+          "id": "chaman-homme-bete",
+          "nom": "Chaman Homme-Bête",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 11,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": ["Combat", "Vitesse", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il utilise les Rituels du Chaos."
+            },
+            {
+              "titre": "Sans armure",
+              "description": "Il choisit ses armes dans la liste des Hommes-Bêtes, mais ne peut porter aucune armure."
+            }
+          ],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 4, 5, 6 et 12"
+        },
+        {
+          "id": "bestigor",
+          "nom": "Bestigor",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 4, 5 et 6"
+        },
+        {
+          "id": "centigor",
+          "nom": "Centigor",
+          "categorie": "Héros",
+          "cout": 80,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 8,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 2,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": ["Combat", "Force", "Spéciale"],
+          "regles": [
+            {
+              "titre": "Ivre",
+              "description": "Au début de chaque tour, lancez 1D6. Sur 1, il doit tester la stupidité pour ce tour. Sur 2 à 5, rien ne se produit. Sur 6, il devient frénétique pour ce tour. Tant qu’il est stupide ou frénétique, il est immunisé à la psychologie."
+            },
+            {
+              "titre": "Habitat forestier",
+              "description": "Il ne subit aucune pénalité de Mouvement en terrain boisé."
+            },
+            {
+              "titre": "Piétinement",
+              "description": "Il effectue une Attaque supplémentaire avec ses sabots. Cette attaque n’est jamais modifiée par les bonus ou malus de ses armes."
+            }
+          ],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 4, 5 et 6"
+        },
+        {
+          "id": "ungor",
+          "nom": "Ungor",
+          "categorie": "Hommes de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Sous-bêtes",
+              "description": "Ils ne peuvent jamais devenir Héros. Un résultat Ce gars est doué sur leur jet de progression doit être relancé."
+            }
+          ],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 4 et 7"
+        },
+        {
+          "id": "gor",
+          "nom": "Gor",
+          "categorie": "Hommes de main",
+          "cout": 35,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 5,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 4 et 7"
+        },
+        {
+          "id": "chien-du-chaos",
+          "nom": "Chien du Chaos",
+          "categorie": "Hommes de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 5,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 7,
+            "capaciteCombat": 4,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Sans équipement",
+              "description": "Il combat uniquement avec ses griffes, crocs et cornes, sans pénalité."
+            },
+            {
+              "titre": "Animal",
+              "description": "Il ne gagne jamais de points d’expérience."
+            }
+          ],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 4 et 7"
+        },
+        {
+          "id": "minotaure",
+          "nom": "Minotaure",
+          "categorie": "Hommes de main",
+          "cout": 200,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 6,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 4,
+            "attaques": 3,
+            "commandement": 8
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            { "titre": "Peur", "description": "Il provoque la peur." },
+            {
+              "titre": "Soif de sang",
+              "description": "Après avoir mis hors de combat tous ses adversaires au corps à corps, il devient frénétique sur 4+ sur 1D6."
+            },
+            {
+              "titre": "Animal",
+              "description": "Il gagne de l’expérience et des progressions, mais ne peut jamais devenir Héros."
+            },
+            {
+              "titre": "Grande cible",
+              "description": "Il est traité comme une grande cible pour les règles de tir."
+            }
+          ],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 4 et 7"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Hommes-Bêtes",
+          "profils": [
+            "chef-homme-bete",
+            "chaman-homme-bete",
+            "bestigor",
+            "centigor",
+            "gor",
+            "minotaure"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Épée", "cout": 10 },
+                { "nom": "Hallebarde", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Armure légère", "cout": 20 },
+                { "nom": "Armure lourde", "cout": 50 },
+                { "nom": "Casque", "cout": 10 },
+                { "nom": "Bouclier", "cout": 5 }
+              ]
+            }
+          ],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 5"
+        },
+        {
+          "nom": "Ungors",
+          "profils": ["ungor"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "La première est gratuite."
+                },
+                { "nom": "Marteau", "cout": 3 },
+                { "nom": "Masse", "cout": 3 },
+                { "nom": "Hache", "cout": 5 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            { "nom": "Armes de tir", "entrees": [] },
+            { "nom": "Armures", "entrees": [{ "nom": "Bouclier", "cout": 5 }] }
+          ],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 5"
+        },
+        {
+          "nom": "Équipement spécial",
+          "profils": [
+            "chef-homme-bete",
+            "chaman-homme-bete",
+            "bestigor",
+            "centigor"
+          ],
+          "categories": [
+            {
+              "nom": "Armes",
+              "entrees": [
+                {
+                  "nom": "Arme en obsidienne",
+                  "cout": 0,
+                  "formuleCout": "Quatre fois le prix de l’arme normale",
+                  "note": "Rare 12. Confère +1 Force au corps à corps, frappe toujours en dernier et ne peut pas être utilisée par Nains, Elfes, Sœurs de Sigmar, Répurgateurs ou Prêtres."
+                }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                {
+                  "nom": "Armure du Chaos",
+                  "cout": 185,
+                  "formuleCout": "185 CO moins 1 CO par point d’expérience du Héros",
+                  "note": "Rare 13. Sauvegarde 4+. Fusionne définitivement avec le porteur, peut être portée par un lanceur de sorts, mais dans ce cas sans bouclier ni rondache. Le jet de rareté gagne +1 par ennemi mis hors de combat lors de la bataille précédente."
+                }
+              ]
+            },
+            {
+              "nom": "Montures",
+              "entrees": [
+                {
+                  "nom": "Destrier du Chaos",
+                  "cout": 90,
+                  "note": "Rare 11, bandes du Chaos uniquement. Mouvement 8, CC 3, CT 0, F 4, E 3, PV 1, I 3, A 1, Cd 5. Le cavalier peut relancer une fois chaque test de contrôle raté."
+                }
+              ]
+            }
+          ],
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 10 et 11"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Cuir épais",
+          "description": "Confère une sauvegarde d’armure de 6+ cumulable avec les autres armures.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 5"
+        },
+        {
+          "titre": "Mutant",
+          "description": "Le Héros peut acheter une mutation. La première coûte le prix indiqué, puis chaque mutation supplémentaire achetée par cette figurine coûte le double.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, pages 5, 8 et 9"
+        },
+        {
+          "titre": "Sans peur",
+          "description": "Le Héros est immunisé à la peur et ne teste jamais seul contre tous.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 5"
+        },
+        {
+          "titre": "Le cornu",
+          "description": "Lorsqu’il charge, il effectue une Attaque supplémentaire avec sa Force de base grâce à ses cornes.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 5"
+        },
+        {
+          "titre": "Mugissement",
+          "description": "Réservée au Chef. Elle permet de relancer tout test de Déroute raté.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 5"
+        },
+        {
+          "titre": "Mangeur d’hommes",
+          "description": "Le Héros est sujet à la haine contre toutes les bandes humaines.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 5"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Vision d’Horreur",
+          "difficulte": 10,
+          "description": "Cible l’ennemi le plus proche à 6 ps ou moins, ou une figurine au contact si le Chaman est engagé. La cible est sonnée, ou mise à terre si elle ne peut pas être sonnée.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 12"
+        },
+        {
+          "titre": "Œil Divin",
+          "difficulte": 7,
+          "description": "Une seule réussite par bataille. Sur une figurine à 6 ps ou moins, lancez 1D6: sur 1 elle est mise hors de combat sans jet de Blessures Graves après la bataille, sur 2 à 5 elle gagne +1 à une caractéristique choisie pour la bataille, sur 6 elle gagne +1 à toutes ses caractéristiques pour la bataille.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 12"
+        },
+        {
+          "titre": "Sang Noir",
+          "difficulte": 8,
+          "description": "Une ligne de 8 ps inflige D3 touches de Force 5 à la première figurine rencontrée. Après le sort, le Chaman lance sur le tableau des Dégâts pour lui-même, mais un résultat hors de combat devient sonné.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 12"
+        },
+        {
+          "titre": "Tentation du Chaos",
+          "difficulte": 9,
+          "description": "Cible l’ennemi le plus proche à 12 ps ou moins. Chaque camp lance 1D6 et ajoute le Commandement du Chaman ou de la cible. Si le Chaman gagne, il contrôle la victime jusqu’à ce qu’elle réussisse un test de Commandement pendant la phase de Ralliement adverse. Elle ne peut pas se suicider, peut attaquer son propre camp et cesse de combattre la bande du Chaman.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 12"
+        },
+        {
+          "titre": "Ailes Ténébreuses",
+          "difficulte": 7,
+          "description": "Le Chaman se déplace immédiatement jusqu’à 12 ps, y compris au contact où il compte comme ayant chargé. Contre un ennemi en fuite, il inflige une touche automatique, puis la cible survivante fuit encore.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 12"
+        },
+        {
+          "titre": "Mot de Souffrance",
+          "difficulte": 7,
+          "description": "Toutes les figurines situées à 3 ps ou moins, amies comme ennemies, subissent une touche de Force 3 sans sauvegarde d’armure.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 12"
+        }
+      ],
+      "mutations": [
+        {
+          "titre": "Âme démoniaque",
+          "cout": 20,
+          "description": "Sauvegarde spéciale de 4+ contre les sorts et les prières.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 8"
+        },
+        {
+          "titre": "Pince",
+          "cout": 50,
+          "description": "Le bras muté ne peut porter d’arme et fournit une Attaque supplémentaire de Force +1 au corps à corps.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 8"
+        },
+        {
+          "titre": "Tentacule",
+          "cout": 35,
+          "description": "Au corps à corps, retire une Attaque choisie à l’adversaire, sans pouvoir le réduire sous une Attaque.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 8"
+        },
+        {
+          "titre": "Sabots fendus",
+          "cout": 40,
+          "description": "Ajoute +1 au Mouvement.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 8"
+        },
+        {
+          "titre": "Sang acide",
+          "cout": 30,
+          "description": "À chaque blessure subie au corps à corps, toutes les figurines au contact subissent une touche de Force 3 sans Coup Critique.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 8"
+        },
+        {
+          "titre": "Épines",
+          "cout": 35,
+          "description": "Au début de chaque phase de corps à corps, toute figurine au contact subit une touche automatique de Force 1 sans Coup Critique.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 8"
+        },
+        {
+          "titre": "Queue de scorpion",
+          "cout": 40,
+          "description": "Fournit une Attaque supplémentaire de Force 5. Sa Force tombe à 2 contre une cible immunisée au poison.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 8"
+        },
+        {
+          "titre": "Bras supplémentaire",
+          "cout": 40,
+          "description": "Le bras peut employer une arme à une main, un bouclier ou une rondache. Il fournit une Attaque supplémentaire si une arme est choisie, mais ne permet alors pas une autre arme supplémentaire.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 8"
+        },
+        {
+          "titre": "Hideux",
+          "cout": 40,
+          "description": "Le mutant provoque la peur.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 8"
+        },
+        {
+          "titre": "Corps cristallin",
+          "cout": 60,
+          "description": "Fixe définitivement l’Endurance à 6 et les Points de Vie à 1. Ces valeurs ne peuvent plus changer par expérience ou mutation, et les progressions correspondantes sont relancées.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 9"
+        },
+        {
+          "titre": "Brute épaisse",
+          "cout": 50,
+          "description": "Ajoute +2 Force et retire -4 Commandement.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 9"
+        },
+        {
+          "titre": "Morsure venimeuse",
+          "cout": 50,
+          "description": "Fournit une Attaque de morsure supplémentaire de Force 5, réduite à 2 contre les cibles immunisées au poison. Si le mutant possède déjà une morsure, elle acquiert seulement cet effet.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 9"
+        },
+        {
+          "titre": "Queue préhensile",
+          "cout": 50,
+          "description": "Fournit une Attaque de queue supplémentaire et permet d’utiliser une arme à une main, un bouclier ou une rondache autorisé. Avec plusieurs queues, une seule est choisie au début de chaque phase de corps à corps.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 9"
+        },
+        {
+          "titre": "Peau écailleuse",
+          "cout": 60,
+          "description": "Confère une sauvegarde naturelle de 5+, jamais dégradée au-delà de 6+, sauf annulation par un Coup Critique sans sauvegarde. Une armure légère et les autres protections peuvent l’améliorer.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 9"
+        },
+        {
+          "titre": "Ailes",
+          "cout": 45,
+          "description": "Permet de planer depuis une position élevée: pour chaque pouce descendu, le mutant parcourt 2 ps horizontalement.",
+          "source": "Pillards Hommes-Bêtes V2.3dFr, page 9"
+        }
+      ],
+      "ambiguites": [
+        "Le profil du Centigor imprime Attaques 1(2). La donnée numérique conserve l’Attaque de base à 1 et la seconde est décrite dans Piétinement, conformément au maximum imprimé 4(+1).",
+        "Le document qualifie le Minotaure d’Animal tout en précisant qu’il gagne de l’expérience. Cette règle lui interdit uniquement de devenir Héros, contrairement aux Chiens du Chaos qui ne gagnent jamais d’expérience.",
+        "Le coût d’une arme en obsidienne dépend de l’arme choisie. La valeur cout est donc 0 et formuleCout porte la règle de calcul."
+      ]
+    }
+  }
+}

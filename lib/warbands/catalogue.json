@@ -1,0 +1,434 @@
+{
+  "schema": "trackheim-warband-catalogue",
+  "version": 1,
+  "verifieLe": "2026-09-02",
+  "sourceCatalogue": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes",
+  "bandes": {
+    "chasseurs-de-tresors-nains": {
+      "presentation": "Des nobles nains dépossédés rassemblent parents et compagnons pour retrouver assez de richesses à Mordheim et fonder une nouvelle forteresse. Leur bande est résistante, disciplinée et tournée vers la chasse au trésor.",
+      "publication": "Grade 1a. Town Cryer 4, traduction Games Workshop France, édition GLM avec errata du Rules Review 2005.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/12R4_kYLxzjnV6-sY-iiHJzy_186TYsfd/view?usp=sharing",
+      "pagesPdf": 5,
+      "avertissements": []
+    },
+    "culte-des-possedes": {
+      "presentation": "Les adorateurs du Seigneur des Ombres récoltent la pierre magique et renforcent leurs rangs de mutants et de créatures démoniaques. La bande mêle cultistes, magie du Chaos, mutations et combattants monstrueux.",
+      "publication": "Grade 1a. Livre de règles, édition GLM V2.2aFr avec mutations, équipement du Chaos, montures, récompenses et rituels en annexes.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/199iOwbkouMfOgxtdi5tbDQLal-ZmCcvk/view?usp=sharing",
+      "pagesPdf": 10,
+      "avertissements": [
+        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
+      ]
+    },
+    "horde-orque": {
+      "presentation": "Un chef orque mène une troupe attirée par les bagarres, le pillage et la pierre magique. La bande réunit la brutalité des orques et les effectifs plus instables des gobelins.",
+      "publication": "Grade 1a. Town Cryer 6, édition GLM V1.1bFr avec errata du Rules Review 2005 et montures en annexe.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1mCxyUQtLWLRD7EHzh3z_aPGXdr3viUOI/view?usp=sharing",
+      "pagesPdf": 10,
+      "avertissements": []
+    },
+    "kermesse-du-chaos": {
+      "presentation": "Cette troupe de bateleurs itinérants dissimule des serviteurs de Nurgle qui répandent maladie et corruption. Ses règles associent carnaval macabre, démons et mutations pestilentielles.",
+      "publication": "Grade 1a. Town Cryer 27 puis Empire en Flammes, PDF Games Workshop intégrant les correctifs publiés.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1QBrTaetz_LiTXuXrnD7J95Pjssw90EJi/view?usp=sharing",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "kislevites": {
+      "presentation": "Des guerriers du nord habitués aux hivers extrêmes et aux incursions du Chaos viennent combattre à Mordheim. Leur culture martiale repose sur le courage, la solidarité et une haine farouche du Chaos.",
+      "publication": "Grade 1a. Town Cryer 16, version française publiée par Games Workshop France.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1xuOXK7nWEa1b9nE8vyXrZnBVwIIBSFYj/view?usp=sharing",
+      "pagesPdf": 6,
+      "avertissements": []
+    },
+    "mercenaires-averlanders": {
+      "presentation": "Ces mercenaires d'une province prospère se distinguent par leurs vétérans et leurs tireurs, tout en affichant des tenues volontairement voyantes. Ils apportent une variante impériale orientée vers l'adresse au tir et des recrues spécialisées.",
+      "publication": "Grade 1a. Town Cryer 10, traduction et édition GLM V1.2gFr avec corrections documentées.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/14vGgB6EOoIQrYg_qCML3JK60_XpLfQQA/view?usp=sharing",
+      "pagesPdf": 5,
+      "avertissements": []
+    },
+    "mercenaires-marienburgers": {
+      "presentation": "Financés par les riches guildes de Marienburg, ces mercenaires arrivent mieux dotés et excellent dans l'acquisition de matériel rare. Leur aisance économique est leur principal avantage de campagne.",
+      "publication": "Grade 1a. Livre de règles, PDF Games Workshop V2LRBFr commun aux Reiklanders, Middenheimers et Marienburgers.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/11E_fKx-2HqP6kfGeZstD6tJvstJYOVV5/view?usp=sharing",
+      "pagesPdf": 4,
+      "avertissements": []
+    },
+    "mercenaires-middenheimers": {
+      "presentation": "Les hommes de la Cité du Loup Blanc sont réputés pour leur force physique et leur goût du combat direct. Leurs chefs et champions commencent plus puissants que les mercenaires humains ordinaires.",
+      "publication": "Grade 1a. Livre de règles, PDF Games Workshop V2LRBFr commun aux Reiklanders, Middenheimers et Marienburgers.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/11E_fKx-2HqP6kfGeZstD6tJvstJYOVV5/view?usp=sharing",
+      "pagesPdf": 4,
+      "avertissements": []
+    },
+    "mercenaires-ostermarkers": {
+      "presentation": "Habitués à défendre seuls leurs terres contre pillards et envahisseurs, les Ostermarkers sont autonomes et tenaces. Leur bande traduit cette capacité à tenir lorsque la situation devient défavorable.",
+      "publication": "Grade 1a. Édition GLM V1dFr avec montures disponibles en annexe.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1DNnDT2lL4XdaeS6gXHXMbNzksYilEzsP/view?usp=sharing",
+      "pagesPdf": 5,
+      "avertissements": [
+        "La page GLM consultée ne précise pas clairement la publication d'origine dans son résumé éditorial."
+      ]
+    },
+    "mercenaires-ostlanders": {
+      "presentation": "Les Ostlanders viennent d'une province pauvre et isolée où les familles apprennent à survivre ensemble. Leur bande met en avant des combattants robustes, des liens familiaux et une forte haine du Chaos.",
+      "publication": "Grade 1a. Town Cryer 11 puis Mordheim Annual 2002, édition GLM V1.4Fr.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1JeaiPJ_ivIE-72Z-e192r3IVPKhTvrrM/view?usp=drive_link",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "mercenaires-reiklanders": {
+      "presentation": "Ces soldats professionnels incarnent la discipline et la loyauté du Reikland. Leurs chefs maintiennent mieux la cohésion de la bande et leurs tireurs sont particulièrement compétents.",
+      "publication": "Grade 1a. Livre de règles, PDF Games Workshop V2LRBFr commun aux Reiklanders, Middenheimers et Marienburgers.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/11E_fKx-2HqP6kfGeZstD6tJvstJYOVV5/view?usp=sharing",
+      "pagesPdf": 4,
+      "avertissements": []
+    },
+    "morts-vivants": {
+      "presentation": "Un vampire envoyé par la noblesse de Sylvanie conduit nécromancien, goules et cadavres animés à travers Mordheim. La bande combine un chef très puissant avec des serviteurs vivants et morts aux rôles distincts.",
+      "publication": "Grade 1a. Livre de règles, PDF Games Workshop enrichi des sorts de Nécromancie pour éviter les renvois.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/19d2iZDHQB1fLLz9ITUCSHALXvT1Cm9X0/view?usp=sharing",
+      "pagesPdf": 5,
+      "avertissements": [
+        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
+      ]
+    },
+    "pillards-hommes-betes": {
+      "presentation": "Ces hardes brutales quittent les forêts pour détruire les établissements humains et récupérer la pierre magique. Elles mêlent chefs bestiaux, gors, ungors et créatures du Chaos dans une force agressive.",
+      "publication": "Grade 1a. Town Cryer 29 puis Empire en Flammes, édition GLM V2.3dFr avec errata du Rules Review 2005 et annexes.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1UtVRVV8yKlBZc6YD068QR7h5gAiSSj8T/view?usp=sharing",
+      "pagesPdf": 12,
+      "avertissements": []
+    },
+    "repurgateurs": {
+      "presentation": "Les templiers de Sigmar traquent sorciers, mutants, morts-vivants et adorateurs du Chaos dans les ruines. Ils avancent avec prêtres, flagellants et chiens de guerre dans une croisade inflexible.",
+      "publication": "Grade 1a. Livre de règles, PDF Games Workshop enrichi des Prières de Sigmar.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1zoQZnMwOuEFKmRuRb-ltsZBd6GKIVkW8/view?usp=sharing",
+      "pagesPdf": 5,
+      "avertissements": [
+        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
+      ]
+    },
+    "skavens-du-clan-eshin": {
+      "presentation": "Le Clan Eshin infiltre Mordheim par ses tunnels afin de s'emparer de la malepierre sans révéler son abondance aux clans rivaux. Ses bandes privilégient la vitesse, la furtivité et les techniques d'assassinat.",
+      "publication": "Grade 1a. Livre de règles, PDF Games Workshop enrichi de la Magie du Rat Cornu.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1kAgHhx9tcEShv2PuNmagwDI2uVtVo7dz/view?usp=sharing",
+      "pagesPdf": 7,
+      "avertissements": [
+        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
+      ]
+    },
+    "soeurs-de-sigmar": {
+      "presentation": "Les religieuses du Roc de Sigmar ont survécu à la destruction de la cité et cherchent désormais à soustraire la pierre magique aux profanateurs. La bande réunit matriarches, novices et sœurs guerrières soutenues par les Prières de Sigmar.",
+      "publication": "Grade 1a. Livre de règles, PDF Games Workshop enrichi des Prières de Sigmar.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1UWfMrQUoOoT64lWbm5uV-hg-K5t4Ae64/view?usp=sharing",
+      "pagesPdf": 5,
+      "avertissements": [
+        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
+      ]
+    },
+    "amazones-l": {
+      "presentation": "Les Amazones de Lustrie défendent leur île et explorent les ruines à la recherche d'artefacts des anciens Slanns. Cette version conserve l'équipement exotique et la puissance prévus pour le cadre de campagne lustrien.",
+      "publication": "Grade 1b. Version Lustrie issue du Town Cryer 15, édition GLM V1.1gFr.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1heAf0yWNUqSFaR33yW5GTP5OBmsEhliA/view?usp=sharing",
+      "pagesPdf": 8,
+      "avertissements": [
+        "Cette version est calibrée pour Lustrie et ne doit pas être confondue avec l'adaptation Mordheim."
+      ]
+    },
+    "amazones-m": {
+      "presentation": "Cette adaptation représente des Amazones exilées qui cherchent à réunir assez de richesses pour rentrer en Lustrie. Son équipement et ses options ont été réduits afin de mieux correspondre aux bandes de Mordheim.",
+      "publication": "Grade 1b. Adaptation Mordheim publiée dans le Town Cryer 23, PDF Games Workshop France.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1XgVsViZ3PHS20RsvIX6D5lvaGHNgvNuE/view?usp=sharing",
+      "pagesPdf": 8,
+      "avertissements": [
+        "La page GLM présente les deux variantes ensemble. L'application doit clairement distinguer la version Lustrie de la version Mordheim."
+      ]
+    },
+    "artilleurs-de-nuln": {
+      "presentation": "Des élèves de l'école d'artillerie quittent Nuln sous la conduite d'officiers et d'instructeurs pour éprouver leurs armes sur le terrain. La bande est très bien équipée et centrée sur les armes à poudre noire.",
+      "publication": "Grade 1b. Bande du supplément Nemesis Crown, édition GLM V1lFr avec montures en annexe.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/122xb8a2aNDoO6RZEIbyMedDQDuTgQMRD/view?usp=drive_link",
+      "pagesPdf": 8,
+      "avertissements": []
+    },
+    "bandits-du-hochland": {
+      "presentation": "Des réfugiés du Hochland restés au Talabecland vivent en marge d'une population qui les rejette. Leur bande transforme cette précarité en réseau de brigands, de tireurs et de survivants économes.",
+      "publication": "Grade 1b. Bande du supplément Nemesis Crown, édition GLM V1.3Fr avec corrections et montures.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1WCv97t_XXAwxdSzmGRbGFLhtbgQco63q/view?usp=drive_link",
+      "pagesPdf": 9,
+      "avertissements": []
+    },
+    "chasseurs-cornus": {
+      "presentation": "Ces fidèles de Taal parcourent les forêts du Talabecland et rejettent armes à feu, villes et technologie. Ils s'appuient sur leur connaissance de la nature, leur mobilité et leurs talents de chasseurs.",
+      "publication": "Grade 1b. Édition GLM V1hFr avec montures en annexe.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1gzkxAxEJ9Yab2c9l_vOT5J6dzSj4jHJh/view?usp=sharing",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "chevaliers-bretonniens": {
+      "presentation": "Un Chevalier de la Quête mène chevaliers errants et serviteurs à Mordheim pour éprouver sa valeur et gagner la faveur de la Dame du Lac. La bande privilégie l'honneur, les héros montés et une bénédiction protectrice.",
+      "publication": "Grade 1b. Version Town Cryer avec errata du numéro 12, édition GLM V1.6dFr et montures en annexe.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1H37QNSx3udFNKyr4rdr7XcOyCNnId7Hx/view?usp=sharing",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "elfes-noirs": {
+      "presentation": "Ces pillards venus des Arches Noires explorent la Lustrie pour s'emparer des artefacts des Slanns. Ils excellent dans la furtivité et l'embuscade, avec des profils particulièrement puissants.",
+      "publication": "Grade 1b. Town Cryer 12 pour Lustrie, traduction Games Workshop France mise à jour par GLM en V1.1hFr.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1gFB4vYqNOOc6ybTv0FiVzuwezHt6Lsg3/view?usp=sharing",
+      "pagesPdf": 8,
+      "avertissements": [
+        "Le Rules Review 2005 juge cette version inadaptée au cadre Mordheim. La page GLM avertit aussi qu'elle peut être déséquilibrée face aux bandes du cadre de base."
+      ]
+    },
+    "escorteurs-imperiaux": {
+      "presentation": "Ces cavaliers rapides sont envoyés par les provinces impériales pour retrouver la Couronne du Destin. Leur mission repose sur la reconnaissance, le contournement et la fuite avec le butin plutôt que sur l'affrontement frontal.",
+      "publication": "Grade 1b. Bande du supplément Nemesis Crown, édition GLM V1.2Fr avec montures et compétences d'équitation.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1Me9MV__rmtmaBrw49CAWK35oJ5cQpWnj/view?usp=drive_link",
+      "pagesPdf": 8,
+      "avertissements": []
+    },
+    "expeditions-runiques": {
+      "presentation": "Des nains traditionalistes partent récupérer trésors et artefacts perdus tout en purifiant les territoires occupés. Ils privilégient les armes, les runes et les méthodes héritées de leurs ancêtres.",
+      "publication": "Grade 1b. Bande du supplément Nemesis Crown, édition GLM V1.2aFr.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1bCtKwo9R3iHNd1tbJUX9GxcXRAgAtOGu/view?usp=sharing",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "gardiens-des-tombes": {
+      "presentation": "Une expédition de morts de Nehekhara menée par un Seigneur des Tombes et un Prêtre Liche, avec squelettes, gardes momifiés et scorpions. La liste associe endurance surnaturelle, magie funéraire et équipement antique.",
+      "publication": "VO, Setting Khemri - Land of the Dead. Aucun PDF français disponible sur la fiche GLM.",
+      "langueDocument": "anglais",
+      "pdfUrl": "https://drive.google.com/file/d/1MST9gPstKsZfrZ-QOSY-bcWJtPGSoxwU/view?usp=drive_link",
+      "pagesPdf": 9,
+      "avertissements": [
+        "Le lien explicitement nommé PDF Tomb Guardians VO renvoie une erreur 404. Le second lien non libellé de la page contient bien le document complet."
+      ]
+    },
+    "gladiateurs": {
+      "presentation": "Des combattants d’arène affranchis ou fugitifs, particulièrement dangereux dans les rues et les espaces fermés. Leur recrutement repose sur des profils de mêlée et des ensembles complets d’équipement inspirés des styles de gladiateurs.",
+      "publication": "VF GLM fondée sur la mise à jour du Town Cryer 21, après une première version dans le Town Cryer 14.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1hxxwhzRAj0OpmyH4fKDjYbsoolSv5e3U/view?usp=drive_link",
+      "pagesPdf": 9,
+      "avertissements": []
+    },
+    "gobelins-des-forets": {
+      "presentation": "Des gobelins adaptés aux sous-bois, experts en camouflage, poisons et embuscades. Leurs chasseurs peuvent s’appuyer sur les créatures venimeuses de la forêt et sur une grande mobilité en terrain boisé.",
+      "publication": "VF GLM V1gFr, issue de Forest Goblins dans la Couronne du Destin, avec annexe sur les montures.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1xge4dECLtnhCaq1oOc_KdfREN57zDQss/view?usp=drive_link",
+      "pagesPdf": 8,
+      "avertissements": []
+    },
+    "guerriers-fantomes": {
+      "presentation": "Des exilés de Nagarythe qui traquent les serviteurs du Roi Sorcier loin d’Ulthuan. Cette bande d’élite privilégie l’adresse, le tir et la mobilité, avec les limites propres à une petite troupe elfique.",
+      "publication": "VF Games Workshop, Town Cryer 10. La liste a ensuite été écartée des bandes officielles par le Rules Review 2005.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1qN-Q90cOBj9LpbzVUGCbx8kQKnlgqwek/view?usp=sharing",
+      "pagesPdf": 7,
+      "avertissements": [
+        "Le document reste jouable, mais son retrait explicite de l’officialité doit être affiché clairement."
+      ]
+    },
+    "hommes-lezards": {
+      "presentation": "Des protecteurs des cités-temples qui combinent le harcèlement des Skinks et la puissance des Saurus. Ils défendent les ruines des Anciens par la guérilla, les pièges et des attaques rapides.",
+      "publication": "VF GLM mise à jour depuis la traduction GW de Lustria - Cities of Gold 2, Town Cryer 11.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1fwp08gsl8YzZzHgK8dkywfJ6Cj1MLVil/view?usp=sharing",
+      "pagesPdf": 9,
+      "avertissements": []
+    },
+    "hors-la-loi-de-stirwood": {
+      "presentation": "Des proscrits réfugiés dans la forêt de Stirwood, rejoints par des moines et rompus au tir à l’arc. Leur style repose sur l’embuscade, la chasse et la connaissance du terrain.",
+      "publication": "VF GLM de Outlaws of Stirwood Forest, Town Cryer 29, avec la règle complète de la Flèche de Chasse ajoutée.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1U_ei46uliYCUlyf0M7N-88Cl0qfaNR9Q/view?usp=sharing",
+      "pagesPdf": 5,
+      "avertissements": []
+    },
+    "mootlanders": {
+      "presentation": "Une troupe de Halflings du Moot menée par un ancien et un maître cuisinier. Faibles physiquement mais adroits au tir, ils emploient des ustensiles de cuisine transformés en armes et des règles de soutien culinaire.",
+      "publication": "VO, Citadel Journal 36. Aucun PDF français disponible sur la fiche GLM.",
+      "langueDocument": "anglais",
+      "pdfUrl": "https://drive.google.com/file/d/1xLyUkW422E5uxAf3w23DvYXQ9yy6s5CR/view?usp=sharing",
+      "pagesPdf": 4,
+      "avertissements": [
+        "PDF scanné sans texte extractible, vérifié visuellement page par page."
+      ]
+    },
+    "norses": {
+      "presentation": "Des marins et pillards de Norsca entraînés au combat dès l’enfance. Leur bande mise sur des guerriers robustes, les armes de mêlée et l’expérience des expéditions lointaines.",
+      "publication": "VF GLM unifiée depuis Norse Explorers, Lustria - Cities of Gold 4, Town Cryer 13, et Border Town Burning.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1g_jZpK2O8EdMSaR2eFBvFafvx-vpkfZ_/view?usp=sharing",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "orques-noirs": {
+      "presentation": "Une élite peau-verte plus forte, disciplinée et lourdement équipée que les orques ordinaires. Elle entraîne dans son sillage d’autres combattants peaux-vertes soumis aux tensions de l’animosité.",
+      "publication": "VF GLM V1eFr du 21 novembre 2023, développée pour Nemesis Crown et adaptée à Empire en Flammes.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1__rnCCXqj5FGRyomQfWjDUXxL9iEnoYg/view?usp=drive_link",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "pilleurs-de-tombes-arabiens": {
+      "presentation": "Des nomades d’Arabie partis explorer les terres de Khemri sous la conduite d’un Sheikh. Champions, mystique, Bédouins, guerriers et esclaves composent une troupe mobile avec sa propre magie élémentaire.",
+      "publication": "VO, Setting Khemri - Land of the Dead. Aucun PDF français disponible sur la fiche GLM.",
+      "langueDocument": "anglais",
+      "pdfUrl": "https://drive.google.com/file/d/1n6dUwpeBsNE9CgTVqiYhyM77SZ3LIu35/view?usp=sharing",
+      "pagesPdf": 8,
+      "avertissements": [
+        "PDF scanné sans texte extractible, vérifié visuellement page par page."
+      ]
+    },
+    "pirates": {
+      "presentation": "Des équipages qui remontent les fleuves pour piller l’or et la pierre magique autour de Mordheim. Leurs profils et leur arsenal mêlent armes de bord, poudre noire et spécialistes de l’artillerie.",
+      "publication": "VF V1cFr du 8 décembre 2025, issue du Town Cryer 9 avec errata du Town Cryer 12.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1iSoUttc13KhoiquOxfFOXOxNPirbKHWP/view?usp=sharing",
+      "pagesPdf": 12,
+      "avertissements": []
+    },
+    "skavens-du-clan-pestilens": {
+      "presentation": "Des Skavens voués à la maladie, à la corruption et aux pratiques du Clan Pestilens. Ils combattent avec des moines de la peste, des armes infectées et des règles liées aux afflictions.",
+      "publication": "VF GLM fondée sur la traduction V1Fr du Spawn Cryer 2, liste originale du Town Cryer 29.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1k8V8q6nLOQlZmAOt0pziTE4ViT3Mlo-H/view?usp=share_link",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "tileens": {
+      "presentation": "Des mercenaires des cités-États de Tilée attirés par la gloire, l’or et les expéditions lointaines. Leur organisation rappelle les bandes mercenaires, avec des profils spécialisés et une forte tradition d’exploration.",
+      "publication": "VF GLM de Tileans, Lustria - Cities of Gold 5, Town Cryer 14.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1gytvw4Tmh-EnBxBFW2_jEL_T_TtI9YLd/view?usp=sharing",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "caravane-des-marchands": {
+      "presentation": "Une entreprise commerciale itinérante qui protège ses biens sur les routes dangereuses. Marchands, gardes et spécialistes doivent concilier survie, escorte et recherche de profit.",
+      "publication": "VO, Setting Border Town Burning. Aucun PDF français disponible sur la fiche GLM.",
+      "langueDocument": "anglais",
+      "pdfUrl": "https://drive.google.com/file/d/1no4mkSguLaCbkAWMP1aBgeRx5IKdF1z_/view?usp=sharing",
+      "pagesPdf": 5,
+      "avertissements": []
+    },
+    "fils-dhashut": {
+      "presentation": "Une expédition de Nains du Chaos envoyée chercher de la pierre magique et servir le culte d’Hashut. Elle associe guerriers endurants, serviteurs asservis, sorcellerie et équipement forgé dans les terres de l’Est.",
+      "publication": "VO uniquement sur la fiche GLM. La page ne précise ni traduction française ni numéro de version.",
+      "langueDocument": "anglais",
+      "pdfUrl": "https://drive.google.com/file/d/1A-fOwm-mt8T8H5K8EF6m_yKLRuXHe81I/view?usp=sharing",
+      "pagesPdf": 5,
+      "avertissements": ["Provenance éditoriale non précisée sur la page GLM."]
+    },
+    "gardiens-de-chapelle-bretonniens": {
+      "presentation": "Une force réunie pour défendre les chapelles et reliques consacrées à la Dame du Lac. Damoiselles, chevaliers, écuyers, archers et pèlerins y forment une troupe fidèle à l’univers bretonnien de sixième édition.",
+      "publication": "VF GLM V1hFR, d’après Bretonnian Chapel Guard, avec annexe sur les montures et le caparaçon.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/open?id=1ObwL0sLMXByp_K5Y-YaZQ2vMNnGo6kzd",
+      "pagesPdf": 8,
+      "avertissements": []
+    },
+    "gobelins-de-la-nuit": {
+      "presentation": "Des pillards souterrains attirés par les effets de la pierre magique sur leurs champignons. La bande exploite les poisons, les drogues, les fanatiques et les créatures des cavernes.",
+      "publication": "VF GLM traduite et rééquilibrée depuis Night Goblins de James Michael Dudli.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1r1AK9pyJcLDdYHzcOaoT0hMO6HLiwZya/view?usp=sharing",
+      "pagesPdf": 12,
+      "avertissements": [
+        "La version GLM comporte des modifications d’équilibrage par rapport au document d’origine."
+      ]
+    },
+    "mangeurs-dhommes": {
+      "presentation": "Une petite bande d’Ogres mercenaires qui vend sa force à ceux capables de la payer. Ses combattants sont peu nombreux, coûteux et puissants, avec une grande variété d’armes et d’expériences acquises à l’étranger.",
+      "publication": "VO, Setting Border Town Burning. Aucun PDF français disponible sur la fiche GLM.",
+      "langueDocument": "anglais",
+      "pdfUrl": "https://drive.google.com/file/d/1zmGUNenURkJ4aLv3u6XtlDr-YkEDPLFW/view?usp=share_link",
+      "pagesPdf": 5,
+      "avertissements": []
+    },
+    "maraudeurs-du-chaos": {
+      "presentation": "Des tribus du Nord qui descendent vers les terres civilisées pour gagner la faveur de leurs dieux. La liste couvre les guerriers maraudeurs, les marques, les mutations et plusieurs équipements du Chaos.",
+      "publication": "VF GLM du Setting Border Town Burning, enrichie avec des éléments de Mutiny in Marienburg et du livre de règles.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1bQ_xvR6Bld3yHuGszqdbFdxgvcISiwrj/view?usp=sharing",
+      "pagesPdf": 18,
+      "avertissements": [
+        "La VF GLM regroupe des ajouts provenant de plusieurs sources, à signaler dans la fiche."
+      ]
+    },
+    "moines-guerriers-de-cathay": {
+      "presentation": "Des ascètes combattants venus du Grand Cathay pour protéger ses frontières et poursuivre leur discipline martiale. Leur liste mêle arts de combat, maîtrise spirituelle et profils spécialisés.",
+      "publication": "VO, Setting Border Town Burning. Aucun PDF français disponible sur la fiche GLM.",
+      "langueDocument": "anglais",
+      "pdfUrl": "https://drive.google.com/file/d/1w0KjmYJvVZuqbmNXRO20Qxd25Qjv03LE/view?usp=sharing",
+      "pagesPdf": 4,
+      "avertissements": []
+    },
+    "morts-tourmentes": {
+      "presentation": "Une procession de morts sans repos ramenés au combat par des maîtres des arts funèbres. La bande combine héros nécromantiques, guerriers revenants et serviteurs réanimés.",
+      "publication": "VO de Restless Dead, Setting Border Town Burning. Aucun PDF français disponible sur la fiche GLM.",
+      "langueDocument": "anglais",
+      "pdfUrl": "https://drive.google.com/file/d/10T4ECiIDNt8fSVC0ZEFvMvjhlae-IJK-/view?usp=sharing",
+      "pagesPdf": 7,
+      "avertissements": []
+    },
+    "nains-du-chaos": {
+      "presentation": "Des serviteurs d’Hashut qui cherchent minerais, captifs et pierre magique loin de leurs forteresses. Leur troupe associe armures lourdes, magie noire, esclaves et armes d’obsidienne.",
+      "publication": "VF GLM de Black Dwarfs, Setting Border Town Burning, complétée avec plusieurs équipements issus de la même campagne.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/file/d/1uQalspo55MoOJqCACG3zJvC5FVw5HGnc/view?usp=sharing",
+      "pagesPdf": 9,
+      "avertissements": [
+        "Cette liste est distincte des Fils d’Hashut et les deux fiches ne doivent pas être fusionnées."
+      ]
+    },
+    "arpenteurs-fimirs": {
+      "presentation": "Des créatures amphibies borgnes qui surgissent des marais sous le couvert d’un brouillard rituel. Cette troupe d’embuscade combine guerriers robustes, sorcellerie démoniaque et équipement adapté aux terrains humides.",
+      "publication": "VF GLM de Ambush Parties Fimir, Setting Mutiny in Marienburg, intégrant la FAQ et des équipements complémentaires.",
+      "langueDocument": "français",
+      "pdfUrl": "https://drive.google.com/open?id=1v3xzRH1mV6dp79Lo9EMjhvhM_-YGCFSg",
+      "pagesPdf": 11,
+      "avertissements": [
+        "La VF GLM incorpore des ajouts et précisions absents du document d’origine."
+      ]
+    },
+    "strigannes": {
+      "presentation": "Des exilés de Strigos qui vivent sur des barges et caravanes fluviales, entre commerce, larcins et traditions occultes. La bande associe humains nomades, artisans, mystiques et influence persistante des vampires Strigoi.",
+      "publication": "VO de Channel Rats, Setting Mutiny in Marienburg. Aucun PDF français disponible sur la fiche GLM.",
+      "langueDocument": "anglais",
+      "pdfUrl": "https://drive.google.com/file/d/1AsWmv_dSSu2a1cepITITqA2VhAUP0Km2/view?usp=sharing",
+      "pagesPdf": 8,
+      "avertissements": []
+    }
+  }
+}

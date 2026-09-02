@@ -152,7 +152,7 @@ const profilsRepurgateurs: ProfilRecrue[] = [
     statistiques: [4, 3, 3, 4, 4, 1, 3, 1, 10],
     listesEquipement: ['flagellants'],
     regleSpeciale:
-      'Fanatique : réussit automatiquement tous les tests fondés sur le Commandement et ne peut jamais devenir chef.',
+      'Fanatique : réussit automatiquement tous les tests fondés sur le Commandement, ne peut jamais devenir chef et ne peut utiliser aucune arme de tir, même s’il obtient plus tard l’accès à cette catégorie.',
   }),
   profil({
     id: 'repurgateurs-zelote',
@@ -566,7 +566,7 @@ export const equipementsBandesCore: Equipement[] = [
       'Tir',
       25,
       ['skavens-heros'],
-      'Portée 8 ps, F1, sauvegarde +1. Poison, silencieuse et sans coup critique.',
+      'Portée 8 ps, F1, sauvegarde +1. Un 6 pour toucher blesse automatiquement et l’arme ne cause aucun coup critique. Un tireur caché reste caché après le tir, sauf si la cible réussit un test d’Initiative pour le repérer.',
     ),
     rareteCommerce: 7,
   },
@@ -589,7 +589,7 @@ export const equipementsBandesCore: Equipement[] = [
       'Corps à corps',
       50,
       ['skavens-heros'],
-      'Paire, venimeuses au Lotus noir et permettent de parer.',
+      'La paire donne +1 Attaque. Elle emploie les effets du Lotus noir, ne peut recevoir aucun autre poison et permet de parer comme des épées.',
     ),
     rareteCommerce: 9,
   },

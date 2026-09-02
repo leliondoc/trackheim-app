@@ -1,0 +1,588 @@
+{
+  "bandes": {
+    "strigannes": {
+      "pageSource": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes/strigannes",
+      "composition": {
+        "budgetInitial": 600,
+        "effectifMinimum": 3,
+        "effectifMaximum": 15,
+        "maximumHeros": 5,
+        "source": "PDF Channel Rats, River Strigany, Exiles of Strigos VO, page 3, https://drive.google.com/file/d/1AsWmv_dSSu2a1cepITITqA2VhAUP0Km2/view?usp=sharing"
+      },
+      "regles": [
+        {
+          "titre": "Une embarcation obligatoire",
+          "description": "La bande doit posséder une barque fluviale ou une barge fluviale. Dans une campagne sans rivière, la barque est remplacée par un chariot et deux chevaux, et la compétence de réparation fluviale du Rétameur est remplacée par Bricoleur pour lui permettre de réparer le chariot.",
+          "source": "PDF Channel Rats VO, page 3"
+        },
+        {
+          "titre": "Bruyère blanche porte-bonheur",
+          "description": "Au lieu de chercher un objet rare pendant l'après-bataille, un Héros peut tenter une escroquerie ou un vol lors d'une visite à une autre bande. Lancez 1D6. Sur 1, il est lynché et subit immédiatement un jet sur le tableau des blessures graves. Sur 2 à 5, la bande visitée doit acheter un faux porte-bonheur pour 1D6 couronnes d'or. Sur 6, choisissez et dérobez un objet porté par un Héros de cette bande. Lorsque les jets sont supervisés par un autre joueur, le texte conseille que ce dernier révèle le vol à la victime au moment où elle tente d'utiliser l'objet.",
+          "source": "PDF Channel Rats VO, page 2"
+        },
+        {
+          "titre": "Traditions obscures",
+          "description": "Au lieu de chercher un objet rare pendant l'après-bataille, le Petru peut solliciter une audience auprès d'un Ancien Père. Il effectue un test de Commandement. En cas de réussite, un autre Héros de la bande doit rendre visite au vampire. En cas d'échec, le Petru manque la prochaine bataille. Le visiteur doit être humain et ne peut être ni le Chef ni un lanceur de sorts. Un Héros doté de mutations applique un malus de 1 au jet du tableau Père des ténèbres.",
+          "source": "PDF Channel Rats VO, page 2"
+        },
+        {
+          "titre": "Tableau Père des ténèbres",
+          "description": "Lancez 1D6 pour le visiteur. Sur 1 à 3, l'Ancien Père le tue et le Héros est retiré de la feuille de bande. Sur 4, il ne se produit rien. Sur 5, le Héros devient un Serviteur de sang, gagne 1 en Initiative et 1 Attaque, puis bénéficie d'un bonus de 1 lors d'une future visite. Sur 6, il devient un Vampire de substitution et gagne 1 en Mouvement, 1 en Endurance, 1 Point de Vie, 1 en Initiative et 1 Attaque. Ces augmentations ne se cumulent pas avec celles du Serviteur de sang. Un Vampire traite un résultat sonné comme mis à terre. Un Vampire de substitution cause la peur, est immunisé au poison et subit la Soif rouge.",
+          "source": "PDF Channel Rats VO, page 2"
+        },
+        {
+          "titre": "Soif rouge",
+          "description": "Au début de chacun de ses tours, un Vampire de substitution lance 1D6. Sur 1, il doit effectuer un test de stupidité pour ce tour. Sur 2 à 5, rien ne se produit. Sur 6, il est sujet à la frénésie pour ce tour.",
+          "source": "PDF Channel Rats VO, page 2"
+        }
+      ],
+      "profils": [
+        {
+          "id": "domnu-striganne",
+          "nom": "Domnu",
+          "categorie": "Héros",
+          "cout": 65,
+          "minimum": 1,
+          "maximum": 1,
+          "experienceInitiale": 20,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 2,
+            "commandement": 8
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Tir",
+            "Force",
+            "Vitesse",
+            "Spécial Striganne"
+          ],
+          "regles": [
+            {
+              "titre": "Chef",
+              "description": "Tout membre de la bande situé à 6 ps ou moins peut utiliser son Commandement pour ses tests."
+            },
+            {
+              "titre": "Combattant à mains nues",
+              "description": "Il ne subit aucune pénalité lorsqu'il combat sans arme et gagne 1 Attaque dans cette situation."
+            },
+            {
+              "titre": "Étreinte de l'ours",
+              "description": "S'il touche le même adversaire avec ses deux attaques à mains nues pendant le même round, il peut remplacer leur résolution par une étreinte. Chaque joueur lance 1D6 et ajoute la Force de son combattant. Si le total du Domnu est supérieur ou égal, la cible subit automatiquement une blessure sans sauvegarde d'armure. Si le total adverse est supérieur, la cible se libère sans dommage."
+            }
+          ],
+          "source": "PDF Channel Rats VO, pages 3 et 5"
+        },
+        {
+          "id": "petru-striganne",
+          "nom": "Petru",
+          "categorie": "Héros",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 8,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 2,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Érudition",
+            "Vitesse",
+            "Spécial Striganne"
+          ],
+          "regles": [
+            {
+              "titre": "Sorcier",
+              "description": "Il commence avec deux sorts déterminés dans la liste Charmes et Maléfices."
+            },
+            {
+              "titre": "Nécromancie",
+              "description": "Lorsqu'il pourrait apprendre une nouvelle compétence, il peut à la place déterminer aléatoirement un nouveau sort de Nécromancie."
+            },
+            {
+              "titre": "Potions",
+              "description": "Avant chaque bataille, un seul Héros de la bande peut boire une potion. Lancez 1D6. Sur 1, il perd 1 en Endurance pour toute la bataille, jusqu'à obtenir un 6 sur 1D6 pendant une phase de récupération. Sur 2 ou 3, il gagne 1 en Force jusqu'à obtenir un 1 pendant une phase de récupération. Sur 4 ou 5, il gagne 1 en Endurance selon la même durée. Sur 6, il gagne 1 Point de Vie pour toute la bataille, mais ce point supplémentaire ne peut pas être récupéré après avoir été perdu."
+            }
+          ],
+          "source": "PDF Channel Rats VO, pages 3 et 5"
+        },
+        {
+          "id": "retameur-striganne",
+          "nom": "Rétameur",
+          "categorie": "Héros",
+          "cout": 45,
+          "minimum": 0,
+          "maximum": 1,
+          "experienceInitiale": 12,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [
+            "Tir",
+            "Érudition",
+            "Vitesse",
+            "Spécial Striganne"
+          ],
+          "regles": [
+            {
+              "titre": "Escroc",
+              "description": "Comme un marchand, il permet de conclure des transactions avec d'autres bandes."
+            },
+            {
+              "titre": "Gréeur",
+              "description": "Si la barque ou la barge est immobile et ne s'est pas déplacée au tour précédent, un Rétameur en contact peut réparer un emplacement endommagé, par exemple une pagaie ou un mât. Il ne fait rien d'autre ce tour et le véhicule ne peut pas bouger. La réparation est impossible si un ennemi est en contact avec le Rétameur ou l'embarcation."
+            }
+          ],
+          "source": "PDF Channel Rats VO, pages 3 et 5"
+        },
+        {
+          "id": "jeune-vagabond-striganne",
+          "nom": "Jeune Vagabond",
+          "categorie": "Héros",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [
+            "Combat",
+            "Force",
+            "Vitesse",
+            "Spécial Striganne"
+          ],
+          "regles": [
+            {
+              "titre": "Agile",
+              "description": "Il peut courir ou charger pendant une escalade."
+            },
+            {
+              "titre": "Provocation",
+              "description": "Pendant la phase de tir, il peut provoquer un ennemi visible au lieu de tirer. La cible effectue un test de Commandement. En cas de réussite, rien ne se passe. En cas d'échec, elle doit consacrer sa prochaine phase de mouvement à tenter d'engager le provocateur au corps à corps."
+            }
+          ],
+          "source": "PDF Channel Rats VO, pages 3 et 6"
+        },
+        {
+          "id": "striganne",
+          "nom": "Striganne",
+          "categorie": "Homme de main",
+          "cout": 25,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Channel Rats VO, pages 3 et 7"
+        },
+        {
+          "id": "oeil-mort-striganne",
+          "nom": "Œil Mort",
+          "categorie": "Homme de main",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 3,
+            "capaciteTir": 4,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Tireur d'élite",
+              "description": "Il ignore les modificateurs de couvert lorsqu'il tire ou lance une arme."
+            },
+            {
+              "titre": "Tir de réaction",
+              "description": "Lorsqu'il est chargé, il peut effectuer une unique attaque avec une arme de tir, avec un malus de 1 pour toucher."
+            },
+            {
+              "titre": "Expert en armes",
+              "description": "Il applique la compétence Expert en armes du livre de règles de Mordheim, page 122 de la source VO citée."
+            }
+          ],
+          "source": "PDF Channel Rats VO, pages 3 et 7"
+        },
+        {
+          "id": "fugitif-striganne",
+          "nom": "Fugitif",
+          "categorie": "Homme de main",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": 2,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 4,
+            "capaciteTir": 3,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Charismatique",
+              "description": "Une figurine du sexe opposé, par exemple une Sœur de Sigmar, une Amazone ou une Ranger kislevite, doit réussir un test de Commandement pour pouvoir le charger."
+            }
+          ],
+          "source": "PDF Channel Rats VO, pages 3 et 7"
+        },
+        {
+          "id": "vagabond-striganne",
+          "nom": "Vagabond",
+          "categorie": "Homme de main",
+          "cout": 15,
+          "minimum": 0,
+          "maximum": 4,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 2,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 1,
+            "initiative": 3,
+            "attaques": 1,
+            "commandement": 6
+          },
+          "competencesDisponibles": [],
+          "regles": [],
+          "source": "PDF Channel Rats VO, pages 3 et 7"
+        },
+        {
+          "id": "homme-osier-striganne",
+          "nom": "Homme d'osier",
+          "categorie": "Créature d'équipement",
+          "cout": 50,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 4,
+            "capaciteCombat": 2,
+            "capaciteTir": 0,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 1,
+            "initiative": 1,
+            "attaques": 1,
+            "commandement": 5
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Réservé au Petru",
+              "description": "Cet objet rare ne peut être acquis que par le Petru et suit ses ordres."
+            },
+            {
+              "titre": "Zombifié",
+              "description": "Il applique toutes les règles spéciales d'un Zombie, notamment peur, interdiction de courir et absence de cerveau."
+            },
+            {
+              "titre": "Construction",
+              "description": "Sur 4 ou plus, il ignore un résultat obtenu sur le tableau des dégâts et continue à combattre. Ce jet n'est pas une sauvegarde d'armure et n'est pas modifié par la Force. Il ne fonctionne pas contre les blessures infligées par la magie ou une arme magique."
+            }
+          ],
+          "source": "PDF Channel Rats VO, page 4"
+        },
+        {
+          "id": "main-coureuse-striganne",
+          "nom": "Main Coureuse",
+          "categorie": "Créature d'équipement",
+          "cout": 40,
+          "minimum": 0,
+          "maximum": null,
+          "experienceInitiale": 0,
+          "statistiques": {
+            "mouvement": 3,
+            "capaciteCombat": 1,
+            "capaciteTir": 0,
+            "force": 1,
+            "endurance": 1,
+            "pointsVie": 1,
+            "initiative": 4,
+            "attaques": 1,
+            "commandement": 7
+          },
+          "competencesDisponibles": [],
+          "regles": [
+            {
+              "titre": "Capacités innées",
+              "description": "Elle est immunisée à la psychologie et possède Esquive, Escalade de surfaces abruptes et Déplacement silencieux."
+            },
+            {
+              "titre": "Déplacement silencieux",
+              "description": "Elle reste cachée en permanence, sauf lorsqu'elle attaque un combattant ennemi."
+            }
+          ],
+          "source": "PDF Channel Rats VO, page 4"
+        }
+      ],
+      "listesEquipement": [
+        {
+          "nom": "Équipement striganne",
+          "profils": [
+            "domnu-striganne",
+            "retameur-striganne",
+            "jeune-vagabond-striganne",
+            "striganne",
+            "oeil-mort-striganne",
+            "fugitif-striganne",
+            "vagabond-striganne"
+          ],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 0,
+                  "formuleCout": "première gratuite, suivante 2 CO"
+                },
+                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Gaffe",
+                  "cout": 8,
+                  "note": "Force de l'utilisateur moins 1. Frappe en premier et arme à deux mains."
+                },
+                { "nom": "Coutelas ou épée", "cout": 10 },
+                { "nom": "Arme à deux mains", "cout": 15 }
+              ]
+            },
+            {
+              "nom": "Armes de tir",
+              "entrees": [
+                {
+                  "nom": "Cabillot",
+                  "cout": 3,
+                  "note": "Portée 6 ps, Force de l'utilisateur moins 1. Arme de jet et confère 1 à la sauvegarde d'armure ennemie."
+                },
+                { "nom": "Filet", "cout": 5 },
+                {
+                  "nom": "Ligne à hameçon",
+                  "cout": 10,
+                  "note": "Rare 7. Portée 3 ps, Force 3. Arme de jet sans pénalité de portée ni de mouvement. Peut viser une figurine engagée si le porteur ne l'est pas. Au lieu des dégâts, le tireur peut réussir son jet pour toucher puis un test de Force pour mettre la cible à terre. Ce test gagne 1 contre une grande cible. Une monture mise à terre fait chuter son cavalier selon le résultat 3 à 4 du tableau de chute de monture."
+                },
+                { "nom": "Couteaux de lancer", "cout": 15 },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "formuleCout": "30 CO la paire"
+                },
+                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Tromblon",
+                  "cout": 30,
+                  "note": "Rétameur uniquement."
+                },
+                { "nom": "Arquebuse", "cout": 35 }
+              ]
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                { "nom": "Rondache", "cout": 5 },
+                { "nom": "Cuir renforcé", "cout": 5 },
+                { "nom": "Armure légère", "cout": 20 }
+              ]
+            },
+            {
+              "nom": "Équipement divers",
+              "entrees": [
+                { "nom": "Corde et grappin", "cout": 5 },
+                {
+                  "nom": "Patte de lapin",
+                  "cout": 5,
+                  "note": "Héros uniquement."
+                },
+                {
+                  "nom": "Boussole",
+                  "cout": 45,
+                  "note": "Rare 9, Rétameur uniquement. Si son porteur participe à la bataille, la bande peut relancer son jet pour déterminer quel camp se déploie en premier. Si les deux camps en possèdent une, aucune relance n'est permise."
+                },
+                {
+                  "nom": "Longue-vue",
+                  "cout": 75,
+                  "note": "Rétameur uniquement."
+                },
+                { "nom": "Barque fluviale", "cout": 100 },
+                { "nom": "Barge fluviale", "cout": 200 },
+                {
+                  "nom": "Homme d'osier",
+                  "cout": 50,
+                  "note": "Rare 12, Petru uniquement. Son profil et ses règles figurent parmi les profils de cette fiche."
+                },
+                {
+                  "nom": "Main Coureuse",
+                  "cout": 40,
+                  "note": "Rare 11. Son profil et ses règles figurent parmi les profils de cette fiche."
+                }
+              ]
+            }
+          ],
+          "source": "PDF Channel Rats VO, pages 3 et 4"
+        },
+        {
+          "nom": "Équipement du Petru",
+          "profils": ["petru-striganne"],
+          "categories": [
+            {
+              "nom": "Armes de corps à corps",
+              "entrees": [
+                {
+                  "nom": "Dague",
+                  "cout": 0,
+                  "formuleCout": "première gratuite, suivante 2 CO"
+                },
+                { "nom": "Masse ou bâton", "cout": 3 },
+                { "nom": "Coutelas ou épée", "cout": 10 },
+                { "nom": "Lance", "cout": 10 }
+              ]
+            },
+            {
+              "nom": "Équipement divers",
+              "entrees": [
+                { "nom": "Patte de lapin", "cout": 5 },
+                { "nom": "Porte-bonheur", "cout": 10 },
+                { "nom": "Cartes de tarot", "cout": 50 }
+              ]
+            }
+          ],
+          "source": "PDF Channel Rats VO, page 3"
+        }
+      ],
+      "competencesSpeciales": [
+        {
+          "titre": "Connaissance des mythes et légendes",
+          "description": "Pendant l'exploration, si le Héros n'a pas été mis hors de combat, vous pouvez relancer un dé. Le second résultat doit être conservé, même s'il est moins favorable.",
+          "source": "PDF Channel Rats VO, page 7"
+        },
+        {
+          "titre": "Charge brutale",
+          "description": "Lorsqu'il charge, le Héros peut tenter de mettre sa cible à terre à la place de ses attaques normales. Il effectue un unique jet pour toucher avec un bonus de 1. Aucun jet pour blesser n'est requis. Si l'attaque touche, l'adversaire est mis à terre.",
+          "source": "PDF Channel Rats VO, page 7"
+        },
+        {
+          "titre": "Chanteur",
+          "description": "Toute figurine amie située à 6 ps ou moins peut relancer un test de Commandement raté en bénéficiant de 1 en Commandement, y compris pour un test de déroute.",
+          "source": "PDF Channel Rats VO, page 7"
+        },
+        {
+          "titre": "Combattant à mains nues",
+          "description": "Le Héros ne subit aucune pénalité lorsqu'il combat sans arme et gagne 1 Attaque dans cette situation.",
+          "source": "PDF Channel Rats VO, page 7"
+        },
+        {
+          "titre": "Charmeur d'animaux",
+          "description": "Le Héros peut contrôler jusqu'à cinq animaux tant qu'ils restent à 6 ps ou moins de lui. Pendant la phase de mouvement, tout animal hors de cette portée se déplace de 1D6 ps dans une direction aléatoire. S'il entre en contact avec une figurine amie ou ennemie, il l'attaque comme s'il avait chargé.",
+          "source": "PDF Channel Rats VO, page 7"
+        },
+        {
+          "titre": "Infiltration",
+          "description": "Le Héros est déployé après la bande adverse, n'importe où hors de sa ligne de vue et à plus de 12 ps de tout ennemi. Si les deux joueurs possèdent des infiltrateurs, chacun lance 1D6 et le résultat le plus bas se déploie en premier.",
+          "source": "PDF Channel Rats VO, page 7"
+        }
+      ],
+      "magie": [
+        {
+          "titre": "Scrutation",
+          "difficulte": 6,
+          "description": "Pendant ce tour, un Héros ou un Homme de main peut relancer 1D3 jets de dés et ajouter ou soustraire 1 au résultat, selon la formulation de la source.",
+          "source": "PDF Channel Rats VO, page 8"
+        },
+        {
+          "titre": "Malédiction",
+          "difficulte": 6,
+          "description": "Un ennemi situé à 12 ps ou moins du Petru doit relancer tous ses jets réussis jusqu'à la fin de son prochain tour.",
+          "source": "PDF Channel Rats VO, page 8"
+        },
+        {
+          "titre": "Poussière aveuglante",
+          "difficulte": 9,
+          "description": "Un ennemi situé à 16 ps ou moins est aveuglé. Il ne peut ni tirer, ni charger, ni courir, sa Capacité de Combat est divisée par deux et il se déplace dans une direction aléatoire au début de son tour. L'effet cesse dès que le Petru lance un autre sort ou se déplace.",
+          "source": "PDF Channel Rats VO, page 8"
+        },
+        {
+          "titre": "Âge de pierre",
+          "difficulte": 8,
+          "description": "Toutes les caractéristiques d'un ennemi situé à 12 ps ou moins sont réduites de 1 jusqu'à la fin de son prochain tour.",
+          "source": "PDF Channel Rats VO, page 8"
+        },
+        {
+          "titre": "Fléau du guerrier",
+          "difficulte": 7,
+          "description": "Un ennemi situé à 18 ps ou moins ne peut utiliser aucune de ses armes jusqu'à la fin de son prochain tour. Il ne peut pas tirer et combat à mains nues au corps à corps.",
+          "source": "PDF Channel Rats VO, page 8"
+        },
+        {
+          "titre": "Guérison",
+          "difficulte": 6,
+          "description": "Toutes les figurines amies situées à 6 ps ou moins du Petru récupèrent une blessure. Toute figurine amie sonnée ou mise à terre dans cette zone se relève immédiatement.",
+          "source": "PDF Channel Rats VO, page 8"
+        }
+      ],
+      "ambiguites": [
+        "La Grande Librairie de Mordheim ne fournit pour cette bande que le document original anglais Channel Rats, issu du cadre Mutiny in Marienburg. Les noms français de cette fiche sont donc des traductions éditoriales et non des appellations issues d'une version française officielle.",
+        "Le maximum de cinq Héros est déduit des quotas Domnu, Petru, Rétameur et deux Jeunes Vagabonds. Le document ne l'énonce pas séparément.",
+        "Le résultat 6 du tableau Père des ténèbres contient l'expression anglaise probablement fautive immune by poison. Cette fiche retient le sens attendu immunisé au poison.",
+        "La Scrutation indique qu'un bénéficiaire peut relancer 1D3 jets et plus or minus 1 to the result, sans préciser sans équivoque si la modification de 1 s'applique à chaque jet relancé ou à un seul résultat.",
+        "Les règles complètes des barques, barges, chariots, chevaux et des compétences génériques citées par renvoi ne sont pas reproduites dans les huit pages de la bande.",
+        "Aucune limite quantitative n'est donnée pour les créatures achetées comme Homme d'osier ou Main Coureuse. Leur maximum est donc laissé à null au lieu d'inventer un quota."
+      ]
+    }
+  }
+}

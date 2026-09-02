@@ -16,6 +16,19 @@ export default defineConfig({
     rolldownOptions: {
       output: {
         manualChunks(id) {
+          if (id.includes('/lib/warbands/fiches/officielles')) {
+            return 'warbands-official';
+          }
+          if (id.includes('/lib/warbands/fiches/grade1b')) {
+            return 'warbands-grade1b';
+          }
+          if (id.includes('/lib/warbands/fiches/catalogue-lot')) {
+            return 'warbands-extended';
+          }
+          if (id.includes('/lib/warbands/catalogue.json')) {
+            return 'warband-catalogue';
+          }
+          if (id.includes('/lib/warbands/')) return 'warband-library';
           if (!id.includes('node_modules')) return;
           if (id.includes('/react/') || id.includes('/react-dom/')) {
             return 'react-vendor';

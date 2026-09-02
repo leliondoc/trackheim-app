@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  ArrowLeft,
   BookOpen,
   CircleAlert,
   Coins,
@@ -104,7 +105,21 @@ import {
   memoriserCampagneActive,
   type ResumeCampagneLocale,
 } from '@/lib/campaign-storage';
-import { hashPourVue, vueDepuisHash, type Vue } from '@/lib/app-navigation';
+import {
+  bandeDepuisHash,
+  hashPourBande,
+  hashPourVue,
+  vueDepuisHash,
+  type Vue,
+} from '@/lib/app-navigation';
+import {
+  fichesBandesReference,
+  obtenirFicheBandeReference,
+} from '@/lib/warbands/reference';
+import type {
+  FicheBandeReference,
+  ProfilBandeReference,
+} from '@/lib/warbands/schema';
 
 const PostBattleWorkflow = lazy(() =>
   import('@/components/post-battle-workflow').then((module) => ({
@@ -164,6 +179,9 @@ const pagesRecherche: Array<{
 export function MordheimApp() {
   const [idCampagne, setIdCampagne] = useState(ID_CAMPAGNE);
   const [vue, setVue] = useState<Vue>(() => vueDepuisHash(location.hash));
+  const [bandeBibliothequeSlug, setBandeBibliothequeSlug] = useState<
+    string | null
+  >(() => bandeDepuisHash(location.hash));
   const [campagne, setCampagne] = useState<EtatCampagne | null>(null);
   const [rechercheOuverte, setRechercheOuverte] = useState(false);
   const [rechercheBibliotheque, setRechercheBibliotheque] = useState('');
@@ -194,6 +212,7 @@ export function MordheimApp() {
   useEffect(() => {
     function synchroniserVue() {
       setVue(vueDepuisHash(location.hash));
+      setBandeBibliothequeSlug(bandeDepuisHash(location.hash));
     }
     window.addEventListener('hashchange', synchroniserVue);
     return () => window.removeEventListener('hashchange', synchroniserVue);
@@ -211,6 +230,20 @@ export function MordheimApp() {
     const hash = hashPourVue(vueCible);
     if (location.hash !== hash) history.pushState(null, '', hash);
     setVue(vueCible);
+    setBandeBibliothequeSlug(null);
+  }
+
+  function ouvrirFicheBibliotheque(slug: string) {
+    const hash = hashPourBande(slug);
+    if (location.hash !== hash) history.pushState(null, '', hash);
+    setVue('library');
+    setBandeBibliothequeSlug(slug);
+  }
+
+  function fermerFicheBibliotheque() {
+    const hash = hashPourVue('library');
+    if (location.hash !== hash) history.pushState(null, '', hash);
+    setBandeBibliothequeSlug(null);
   }
 
   useEffect(() => {
@@ -618,7 +651,8 @@ export function MordheimApp() {
   function ouvrirBandeDepuisRecherche(bande: BandeBibliotheque) {
     setRechercheBibliotheque(bande.nom);
     setGradeBibliotheque('tous');
-    naviguerDepuisRecherche('library', `bande-${bande.grade}-${bande.slug}`);
+    setRechercheOuverte(false);
+    ouvrirFicheBibliotheque(bande.slug);
   }
 
   return (
@@ -756,8 +790,11 @@ export function MordheimApp() {
                   <LibraryView
                     recherche={rechercheBibliotheque}
                     grade={gradeBibliotheque}
+                    slugSelectionne={bandeBibliothequeSlug}
                     onRechercheChange={setRechercheBibliotheque}
                     onGradeChange={setGradeBibliotheque}
+                    onOuvrir={ouvrirFicheBibliotheque}
+                    onRetour={fermerFicheBibliotheque}
                   />
                 )}
                 {vue === 'homebrew' && (
@@ -782,6 +819,9 @@ export function MordheimApp() {
                 onGradeChange={setGradeBibliotheque}
                 onRechercheChange={setRechercheBibliotheque}
                 onVueChange={naviguerVers}
+                slugBande={bandeBibliothequeSlug}
+                onOuvrirBande={ouvrirFicheBibliotheque}
+                onRetourBibliotheque={fermerFicheBibliotheque}
               />
             )}
           </main>
@@ -1256,6 +1296,9 @@ function EmptyApplicationContent({
   onRechercheChange,
   onGradeChange,
   onVueChange,
+  slugBande,
+  onOuvrirBande,
+  onRetourBibliotheque,
 }: {
   vue: Vue;
   recherche: string;
@@ -1264,6 +1307,9 @@ function EmptyApplicationContent({
   onRechercheChange: (recherche: string) => void;
   onGradeChange: (grade: FiltreGrade) => void;
   onVueChange: (vue: Vue) => void;
+  slugBande: string | null;
+  onOuvrirBande: (slug: string) => void;
+  onRetourBibliotheque: () => void;
 }) {
   const [nomBande, setNomBande] = useState('');
   const [factionSelectionnee, setFactionSelectionnee] = useState('');
@@ -1273,8 +1319,15 @@ function EmptyApplicationContent({
       <LibraryView
         recherche={recherche}
         grade={grade}
+        slugSelectionne={slugBande}
         onRechercheChange={onRechercheChange}
         onGradeChange={onGradeChange}
+        onOuvrir={onOuvrirBande}
+        onRetour={onRetourBibliotheque}
+        onConstruire={(factionId) => {
+          setFactionSelectionnee(factionId);
+          onVueChange('warband');
+        }}
       />
     );
   }
@@ -3048,199 +3101,812 @@ function SettingsView({
   );
 }
 
+const caracteristiquesProfil: Array<{
+  abreviation: string;
+  libelle: string;
+  cle: keyof Statistiques;
+}> = [
+  { abreviation: 'M', libelle: 'Mouvement', cle: 'mouvement' },
+  { abreviation: 'CC', libelle: 'Capacité de combat', cle: 'capaciteCombat' },
+  { abreviation: 'CT', libelle: 'Capacité de tir', cle: 'capaciteTir' },
+  { abreviation: 'F', libelle: 'Force', cle: 'force' },
+  { abreviation: 'E', libelle: 'Endurance', cle: 'endurance' },
+  { abreviation: 'PV', libelle: 'Points de vie', cle: 'pointsVie' },
+  { abreviation: 'I', libelle: 'Initiative', cle: 'initiative' },
+  { abreviation: 'A', libelle: 'Attaques', cle: 'attaques' },
+  { abreviation: 'Cd', libelle: 'Commandement', cle: 'commandement' },
+];
+
+const categoriesEquipementBibliotheque: Equipement['categorie'][] = [
+  'Corps à corps',
+  'Tir',
+  'Armure',
+  'Mutation',
+  'Divers',
+];
+
+function libelleQuotaProfil(profil: ProfilRecrue) {
+  if (profil.minimum === 1 && profil.maximum === 1) return '1 obligatoire';
+  if (profil.maximum === null) return 'Sans limite propre';
+  if (profil.maximum === 1) return '0 ou 1';
+  return `Jusqu’à ${profil.maximum}`;
+}
+
+function libelleQuotaProfilReference(profil: ProfilBandeReference) {
+  if (profil.minimum === 1 && profil.maximum === 1) return '1 obligatoire';
+  if (profil.maximum === null) return 'Sans limite propre';
+  if (profil.maximum === 1) return '0 ou 1';
+  return `Jusqu’à ${profil.maximum}`;
+}
+
+function libelleCoutProfilReference(profil: ProfilBandeReference) {
+  return profil.cout === null ? 'Non recruté' : `${profil.cout} CO`;
+}
+
+function sourceBandeLisible(source: string) {
+  return source.replace(/,?\s*https?:\/\/\S+.*$/i, '').trim();
+}
+
+function plageEffectifReference(fiche: FicheBandeReference) {
+  return fiche.composition.effectifMaximum === null
+    ? `${fiche.composition.effectifMinimum} minimum, plafond non précisé`
+    : `${fiche.composition.effectifMinimum} à ${fiche.composition.effectifMaximum}`;
+}
+
+function SectionsFicheBandeReference({
+  fiche,
+}: {
+  fiche: FicheBandeReference;
+}) {
+  const nombreHeros = fiche.profils.filter(
+    (profil) => profil.categorie === 'Héros',
+  ).length;
+  const nombreAutresProfils = fiche.profils.length - nombreHeros;
+
+  return (
+    <>
+      <dl className="band-details-grid band-details-summary">
+        <div>
+          <dt>Budget initial</dt>
+          <dd>{fiche.composition.budgetInitial} CO</dd>
+        </div>
+        <div>
+          <dt>Effectif</dt>
+          <dd>{plageEffectifReference(fiche)}</dd>
+        </div>
+        <div>
+          <dt>Héros</dt>
+          <dd>
+            {nombreHeros} profils, {fiche.composition.maximumHeros} maximum
+          </dd>
+        </div>
+        <div>
+          <dt>Autres profils</dt>
+          <dd>{nombreAutresProfils} profils</dd>
+        </div>
+      </dl>
+      <p className="band-entry-source">
+        {sourceBandeLisible(fiche.composition.source)}
+      </p>
+
+      {fiche.regles.length ? (
+        <section
+          aria-labelledby="band-reference-rules-title"
+          className="band-details-section"
+        >
+          <div className="band-details-section-heading">
+            <div>
+              <p className="eyebrow">Composition</p>
+              <h3 id="band-reference-rules-title">Règles de bande</h3>
+            </div>
+            <span>{fiche.regles.length}</span>
+          </div>
+          <div className="band-rules-grid">
+            {fiche.regles.map((regle) => (
+              <article key={`${regle.titre}-${regle.source ?? ''}`}>
+                <h4>{regle.titre}</h4>
+                <p>{regle.description}</p>
+                {regle.source ? (
+                  <small className="band-entry-source">
+                    {sourceBandeLisible(regle.source)}
+                  </small>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      <section
+        aria-labelledby="band-reference-profiles-title"
+        className="band-details-section"
+      >
+        <div className="band-details-section-heading">
+          <div>
+            <p className="eyebrow">Recrutement</p>
+            <h3 id="band-reference-profiles-title">Profils</h3>
+          </div>
+          <span>{fiche.profils.length}</span>
+        </div>
+        <div className="band-profile-list">
+          {fiche.profils.map((profil) => (
+            <article className="band-profile-entry" key={profil.id}>
+              <header>
+                <div>
+                  <span>{profil.categorie}</span>
+                  <h4>{profil.nom}</h4>
+                </div>
+                <strong>{libelleCoutProfilReference(profil)}</strong>
+              </header>
+              <p className="band-profile-quota">
+                {libelleQuotaProfilReference(profil)} ·{' '}
+                {profil.experienceInitiale} XP au départ
+              </p>
+              <dl
+                aria-label={`Caractéristiques de ${profil.nom}`}
+                className="band-profile-stats"
+              >
+                {caracteristiquesProfil.map(({ abreviation, libelle, cle }) => (
+                  <div key={cle} title={libelle}>
+                    <dt>{abreviation}</dt>
+                    <dd>{profil.statistiques[cle] ?? '-'}</dd>
+                  </div>
+                ))}
+              </dl>
+              {profil.competencesDisponibles.length ? (
+                <p className="band-profile-skills">
+                  <strong>Compétences :</strong>{' '}
+                  {profil.competencesDisponibles.join(', ')}
+                </p>
+              ) : null}
+              {profil.regles.map((regle) => (
+                <p className="band-profile-rule" key={regle.titre}>
+                  <strong>{regle.titre}.</strong> {regle.description}
+                </p>
+              ))}
+              <small className="band-entry-source">
+                {sourceBandeLisible(profil.source)}
+              </small>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {fiche.listesEquipement.length ? (
+        <section
+          aria-labelledby="band-reference-equipment-title"
+          className="band-details-section"
+        >
+          <div className="band-details-section-heading">
+            <div>
+              <p className="eyebrow">Équipement de départ</p>
+              <h3 id="band-reference-equipment-title">Arsenal</h3>
+            </div>
+            <span>{fiche.listesEquipement.length}</span>
+          </div>
+          <div className="band-reference-equipment-lists">
+            {fiche.listesEquipement.map((liste) => (
+              <section key={liste.nom}>
+                <header>
+                  <div>
+                    <h4>{liste.nom}</h4>
+                    <p>{liste.profils.join(', ')}</p>
+                  </div>
+                  <small className="band-entry-source">
+                    {sourceBandeLisible(liste.source)}
+                  </small>
+                </header>
+                <div className="band-equipment-groups">
+                  {liste.categories.map((categorie) => (
+                    <section key={categorie.nom}>
+                      <h4>{categorie.nom}</h4>
+                      <ul>
+                        {categorie.entrees.map((entree) => (
+                          <li key={`${entree.nom}-${entree.cout}`}>
+                            <div>
+                              <strong>{entree.nom}</strong>
+                              <span>
+                                {entree.formuleCout ?? `${entree.cout} CO`}
+                              </span>
+                            </div>
+                            {entree.note ? <p>{entree.note}</p> : null}
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {fiche.competencesSpeciales.length || fiche.magie.length ? (
+        <section
+          aria-labelledby="band-reference-abilities-title"
+          className="band-details-section"
+        >
+          <div className="band-details-section-heading">
+            <div>
+              <p className="eyebrow">Progression et magie</p>
+              <h3 id="band-reference-abilities-title">Aptitudes</h3>
+            </div>
+            <span>
+              {fiche.competencesSpeciales.length + fiche.magie.length}
+            </span>
+          </div>
+          <div className="band-abilities-columns">
+            {fiche.competencesSpeciales.length ? (
+              <section>
+                <h4>Compétences spéciales</h4>
+                <div className="band-rules-grid single-column">
+                  {fiche.competencesSpeciales.map((regle) => (
+                    <article key={regle.titre}>
+                      <h4>{regle.titre}</h4>
+                      <p>{regle.description}</p>
+                      {regle.source ? (
+                        <small className="band-entry-source">
+                          {sourceBandeLisible(regle.source)}
+                        </small>
+                      ) : null}
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+            {fiche.magie.length ? (
+              <section>
+                <h4>Sorts et prières</h4>
+                <div className="band-rules-grid single-column">
+                  {fiche.magie.map((sort) => (
+                    <article key={sort.titre}>
+                      <h4>
+                        {sort.titre}
+                        {sort.difficulte !== undefined
+                          ? ` · difficulté ${sort.difficulte}`
+                          : ''}
+                      </h4>
+                      <p>{sort.description}</p>
+                      {sort.source ? (
+                        <small className="band-entry-source">
+                          {sourceBandeLisible(sort.source)}
+                        </small>
+                      ) : null}
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
+
+      {fiche.ambiguites.map((ambiguite) => (
+        <div className="band-source-warning" key={ambiguite} role="note">
+          <CircleAlert aria-hidden="true" />
+          <p>{ambiguite}</p>
+        </div>
+      ))}
+    </>
+  );
+}
+
 function LibraryView({
   recherche,
   grade,
   onRechercheChange,
   onGradeChange,
+  slugSelectionne,
+  onOuvrir,
+  onRetour,
+  onConstruire,
 }: {
   recherche: string;
   grade: FiltreGrade;
+  slugSelectionne: string | null;
   onRechercheChange: (recherche: string) => void;
   onGradeChange: (grade: FiltreGrade) => void;
+  onOuvrir: (slug: string) => void;
+  onRetour: () => void;
+  onConstruire?: (factionId: FactionId) => void;
 }) {
-  const [bandeSelectionnee, setBandeSelectionnee] =
-    useState<BandeBibliotheque | null>(null);
+  const bandeSelectionnee = slugSelectionne
+    ? (bandesBibliotheque.find((bande) => bande.slug === slugSelectionne) ??
+      null)
+    : null;
+  const definitionSelectionnee = bandeSelectionnee
+    ? definitionsBandes.find(
+        (definition) => definition.id === bandeSelectionnee.slug,
+      )
+    : undefined;
+  const ficheReferenceSelectionnee = bandeSelectionnee
+    ? obtenirFicheBandeReference(bandeSelectionnee.slug)
+    : undefined;
+  const equipementsSelectionnes = definitionSelectionnee
+    ? equipements.flatMap((item) => {
+        if (item.commerceUniquement) return [];
+        const profilsAutorises = definitionSelectionnee.profils.filter(
+          (profil) => equipementAutorise(profil, item),
+        );
+        if (profilsAutorises.length === 0) return [];
+        const prix = [
+          ...new Set(
+            profilsAutorises.map((profil) =>
+              coutEquipementPourProfil(item, profil),
+            ),
+          ),
+        ].sort((a, b) => a - b);
+        return [{ item, profilsAutorises, prix }];
+      })
+    : [];
   const resultats = bandesBibliotheque.filter((bande) => {
-    const nomCorrespond = normaliser(bande.nom).includes(normaliser(recherche));
-    return nomCorrespond && (grade === 'tous' || bande.grade === grade);
+    const definition = definitionsBandes.find((item) => item.id === bande.slug);
+    const fiche = obtenirFicheBandeReference(bande.slug);
+    const index = [
+      bande.nom,
+      bande.presentation,
+      bande.publication,
+      ...(definition?.profils.map((profil) => profil.nom) ?? []),
+      ...(definition?.regles.flatMap((regle) => [
+        regle.titre,
+        regle.description,
+      ]) ?? []),
+      ...(fiche?.profils.flatMap((profil) => [
+        profil.nom,
+        ...profil.regles.flatMap((regle) => [regle.titre, regle.description]),
+      ]) ?? []),
+      ...(fiche?.regles.flatMap((regle) => [regle.titre, regle.description]) ??
+        []),
+      ...(fiche?.competencesSpeciales.flatMap((regle) => [
+        regle.titre,
+        regle.description,
+      ]) ?? []),
+      ...(fiche?.magie.flatMap((regle) => [regle.titre, regle.description]) ??
+        []),
+      ...(fiche?.listesEquipement.flatMap((liste) =>
+        liste.categories.flatMap((categorie) =>
+          categorie.entrees.map((entree) => entree.nom),
+        ),
+      ) ?? []),
+    ].join(' ');
+    const texteCorrespond = normaliser(index).includes(normaliser(recherche));
+    return texteCorrespond && (grade === 'tous' || bande.grade === grade);
   });
 
   return (
     <section className="product-view">
-      <PageHeader
-        eyebrow="Grande Librairie de Mordheim"
-        title="Bibliothèque des bandes"
-        description="Le grade indique le niveau d’officialité GLM. Chaque entrée ouvre sa page de référence et, lorsqu’il est indexé, son PDF."
-        action={
-          <a
-            className="source-button"
-            href={`${SOURCE_GLM}/bandes`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Voir la GLM <ExternalLink aria-hidden="true" />
-            <IndicationNouvelOnglet />
-          </a>
-        }
-      />
-
-      <div className="library-toolbar">
-        <div className="library-search">
-          <Search />
-          <Input
-            aria-label="Rechercher une bande"
-            value={recherche}
-            onChange={(event) => onRechercheChange(event.target.value)}
-            placeholder="Rechercher une bande…"
-          />
-        </div>
-        <NativeSelect
-          aria-label="Filtrer les bandes par grade"
-          value={grade}
-          onChange={(event) => onGradeChange(event.target.value as FiltreGrade)}
-        >
-          <NativeSelectOption value="tous">Tous les grades</NativeSelectOption>
-          <NativeSelectOption value="1a">
-            Grade 1a : officiel
-          </NativeSelectOption>
-          <NativeSelectOption value="1b">
-            Grade 1b : publié GW
-          </NativeSelectOption>
-          <NativeSelectOption value="1c">
-            Grade 1c : expérimental
-          </NativeSelectOption>
-          <NativeSelectOption value="2">
-            Grade 2 : fan fiable
-          </NativeSelectOption>
-        </NativeSelect>
-        <span>{resultats.length} bandes</span>
-      </div>
-
-      <div className="library-grid">
-        {resultats.map((bande) => (
-          <article
-            className="library-card search-destination"
-            id={`bande-${bande.grade}-${bande.slug}`}
-            key={`${bande.grade}-${bande.slug}`}
-            tabIndex={-1}
-          >
-            <button
-              className="library-card-main"
-              type="button"
-              onClick={() => setBandeSelectionnee(bande)}
-              aria-label={`Consulter les informations de ${bande.nom}`}
-            >
-              <span className="library-card-top">
-                <span className={`grade grade-${bande.grade}`}>
-                  Grade {bande.grade}
-                </span>
-                <Users aria-hidden="true" />
-              </span>
-              <h3>{bande.nom}</h3>
-              <p>{texteGrade(bande.grade)}</p>
-              <span className="library-card-hint">Consulter la fiche</span>
-            </button>
-            <div className="library-card-actions">
+      {!bandeSelectionnee ? (
+        <>
+          <PageHeader
+            eyebrow="Grande Librairie de Mordheim"
+            title="Bibliothèque des bandes"
+            description="Le grade indique le niveau d’officialité GLM. Chaque entrée ouvre sa page de référence et, lorsqu’il est indexé, son PDF."
+            action={
               <a
-                href={`${SOURCE_GLM}/bandes/${bande.slug}`}
+                className="source-button"
+                href={`${SOURCE_GLM}/bandes`}
                 target="_blank"
                 rel="noreferrer"
               >
-                Fiche GLM <ExternalLink aria-hidden="true" />
+                Voir la GLM <ExternalLink aria-hidden="true" />
                 <IndicationNouvelOnglet />
               </a>
-              {bande.pdfUrl && (
-                <a href={bande.pdfUrl} target="_blank" rel="noreferrer">
-                  <FileText aria-hidden="true" /> PDF
-                  <IndicationNouvelOnglet />
-                </a>
-              )}
+            }
+          />
+
+          <div className="library-toolbar">
+            <div className="library-search">
+              <Search />
+              <Input
+                aria-label="Rechercher une bande"
+                value={recherche}
+                onChange={(event) => onRechercheChange(event.target.value)}
+                placeholder="Rechercher une bande…"
+              />
             </div>
-          </article>
-        ))}
-      </div>
+            <NativeSelect
+              aria-label="Filtrer les bandes par grade"
+              value={grade}
+              onChange={(event) =>
+                onGradeChange(event.target.value as FiltreGrade)
+              }
+            >
+              <NativeSelectOption value="tous">
+                Tous les grades
+              </NativeSelectOption>
+              <NativeSelectOption value="1a">
+                Grade 1a : officiel
+              </NativeSelectOption>
+              <NativeSelectOption value="1b">
+                Grade 1b : publié GW
+              </NativeSelectOption>
+              <NativeSelectOption value="1c">
+                Grade 1c : expérimental
+              </NativeSelectOption>
+              <NativeSelectOption value="2">
+                Grade 2 : fan fiable
+              </NativeSelectOption>
+            </NativeSelect>
+            <span>{resultats.length} bandes</span>
+          </div>
 
-      <Dialog
-        open={Boolean(bandeSelectionnee)}
-        onOpenChange={(ouverte) => {
-          if (!ouverte) setBandeSelectionnee(null);
-        }}
-      >
-        <DialogContent className="band-details-dialog">
-          {bandeSelectionnee ? (
-            <>
-              <DialogHeader>
-                <span
-                  className={`grade grade-${bandeSelectionnee.grade} band-details-grade`}
+          <div className="library-grid">
+            {resultats.map((bande) => {
+              const definition = definitionsBandes.find(
+                (item) => item.id === bande.slug,
+              );
+              const fiche = fichesBandesReference[bande.slug];
+              return (
+                <article
+                  className="library-card search-destination"
+                  id={`bande-${bande.grade}-${bande.slug}`}
+                  key={`${bande.grade}-${bande.slug}`}
+                  tabIndex={-1}
                 >
-                  Grade {bandeSelectionnee.grade}
-                </span>
-                <DialogTitle>{bandeSelectionnee.nom}</DialogTitle>
-                <DialogDescription>
-                  {texteGrade(bandeSelectionnee.grade)} Cette fiche distingue
-                  les références disponibles des règles réellement intégrées
-                  dans Trackheim.
-                </DialogDescription>
-              </DialogHeader>
+                  <button
+                    className="library-card-main"
+                    type="button"
+                    onClick={() => onOuvrir(bande.slug)}
+                    aria-label={`Consulter les informations de ${bande.nom}`}
+                  >
+                    <span className="library-card-top">
+                      <span className={`grade grade-${bande.grade}`}>
+                        Grade {bande.grade}
+                      </span>
+                      <Users aria-hidden="true" />
+                    </span>
+                    <h3>{bande.nom}</h3>
+                    <p>{bande.presentation}</p>
+                    {fiche ? (
+                      <>
+                        <p className="library-card-summary">
+                          {fiche.composition.budgetInitial} CO au départ ·{' '}
+                          {fiche.composition.effectifMaximum === null
+                            ? `${fiche.composition.effectifMinimum} combattants minimum`
+                            : `de ${fiche.composition.effectifMinimum} à ${fiche.composition.effectifMaximum} combattants`}
+                        </p>
+                        <span className="library-card-support complete">
+                          Fiche complète · {fiche.profils.length} profils
+                        </span>
+                      </>
+                    ) : definition ? (
+                      <>
+                        <p className="library-card-summary">
+                          {definition.budgetInitial} CO au départ · de{' '}
+                          {definition.effectifMinimum} à{' '}
+                          {definition.effectifMaximum} combattants
+                        </p>
+                        <span className="library-card-support">
+                          Constructible · {definition.profils.length} profils
+                        </span>
+                      </>
+                    ) : (
+                      <span className="library-card-support reference-only">
+                        Document vérifié · {bande.pagesPdf} pages
+                      </span>
+                    )}
+                    <span className="library-card-hint">
+                      Consulter la fiche
+                    </span>
+                  </button>
+                  <div className="library-card-actions">
+                    <a
+                      href={`${SOURCE_GLM}/bandes/${bande.slug}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Fiche GLM <ExternalLink aria-hidden="true" />
+                      <IndicationNouvelOnglet />
+                    </a>
+                    {bande.pdfUrl && (
+                      <a href={bande.pdfUrl} target="_blank" rel="noreferrer">
+                        <FileText aria-hidden="true" /> PDF
+                        <IndicationNouvelOnglet />
+                      </a>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </>
+      ) : null}
 
-              <dl className="band-details-grid">
-                <div>
-                  <dt>Référence</dt>
-                  <dd>Grande Librairie de Mordheim</dd>
-                </div>
-                <div>
-                  <dt>Fiche GLM</dt>
-                  <dd>Disponible en ligne</dd>
-                </div>
-                <div>
-                  <dt>PDF indexé</dt>
-                  <dd>
-                    {bandeSelectionnee.pdfUrl ? 'Disponible' : 'Non disponible'}
-                  </dd>
-                </div>
-              </dl>
+      {bandeSelectionnee ? (
+        <div className="band-details-page">
+          <Button
+            className="band-details-back"
+            onClick={onRetour}
+            type="button"
+            variant="ghost"
+          >
+            <ArrowLeft aria-hidden="true" /> Toutes les bandes
+          </Button>
+          <article className="band-details-sheet">
+            <header className="band-details-header">
+              <span
+                className={`grade grade-${bandeSelectionnee.grade} band-details-grade`}
+              >
+                Grade {bandeSelectionnee.grade}
+              </span>
+              <h2>{bandeSelectionnee.nom}</h2>
+              <p>{bandeSelectionnee.presentation}</p>
+            </header>
 
-              <div className="band-support-state">
-                <Shield aria-hidden="true" />
-                <div>
-                  <strong>Prise en charge Trackheim</strong>
-                  <p>
-                    {definitionsBandes.some(
-                      (definition) => definition.id === bandeSelectionnee.slug,
-                    )
-                      ? 'Règles de composition et recrutement intégrées au constructeur de bande.'
-                      : 'Référence consultable. Les profils de recrutement de cette bande ne sont pas encore indexés dans l’application.'}
-                  </p>
-                </div>
+            <dl className="band-details-grid band-source-summary">
+              <div>
+                <dt>Statut</dt>
+                <dd>{texteGrade(bandeSelectionnee.grade)}</dd>
               </div>
+              <div>
+                <dt>Document</dt>
+                <dd>
+                  {bandeSelectionnee.pagesPdf} pages en{' '}
+                  {bandeSelectionnee.langueDocument}
+                </dd>
+              </div>
+              <div>
+                <dt>Édition vérifiée</dt>
+                <dd>{bandeSelectionnee.publication}</dd>
+              </div>
+            </dl>
 
-              <DialogFooter className="band-details-actions">
+            {bandeSelectionnee.avertissements.map((avertissement) => (
+              <div
+                className="band-source-warning"
+                key={avertissement}
+                role="note"
+              >
+                <CircleAlert aria-hidden="true" />
+                <p>{avertissement}</p>
+              </div>
+            ))}
+
+            {ficheReferenceSelectionnee ? (
+              <SectionsFicheBandeReference fiche={ficheReferenceSelectionnee} />
+            ) : definitionSelectionnee ? (
+              <>
+                <dl className="band-details-grid band-details-summary">
+                  <div>
+                    <dt>Budget initial</dt>
+                    <dd>{definitionSelectionnee.budgetInitial} CO</dd>
+                  </div>
+                  <div>
+                    <dt>Effectif</dt>
+                    <dd>
+                      {definitionSelectionnee.effectifMinimum} à{' '}
+                      {definitionSelectionnee.effectifMaximum}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Héros</dt>
+                    <dd>
+                      {
+                        definitionSelectionnee.profils.filter(
+                          (profil) => profil.categorie === 'Héros',
+                        ).length
+                      }{' '}
+                      profils
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Hommes de main</dt>
+                    <dd>
+                      {
+                        definitionSelectionnee.profils.filter(
+                          (profil) => profil.categorie === 'Hommes de main',
+                        ).length
+                      }{' '}
+                      profils
+                    </dd>
+                  </div>
+                </dl>
+
+                <section
+                  aria-labelledby="band-rules-title"
+                  className="band-details-section"
+                >
+                  <div className="band-details-section-heading">
+                    <div>
+                      <p className="eyebrow">Composition</p>
+                      <h3 id="band-rules-title">Règles de bande</h3>
+                    </div>
+                    <span>{definitionSelectionnee.regles.length}</span>
+                  </div>
+                  <div className="band-rules-grid">
+                    {definitionSelectionnee.regles.map((regle) => (
+                      <article key={regle.titre}>
+                        <h4>{regle.titre}</h4>
+                        <p>{regle.description}</p>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                <section
+                  aria-labelledby="band-profiles-title"
+                  className="band-details-section"
+                >
+                  <div className="band-details-section-heading">
+                    <div>
+                      <p className="eyebrow">Recrutement</p>
+                      <h3 id="band-profiles-title">Profils</h3>
+                    </div>
+                    <span>{definitionSelectionnee.profils.length}</span>
+                  </div>
+                  <div className="band-profile-list">
+                    {definitionSelectionnee.profils.map((profil) => (
+                      <article className="band-profile-entry" key={profil.id}>
+                        <header>
+                          <div>
+                            <span>{profil.categorie}</span>
+                            <h4>{profil.nom}</h4>
+                          </div>
+                          <strong>{profil.cout} CO</strong>
+                        </header>
+                        <p className="band-profile-quota">
+                          {libelleQuotaProfil(profil)} ·{' '}
+                          {profil.experienceInitiale} XP au départ
+                          {profil.chef ? ' · Chef' : ''}
+                        </p>
+                        <dl
+                          aria-label={`Caractéristiques de ${profil.nom}`}
+                          className="band-profile-stats"
+                        >
+                          {caracteristiquesProfil.map(
+                            ({ abreviation, libelle, cle }) => (
+                              <div key={cle} title={libelle}>
+                                <dt>{abreviation}</dt>
+                                <dd>{profil.statistiques[cle]}</dd>
+                              </div>
+                            ),
+                          )}
+                        </dl>
+                        {profil.maximums ? (
+                          <p className="band-profile-maximums">
+                            <strong>Maximums :</strong>{' '}
+                            {caracteristiquesProfil
+                              .map(
+                                ({ abreviation, cle }) =>
+                                  `${abreviation} ${profil.maximums?.[cle]}`,
+                              )
+                              .join(' · ')}
+                          </p>
+                        ) : null}
+                        {profil.competencesDisponibles?.length ? (
+                          <p className="band-profile-skills">
+                            <strong>Compétences :</strong>{' '}
+                            {profil.competencesDisponibles.join(', ')}
+                          </p>
+                        ) : null}
+                        {profil.regleSpeciale ? (
+                          <p className="band-profile-rule">
+                            {profil.regleSpeciale}
+                          </p>
+                        ) : null}
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                <section
+                  aria-labelledby="band-equipment-title"
+                  className="band-details-section"
+                >
+                  <div className="band-details-section-heading">
+                    <div>
+                      <p className="eyebrow">Équipement de départ</p>
+                      <h3 id="band-equipment-title">Arsenal</h3>
+                    </div>
+                    <span>{equipementsSelectionnes.length}</span>
+                  </div>
+                  <div className="band-equipment-groups">
+                    {categoriesEquipementBibliotheque.map((categorie) => {
+                      const elements = equipementsSelectionnes.filter(
+                        ({ item }) => item.categorie === categorie,
+                      );
+                      if (elements.length === 0) return null;
+                      return (
+                        <section key={categorie}>
+                          <h4>{categorie}</h4>
+                          <ul>
+                            {elements.map(
+                              ({ item, profilsAutorises, prix }) => (
+                                <li key={item.id}>
+                                  <div>
+                                    <strong>{item.nom}</strong>
+                                    <span>
+                                      {prix
+                                        .map((montant) => `${montant} CO`)
+                                        .join(' / ')}
+                                    </span>
+                                  </div>
+                                  <small>
+                                    {profilsAutorises
+                                      .map((profil) => profil.nom)
+                                      .join(', ')}
+                                  </small>
+                                  {item.regleSpeciale ? (
+                                    <p>{item.regleSpeciale}</p>
+                                  ) : null}
+                                </li>
+                              ),
+                            )}
+                          </ul>
+                        </section>
+                      );
+                    })}
+                  </div>
+                </section>
+              </>
+            ) : (
+              <>
+                <dl className="band-details-grid">
+                  <div>
+                    <dt>Contenu contrôlé</dt>
+                    <dd>Composition, profils, équipement et règles</dd>
+                  </div>
+                  <div>
+                    <dt>Lecture</dt>
+                    <dd>Document source complet</dd>
+                  </div>
+                  <div>
+                    <dt>Constructeur</dt>
+                    <dd>Automatisation à valider</dd>
+                  </div>
+                </dl>
+                <div className="band-support-state reference-only">
+                  <BookOpen aria-hidden="true" />
+                  <div>
+                    <strong>Fiche de référence</strong>
+                    <p>
+                      Le document a été contrôlé pour cette édition. Les données
+                      de jeu seront affichées ici dès que leur saisie structurée
+                      aura été comparée au PDF.
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+
+            <footer className="band-details-actions">
+              {definitionSelectionnee && onConstruire ? (
+                <Button
+                  className="primary-action"
+                  onClick={() => {
+                    onRetour();
+                    onConstruire(definitionSelectionnee.id);
+                  }}
+                  type="button"
+                >
+                  <UserPlus aria-hidden="true" /> Créer cette bande
+                </Button>
+              ) : null}
+              <a
+                className="source-button"
+                href={`${SOURCE_GLM}/bandes/${bandeSelectionnee.slug}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Ouvrir la fiche GLM <ExternalLink aria-hidden="true" />
+                <IndicationNouvelOnglet />
+              </a>
+              {bandeSelectionnee.pdfUrl ? (
                 <a
                   className="source-button"
-                  href={`${SOURCE_GLM}/bandes/${bandeSelectionnee.slug}`}
+                  href={bandeSelectionnee.pdfUrl}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Ouvrir la fiche GLM <ExternalLink aria-hidden="true" />
+                  Lire le PDF <FileText aria-hidden="true" />
                   <IndicationNouvelOnglet />
                 </a>
-                {bandeSelectionnee.pdfUrl ? (
-                  <a
-                    className="source-button"
-                    href={bandeSelectionnee.pdfUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Lire le PDF <FileText aria-hidden="true" />
-                    <IndicationNouvelOnglet />
-                  </a>
-                ) : null}
-              </DialogFooter>
-            </>
-          ) : null}
-        </DialogContent>
-      </Dialog>
+              ) : null}
+            </footer>
+          </article>
+        </div>
+      ) : null}
     </section>
   );
 }
