@@ -311,6 +311,7 @@
 .band-rules-grid p {
   margin: 5px 0 0;
   color: #62513e;
+  font-size: 15px;
   line-height: 1.5;
 }
 .band-profile-list {
@@ -332,7 +333,7 @@
 .band-profile-entry > header span {
   display: block;
   color: #806b51;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -354,8 +355,8 @@
 .band-profile-rule {
   margin: 8px 0 0;
   color: #675642;
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 14px;
+  line-height: 1.5;
 }
 .band-profile-quota {
   color: #7d6a52;
@@ -375,13 +376,13 @@
 }
 .band-profile-stats dt {
   color: #867259;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
 }
 .band-profile-stats dd {
   margin: 2px 0 0;
   font-family: var(--font-geist-sans), Arial, sans-serif;
-  font-size: 22px;
+  font-size: 24px;
   font-variant-numeric: tabular-nums;
   font-weight: 900;
   line-height: 1;

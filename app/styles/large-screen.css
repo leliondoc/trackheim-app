@@ -93,8 +93,43 @@
   .homebrew-toggle p,
   .price-row small,
   .custom-rule p {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5;
+  }
+
+  .profile-skills {
+    font-size: 16px;
+  }
+
+  .band-details-header p,
+  .band-rules-grid p {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .band-profile-quota,
+  .band-profile-maximums,
+  .band-profile-skills,
+  .band-profile-rule {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .band-entry-source,
+  .band-profile-entry > header span {
+    font-size: 13px;
+  }
+
+  .band-profile-entry h4 {
+    font-size: 24px;
+  }
+
+  .band-profile-stats dt {
+    font-size: 13px;
+  }
+
+  .band-profile-stats dd {
+    font-size: 26px;
   }
 
   .status,
@@ -408,7 +443,12 @@
   .homebrew-toggle p,
   .price-row small,
   .custom-rule p {
-    font-size: 14px;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .profile-skills {
+    font-size: 17px;
   }
 
   .status,
@@ -747,7 +787,8 @@
 
   .band-details-header p,
   .band-rules-grid p {
-    font-size: 17px;
+    font-size: 19px;
+    line-height: 1.6;
   }
 
   .band-source-summary dd,
@@ -756,13 +797,14 @@
   .band-profile-maximums,
   .band-profile-skills,
   .band-profile-rule {
-    font-size: 15px;
+    font-size: 17px;
+    line-height: 1.55;
   }
 
   .band-entry-source,
   .band-profile-entry > header span,
   .band-reference-equipment-lists > section > header .band-entry-source {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .band-details-section-heading h3 {
@@ -771,7 +813,7 @@
 
   .band-rules-grid h4,
   .band-profile-entry h4 {
-    font-size: 22px;
+    font-size: 25px;
   }
 
   .band-profile-entry > header > strong {
@@ -779,11 +821,11 @@
   }
 
   .band-profile-stats dt {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .band-profile-stats dd {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .band-equipment-groups h4,
@@ -819,7 +861,7 @@
 
   .band-details-header p,
   .band-rules-grid p {
-    font-size: 18px;
+    font-size: 21px;
   }
 
   .band-source-summary dd,
@@ -828,20 +870,20 @@
   .band-profile-maximums,
   .band-profile-skills,
   .band-profile-rule {
-    font-size: 16px;
+    font-size: 19px;
   }
 
   .band-entry-source,
   .band-profile-entry > header span,
   .band-reference-equipment-lists > section > header .band-entry-source {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .band-profile-stats dt {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .band-profile-stats dd {
-    font-size: 26px;
+    font-size: 30px;
   }
 }

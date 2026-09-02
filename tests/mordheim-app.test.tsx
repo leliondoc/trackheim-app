@@ -1,4 +1,10 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -51,6 +57,20 @@ describe('navigation principale', () => {
     expect(
       screen.getByRole('link', { name: /^Campagne$/ }).querySelector('svg'),
     ).toHaveClass('lucide-scroll-text');
+  });
+
+  it('ouvre une page du menu mobile dès le premier appui tactile', async () => {
+    render(<MordheimApp />);
+
+    fireEvent.pointerUp(
+      await screen.findByRole('link', { name: /^Bibliothèque$/ }),
+      { pointerType: 'touch' },
+    );
+
+    expect(
+      await screen.findByRole('heading', { name: /Bibliothèque/i }),
+    ).toBeInTheDocument();
+    expect(location.hash).toBe('#/library');
   });
 
   it('propose les 49 bandes dans le constructeur et conserve la sélection de la bibliothèque', async () => {
@@ -211,6 +231,25 @@ describe('navigation principale', () => {
       }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('affiche les noms accentués plutôt que les identifiants des profils', async () => {
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    await utilisateur.click(
+      await screen.findByRole('link', { name: /^Bibliothèque$/ }),
+    );
+    await utilisateur.click(
+      screen.getByRole('button', {
+        name: 'Consulter les informations de Kermesse du Chaos',
+      }),
+    );
+
+    expect(
+      await screen.findByText('Maître de Cérémonie, Impur, Frère'),
+    ).toBeInTheDocument();
+    expect(screen.queryByText('maitre-de-ceremonie, impur, frere')).toBeNull();
   });
 
   it('écarte silencieusement une sauvegarde invalide sans ancien format', async () => {

@@ -1,4 +1,5 @@
 import {
+  ALargeSmall,
   BookOpen,
   ChevronDown,
   FlaskConical,
@@ -59,6 +60,11 @@ export function Sidebar({
         className={`navigation-item ${classeSupplementaire} ${actif ? 'active' : ''}`.trim()}
         href={hashPourVue(id)}
         onClick={(event) => {
+          event.preventDefault();
+          onVueChange(id);
+        }}
+        onPointerUp={(event) => {
+          if (event.pointerType !== 'touch') return;
           event.preventDefault();
           onVueChange(id);
         }}
@@ -205,24 +211,33 @@ export function Topbar({
             )}
           </span>
         )}
-        <div className="text-scale-control" aria-label="Taille du texte">
-          <button
-            aria-label="Réduire la taille du texte"
-            disabled={tailleTexteMinimale}
-            onClick={onDiminuerTailleTexte}
-            type="button"
+        <div className="text-scale-tool">
+          <span
+            aria-hidden="true"
+            className="text-scale-tool-icon"
+            title="Taille du texte"
           >
-            <Minus aria-hidden="true" />
-          </button>
-          <output aria-live="polite">{tailleTexte} %</output>
-          <button
-            aria-label="Augmenter la taille du texte"
-            disabled={tailleTexteMaximale}
-            onClick={onAugmenterTailleTexte}
-            type="button"
-          >
-            <Plus aria-hidden="true" />
-          </button>
+            <ALargeSmall />
+          </span>
+          <div className="text-scale-control" aria-label="Taille du texte">
+            <button
+              aria-label="Réduire la taille du texte"
+              disabled={tailleTexteMinimale}
+              onClick={onDiminuerTailleTexte}
+              type="button"
+            >
+              <Minus aria-hidden="true" />
+            </button>
+            <output aria-live="polite">{tailleTexte} %</output>
+            <button
+              aria-label="Augmenter la taille du texte"
+              disabled={tailleTexteMaximale}
+              onClick={onAugmenterTailleTexte}
+              type="button"
+            >
+              <Plus aria-hidden="true" />
+            </button>
+          </div>
         </div>
         <button
           aria-expanded={rechercheOuverte}

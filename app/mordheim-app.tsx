@@ -3333,6 +3333,18 @@ function sourceBandeLisible(source: string) {
   return source.replace(/,?\s*https?:\/\/\S+.*$/i, '').trim();
 }
 
+function nomsProfilsListeReference(
+  fiche: FicheBandeReference,
+  profils: string[],
+) {
+  return profils
+    .flatMap((id) => {
+      const profil = fiche.profils.find((entree) => entree.id === id);
+      return profil ? [profil.nom] : [];
+    })
+    .join(', ');
+}
+
 function plageEffectifReference(fiche: FicheBandeReference) {
   return fiche.composition.effectifMaximum === null
     ? `${fiche.composition.effectifMinimum} minimum, plafond non précisé`
@@ -3476,7 +3488,7 @@ function SectionsFicheBandeReference({
                 <header>
                   <div>
                     <h4>{liste.nom}</h4>
-                    <p>{liste.profils.join(', ')}</p>
+                    <p>{nomsProfilsListeReference(fiche, liste.profils)}</p>
                   </div>
                   <small className="band-entry-source">
                     {sourceBandeLisible(liste.source)}

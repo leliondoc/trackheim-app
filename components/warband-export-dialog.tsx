@@ -67,7 +67,7 @@ export function WarbandExportDialog({
     <Dialog>
       <DialogTrigger
         render={
-          <Button type="button" variant="outline">
+          <Button className="export-trigger" type="button" variant="outline">
             <Download aria-hidden="true" /> Exporter
           </Button>
         }

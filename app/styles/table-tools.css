@@ -17,6 +17,23 @@
   }
 }
 
+.text-scale-tool {
+  display: grid;
+  flex: none;
+  justify-items: center;
+  gap: 3px;
+}
+.text-scale-tool-icon {
+  display: grid;
+  height: 18px;
+  place-items: center;
+  color: #6f4f39;
+}
+.text-scale-tool-icon svg {
+  width: 19px;
+  height: 19px;
+  stroke-width: 1.8;
+}
 .text-scale-control {
   display: inline-flex;
   height: 40px;
@@ -540,6 +557,46 @@
   width: 25px;
 }
 
+.export-trigger[data-slot='button'] {
+  min-height: 44px;
+  gap: 9px;
+  border: 1px solid #6d3f2a;
+  background: linear-gradient(
+    180deg,
+    rgb(255 248 226 / 94%),
+    rgb(222 199 153 / 92%)
+  );
+  color: #2f2118;
+  padding-inline: 16px;
+  box-shadow:
+    3px 3px 0 rgb(72 41 22 / 15%),
+    inset 0 1px 0 rgb(255 255 255 / 65%);
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.export-trigger[data-slot='button'] svg {
+  width: 18px;
+  height: 18px;
+  color: #7a3028;
+  stroke-width: 2;
+}
+.export-trigger[data-slot='button']:hover {
+  border-color: #7a3028;
+  background: linear-gradient(180deg, #fff6dc, #d9b978);
+  color: #5e211c;
+  box-shadow:
+    3px 3px 0 rgb(72 41 22 / 20%),
+    0 6px 15px rgb(94 43 30 / 10%);
+}
+.export-trigger[data-slot='button']:focus-visible {
+  border-color: #7a3028;
+  box-shadow:
+    0 0 0 3px rgb(122 48 40 / 24%),
+    3px 3px 0 rgb(72 41 22 / 15%);
+}
+
 .export-dialog {
   max-width: 660px;
 }
@@ -607,6 +664,10 @@
   .sidebar {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
+  .sidebar .navigation-item {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
   .topbar-actions {
     gap: 6px;
   }
@@ -615,6 +676,9 @@
   }
   .text-scale-control {
     height: 42px;
+  }
+  .text-scale-tool {
+    gap: 2px;
   }
   .text-scale-control button {
     width: 38px;
