@@ -40,6 +40,8 @@ describe('valeur de bande et outsider', () => {
     for (const [difference, attendu] of cas) {
       assert.equal(calculerBonusChallenger(difference), attendu);
     }
+    assert.equal(calculerBonusChallenger(Number.NaN), 0);
+    assert.equal(calculerBonusChallenger(Number.POSITIVE_INFINITY), 0);
   });
 });
 

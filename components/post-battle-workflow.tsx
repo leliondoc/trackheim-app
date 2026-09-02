@@ -32,6 +32,16 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import {
   NativeSelect,
@@ -426,6 +436,7 @@ export function PostBattleWorkflow({
       date: creation.date,
       valeurAvant: valeurBande,
       valeurAdverse,
+      bonusChallengerApplique: false,
       successeurChefId: null,
       etapeActive: 0,
       tour: 1,
@@ -502,10 +513,21 @@ export function PostBattleWorkflow({
     setErreur(null);
   }
 
+  function annulerBataille() {
+    setErreur(null);
+    onCampagneChange({
+      ...campagne,
+      revision: campagne.revision + 1,
+      batailleEnCours: null,
+      etapesApresBataille: Array.from({ length: 10 }, () => false),
+    });
+  }
+
   if (!campagne.batailleEnCours) {
     return (
       <CreationBataille
         campagne={campagne}
+        valeurBande={valeurBande}
         creation={creation}
         participantsSelectionnes={participantsSelectionnes}
         jetsVieilleBlessure={jetsVieilleBlessure}
@@ -537,6 +559,7 @@ export function PostBattleWorkflow({
     return (
       <ResultatBataille
         bataille={bataille}
+        onCancel={annulerBataille}
         onResultat={(resultat) =>
           publierBataille((courante) => ({ ...courante, resultat }))
         }
@@ -558,9 +581,12 @@ export function PostBattleWorkflow({
       grandeCreature: profilsParId.get(combattant.profilId)?.grandeCreature,
     })),
   );
-  const bonusChallenger = calculerBonusChallenger(
+  const bonusChallengerCalcule = calculerBonusChallenger(
     bataille.valeurAdverse - bataille.valeurAvant,
   );
+  const bonusChallenger = bataille.bonusChallengerApplique
+    ? bonusChallengerCalcule
+    : 0;
   const augurePresente = combattantsParticipants.some(
     (combattant) =>
       combattant.profilId === 'soeurs-augure' &&
@@ -1715,7 +1741,10 @@ export function PostBattleWorkflow({
             {bataille.valeurAdverse}
           </CardDescription>
           <CardAction>
-            <Badge variant="outline">{terminees} / 10</Badge>
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <Badge variant="outline">{terminees} / 10</Badge>
+              <AnnulerBataille onConfirm={annulerBataille} />
+            </div>
           </CardAction>
         </CardHeader>
         <CardContent className="grid gap-4 pt-4">
@@ -1836,10 +1865,17 @@ export function PostBattleWorkflow({
               : []
           }
           bonusChallenger={bonusChallenger}
+          bonusChallengerCalcule={bonusChallengerCalcule}
           profilsParId={profilsParId}
           experiencesAppliquees={experiencesAppliquees}
           bilanExperience={bilanExperience}
           onParticipantChange={modifierParticipant}
+          onBonusChallengerChange={(applique) =>
+            publierBataille((courante) => ({
+              ...courante,
+              bonusChallengerApplique: applique,
+            }))
+          }
           onProgressionChange={modifierSaisieProgression}
           onApply={appliquerExperiences}
           onContinue={() => terminerEtape(1)}
@@ -1983,6 +2019,7 @@ export function PostBattleWorkflow({
 
 function CreationBataille({
   campagne,
+  valeurBande,
   creation,
   participantsSelectionnes,
   jetsVieilleBlessure,
@@ -1993,6 +2030,7 @@ function CreationBataille({
   onCreate,
 }: {
   campagne: EtatCampagne;
+  valeurBande: number;
   creation: BrouillonBataille;
   participantsSelectionnes: string[];
   jetsVieilleBlessure: Record<string, number | null>;
@@ -2002,6 +2040,9 @@ function CreationBataille({
   onOldBattleWoundRoll: (id: string, jet: number | null) => void;
   onCreate: () => void;
 }) {
+  const valeurAdverse = entierDepuisTexte(creation.valeurAdverse);
+  const differenceValeur = Math.max(0, valeurAdverse - valeurBande);
+  const bonusChallenger = calculerBonusChallenger(differenceValeur);
   return (
     <Card className="border-stone-500/30 bg-[rgba(252,248,236,.78)] shadow-sm">
       <CardHeader className="border-b border-stone-500/20">
@@ -2054,7 +2095,7 @@ function CreationBataille({
               }
             />
           </Champ>
-          <Champ libelle="Valeur adverse" htmlFor="battle-rating">
+          <Champ libelle="Valeur de bande adverse" htmlFor="battle-rating">
             <Input
               id="battle-rating"
               type="number"
@@ -2064,6 +2105,17 @@ function CreationBataille({
                 onCreationChange({ valeurAdverse: event.target.value })
               }
             />
+            <small className="text-muted-foreground" aria-live="polite">
+              Votre valeur : {valeurBande}. Saisissez la valeur de bande de
+              l’adversaire, pas son budget en CO.
+              {valeurAdverse > 0 && (
+                <>
+                  {' '}
+                  Écart : {differenceValeur}. Bonus potentiel : +
+                  {bonusChallenger} XP.
+                </>
+              )}
+            </small>
           </Champ>
         </div>
         <div className="grid gap-3">
@@ -2154,9 +2206,11 @@ function CreationBataille({
 function ResultatBataille({
   bataille,
   onResultat,
+  onCancel,
 }: {
   bataille: BatailleEnCours;
   onResultat: (resultat: Partie['resultat']) => void;
+  onCancel: () => void;
 }) {
   return (
     <Card className="border-stone-500/30 bg-[rgba(252,248,236,.78)] shadow-sm">
@@ -2169,6 +2223,9 @@ function ResultatBataille({
           {bataille.scenario} contre {bataille.adversaire}. Le mode Combat reste
           disponible tant que le résultat n’est pas enregistré.
         </CardDescription>
+        <CardAction>
+          <AnnulerBataille onConfirm={onCancel} />
+        </CardAction>
       </CardHeader>
       <CardContent className="grid gap-4 pt-5">
         <div>
@@ -2192,6 +2249,34 @@ function ResultatBataille({
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function AnnulerBataille({ onConfirm }: { onConfirm: () => void }) {
+  return (
+    <Dialog>
+      <DialogTrigger render={<Button size="sm" variant="outline" />}>
+        <Trash2 /> Annuler la bataille
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Annuler cette bataille ?</DialogTitle>
+          <DialogDescription>
+            La bataille inachevée et sa progression seront supprimées. Les
+            blessures, achats ou gains déjà appliqués à la bande resteront
+            enregistrés.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <DialogClose render={<Button variant="outline" />}>
+            Revenir à la bataille
+          </DialogClose>
+          <Button variant="destructive" onClick={onConfirm}>
+            <Trash2 /> Annuler et déverrouiller la bande
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -2960,10 +3045,12 @@ function EtapeExperience({
   differenceValeur,
   reglesChallengerHomebrew,
   bonusChallenger,
+  bonusChallengerCalcule,
   profilsParId,
   experiencesAppliquees,
   bilanExperience,
   onParticipantChange,
+  onBonusChallengerChange,
   onProgressionChange,
   onApply,
   onContinue,
@@ -2975,6 +3062,7 @@ function EtapeExperience({
   differenceValeur: number;
   reglesChallengerHomebrew: Array<{ titre: string; description: string }>;
   bonusChallenger: number;
+  bonusChallengerCalcule: number;
   profilsParId: Map<string, ProfilRecrue>;
   experiencesAppliquees: boolean;
   bilanExperience: (combattant: Combattant) => {
@@ -2989,6 +3077,7 @@ function EtapeExperience({
     id: string,
     modification: Partial<SuiviCombattantBataille>,
   ) => void;
+  onBonusChallengerChange: (applique: boolean) => void;
   onProgressionChange: (
     combattant: Combattant,
     index: number,
@@ -3001,7 +3090,7 @@ function EtapeExperience({
     <CarteEtape
       numero={2}
       titre="Expérience et progressions"
-      description={`Écart de valeur : ${differenceValeur} points. Bonus challenger officiel : +${bonusChallenger} XP par combattant admissible.`}
+      description={`Écart de valeur : ${differenceValeur} points. Bonus challenger calculé : +${bonusChallengerCalcule} XP par combattant admissible.`}
       icone={<Sparkles />}
       action={
         experiencesAppliquees ? (
@@ -3015,6 +3104,29 @@ function EtapeExperience({
         )
       }
     >
+      <div className="rounded-md border border-stone-500/25 bg-stone-500/5 p-3">
+        <label
+          className="flex cursor-pointer items-start gap-3"
+          htmlFor="apply-challenger-bonus"
+        >
+          <Checkbox
+            id="apply-challenger-bonus"
+            checked={bataille.bonusChallengerApplique === true}
+            disabled={experiencesAppliquees || bonusChallengerCalcule === 0}
+            onCheckedChange={(checked) =>
+              onBonusChallengerChange(checked === true)
+            }
+          />
+          <span className="grid gap-1">
+            <strong>Appliquer le bonus challenger officiel</strong>
+            <small className="text-muted-foreground">
+              +{bonusChallengerCalcule} XP par combattant admissible. Cette
+              confirmation évite d’ajouter le bonus si la valeur adverse a été
+              saisie en CO ou si vous utilisez une variante maison.
+            </small>
+          </span>
+        </label>
+      </div>
       {reglesChallengerHomebrew.length > 0 && (
         <Alert>
           <Sparkles />

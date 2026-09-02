@@ -278,6 +278,7 @@ export function calculerValeurBande(entrees: EntreeValeurBande[]) {
 }
 
 export function calculerBonusChallenger(difference: number) {
+  if (!Number.isFinite(difference)) return 0;
   const ecart = Math.max(0, Math.floor(difference));
   if (ecart <= 50) return 0;
   if (ecart <= 75) return 1;

@@ -80,6 +80,68 @@ function avecBataille(
 }
 
 describe('snapshots de l’après-bataille', () => {
+  it('n’applique le bonus challenger qu’après confirmation explicite', async () => {
+    const groupe = groupeGuerriers(1);
+    const bataille = batailleTest();
+    bataille.resultat = 'Défaite';
+    bataille.etapeActive = 1;
+    bataille.valeurAvant = 100;
+    bataille.valeurAdverse = 500;
+    bataille.bonusChallengerApplique = false;
+    bataille.participants[groupe.id] = {
+      ...creerSuiviCombattant(groupe),
+      blessureResolue: true,
+    };
+    const onCampagneChange = vi.fn();
+    render(
+      <PostBattleWorkflow
+        campagne={avecBataille([groupe], bataille)}
+        onCampagneChange={onCampagneChange}
+        valeurBande={100}
+      />,
+    );
+
+    expect(screen.getByText(/0 → 1 XP/)).toBeVisible();
+    const confirmation = screen.getByRole('checkbox', {
+      name: /Appliquer le bonus challenger officiel/i,
+    });
+    expect(confirmation).not.toBeChecked();
+    await userEvent.click(confirmation);
+
+    const suivante = onCampagneChange.mock.calls.at(-1)?.[0] as EtatCampagne;
+    expect(suivante.batailleEnCours?.bonusChallengerApplique).toBeTruthy();
+  });
+
+  it('permet d’annuler une bataille et déverrouille la bande', async () => {
+    const groupe = groupeGuerriers(1);
+    const bataille = batailleTest();
+    bataille.resultat = null;
+    bataille.participants[groupe.id] = creerSuiviCombattant(groupe);
+    const onCampagneChange = vi.fn();
+    render(
+      <PostBattleWorkflow
+        campagne={avecBataille([groupe], bataille)}
+        onCampagneChange={onCampagneChange}
+        valeurBande={100}
+      />,
+    );
+
+    await userEvent.click(
+      screen.getByRole('button', { name: /Annuler la bataille/i }),
+    );
+    await userEvent.click(
+      screen.getByRole('button', {
+        name: /Annuler et déverrouiller la bande/i,
+      }),
+    );
+
+    const suivante = onCampagneChange.mock.calls.at(-1)?.[0] as EtatCampagne;
+    expect(suivante.batailleEnCours).toBeNull();
+    expect(suivante.etapesApresBataille).toEqual(
+      Array.from({ length: 10 }, () => false),
+    );
+  });
+
   it('conserve le participant tombstone après la mort d’un Héros', async () => {
     const capitaine = campagneAvecCapitaineTest().combattants[0];
     const bataille = batailleTest();

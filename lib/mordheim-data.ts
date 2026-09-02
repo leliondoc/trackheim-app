@@ -223,6 +223,8 @@ export type BatailleEnCours = {
   date: string;
   valeurAvant: number;
   valeurAdverse: number;
+  /** Le bonus officiel reste une confirmation explicite du joueur. */
+  bonusChallengerApplique?: boolean;
   successeurChefId: string | null;
   etapeActive: number;
   tour?: number;

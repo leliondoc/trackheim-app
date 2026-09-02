@@ -517,6 +517,12 @@ function validerBataille(
     return 'batailleEnCours.valeurAdverse est invalide.';
   }
   if (
+    valeur.bonusChallengerApplique !== undefined &&
+    typeof valeur.bonusChallengerApplique !== 'boolean'
+  ) {
+    return 'batailleEnCours.bonusChallengerApplique est invalide.';
+  }
+  if (
     valeur.successeurChefId !== null &&
     (!estIdentifiantTechnique(valeur.successeurChefId) ||
       !combattantsParId.has(valeur.successeurChefId))
