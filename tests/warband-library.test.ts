@@ -8,7 +8,14 @@ import {
   equipements,
   obtenirProfil,
 } from '../lib/mordheim-data.ts';
+import {
+  estPouvoirMagiqueApprenable,
+  pouvoirsMagiquesPourProfil,
+  profilsMagiquesFaction,
+  profilEstLanceurMagie,
+} from '../lib/magic-data.ts';
 import { fichesBandesReference } from '../lib/warbands/reference.ts';
+import { campagneAvecCapitaineTest, campagneVideTest } from './fixtures.ts';
 
 void test('le catalogue contient les 49 bandes GLM attendues', () => {
   assert.equal(bandesBibliotheque.length, 49);
@@ -36,6 +43,218 @@ void test('chaque fiche possède une présentation et un document vérifiés', (
       bande.slug,
     );
   }
+});
+
+void test('chaque répertoire magique est relié à des profils explicites', () => {
+  for (const definition of definitionsBandes) {
+    const fiche = fichesBandesReference[definition.id];
+    const profils = profilsMagiquesFaction(definition.id);
+    if (fiche.magie.length === 0) {
+      assert.equal(profils.length, 0, definition.id);
+      continue;
+    }
+    assert.ok(profils.length > 0, definition.id);
+    for (const profilId of profils) {
+      assert.ok(
+        definition.profils.some((profil) => profil.id === profilId),
+        `${definition.id}:${profilId}`,
+      );
+      assert.equal(profilEstLanceurMagie(profilId), true);
+    }
+  }
+
+  assert.equal(profilEstLanceurMagie('repurgateurs-capitaine'), false);
+  assert.equal(profilEstLanceurMagie('repurgateurs-repurgateur'), false);
+  assert.equal(profilEstLanceurMagie('repurgateurs-pretre'), true);
+  assert.equal(
+    profilEstLanceurMagie('ref-skavens-du-clan-pestilens-pretre-de-la-peste'),
+    false,
+  );
+  assert.equal(
+    profilEstLanceurMagie(
+      'ref-skavens-du-clan-pestilens-precheur-sorcier-pestilens',
+    ),
+    true,
+  );
+});
+
+void test('seuls les trois en-têtes de magie sont exclus des pouvoirs', () => {
+  const exclus = Object.entries(fichesBandesReference).flatMap(
+    ([factionId, fiche]) =>
+      fiche.magie
+        .filter(
+          (entree) =>
+            !estPouvoirMagiqueApprenable(
+              factionId as Parameters<typeof estPouvoirMagiqueApprenable>[0],
+              entree.titre,
+            ),
+        )
+        .map((entree) => `${factionId}:${entree.titre}`),
+  );
+
+  assert.deepEqual(exclus.sort(), [
+    'caravane-des-marchands:Magie mineure',
+    'expeditions-runiques:Règles des runes mineures',
+    'maraudeurs-du-chaos:Rituels du Chaos',
+  ]);
+
+  const pouvoirsSansDifficulte = Object.entries(fichesBandesReference).flatMap(
+    ([factionId, fiche]) =>
+      fiche.magie
+        .filter(
+          (entree) =>
+            entree.difficulte === undefined &&
+            estPouvoirMagiqueApprenable(
+              factionId as Parameters<typeof estPouvoirMagiqueApprenable>[0],
+              entree.titre,
+            ),
+        )
+        .map((entree) => `${factionId}:${entree.titre}`),
+  );
+  assert.equal(pouvoirsSansDifficulte.length, 6);
+  assert.ok(
+    pouvoirsSansDifficulte.includes(
+      'gardiens-de-chapelle-bretonniens:Faveurs de la Dame',
+    ),
+  );
+  assert.ok(
+    pouvoirsSansDifficulte.includes('maraudeurs-du-chaos:Bénédiction de Tchar'),
+  );
+});
+
+void test('le Devin ne reçoit que les pouvoirs de sa marque', () => {
+  const devin = 'ref-maraudeurs-du-chaos-devin';
+  const combattantBase = campagneAvecCapitaineTest().combattants[0];
+  const combattantParMarque = (
+    marqueChaos: NonNullable<
+      typeof combattantBase.optionsRegles
+    >['marqueChaos'],
+  ) => ({
+    ...combattantBase,
+    profilId: devin,
+    optionsRegles: { marqueChaos },
+  });
+
+  const arkhar = combattantParMarque('Arkhar');
+  assert.equal(profilEstLanceurMagie(devin, arkhar), false);
+  assert.deepEqual(
+    pouvoirsMagiquesPourProfil(devin, { combattant: arkhar }),
+    [],
+  );
+  assert.deepEqual(
+    pouvoirsMagiquesPourProfil(devin, {
+      combattant: combattantParMarque('Chaos Universel'),
+    }),
+    [
+      "Vision d'Horreur",
+      'Œil Divin',
+      'Sang Noir',
+      'Tentation du Chaos',
+      'Ailes Ténébreuses',
+      'Mot de Souffrance',
+    ],
+  );
+  assert.deepEqual(
+    pouvoirsMagiquesPourProfil(devin, {
+      combattant: combattantParMarque('Shornaal'),
+    }),
+    [
+      'Délicieuse souffrance',
+      'Danse du serpent',
+      'Tourment sans fin',
+      'Consternation',
+      'Mille voix',
+      'Tentation',
+    ],
+  );
+  assert.deepEqual(
+    pouvoirsMagiquesPourProfil(devin, {
+      combattant: combattantParMarque('Tchar'),
+    }),
+    [
+      'Bénédiction de Tchar',
+      'Dissipation',
+      'Clairvoyance',
+      'Courroux de Tchar',
+      'Récompense de Tchar',
+      'Esclave du Chaos',
+    ],
+  );
+  assert.deepEqual(
+    pouvoirsMagiquesPourProfil(devin, {
+      combattant: combattantParMarque('Onogal'),
+    }),
+    [
+      "Toucher d'Onogal",
+      'Furoncles',
+      'Miasmes',
+      'Pestilence',
+      'Peau verruqueuse',
+      "Pourriture d'Onogal",
+    ],
+  );
+});
+
+void test('la Liche et son Nécromancien respectent leurs restrictions', () => {
+  const liche = 'ref-morts-tourmentes-liche';
+  const necromancien = 'ref-morts-tourmentes-necromancien';
+  const pouvoirsLiche = pouvoirsMagiquesPourProfil(liche);
+
+  assert.ok(pouvoirsLiche.includes('Horreur vivante'));
+  assert.ok(!pouvoirsLiche.includes('Visage de la mort'));
+  assert.deepEqual(pouvoirsMagiquesPourProfil(necromancien), []);
+
+  const campagneAvecLiche = campagneVideTest();
+  const combattantBase = campagneAvecCapitaineTest().combattants[0];
+  const combattantLiche = {
+    ...combattantBase,
+    id: 'liche-test',
+    profilId: liche,
+    competences: [
+      'Sort ou prière : Voleur de vie',
+      'Sort ou prière : Horreur vivante',
+    ],
+  };
+  const combattantNecromancien = {
+    ...combattantBase,
+    id: 'necromancien-test',
+    profilId: necromancien,
+  };
+  campagneAvecLiche.factionId = 'morts-tourmentes';
+  campagneAvecLiche.combattants = [combattantLiche, combattantNecromancien];
+  assert.deepEqual(
+    pouvoirsMagiquesPourProfil(necromancien, {
+      combattant: combattantNecromancien,
+      campagne: campagneAvecLiche,
+    }),
+    ['Voleur de vie', 'Visage de la mort'],
+  );
+
+  const campagneSansLiche = {
+    ...campagneAvecLiche,
+    combattants: [combattantNecromancien],
+  };
+  const pouvoirsSansLiche = pouvoirsMagiquesPourProfil(necromancien, {
+    combattant: combattantNecromancien,
+    campagne: campagneSansLiche,
+  });
+  assert.ok(pouvoirsSansLiche.includes('Visage de la mort'));
+  assert.ok(!pouvoirsSansLiche.includes('Horreur vivante'));
+});
+
+void test('les répertoires externes incomplets ne créent aucun faux choix', () => {
+  assert.deepEqual(
+    pouvoirsMagiquesPourProfil('ref-caravane-des-marchands-magicien-caravane'),
+    [],
+  );
+
+  const charmes = pouvoirsMagiquesPourProfil('ref-strigannes-petru-striganne');
+  assert.equal(charmes.length, 6);
+  assert.deepEqual(
+    charmes,
+    fichesBandesReference.strigannes.magie.map((pouvoir) => pouvoir.titre),
+  );
+  assert.ok(!charmes.includes('Drain de Vie'));
 });
 
 void test('chaque bande constructible correspond à une fiche du catalogue', () => {
@@ -118,6 +337,25 @@ void test('les restrictions nominatives des équipements sont appliquées', () =
   assert.ok(destrier);
   assert.equal(equipementAutorise(chevalier, destrier), true);
   assert.equal(equipementAutorise(gardeNoir, destrier), false);
+});
+
+void test('la dague gratuite est une donnée structurée pour les profils concernés', () => {
+  const profilsAvecDague = definitionsBandes.flatMap((definition) =>
+    definition.profils.filter((profil) =>
+      equipements.some(
+        (equipement) =>
+          equipement.accordeDagueDeBase &&
+          equipementAutorise(profil, equipement),
+      ),
+    ),
+  );
+
+  assert.ok(profilsAvecDague.length >= 225);
+  assert.ok(
+    equipements
+      .filter((equipement) => equipement.accordeDagueDeBase)
+      .every((equipement) => /dague/i.test(equipement.nom)),
+  );
 });
 
 void test('aucun texte éditorial ne contient de cadratin', () => {

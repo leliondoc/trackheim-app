@@ -44,6 +44,11 @@ import {
 } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
 import {
+  creerSuiviCombattant,
+  modifierParticipantBataille,
+  obtenirSuiviParticipant,
+} from '@/lib/battle-state';
+import {
   competencesPourProfil,
   sortsPourHeritageMagique,
   sortsPourProfil,
@@ -90,7 +95,6 @@ type Props = {
 type BrouillonBataille = {
   scenario: string;
   adversaire: string;
-  resultat: Partie['resultat'];
   date: string;
   valeurAdverse: string;
 };
@@ -201,7 +205,6 @@ function creerBrouillonBataille(): BrouillonBataille {
   return {
     scenario: '',
     adversaire: '',
-    resultat: 'Victoire',
     date: dateLocale,
     valeurAdverse: '',
   };
@@ -327,16 +330,13 @@ export function PostBattleWorkflow({
     combattantId: string,
     modification: Partial<SuiviCombattantBataille>,
   ) {
-    publierBataille((courante) => ({
-      ...courante,
-      participants: {
-        ...courante.participants,
-        [combattantId]: {
-          ...courante.participants[combattantId],
-          ...modification,
-        },
-      },
-    }));
+    const combattant = campagne.combattants.find(
+      (candidat) => candidat.id === combattantId,
+    );
+    if (!combattant) return;
+    publierBataille((courante) =>
+      modifierParticipantBataille(courante, combattant, modification),
+    );
   }
 
   function creerBataille() {
@@ -409,10 +409,12 @@ export function PostBattleWorkflow({
       1,
     );
     const participants = Object.fromEntries(
-      participantsSelectionnes.map((combattantId) => [
-        combattantId,
-        creerSuiviCombattant(combattantId),
-      ]),
+      participantsSelectionnes.map((combattantId) => {
+        const combattant = campagne.combattants.find(
+          (candidat) => candidat.id === combattantId,
+        )!;
+        return [combattantId, creerSuiviCombattant(combattant)];
+      }),
     );
 
     const nouvelleBataille: BatailleEnCours = {
@@ -420,7 +422,7 @@ export function PostBattleWorkflow({
       numero,
       scenario: creation.scenario.trim(),
       adversaire: creation.adversaire.trim(),
-      resultat: creation.resultat,
+      resultat: null,
       date: creation.date,
       valeurAvant: valeurBande,
       valeurAdverse,
@@ -429,6 +431,7 @@ export function PostBattleWorkflow({
       tour: 1,
       phase: 'Mouvement',
       participants,
+      affectationsParticipants: {},
       exploration: {
         lancers: [],
         desConserves: [],
@@ -530,11 +533,22 @@ export function PostBattleWorkflow({
     );
   }
 
+  if (bataille.resultat === null) {
+    return (
+      <ResultatBataille
+        bataille={bataille}
+        onResultat={(resultat) =>
+          publierBataille((courante) => ({ ...courante, resultat }))
+        }
+      />
+    );
+  }
+
   const etapes = normaliserEtapes(campagne.etapesApresBataille);
   const terminees = etapes.filter(Boolean).length;
   const etapeActive = Math.max(0, Math.min(9, bataille.etapeActive));
-  const combattantsParticipants = campagne.combattants.filter(
-    (combattant) => bataille.participants[combattant.id],
+  const combattantsParticipants = campagne.combattants.filter((combattant) =>
+    obtenirSuiviParticipant(bataille, combattant.id),
   );
   /* Recalcul local sur la campagne mutée : le prop sert seulement au snapshot initial. */
   const valeurBandeCourante = calculerValeurBande(
@@ -550,13 +564,13 @@ export function PostBattleWorkflow({
   const augurePresente = combattantsParticipants.some(
     (combattant) =>
       combattant.profilId === 'soeurs-augure' &&
-      bataille.participants[combattant.id]?.horsCombat === 0,
+      obtenirSuiviParticipant(bataille, combattant.id)?.horsCombat === 0,
   );
   const desExplorationDeBase =
     combattantsParticipants.filter(
       (combattant) =>
         categorieCombattant(combattant, profilsParId) === 'Héros' &&
-        bataille.participants[combattant.id]?.horsCombat === 0,
+        obtenirSuiviParticipant(bataille, combattant.id)?.horsCombat === 0,
     ).length +
     (bataille.resultat === 'Victoire' ? 1 : 0) +
     (augurePresente ? 1 : 0);
@@ -801,7 +815,7 @@ export function PostBattleWorkflow({
   }
 
   function bilanExperience(combattant: Combattant) {
-    const suivi = bataille.participants[combattant.id];
+    const suivi = obtenirSuiviParticipant(bataille, combattant.id)!;
     const profil = profilsParId.get(combattant.profilId);
     const categorie = categorieCombattant(combattant, profilsParId);
     if (profil?.gagneExperience === false) {
@@ -850,7 +864,7 @@ export function PostBattleWorkflow({
     index: number,
     modification: Partial<SaisieProgression>,
   ) {
-    const suivi = bataille.participants[combattant.id];
+    const suivi = obtenirSuiviParticipant(bataille, combattant.id)!;
     const nombre = bilanExperience(combattant).progressions;
     const dossier = lireProgressions(nombre, suivi.progressions);
     const saisies = dossier.saisies.map((saisie, position) =>
@@ -864,6 +878,9 @@ export function PostBattleWorkflow({
   function appliquerExperiences() {
     const erreurs: string[] = [];
     const participants = { ...bataille.participants };
+    const affectationsParticipants = {
+      ...bataille.affectationsParticipants,
+    };
     let nombreHeros = campagne.combattants.filter(
       (combattant) => categorieCombattant(combattant, profilsParId) === 'Héros',
     ).length;
@@ -879,10 +896,12 @@ export function PostBattleWorkflow({
       const competencesAutorisees = new Set(
         profil
           ? [
-              ...competencesPourProfil(profil, campagne.factionId).map(
-                (competence) => competence.nom,
-              ),
-              ...sortsPourProfil(profil).map(
+              ...competencesPourProfil(
+                profil,
+                campagne.factionId,
+                combattant,
+              ).map((competence) => competence.nom),
+              ...sortsPourProfil(profil, combattant, campagne).map(
                 (sort) => `Sort ou prière : ${sort}`,
               ),
               ...(possedeHeritageMagique(combattant)
@@ -936,9 +955,11 @@ export function PostBattleWorkflow({
         : null;
       const competencesPromuAutorisees = new Set(
         profilPromu
-          ? competencesPourProfil(profilPromu, campagne.factionId).map(
-              (competence) => competence.nom,
-            )
+          ? competencesPourProfil(
+              profilPromu,
+              campagne.factionId,
+              combattant,
+            ).map((competence) => competence.nom)
           : [],
       );
       const progressionPromu = progressionSecondaire(
@@ -1020,8 +1041,27 @@ export function PostBattleWorkflow({
         statistiquesInitiales,
         maximums,
       );
+      const indicesSurvivants = indicesFigurinesSurvivantes(suivi);
+      const indexPromu =
+        indicesSurvivants.find(
+          (index) =>
+            suivi.figurinesTable[index]?.etatTable !== 'Hors de combat',
+        ) ?? indicesSurvivants[0];
+      if (indexPromu === undefined) {
+        erreurs.push(
+          `${combattant.nom} : aucune figurine survivante ne peut être promue.`,
+        );
+        return [combattant];
+      }
+      affectationsParticipants[promu.id] = {
+        participantId: combattant.id,
+        indicesFigurines: [indexPromu],
+      };
       nombreHeros += 1;
-      if (combattant.quantite === 1) return [promu];
+      if (combattant.quantite === 1) {
+        delete affectationsParticipants[combattant.id];
+        return [promu];
+      }
       const groupeRestantBase: Combattant = {
         ...applique,
         quantite: combattant.quantite - 1,
@@ -1040,6 +1080,12 @@ export function PostBattleWorkflow({
         statistiquesInitiales,
         maximums,
       );
+      affectationsParticipants[combattant.id] = {
+        participantId: combattant.id,
+        indicesFigurines: indicesSurvivants.filter(
+          (index) => index !== indexPromu,
+        ),
+      };
       return [groupeRestant, promu];
     });
 
@@ -1052,7 +1098,11 @@ export function PostBattleWorkflow({
       ...campagne,
       revision: campagne.revision + 1,
       combattants,
-      batailleEnCours: { ...bataille, participants },
+      batailleEnCours: {
+        ...bataille,
+        participants,
+        affectationsParticipants,
+      },
     });
   }
 
@@ -1203,7 +1253,7 @@ export function PostBattleWorkflow({
     if (
       !hero ||
       categorieCombattant(hero, profilsParId) !== 'Héros' ||
-      bataille.participants[hero.id]?.horsCombat !== 0 ||
+      obtenirSuiviParticipant(bataille, hero.id)?.horsCombat !== 0 ||
       !equipement?.rareteCommerce
     ) {
       setErreur('Sélectionnez un Héros et un objet rare.');
@@ -1377,7 +1427,7 @@ export function PostBattleWorkflow({
       if (
         !heroRecherche ||
         categorieCombattant(heroRecherche, profilsParId) !== 'Héros' ||
-        bataille.participants[heroRecherche.id]?.horsCombat !== 0
+        obtenirSuiviParticipant(bataille, heroRecherche.id)?.horsCombat !== 0
       ) {
         setErreur(
           'Sélectionnez un Héros admissible pour rechercher ce Dramatis Persona.',
@@ -1570,6 +1620,11 @@ export function PostBattleWorkflow({
   }
 
   function finaliserBataille() {
+    const resultat = bataille.resultat;
+    if (resultat === null) {
+      setErreur('Renseignez le résultat de la bataille avant de la finaliser.');
+      return;
+    }
     if (!etapes.slice(0, 9).every(Boolean)) {
       setErreur(
         'Les neuf étapes précédentes doivent être validées avant la finalisation.',
@@ -1587,7 +1642,7 @@ export function PostBattleWorkflow({
       id: `partie-${bataille.numero}-${bataille.id}`,
       scenario: bataille.scenario,
       adversaire: bataille.adversaire,
-      resultat: bataille.resultat,
+      resultat,
       date: bataille.date,
       valeurAvant: bataille.valeurAvant,
       valeurAdverse: bataille.valeurAdverse,
@@ -1596,9 +1651,11 @@ export function PostBattleWorkflow({
       revenu: bataille.vente.revenu,
       notes: notes || undefined,
     };
-    const idsParticipants = new Set(Object.keys(bataille.participants));
     const combattantsApresAbsences = campagne.combattants.map((combattant) => {
-      if (idsParticipants.has(combattant.id) || combattant.partiesManquees <= 0)
+      if (
+        obtenirSuiviParticipant(bataille, combattant.id) ||
+        combattant.partiesManquees <= 0
+      )
         return combattant;
 
       /* Une absence imposée est consommée uniquement par une bataille non jouée. */
@@ -1635,7 +1692,8 @@ export function PostBattleWorkflow({
   const successionResolue =
     chefPresent || bataille.notes.includes(MARQUE_CAMPAGNE_CLOSE);
   const experiencesAppliquees = combattantsParticipants.every(
-    (combattant) => bataille.participants[combattant.id]?.experienceAppliquee,
+    (combattant) =>
+      obtenirSuiviParticipant(bataille, combattant.id)?.experienceAppliquee,
   );
   const resultatExploration = resoudreExplorationSure(
     bataille.exploration.desConserves,
@@ -1759,6 +1817,7 @@ export function PostBattleWorkflow({
       {etapeActive === 1 && (
         <EtapeExperience
           bataille={bataille}
+          campagne={campagne}
           combattants={combattantsParticipants}
           factionId={campagne.factionId}
           differenceValeur={Math.max(
@@ -1950,7 +2009,8 @@ function CreationBataille({
           <Swords className="size-5 text-red-900" /> Nouvelle bataille
         </CardTitle>
         <CardDescription>
-          Enregistrez le résultat avant d’ouvrir la séquence d’après-bataille.
+          Préparez les participants, puis utilisez le mode Combat pendant la
+          partie. Le résultat sera demandé au retour.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-5 pt-5">
@@ -1983,21 +2043,6 @@ function CreationBataille({
               }
               placeholder="Nom ou faction adverse"
             />
-          </Champ>
-          <Champ libelle="Résultat" htmlFor="battle-result">
-            <NativeSelect
-              id="battle-result"
-              value={creation.resultat}
-              onChange={(event) =>
-                onCreationChange({
-                  resultat: event.target.value as Partie['resultat'],
-                })
-              }
-            >
-              <NativeSelectOption value="Victoire">Victoire</NativeSelectOption>
-              <NativeSelectOption value="Défaite">Défaite</NativeSelectOption>
-              <NativeSelectOption value="Égalité">Égalité</NativeSelectOption>
-            </NativeSelect>
           </Champ>
           <Champ libelle="Date" htmlFor="battle-date">
             <Input
@@ -2099,9 +2144,53 @@ function CreationBataille({
       </CardContent>
       <CardFooter className="justify-end">
         <Button onClick={onCreate}>
-          <Plus /> Créer la bataille
+          <Plus /> Commencer la bataille
         </Button>
       </CardFooter>
+    </Card>
+  );
+}
+
+function ResultatBataille({
+  bataille,
+  onResultat,
+}: {
+  bataille: BatailleEnCours;
+  onResultat: (resultat: Partie['resultat']) => void;
+}) {
+  return (
+    <Card className="border-stone-500/30 bg-[rgba(252,248,236,.78)] shadow-sm">
+      <CardHeader className="border-b border-stone-500/20">
+        <CardTitle as="h2" className="flex items-center gap-2 text-xl">
+          <Swords className="size-5 text-red-900" /> Bataille {bataille.numero}{' '}
+          en cours
+        </CardTitle>
+        <CardDescription>
+          {bataille.scenario} contre {bataille.adversaire}. Le mode Combat reste
+          disponible tant que le résultat n’est pas enregistré.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-4 pt-5">
+        <div>
+          <h3 className="font-medium">Résultat final</h3>
+          <p className="text-sm text-muted-foreground">
+            Choisissez-le uniquement lorsque la partie est terminée pour ouvrir
+            la séquence d’après-bataille.
+          </p>
+        </div>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {(['Victoire', 'Défaite', 'Égalité'] as const).map((resultat) => (
+            <Button
+              key={resultat}
+              onClick={() => onResultat(resultat)}
+              type="button"
+              variant={resultat === 'Victoire' ? 'default' : 'outline'}
+            >
+              {resultat}
+            </Button>
+          ))}
+        </div>
+      </CardContent>
     </Card>
   );
 }
@@ -2865,6 +2954,7 @@ function EtapeBlessures({
 
 function EtapeExperience({
   bataille,
+  campagne,
   combattants,
   factionId,
   differenceValeur,
@@ -2879,6 +2969,7 @@ function EtapeExperience({
   onContinue,
 }: {
   bataille: BatailleEnCours;
+  campagne: EtatCampagne;
   combattants: Combattant[];
   factionId: FactionId;
   differenceValeur: number;
@@ -2941,7 +3032,7 @@ function EtapeExperience({
       )}
       <div className="grid gap-3">
         {combattants.map((combattant) => {
-          const suivi = bataille.participants[combattant.id];
+          const suivi = obtenirSuiviParticipant(bataille, combattant.id)!;
           const bilan = bilanExperience(combattant);
           const profil = profilsParId.get(combattant.profilId);
           const profilCompetences =
@@ -2955,11 +3046,17 @@ function EtapeExperience({
               : profil;
           const choixCompetences = profilCompetences
             ? [
-                ...competencesPourProfil(profilCompetences, factionId),
-                ...sortsPourProfil(profilCompetences).map((sort) => ({
-                  categorie: 'Érudition' as const,
-                  nom: `Sort ou prière : ${sort}`,
-                })),
+                ...competencesPourProfil(
+                  profilCompetences,
+                  factionId,
+                  combattant,
+                ),
+                ...sortsPourProfil(profilCompetences, combattant, campagne).map(
+                  (sort) => ({
+                    categorie: 'Érudition' as const,
+                    nom: `Sort ou prière : ${sort}`,
+                  }),
+                ),
               ].filter(
                 (competence) =>
                   !combattant.competences.includes(competence.nom),
@@ -3108,7 +3205,11 @@ function EtapeExperience({
                         }
                       : null;
                     const competencesPromu = profilPromu
-                      ? competencesPourProfil(profilPromu, factionId).filter(
+                      ? competencesPourProfil(
+                          profilPromu,
+                          factionId,
+                          combattant,
+                        ).filter(
                           (competence) =>
                             !combattant.competences.includes(competence.nom),
                         )
@@ -3857,7 +3958,7 @@ function EtapeRarete({
   const heroes = campagne.combattants.filter(
     (combattant) =>
       categorieCombattant(combattant, profilsParId) === 'Héros' &&
-      bataille.participants[combattant.id]?.horsCombat === 0 &&
+      obtenirSuiviParticipant(bataille, combattant.id)?.horsCombat === 0 &&
       !heroesDramatis.has(combattant.id),
   );
   const rares = equipements.filter(
@@ -4055,7 +4156,7 @@ function EtapePersonnel({
   const heroesAdmissibles = campagne.combattants.filter(
     (combattant) =>
       categorieCombattant(combattant, profilsParId) === 'Héros' &&
-      bataille.participants[combattant.id]?.horsCombat === 0 &&
+      obtenirSuiviParticipant(bataille, combattant.id)?.horsCombat === 0 &&
       !bataille.jetsRarete.some((jet) => jet.heroId === combattant.id) &&
       !dossier.entrees.some(
         (entree) =>
@@ -4590,23 +4691,6 @@ function MiniValeur({
   );
 }
 
-function creerSuiviCombattant(combattantId: string): SuiviCombattantBataille {
-  return {
-    combattantId,
-    etatTable: 'Debout',
-    notesTable: '',
-    horsCombat: 0,
-    jetsBlessure: [],
-    blessureResolue: false,
-    blessureNote: '',
-    ennemisHorsCombat: 0,
-    experienceScenario: 0,
-    experienceManuelle: 0,
-    experienceAppliquee: false,
-    progressions: { version: 1, saisies: [] },
-  };
-}
-
 function normaliserEtapes(etapes: boolean[]) {
   return [...etapes];
 }
@@ -4684,6 +4768,18 @@ function descriptionJetBlessure(
   if (resultatId === 'profonde')
     return `Le Héros manquera les ${jet} prochaine${jet > 1 ? 's' : ''} partie${jet > 1 ? 's' : ''}.`;
   return '';
+}
+
+function indicesFigurinesSurvivantes(suivi: SuiviCombattantBataille) {
+  let positionJet = 0;
+  return suivi.figurinesTable.flatMap((figurine, index) => {
+    if (figurine.etatTable !== 'Hors de combat') return [index];
+    const jet = suivi.jetsBlessure[positionJet];
+    positionJet += 1;
+    return jet !== undefined && resoudreBlessureHommeDeMain(jet) === 'survit'
+      ? [index]
+      : [];
+  });
 }
 
 function validerBlessures(

@@ -1,12 +1,11 @@
 import {
   estIdentifiantCampagneValide,
   TAILLE_MAX_PAYLOAD_CAMPAGNE,
-  validerCampagneV3,
+  validerCampagneV4,
 } from './campaign-validation.ts';
 import type { EtatCampagne } from './mordheim-data.ts';
 
-/* L'application n'étant pas encore publiée, le format de production démarre
-   dans un espace propre sans reprendre les jeux de données de vérification. */
+/* Espace de noms persistant du format de production. */
 export const CLE_CAMPAGNE_ACTIVE = 'trackheim:v1:campagne-active';
 export const PREFIXE_CAMPAGNE = 'trackheim:v1:campagne:';
 
@@ -116,7 +115,7 @@ export function lireCopieLocale(
       contenuBrut,
     };
   }
-  const validation = validerCampagneV3(valeur.campagne);
+  const validation = validerCampagneV4(valeur.campagne);
   if (!validation.ok) {
     return {
       statut: 'invalide',
@@ -146,7 +145,7 @@ export function ecrireCopieLocale(
     forcer?: boolean;
   },
 ) {
-  const validation = validerCampagneV3(campagne);
+  const validation = validerCampagneV4(campagne);
   if (!validation.ok) {
     throw new Error(
       `La campagne à sauvegarder est invalide : ${validation.erreur}`,

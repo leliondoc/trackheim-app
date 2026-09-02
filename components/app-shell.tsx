@@ -9,8 +9,8 @@ import {
   Settings2,
   Sparkles,
   Stamp,
+  ScrollText,
   Swords,
-  Target,
   Users,
 } from 'lucide-react';
 import { Fragment } from 'react';
@@ -29,11 +29,11 @@ const navigation: Array<{
   libelle: string;
   icone: typeof Home;
 }> = [
-  { id: 'overview', libelle: 'Vue d’ensemble', icone: Home },
+  { id: 'overview', libelle: 'Accueil', icone: Home },
   { id: 'warband', libelle: 'Ma bande', icone: Users },
-  { id: 'combat', libelle: 'Mode combat', icone: Target },
+  { id: 'combat', libelle: 'Mode combat', icone: Swords },
   { id: 'spells', libelle: 'Sorts', icone: Sparkles },
-  { id: 'campaign', libelle: 'Campagne', icone: Swords },
+  { id: 'campaign', libelle: 'Campagne', icone: ScrollText },
   { id: 'library', libelle: 'Bibliothèque', icone: BookOpen },
 ];
 

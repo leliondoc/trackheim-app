@@ -14,9 +14,10 @@ Les campagnes sont enregistrées dans le stockage local du navigateur. Aucun com
 
 Le stockage local appartient au navigateur : effacer les données du site supprime les campagnes qui n’ont pas été exportées.
 
-Une sauvegarde illisible n’est jamais remplacée automatiquement : Trackheim
-propose d’abord de télécharger sa copie brute. Si une même campagne est ouverte
-dans deux onglets, un conflit explicite permet de choisir la version à conserver.
+Trackheim ne crée aucun jeu de données de secours et ne tente pas de migrer un
+ancien format : une donnée locale qui ne respecte pas le format courant est
+écartée au chargement. Si une même campagne est ouverte dans deux onglets, un
+conflit explicite permet de choisir la version à conserver.
 
 ## Architecture
 

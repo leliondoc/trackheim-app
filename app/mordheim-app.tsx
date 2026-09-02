@@ -23,6 +23,7 @@ import {
   Plus,
   Repeat2,
   Search,
+  ScrollText,
   Settings2,
   Shield,
   Skull,
@@ -76,6 +77,7 @@ import {
   SOURCE_GLM,
   type BandeBibliotheque,
   type Combattant,
+  type MarqueChaos,
   type Equipement,
   type EtatCampagne,
   type FactionId,
@@ -95,6 +97,7 @@ import { RulesetProvenance } from '@/components/ruleset-provenance';
 import { CombatView } from '@/components/combat-view';
 import { SpellsView } from '@/components/spells-view';
 import { WarbandExportDialog } from '@/components/warband-export-dialog';
+import { nomsEquipementsCombattant } from '@/lib/equipment-display';
 import {
   IndicationNouvelOnglet,
   Sidebar,
@@ -154,7 +157,7 @@ const pagesRecherche: Array<{
 }> = [
   {
     id: 'overview',
-    libelle: 'Vue d’ensemble',
+    libelle: 'Accueil',
     description: 'Synthèse de la bande et après-bataille',
     icone: LayoutDashboard,
   },
@@ -180,7 +183,7 @@ const pagesRecherche: Array<{
     id: 'campaign',
     libelle: 'Campagne',
     description: 'Séquence d’après-bataille et ressources',
-    icone: Swords,
+    icone: ScrollText,
   },
   {
     id: 'library',
@@ -271,8 +274,13 @@ export function MordheimApp() {
       navigationInitialisee.current = true;
       return;
     }
-    requestAnimationFrame(() => contenuPrincipal.current?.focus());
-  }, [vue]);
+    requestAnimationFrame(() => {
+      if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      contenuPrincipal.current?.focus({ preventScroll: true });
+    });
+  }, [bandeBibliothequeSlug, vue]);
 
   function naviguerVers(vueCible: Vue) {
     const hash = hashPourVue(vueCible);
@@ -352,12 +360,10 @@ export function MordheimApp() {
         return;
       }
       if (lecture.statut === 'invalide') {
-        /* Avant la première publication, les anciennes données locales sont
-           uniquement des jeux de vérification : elles ne sont pas migrées. */
         try {
           window.localStorage.removeItem(cleCopieLocale(idCampagne));
         } catch {
-          // Le gestionnaire passera en mode mémoire si le stockage est bloqué.
+          // Le mode mémoire reste disponible si le navigateur bloque l'accès.
         }
         versionStockage.current = 0;
         setCampagne(null);
@@ -850,7 +856,10 @@ export function MordheimApp() {
                   />
                 )}
                 {vue === 'spells' && (
-                  <SpellsView campagne={campagne} onVueChange={naviguerVers} />
+                  <SpellsView
+                    campagne={campagne}
+                    onOpenFaction={ouvrirFicheBibliotheque}
+                  />
                 )}
                 {vue === 'campaign' && (
                   <CampaignView
@@ -993,8 +1002,9 @@ function CampaignManagerDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="campaign-manager-dialog sm:max-w-xl">
-        <DialogHeader>
+      <DialogContent className="campaign-manager-dialog sm:max-w-2xl">
+        <DialogHeader className="campaign-manager-header">
+          <span className="campaign-manager-kicker">Registres de bande</span>
           <DialogTitle>Mes bandes</DialogTitle>
           <DialogDescription>
             {configurationRequise
@@ -1012,7 +1022,10 @@ function CampaignManagerDialog({
               onClick={() => onSelect(resume.id)}
               type="button"
             >
-              <span>
+              <span className="campaign-manager-band-mark" aria-hidden="true">
+                <Shield />
+              </span>
+              <span className="campaign-manager-band-copy">
                 <strong>{resume.nomBande}</strong>
                 <small>
                   {resume.campagneActive
@@ -1020,21 +1033,30 @@ function CampaignManagerDialog({
                     : 'Hors campagne'}
                 </small>
               </span>
-              <b>{resume.id === idCourant ? 'Active' : 'Ouvrir'}</b>
+              <b className="campaign-manager-band-action">
+                {resume.id === idCourant ? 'Active' : 'Ouvrir'}
+              </b>
             </button>
           ))}
         </div>
 
         {!configurationRequise && (
-          <div className="campaign-manager-portable">
-            <div>
-              <strong>Sauvegarde portable</strong>
-              <small>Disponible même avant le début d’une campagne.</small>
+          <section className="campaign-manager-portable">
+            <span className="campaign-manager-section-icon" aria-hidden="true">
+              <Download />
+            </span>
+            <div className="campaign-manager-portable-copy">
+              <span>Sauvegarde</span>
+              <strong>Emporter cette bande</strong>
+              <small>
+                Téléchargez une copie à conserver ou à ouvrir sur un autre
+                appareil.
+              </small>
             </div>
             <Button onClick={onExport} type="button" variant="outline">
-              <Download aria-hidden="true" /> Exporter la bande active
+              <Download aria-hidden="true" /> Télécharger
             </Button>
-          </div>
+          </section>
         )}
 
         <form
@@ -1044,7 +1066,16 @@ function CampaignManagerDialog({
             creer();
           }}
         >
-          <h3>Nouvelle bande</h3>
+          <header className="campaign-create-heading">
+            <span className="campaign-manager-section-icon" aria-hidden="true">
+              <Plus />
+            </span>
+            <div>
+              <span>Nouveau registre</span>
+              <h3>Créer une bande</h3>
+              <p>Choisissez sa faction, puis donnez-lui un nom.</p>
+            </div>
+          </header>
           <label
             className="campaign-faction-field"
             htmlFor="campaign-manager-faction"
@@ -1154,10 +1185,8 @@ function GlobalSearch({
             <CommandGroup heading="Combattants">
               {campagne.combattants.map((combattant) => {
                 const profil = profilParId(combattant.profilId);
-                const nomsEquipements = combattant.equipementIds
-                  .map((id) => equipements.find((item) => item.id === id)?.nom)
-                  .filter(Boolean)
-                  .join(' ');
+                const nomsEquipements =
+                  nomsEquipementsCombattant(combattant).join(' ');
                 return (
                   <CommandItem
                     key={combattant.id}
@@ -1516,8 +1545,8 @@ function EmptyApplicationContent({
     return (
       <section className="product-view empty-app-view">
         <PageHeader
-          eyebrow="Vue d’ensemble"
-          title="Vue d’ensemble"
+          eyebrow="Accueil"
+          title="Accueil"
           description="Composez votre bande, menez la campagne et appliquez chaque étape d’après-bataille dans un seul registre."
         />
 
@@ -1887,9 +1916,7 @@ function MetricCard({
 
 function FighterRow({ combattant }: { combattant: Combattant }) {
   const profil = profilParId(combattant.profilId);
-  const equipement = combattant.equipementIds
-    .map((id) => equipementParId(id).nom)
-    .join(' · ');
+  const equipement = nomsEquipementsCombattant(combattant).join(' · ');
 
   return (
     <article className="fighter-row">
@@ -1920,7 +1947,7 @@ function FighterRow({ combattant }: { combattant: Combattant }) {
           )}
         </p>
         <div className="fighter-foot">
-          <span>{equipement || 'Dague gratuite'}</span>
+          <span>{equipement || 'Aucun équipement enregistré'}</span>
           <span className="xp-pill">{combattant.experience} XP</span>
         </div>
       </div>
@@ -2297,12 +2324,16 @@ function RecruitDialog({
   const [nom, setNom] = useState('');
   const [quantite, setQuantite] = useState(1);
   const [selectionEquipement, setSelectionEquipement] = useState<string[]>([]);
+  const [marqueChaos, setMarqueChaos] = useState<MarqueChaos | ''>('');
 
   const groupeCible = campagne.combattants.find((item) => item.id === groupeId);
   const profil = profilParId(groupeCible?.profilId ?? profilId);
   const creationDeBande =
     campagne.numeroBataille === 0 && campagne.parties.length === 0;
   const disponibles = equipementsPourProfil(profil, campagne, creationDeBande);
+  const dagueDeBaseDisponible = disponibles.some(
+    (item) => item.accordeDagueDeBase,
+  );
   const equipementRecrue = groupeCible?.equipementIds ?? selectionEquipement;
   const nombreArmesCorpsACorps = equipementRecrue.filter(
     (id) => equipementParId(id).categorie === 'Corps à corps',
@@ -2329,6 +2360,10 @@ function RecruitDialog({
   ).length;
   const mutationsInsuffisantes =
     nombreMutations < (profil.minimumMutations ?? 0);
+  const marqueChaosManquante =
+    !groupeCible &&
+    profil.id === 'ref-maraudeurs-du-chaos-devin' &&
+    marqueChaos === '';
   const coutEquipementsSelectionnes = equipementRecrue.reduce(
     (accumulateur, id) => {
       const equipement = equipementParId(id);
@@ -2409,6 +2444,7 @@ function RecruitDialog({
     setNom('');
     setQuantite(1);
     setSelectionEquipement([]);
+    setMarqueChaos('');
   }
 
   function changerOuverture(nouvelEtat: boolean) {
@@ -2429,6 +2465,7 @@ function RecruitDialog({
       groupeDepasse ||
       stockRareInsuffisant ||
       mutationsInsuffisantes ||
+      marqueChaosManquante ||
       limiteArmesDepassee
     )
       return;
@@ -2479,6 +2516,11 @@ function RecruitDialog({
       statistiquesSpeciales: profil.statistiquesSpeciales
         ? { ...profil.statistiquesSpeciales }
         : undefined,
+      dagueDeBase: dagueDeBaseDisponible,
+      optionsRegles:
+        profil.id === 'ref-maraudeurs-du-chaos-devin' && marqueChaos
+          ? { marqueChaos }
+          : undefined,
       equipementIds: selectionEquipement,
       notes: '',
       quantite: quantiteDemandee,
@@ -2588,9 +2630,11 @@ function RecruitDialog({
                     setProfilId(groupe.profilId);
                     setNom(groupe.nom);
                     setSelectionEquipement([...groupe.equipementIds]);
+                    setMarqueChaos(groupe.optionsRegles?.marqueChaos ?? '');
                   } else {
                     setNom('');
                     setSelectionEquipement([]);
+                    setMarqueChaos('');
                   }
                 }}
               >
@@ -2618,6 +2662,7 @@ function RecruitDialog({
                   setProfilId(event.target.value);
                   setQuantite(1);
                   setSelectionEquipement([]);
+                  setMarqueChaos('');
                 }}
               >
                 {definition.profils.map((item) => (
@@ -2627,6 +2672,38 @@ function RecruitDialog({
                 ))}
               </NativeSelect>
             </label>
+            {profil.id === 'ref-maraudeurs-du-chaos-devin' ? (
+              <label className="field-group" htmlFor="recruit-chaos-mark">
+                <span>Marque du Chaos</span>
+                <NativeSelect
+                  id="recruit-chaos-mark"
+                  value={marqueChaos}
+                  onChange={(event) =>
+                    setMarqueChaos(event.target.value as MarqueChaos | '')
+                  }
+                  required
+                >
+                  <NativeSelectOption value="">
+                    Choisir une marque...
+                  </NativeSelectOption>
+                  <NativeSelectOption value="Shornaal">
+                    Shornaal, le Serpent
+                  </NativeSelectOption>
+                  <NativeSelectOption value="Tchar">
+                    Tchar, l’Aigle
+                  </NativeSelectOption>
+                  <NativeSelectOption value="Onogal">
+                    Onogal, le Corbeau
+                  </NativeSelectOption>
+                  <NativeSelectOption value="Chaos Universel">
+                    Chaos Universel
+                  </NativeSelectOption>
+                  <NativeSelectOption value="Arkhar">
+                    Arkhar, le Chien
+                  </NativeSelectOption>
+                </NativeSelect>
+              </label>
+            ) : null}
             <label className="field-group" htmlFor="recruit-name">
               <span>Nom du combattant</span>
               <Input
@@ -2684,7 +2761,9 @@ function RecruitDialog({
                   ? 'Équipement de départ'
                   : 'Objets communs autorisés'}
               </h3>
-              <span>Première dague gratuite</span>
+              {dagueDeBaseDisponible ? (
+                <span>Dague de base incluse gratuitement</span>
+              ) : null}
             </div>
             <div className="equipment-options">
               {(groupeCible
@@ -2772,6 +2851,7 @@ function RecruitDialog({
             groupeDepasse ||
             stockRareInsuffisant ||
             mutationsInsuffisantes ||
+            marqueChaosManquante ||
             limiteArmesDepassee) && (
             <div className="form-alert" role="alert">
               <CircleAlert />{' '}
@@ -2779,17 +2859,19 @@ function RecruitDialog({
                 ? `Trésor insuffisant : il manque ${cout - campagne.couronnes} CO.`
                 : limiteArmesDepassee
                   ? 'Un combattant ne peut porter que deux armes de corps à corps et deux armes de tir.'
-                  : mutationsInsuffisantes
-                    ? `${profil.nom} doit recevoir au moins ${profil.minimumMutations} mutation à la création.`
-                    : stockRareInsuffisant
-                      ? 'Le magot ne contient pas assez d’exemplaires des objets rares portés par ce groupe.'
-                      : veteranIndisponible
-                        ? `Réserve vétéran insuffisante : ${experienceVeteransDemandee} XP requis, ${Math.max(0, (disponibiliteVeterans ?? 0) - experienceVeteransDepensee)} encore disponible.`
-                        : groupeDepasse
-                          ? 'Un groupe d’hommes de main ne peut pas dépasser cinq membres.'
-                          : chefDejaRecrute
-                            ? 'Une bande ne peut pas recruter un second Chef.'
-                            : 'La limite de ce profil ou de la bande est atteinte.'}
+                  : marqueChaosManquante
+                    ? 'Choisissez la marque du Devin. Elle détermine son répertoire magique.'
+                    : mutationsInsuffisantes
+                      ? `${profil.nom} doit recevoir au moins ${profil.minimumMutations} mutation à la création.`
+                      : stockRareInsuffisant
+                        ? 'Le magot ne contient pas assez d’exemplaires des objets rares portés par ce groupe.'
+                        : veteranIndisponible
+                          ? `Réserve vétéran insuffisante : ${experienceVeteransDemandee} XP requis, ${Math.max(0, (disponibiliteVeterans ?? 0) - experienceVeteransDepensee)} encore disponible.`
+                          : groupeDepasse
+                            ? 'Un groupe d’hommes de main ne peut pas dépasser cinq membres.'
+                            : chefDejaRecrute
+                              ? 'Une bande ne peut pas recruter un second Chef.'
+                              : 'La limite de ce profil ou de la bande est atteinte.'}
             </div>
           )}
 
@@ -2813,6 +2895,7 @@ function RecruitDialog({
                 groupeDepasse ||
                 stockRareInsuffisant ||
                 mutationsInsuffisantes ||
+                marqueChaosManquante ||
                 limiteArmesDepassee
               }
             >
@@ -4528,7 +4611,7 @@ function creerEtatCampagne(
   );
   if (!bande) throw new Error(`Fiche de bande inconnue : ${factionId}`);
   return {
-    version: 3,
+    version: 4,
     revision: 0,
     rulesetId: 'mordheim-1999-rules-review-2005-bandes-core',
     nomCampagne: 'Hors campagne',

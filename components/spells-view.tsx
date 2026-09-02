@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import type { Vue } from '@/lib/app-navigation';
+import { profilEstLanceurMagie } from '@/lib/magic-data';
 import { obtenirProfil, type EtatCampagne } from '@/lib/mordheim-data';
 import { obtenirFicheBandeReference } from '@/lib/warbands/reference';
 
@@ -11,10 +11,10 @@ const prefixeSort = 'Sort ou prière : ';
 
 export function SpellsView({
   campagne,
-  onVueChange,
+  onOpenFaction,
 }: {
   campagne: EtatCampagne;
-  onVueChange: (vue: Vue) => void;
+  onOpenFaction: (slug: string) => void;
 }) {
   const [recherche, setRecherche] = useState('');
   const fiche = obtenirFicheBandeReference(campagne.factionId);
@@ -24,10 +24,8 @@ export function SpellsView({
       const sorts = combattant.competences
         .filter((competence) => competence.startsWith(prefixeSort))
         .map((competence) => competence.slice(prefixeSort.length));
-      const texteMagique = `${profil.nom} ${profil.regleSpeciale ?? ''}`;
       const habilite =
-        sorts.length > 0 ||
-        /sorc|prière|prêtre|magie|rituel/i.test(texteMagique);
+        sorts.length > 0 || profilEstLanceurMagie(profil.id, combattant);
       return { combattant, profil, sorts, habilite };
     })
     .filter(({ habilite }) => habilite);
@@ -51,7 +49,7 @@ export function SpellsView({
           </p>
         </div>
         <Button
-          onClick={() => onVueChange('library')}
+          onClick={() => onOpenFaction(campagne.factionId)}
           type="button"
           variant="outline"
         >

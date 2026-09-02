@@ -58,7 +58,9 @@ export function WarbandExportDialog({
     );
     feuille.document.replaceChild(racine, feuille.document.documentElement);
     feuille.focus();
-    window.setTimeout(() => feuille.print(), 120);
+    void feuille.document.fonts.ready.then(() => {
+      feuille.requestAnimationFrame(() => feuille.print());
+    });
   }
 
   return (

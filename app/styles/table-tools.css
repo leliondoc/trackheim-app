@@ -1,14 +1,20 @@
-/* Réglage de lecture appliqué à toute l'interface, avec largeur compensée. */
+/* `zoom` recalcule déjà la mise en page : une seconde compensation de largeur
+   provoquait les débordements à 90 % et l'espace vide à 130 %. */
 .application {
-  width: calc(100% / var(--trackheim-text-scale, 1));
-  min-height: calc(100vh / var(--trackheim-text-scale, 1));
+  width: 100%;
+  min-height: 100vh;
   zoom: var(--trackheim-text-scale, 1);
 }
 .application-layout {
-  min-height: calc(100vh / var(--trackheim-text-scale, 1));
+  min-height: 100vh;
 }
 .application .sidebar {
-  height: calc(100vh / var(--trackheim-text-scale, 1));
+  height: 100vh;
+}
+@media (min-width: 781px) {
+  .application .sidebar {
+    height: calc(100vh / var(--trackheim-text-scale, 1));
+  }
 }
 
 .text-scale-control {
@@ -244,6 +250,82 @@
 }
 .combat-wounds output strong {
   font-size: 22px;
+}
+.combat-group-losses {
+  display: grid;
+  gap: 10px;
+  border-block: 1px solid rgb(112 85 57 / 22%);
+  padding-block: 10px;
+}
+.combat-group-losses > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.combat-group-losses > header span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #5e4d40;
+  font-weight: 800;
+}
+.combat-group-losses > header svg {
+  width: 20px;
+  color: #702c26;
+}
+.combat-group-losses > header strong {
+  color: #702c26;
+  font-size: 13px;
+}
+.combat-group-members {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.combat-member-state {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+  border: 1px solid rgb(112 85 57 / 22%);
+  background: rgb(255 253 242 / 42%);
+  padding: 9px;
+}
+.combat-member-state > strong {
+  color: #5e4d40;
+  font-size: 12px;
+}
+.combat-member-state .combat-wounds {
+  gap: 6px;
+  border: 0;
+  padding: 0;
+}
+.combat-member-state .combat-wounds > svg {
+  display: none;
+}
+.combat-member-state .combat-wounds output {
+  min-width: 62px;
+  font-size: 11px;
+}
+.combat-member-state .combat-wounds output strong {
+  font-size: 18px;
+}
+.combat-member-state .combat-wounds [data-slot='button'] {
+  width: 32px;
+  height: 32px;
+}
+.combat-member-state .combat-state-control {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+}
+.combat-member-state .combat-state-control button {
+  min-height: 34px;
+  padding: 4px;
+  font-size: 10px;
+}
+.combat-single-state {
+  display: grid;
+  gap: 10px;
 }
 .combat-state-control {
   display: grid;
@@ -520,9 +602,7 @@
 
 @media (max-width: 780px) {
   .application .sidebar {
-    height: calc(
-      (72px + env(safe-area-inset-bottom)) / var(--trackheim-text-scale, 1)
-    );
+    height: calc(72px + env(safe-area-inset-bottom));
   }
   .sidebar {
     grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -566,6 +646,17 @@
   }
   .combat-achievement-grid {
     grid-template-columns: 1fr;
+  }
+  .combat-group-members {
+    grid-template-columns: 1fr;
+  }
+  .combat-member-state .combat-wounds [data-slot='button'] {
+    width: 44px;
+    height: 44px;
+  }
+  .combat-member-state .combat-state-control button {
+    min-height: 44px;
+    font-size: 12px;
   }
   .combat-quick-rules > div {
     grid-template-columns: 1fr;

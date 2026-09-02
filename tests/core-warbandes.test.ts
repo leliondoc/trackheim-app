@@ -13,7 +13,7 @@ import {
   type FactionId,
 } from '../lib/mordheim-data.ts';
 import { campagneVideTest } from './fixtures.ts';
-import { validerCampagneV3 } from '../lib/campaign-validation.ts';
+import { validerCampagneV4 } from '../lib/campaign-validation.ts';
 import {
   competencesPourProfil,
   sortsPourHeritageMagique,
@@ -178,7 +178,7 @@ describe('socle automatisé des huit bandes historiques', () => {
         factionId,
         combattants: [],
       };
-      assert.equal(validerCampagneV3(campagne).ok, true, factionId);
+      assert.equal(validerCampagneV4(campagne).ok, true, factionId);
     }
 
     const campagneSkaven = {
@@ -194,6 +194,7 @@ describe('socle automatisé des huit bandes historiques', () => {
           statistiques: structuredClone(
             obtenirProfil('capitaine').statistiques,
           ),
+          dagueDeBase: false,
           equipementIds: [],
           notes: '',
           quantite: 1,
@@ -207,7 +208,7 @@ describe('socle automatisé des huit bandes historiques', () => {
         },
       ],
     };
-    assert.equal(validerCampagneV3(campagneSkaven).ok, false);
+    assert.equal(validerCampagneV4(campagneSkaven).ok, false);
   });
 
   it('ne propose que les compétences accessibles au profil', () => {

@@ -41,15 +41,15 @@ export function estRevisionValide(valeur: unknown): valeur is number {
 }
 
 /**
- * Vérifie strictement la forme persistée de la campagne v3 sans réinterpréter
+ * Vérifie strictement la forme persistée de la campagne v4 sans réinterpréter
  * les règles du jeu.
  */
-export function validerCampagneV3(valeur: unknown): ValidationCampagne {
+export function validerCampagneV4(valeur: unknown): ValidationCampagne {
   const erreurComplexite = validerComplexiteJson(valeur);
   if (erreurComplexite) return echec(erreurComplexite);
   if (!estObjet(valeur)) return echec('La campagne doit être un objet JSON.');
-  if (valeur.version !== 3) {
-    return echec('La campagne doit utiliser la version 3 du format.');
+  if (valeur.version !== 4) {
+    return echec('La campagne doit utiliser la version 4 du format.');
   }
   if (!estRevisionValide(valeur.revision)) {
     return echec(
@@ -75,7 +75,7 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
     typeof valeur.factionId !== 'string' ||
     !IDS_FACTIONS.has(valeur.factionId as FactionId)
   ) {
-    return echec("La faction de la campagne v3 n'est pas prise en charge.");
+    return echec("La faction de la campagne v4 n'est pas prise en charge.");
   }
   const bandeCatalogue = bandesBibliotheque.find(
     (bande) => bande.slug === valeur.factionId,
@@ -112,12 +112,12 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
   if (erreurCombattants) return echec(erreurCombattants);
   const erreurMetier = validerReglesMetier(valeur, definition);
   if (erreurMetier) return echec(erreurMetier);
-  const idsCombattants = new Set(
-    (valeur.combattants as ObjetJson[]).map((combattant) =>
+  const combattantsParId = new Map(
+    (valeur.combattants as ObjetJson[]).map((combattant) => [
       String(combattant.id),
-    ),
+      combattant,
+    ]),
   );
-
   const erreurInventaire = validerCompteur(
     valeur.inventaire,
     'inventaire',
@@ -127,7 +127,7 @@ export function validerCampagneV3(valeur: unknown): ValidationCampagne {
 
   const erreurBataille = validerBataille(
     valeur.batailleEnCours,
-    idsCombattants,
+    combattantsParId,
   );
   if (erreurBataille) return echec(erreurBataille);
 
@@ -296,6 +296,46 @@ function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
     );
     if (erreurStatistiquesSpeciales) return erreurStatistiquesSpeciales;
 
+    if (typeof combattant.dagueDeBase !== 'boolean') {
+      return `${chemin}.dagueDeBase est invalide.`;
+    }
+    if (combattant.optionsRegles !== undefined) {
+      if (!estObjet(combattant.optionsRegles)) {
+        return `${chemin}.optionsRegles est invalide.`;
+      }
+      const clesOptions = Object.keys(combattant.optionsRegles);
+      if (clesOptions.some((cle) => cle !== 'marqueChaos')) {
+        return `${chemin}.optionsRegles contient une option inconnue.`;
+      }
+      if (
+        combattant.optionsRegles.marqueChaos !== undefined &&
+        (typeof combattant.optionsRegles.marqueChaos !== 'string' ||
+          ![
+            'Shornaal',
+            'Tchar',
+            'Onogal',
+            'Chaos Universel',
+            'Arkhar',
+          ].includes(combattant.optionsRegles.marqueChaos))
+      ) {
+        return `${chemin}.optionsRegles.marqueChaos est invalide.`;
+      }
+    }
+    if (
+      combattant.profilId === 'ref-maraudeurs-du-chaos-devin' &&
+      (!estObjet(combattant.optionsRegles) ||
+        combattant.optionsRegles.marqueChaos === undefined)
+    ) {
+      return `${chemin}.optionsRegles.marqueChaos est obligatoire pour le Devin.`;
+    }
+    if (
+      combattant.profilId !== 'ref-maraudeurs-du-chaos-devin' &&
+      estObjet(combattant.optionsRegles) &&
+      combattant.optionsRegles.marqueChaos !== undefined
+    ) {
+      return `${chemin}.optionsRegles.marqueChaos est réservée au Devin.`;
+    }
+
     const erreurEquipement = validerListeTextes(
       combattant.equipementIds,
       `${chemin}.equipementIds`,
@@ -446,7 +486,10 @@ function validerParties(valeur: unknown) {
   return null;
 }
 
-function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
+function validerBataille(
+  valeur: unknown,
+  combattantsParId: Map<string, ObjetJson>,
+) {
   if (valeur === null) return null;
   if (!estObjet(valeur))
     return 'La bataille en cours doit être un objet ou null.';
@@ -459,7 +502,11 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
   if (!estTexte(valeur.adversaire, 0, 300)) {
     return 'batailleEnCours.adversaire est invalide.';
   }
-  if (!['Victoire', 'Défaite', 'Égalité'].includes(String(valeur.resultat))) {
+  if (
+    valeur.resultat !== null &&
+    (typeof valeur.resultat !== 'string' ||
+      !['Victoire', 'Défaite', 'Égalité'].includes(valeur.resultat))
+  ) {
     return 'batailleEnCours.resultat est invalide.';
   }
   if (!estDateIso(valeur.date)) return 'batailleEnCours.date est invalide.';
@@ -472,7 +519,7 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
   if (
     valeur.successeurChefId !== null &&
     (!estIdentifiantTechnique(valeur.successeurChefId) ||
-      !idsCombattants.has(valeur.successeurChefId))
+      !combattantsParId.has(valeur.successeurChefId))
   ) {
     return 'batailleEnCours.successeurChefId est invalide.';
   }
@@ -502,31 +549,57 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
   }
   for (const [combattantId, suivi] of Object.entries(valeur.participants)) {
     const chemin = `batailleEnCours.participants.${combattantId}`;
-    if (
-      !estIdentifiantTechnique(combattantId) ||
-      !idsCombattants.has(combattantId) ||
-      !estObjet(suivi)
-    ) {
+    if (!estIdentifiantTechnique(combattantId) || !estObjet(suivi)) {
       return `${chemin} est invalide.`;
     }
     if (suivi.combattantId !== combattantId) {
       return `${chemin}.combattantId ne correspond pas à sa clé.`;
     }
     if (
-      suivi.etatTable !== undefined &&
-      (typeof suivi.etatTable !== 'string' ||
-        !['Debout', 'À terre', 'Sonné', 'Hors de combat'].includes(
-          suivi.etatTable,
-        ))
+      !estEntierNaturel(suivi.effectifInitial) ||
+      suivi.effectifInitial < 1 ||
+      suivi.effectifInitial > 200
     ) {
-      return `${chemin}.etatTable est invalide.`;
+      return `${chemin}.effectifInitial est invalide.`;
     }
     if (
-      suivi.pointsVieActuels !== undefined &&
-      (!estEntierNaturel(suivi.pointsVieActuels) ||
-        suivi.pointsVieActuels > 1_000)
+      !estEntierNaturel(suivi.pointsVieMaximumInitial) ||
+      suivi.pointsVieMaximumInitial < 1 ||
+      suivi.pointsVieMaximumInitial > 1_000
     ) {
-      return `${chemin}.pointsVieActuels est invalide.`;
+      return `${chemin}.pointsVieMaximumInitial est invalide.`;
+    }
+    if (
+      !Array.isArray(suivi.figurinesTable) ||
+      suivi.figurinesTable.length !== suivi.effectifInitial
+    ) {
+      return `${chemin}.figurinesTable ne correspond pas à l’effectif engagé.`;
+    }
+    let horsCombatCalcules = 0;
+    for (const [index, figurine] of suivi.figurinesTable.entries()) {
+      const cheminFigurine = `${chemin}.figurinesTable.${index}`;
+      if (
+        !estObjet(figurine) ||
+        typeof figurine.etatTable !== 'string' ||
+        !['Debout', 'À terre', 'Sonné', 'Hors de combat'].includes(
+          figurine.etatTable,
+        ) ||
+        !estEntierNaturel(figurine.pointsVieActuels) ||
+        figurine.pointsVieActuels > suivi.pointsVieMaximumInitial
+      ) {
+        return `${cheminFigurine} est invalide.`;
+      }
+      const horsCombat = figurine.etatTable === 'Hors de combat';
+      if (horsCombat !== (figurine.pointsVieActuels === 0)) {
+        return `${cheminFigurine} contient un état et des Points de Vie incohérents.`;
+      }
+      if (horsCombat) horsCombatCalcules += 1;
+    }
+    if (
+      !estEntierNaturel(suivi.horsCombat) ||
+      suivi.horsCombat !== horsCombatCalcules
+    ) {
+      return `${chemin}.horsCombat ne correspond pas aux figurines suivies.`;
     }
     if (
       suivi.notesTable !== undefined &&
@@ -549,6 +622,12 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
       100,
     );
     if (erreurJets) return erreurJets;
+    if (
+      Array.isArray(suivi.jetsBlessure) &&
+      suivi.jetsBlessure.length > suivi.horsCombat
+    ) {
+      return `${chemin}.jetsBlessure contient trop de jets.`;
+    }
     if (typeof suivi.blessureResolue !== 'boolean') {
       return `${chemin}.blessureResolue est invalide.`;
     }
@@ -623,6 +702,67 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
     }
   }
 
+  if (
+    !estObjet(valeur.affectationsParticipants) ||
+    Object.keys(valeur.affectationsParticipants).length > 200
+  ) {
+    return 'batailleEnCours.affectationsParticipants est invalide.';
+  }
+  const indicesAttribues = new Map<string, Set<number>>();
+  for (const [combattantId, affectation] of Object.entries(
+    valeur.affectationsParticipants,
+  )) {
+    const chemin = `batailleEnCours.affectationsParticipants.${combattantId}`;
+    const combattant = combattantsParId.get(combattantId);
+    if (
+      !estIdentifiantTechnique(combattantId) ||
+      !combattant ||
+      !estObjet(affectation) ||
+      !estIdentifiantTechnique(affectation.participantId) ||
+      !Array.isArray(affectation.indicesFigurines) ||
+      !estEntierNaturel(combattant.quantite) ||
+      affectation.indicesFigurines.length < 1 ||
+      affectation.indicesFigurines.length > combattant.quantite ||
+      affectation.indicesFigurines.length > 200
+    ) {
+      return `${chemin} est invalide.`;
+    }
+    const source = valeur.participants[affectation.participantId];
+    if (!estObjet(source)) {
+      return `${chemin}.participantId ne correspond à aucun snapshot.`;
+    }
+    const effectifInitial = source.effectifInitial;
+    if (!estEntierNaturel(effectifInitial)) {
+      return `${chemin}.participantId désigne un snapshot invalide.`;
+    }
+    const indicesLocaux = new Set<number>();
+    const indicesSource =
+      indicesAttribues.get(affectation.participantId) ?? new Set<number>();
+    for (const index of affectation.indicesFigurines) {
+      if (
+        !estEntierNaturel(index) ||
+        index >= effectifInitial ||
+        indicesLocaux.has(index) ||
+        indicesSource.has(index)
+      ) {
+        return `${chemin}.indicesFigurines contient une attribution invalide ou dupliquée.`;
+      }
+      indicesLocaux.add(index);
+      indicesSource.add(index);
+    }
+    indicesAttribues.set(affectation.participantId, indicesSource);
+  }
+  for (const [combattantId, combattant] of combattantsParId) {
+    if (valeur.affectationsParticipants[combattantId]) continue;
+    const source = valeur.participants[combattantId];
+    if (!estObjet(source)) continue;
+    void combattant;
+    const indicesSource = indicesAttribues.get(combattantId);
+    if (indicesSource && indicesSource.size > 0) {
+      return `batailleEnCours.participants.${combattantId} chevauche une affectation.`;
+    }
+  }
+
   if (!estObjet(valeur.exploration))
     return 'batailleEnCours.exploration est invalide.';
   const erreurLancers = validerListeDes(
@@ -687,7 +827,10 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
     if (idsJets.has(jet.id))
       return `L'identifiant de jet « ${jet.id} » est dupliqué.`;
     idsJets.add(jet.id);
-    if (!estIdentifiantTechnique(jet.heroId) || !idsCombattants.has(jet.heroId))
+    if (
+      !estIdentifiantTechnique(jet.heroId) ||
+      !combattantsParId.has(jet.heroId)
+    )
       return `${chemin}.heroId ne correspond à aucun combattant.`;
     if (
       !estIdentifiantTechnique(jet.equipementId) ||
@@ -703,7 +846,10 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
       return `${chemin}.achete est invalide.`;
     if (!estEntierNaturel(jet.prix)) return `${chemin}.prix est invalide.`;
   }
-  const erreurPersonnel = validerPersonnel(valeur.personnel, idsCombattants);
+  const erreurPersonnel = validerPersonnel(
+    valeur.personnel,
+    new Set(combattantsParId.keys()),
+  );
   if (erreurPersonnel) return erreurPersonnel;
   if (!estTexte(valeur.notes, 0, 10_000))
     return 'batailleEnCours.notes est invalide.';

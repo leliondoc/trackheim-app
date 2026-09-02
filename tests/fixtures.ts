@@ -7,7 +7,7 @@ import {
 
 export function campagneVideTest(): EtatCampagne {
   return {
-    version: 3,
+    version: 4,
     revision: 0,
     rulesetId: 'mordheim-1999-rules-review-2005-bandes-core',
     nomCampagne: 'Hors campagne',
@@ -44,6 +44,7 @@ export function campagneAvecCapitaineTest(): EtatCampagne {
     experience: profil.experienceInitiale,
     statut: 'Prêt',
     statistiques: structuredClone(profil.statistiques),
+    dagueDeBase: true,
     equipementIds: [],
     notes: '',
     quantite: 1,

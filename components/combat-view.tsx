@@ -14,11 +14,16 @@ import {
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import type { Vue } from '@/lib/app-navigation';
+import { nomsEquipementsCombattant } from '@/lib/equipment-display';
 import {
-  equipements,
+  modifierFigurineTable,
+  modifierParticipantBataille,
+} from '@/lib/battle-state';
+import {
   obtenirProfil,
   type BatailleEnCours,
   type Combattant,
+  type EtatFigurineTable,
   type EtatCampagne,
   type SuiviCombattantBataille,
 } from '@/lib/mordheim-data';
@@ -29,7 +34,7 @@ const phases: NonNullable<BatailleEnCours['phase']>[] = [
   'Corps à corps',
   'Ralliement',
 ];
-const etats: NonNullable<SuiviCombattantBataille['etatTable']>[] = [
+const etats: EtatFigurineTable[] = [
   'Debout',
   'À terre',
   'Sonné',
@@ -62,16 +67,13 @@ export function CombatView({
     combattantId: string,
     modification: Partial<SuiviCombattantBataille>,
   ) {
-    modifierBataille((courante) => ({
-      ...courante,
-      participants: {
-        ...courante.participants,
-        [combattantId]: {
-          ...courante.participants[combattantId],
-          ...modification,
-        },
-      },
-    }));
+    const combattant = campagne.combattants.find(
+      (candidat) => candidat.id === combattantId,
+    );
+    if (!combattant) return;
+    modifierBataille((courante) =>
+      modifierParticipantBataille(courante, combattant, modification),
+    );
   }
 
   if (!bataille) {
@@ -242,20 +244,16 @@ function CombatantTableCard({
   onChange: (modification: Partial<SuiviCombattantBataille>) => void;
 }) {
   const profil = obtenirProfil(combattant.profilId);
-  const pointsVieMaximum = Math.max(
-    1,
-    combattant.statistiques.pointsVie * Math.max(1, combattant.quantite),
-  );
-  const pointsVie = Math.min(
-    pointsVieMaximum,
-    suivi.pointsVieActuels ?? pointsVieMaximum,
-  );
+  const effectifBataille = suivi.effectifInitial;
+  const pointsVieMaximum = suivi.pointsVieMaximumInitial;
+  const figurines = suivi.figurinesTable;
   const etat =
-    suivi.etatTable ??
-    (combattant.statut === 'Prêt' ? 'Debout' : 'Hors de combat');
-  const equipement = combattant.equipementIds.map(
-    (id) => equipements.find((item) => item.id === id)?.nom ?? id,
-  );
+    figurines.length === 1
+      ? figurines[0].etatTable
+      : suivi.horsCombat === effectifBataille
+        ? 'Hors de combat'
+        : 'Debout';
+  const equipement = nomsEquipementsCombattant(combattant);
   const sorts = combattant.competences
     .filter((competence) => competence.startsWith('Sort ou prière : '))
     .map((competence) => competence.replace('Sort ou prière : ', ''));
@@ -271,9 +269,7 @@ function CombatantTableCard({
           <h2>{combattant.nom}</h2>
           <span>
             {profil.nom}
-            {combattant.quantite > 1
-              ? `, groupe de ${combattant.quantite}`
-              : ''}
+            {effectifBataille > 1 ? `, groupe de ${effectifBataille}` : ''}
           </span>
         </div>
         {etat === 'Hors de combat' ? (
@@ -284,86 +280,67 @@ function CombatantTableCard({
       </header>
 
       <div className="combat-stat-grid" aria-label="Caractéristiques">
+        <Stat label="M" value={valeurStatistique(combattant, 'mouvement')} />
         <Stat
-          label="M"
-          value={
-            combattant.statistiquesSpeciales?.mouvement ??
-            combattant.statistiques.mouvement
-          }
+          label="CC"
+          value={valeurStatistique(combattant, 'capaciteCombat')}
         />
-        <Stat label="CC" value={combattant.statistiques.capaciteCombat} />
-        <Stat label="CT" value={combattant.statistiques.capaciteTir} />
-        <Stat label="F" value={combattant.statistiques.force} />
-        <Stat label="E" value={combattant.statistiques.endurance} />
-        <Stat label="I" value={combattant.statistiques.initiative} />
-        <Stat label="A" value={combattant.statistiques.attaques} />
-        <Stat label="Cd" value={combattant.statistiques.commandement} />
+        <Stat label="CT" value={valeurStatistique(combattant, 'capaciteTir')} />
+        <Stat label="F" value={valeurStatistique(combattant, 'force')} />
+        <Stat label="E" value={valeurStatistique(combattant, 'endurance')} />
+        <Stat label="I" value={valeurStatistique(combattant, 'initiative')} />
+        <Stat label="A" value={valeurStatistique(combattant, 'attaques')} />
+        <Stat
+          label="Cd"
+          value={valeurStatistique(combattant, 'commandement')}
+        />
       </div>
 
-      <section
-        className="combat-wounds"
-        aria-label={`Points de Vie de ${combattant.nom}`}
-      >
-        <Heart aria-hidden="true" />
-        <Button
-          aria-label={`Retirer un Point de Vie à ${combattant.nom}`}
-          disabled={pointsVie === 0}
-          onClick={() =>
+      {effectifBataille > 1 ? (
+        <section className="combat-group-losses">
+          <header>
+            <span>
+              <Skull aria-hidden="true" /> Membres du groupe
+            </span>
+            <strong>
+              {suivi.horsCombat} / {effectifBataille} hors de combat
+            </strong>
+          </header>
+          <div className="combat-group-members">
+            {figurines.map((figurine, index) => (
+              <FigurineTableControl
+                figurine={figurine}
+                index={index}
+                key={index}
+                nom={combattant.nom}
+                onChange={(modification) =>
+                  onChange({
+                    figurinesTable: modifierFigurineTable(
+                      suivi,
+                      index,
+                      modification,
+                    ),
+                  })
+                }
+                pointsVieMaximum={pointsVieMaximum}
+              />
+            ))}
+          </div>
+        </section>
+      ) : (
+        <FigurineTableControl
+          figurine={figurines[0]}
+          index={0}
+          nom={combattant.nom}
+          onChange={(modification) =>
             onChange({
-              pointsVieActuels: Math.max(0, pointsVie - 1),
-              ...(pointsVie === 1 ? { etatTable: 'Hors de combat' } : {}),
+              figurinesTable: modifierFigurineTable(suivi, 0, modification),
             })
           }
-          size="icon"
-          type="button"
-          variant="outline"
-        >
-          <Minus aria-hidden="true" />
-        </Button>
-        <output aria-live="polite">
-          <strong>{pointsVie}</strong> / {pointsVieMaximum} PV
-        </output>
-        <Button
-          aria-label={`Rendre un Point de Vie à ${combattant.nom}`}
-          disabled={pointsVie === pointsVieMaximum}
-          onClick={() =>
-            onChange({
-              pointsVieActuels: pointsVie + 1,
-              ...(pointsVie === 0 ? { etatTable: 'Debout' } : {}),
-            })
-          }
-          size="icon"
-          type="button"
-          variant="outline"
-        >
-          <Plus aria-hidden="true" />
-        </Button>
-      </section>
-
-      <div
-        className="combat-state-control"
-        aria-label={`État de ${combattant.nom}`}
-      >
-        {etats.map((candidate) => (
-          <button
-            aria-pressed={etat === candidate}
-            key={candidate}
-            onClick={() =>
-              onChange({
-                etatTable: candidate,
-                ...(candidate === 'Hors de combat'
-                  ? { pointsVieActuels: 0 }
-                  : pointsVie === 0
-                    ? { pointsVieActuels: 1 }
-                    : {}),
-              })
-            }
-            type="button"
-          >
-            {candidate}
-          </button>
-        ))}
-      </div>
+          pointsVieMaximum={pointsVieMaximum}
+          seule
+        />
+      )}
 
       <div className="combat-achievement-grid">
         <CombatCounter
@@ -381,7 +358,7 @@ function CombatantTableCard({
       <dl className="combat-quick-rules">
         <div>
           <dt>Équipement</dt>
-          <dd>{equipement.join(', ') || 'Dague gratuite'}</dd>
+          <dd>{equipement.join(', ') || 'Aucun équipement enregistré'}</dd>
         </div>
         {autresCompetences.length ? (
           <div>
@@ -421,14 +398,88 @@ function CombatantTableCard({
   );
 }
 
+function FigurineTableControl({
+  figurine,
+  index,
+  nom,
+  onChange,
+  pointsVieMaximum,
+  seule = false,
+}: {
+  figurine: SuiviCombattantBataille['figurinesTable'][number];
+  index: number;
+  nom: string;
+  onChange: (
+    modification: Partial<SuiviCombattantBataille['figurinesTable'][number]>,
+  ) => void;
+  pointsVieMaximum: number;
+  seule?: boolean;
+}) {
+  const libelle = seule ? nom : `${nom}, figurine ${index + 1}`;
+  return (
+    <article className={seule ? 'combat-single-state' : 'combat-member-state'}>
+      {!seule ? <strong>Figurine {index + 1}</strong> : null}
+      <section
+        className="combat-wounds"
+        aria-label={`Points de Vie de ${libelle}`}
+      >
+        <Heart aria-hidden="true" />
+        <Button
+          aria-label={`Retirer un Point de Vie à ${libelle}`}
+          disabled={figurine.pointsVieActuels === 0}
+          onClick={() =>
+            onChange({
+              pointsVieActuels: Math.max(0, figurine.pointsVieActuels - 1),
+            })
+          }
+          size="icon"
+          type="button"
+          variant="outline"
+        >
+          <Minus aria-hidden="true" />
+        </Button>
+        <output aria-live="polite">
+          <strong>{figurine.pointsVieActuels}</strong> / {pointsVieMaximum} PV
+        </output>
+        <Button
+          aria-label={`Rendre un Point de Vie à ${libelle}`}
+          disabled={figurine.pointsVieActuels === pointsVieMaximum}
+          onClick={() =>
+            onChange({ pointsVieActuels: figurine.pointsVieActuels + 1 })
+          }
+          size="icon"
+          type="button"
+          variant="outline"
+        >
+          <Plus aria-hidden="true" />
+        </Button>
+      </section>
+      <div className="combat-state-control" aria-label={`État de ${libelle}`}>
+        {etats.map((candidate) => (
+          <button
+            aria-pressed={figurine.etatTable === candidate}
+            key={candidate}
+            onClick={() => onChange({ etatTable: candidate })}
+            type="button"
+          >
+            {candidate}
+          </button>
+        ))}
+      </div>
+    </article>
+  );
+}
+
 function CombatCounter({
   label,
   value,
   onChange,
+  maximum = 999,
 }: {
   label: string;
   value: number;
   onChange: (value: number) => void;
+  maximum?: number;
 }) {
   return (
     <section className="combat-counter" aria-label={label}>
@@ -447,7 +498,8 @@ function CombatCounter({
         <output aria-live="polite">{value}</output>
         <Button
           aria-label={`Augmenter ${label}`}
-          onClick={() => onChange(Math.min(999, value + 1))}
+          disabled={value >= maximum}
+          onClick={() => onChange(Math.min(maximum, value + 1))}
           size="icon"
           type="button"
           variant="outline"
@@ -456,6 +508,15 @@ function CombatCounter({
         </Button>
       </div>
     </section>
+  );
+}
+
+function valeurStatistique(
+  combattant: Combattant,
+  cle: keyof Combattant['statistiques'],
+) {
+  return (
+    combattant.statistiquesSpeciales?.[cle] ?? combattant.statistiques[cle]
   );
 }
 

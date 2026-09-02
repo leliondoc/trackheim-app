@@ -779,11 +779,11 @@
   }
 
   .band-profile-stats dt {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .band-profile-stats dd {
-    font-size: 18px;
+    font-size: 24px;
   }
 
   .band-equipment-groups h4,
@@ -838,10 +838,10 @@
   }
 
   .band-profile-stats dt {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .band-profile-stats dd {
-    font-size: 20px;
+    font-size: 26px;
   }
 }

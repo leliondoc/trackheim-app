@@ -2091,7 +2091,7 @@
         {
           "titre": "Visage de la mort",
           "difficulte": 6,
-          "description": "Réservé au Nécromancien: il cause la peur et devient immunisé à la peur pour la bataille. Ce sort ne peut être choisi au départ si la Liche connaît Horreur vivante.",
+          "description": "Réservé au Nécromancien : il cause la peur et devient immunisé à la peur pour la bataille. Il peut choisir ce sort si la Liche connaît Horreur vivante.",
           "source": "Restless Dead, Border Town Burning, page 7"
         },
         {

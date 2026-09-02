@@ -35,6 +35,13 @@ export type CategorieCompetence =
   | 'Vitesse'
   | 'Spécial';
 
+export type MarqueChaos =
+  | 'Shornaal'
+  | 'Tchar'
+  | 'Onogal'
+  | 'Chaos Universel'
+  | 'Arkhar';
+
 export type ProfilRecrue = {
   id: string;
   nom: string;
@@ -64,6 +71,8 @@ export type Equipement = {
   categorie: 'Corps à corps' | 'Tir' | 'Armure' | 'Divers' | 'Mutation';
   cout: number;
   listesEquipement: ListeEquipementId[];
+  /** Cette entrée matérialise la dague gratuite reçue au recrutement. */
+  accordeDagueDeBase?: boolean;
   /** Nombre d’exemplaires portables par combattant (une paire vaut deux). */
   quantiteMax?: number;
   quantitesMaxParProfil?: Record<string, number>;
@@ -92,6 +101,12 @@ export type Combattant = {
   statut: 'Prêt' | 'Blessé' | 'Absent';
   statistiques: Statistiques;
   statistiquesSpeciales?: Partial<Record<keyof Statistiques, string>>;
+  /** Dague réglementaire implicite, gratuite et non transférable. */
+  dagueDeBase: boolean;
+  /** Choix réglementaires fixés au recrutement et utilisés par les règles. */
+  optionsRegles?: {
+    marqueChaos?: MarqueChaos;
+  };
   equipementIds: string[];
   notes: string;
   /** Les Hommes de main d'un même groupe partagent profil, XP et équipement. */
@@ -124,12 +139,23 @@ export type Partie = {
   notes?: string;
 };
 
+export type EtatFigurineTable =
+  | 'Debout'
+  | 'À terre'
+  | 'Sonné'
+  | 'Hors de combat';
+
+export type SuiviFigurineBataille = {
+  etatTable: EtatFigurineTable;
+  pointsVieActuels: number;
+};
+
 export type SuiviCombattantBataille = {
   combattantId: string;
-  /** État courant sur la table, conservé avec la bataille active. */
-  etatTable?: 'Debout' | 'À terre' | 'Sonné' | 'Hors de combat';
-  /** Points de Vie restants pour la figurine ou l'ensemble du groupe. */
-  pointsVieActuels?: number;
+  /** Snapshot immuable de l'unité engagée au début de la bataille. */
+  effectifInitial: number;
+  pointsVieMaximumInitial: number;
+  figurinesTable: SuiviFigurineBataille[];
   notesTable?: string;
   horsCombat: number;
   jetsBlessure: number[];
@@ -180,12 +206,20 @@ export type JetRarete = {
   prix: number;
 };
 
+export type AffectationParticipantBataille = {
+  /** Identifiant du snapshot créé au début de la bataille. */
+  participantId: string;
+  /** Figurines de ce snapshot encore rattachées au combattant courant. */
+  indicesFigurines: number[];
+};
+
 export type BatailleEnCours = {
   id: string;
   numero: number;
   scenario: string;
   adversaire: string;
-  resultat: Partie['resultat'];
+  /** Renseigné à la fin du combat, avant la séquence d'après-bataille. */
+  resultat: Partie['resultat'] | null;
   date: string;
   valeurAvant: number;
   valeurAdverse: number;
@@ -194,6 +228,12 @@ export type BatailleEnCours = {
   tour?: number;
   phase?: 'Mouvement' | 'Tir' | 'Corps à corps' | 'Ralliement';
   participants: Record<string, SuiviCombattantBataille>;
+  /**
+   * Répartition des snapshots lorsqu'un groupe est scindé par une promotion.
+   * Les données de bataille restent ainsi immuables et le nouveau Héros garde
+   * son lien avec la figurine qui a réellement participé.
+   */
+  affectationsParticipants: Record<string, AffectationParticipantBataille>;
   exploration: {
     lancers: number[];
     desConserves: number[];
@@ -250,7 +290,7 @@ export type RegleHomebrew = {
 };
 
 export type EtatCampagne = {
-  version: 3;
+  version: 4;
   revision: number;
   rulesetId: string;
   nomCampagne: string;
@@ -454,6 +494,7 @@ const equipementsAutomatises: Equipement[] = [
     nom: 'Dague supplémentaire',
     categorie: 'Corps à corps',
     cout: 2,
+    accordeDagueDeBase: true,
     listesEquipement: toutesListesArmees,
   },
   {
@@ -1313,6 +1354,7 @@ const equipementsReference: Equipement[] = bandesBibliotheque.flatMap(
           categorie: categorieEquipementReference(categorie.nom),
           cout: entree.cout,
           listesEquipement: [idListeReference(bande.slug, indexListe)],
+          accordeDagueDeBase: /^dague$/i.test(entree.nom.trim()),
           profilsAutorises: profilsAutorisesReference(
             bande.slug as FactionId,
             entree.note,

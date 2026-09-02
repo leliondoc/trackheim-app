@@ -1,6 +1,6 @@
 import {
   TAILLE_MAX_PAYLOAD_CAMPAGNE,
-  validerCampagneV3,
+  validerCampagneV4,
 } from './campaign-validation.ts';
 import type { EtatCampagne } from './mordheim-data.ts';
 
@@ -50,7 +50,7 @@ export function importerCampagneDepuisJson(texte: string) {
     );
   }
 
-  const validation = validerCampagneV3(valeur.campagne);
+  const validation = validerCampagneV4(valeur.campagne);
   if (!validation.ok) {
     throw new Error(`La campagne importée est invalide : ${validation.erreur}`);
   }

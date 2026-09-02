@@ -644,6 +644,10 @@ label:has(input[type='file']:focus-visible) {
 }
 
 .campaign-manager-dialog {
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(88vh, 820px);
+  gap: 20px;
+  overflow-y: auto;
   border: 2px solid #604a31;
   border-top: 1px solid var(--frame-red);
   border-radius: 0;
@@ -657,6 +661,43 @@ label:has(input[type='file']:focus-visible) {
   box-shadow:
     8px 10px 0 rgb(43 27 14 / 24%),
     0 24px 70px rgb(25 16 10 / 36%);
+  padding: 28px;
+}
+
+.campaign-manager-header {
+  gap: 5px;
+  border-bottom: 1px solid rgb(116 43 37 / 35%);
+  padding: 0 40px 18px 0;
+}
+
+.campaign-manager-kicker,
+.campaign-create-heading > div > span,
+.campaign-manager-portable-copy > span {
+  color: #7a2f28;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.campaign-manager-header [data-slot='dialog-title'] {
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.campaign-manager-header [data-slot='dialog-description'] {
+  max-width: 60ch;
+  color: #68533f;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.campaign-manager-dialog > [data-slot='dialog-close'] {
+  width: 40px;
+  height: 40px;
+  top: 8px;
+  right: 8px;
 }
 
 .campaign-manager-list {
@@ -667,50 +708,114 @@ label:has(input[type='file']:focus-visible) {
 }
 
 .campaign-manager-list > button {
-  display: flex;
-  min-height: 62px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  min-height: 72px;
   align-items: center;
-  justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
   border: 1px solid #9b815d;
-  border-top: 1px solid var(--frame-red);
-  background: rgb(255 248 227 / 55%);
+  border-left: 3px solid transparent;
+  background: rgb(255 250 237 / 64%);
   color: #30251b;
-  padding: 10px 12px;
+  padding: 11px 14px 11px 12px;
   text-align: left;
   cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    transform 140ms ease;
 }
 
 .campaign-manager-list > button:hover {
   background: #ead7ad;
+  transform: translateX(2px);
 }
 .campaign-manager-list > button.active {
-  background: rgb(212 190 146 / 65%);
+  border-left-color: var(--oxblood);
+  background: rgb(212 190 146 / 72%);
 }
-.campaign-manager-list span {
+.campaign-manager-band-mark {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgb(116 43 37 / 30%);
+  background: rgb(116 43 37 / 8%);
+  color: var(--oxblood);
+}
+.campaign-manager-band-mark svg {
+  width: 20px;
+  height: 20px;
+}
+.campaign-manager-band-copy {
   display: grid;
   min-width: 0;
   gap: 2px;
 }
-.campaign-manager-list strong {
+.campaign-manager-band-copy strong {
   overflow: hidden;
   font-family: var(--font-fell), Georgia, serif;
-  font-size: 17px;
+  font-size: 19px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.campaign-manager-list small {
+.campaign-manager-band-copy small {
   overflow: hidden;
   color: #75614a;
   font-size: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.campaign-manager-list b {
+.campaign-manager-band-action {
+  border: 1px solid rgb(116 43 37 / 35%);
+  background: rgb(255 248 227 / 45%);
   color: var(--oxblood);
   font-family: var(--font-fell), Georgia, serif;
   font-size: 12px;
+  padding: 6px 9px;
   text-transform: uppercase;
+}
+
+.campaign-manager-portable {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid rgb(96 74 49 / 28%);
+  background: rgb(255 250 237 / 45%);
+  padding: 14px;
+}
+
+.campaign-manager-section-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  background: #302820;
+  color: #ead6aa;
+}
+
+.campaign-manager-section-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.campaign-manager-portable-copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.campaign-manager-portable-copy strong {
+  color: #30251b;
+  font-family: var(--font-fell), Georgia, serif;
+  font-size: 18px;
+}
+
+.campaign-manager-portable-copy small {
+  color: #715e48;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .campaign-import-error {
@@ -722,16 +827,36 @@ label:has(input[type='file']:focus-visible) {
 .campaign-create-form {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 9px;
-  border-top: 1px solid var(--frame-red);
-  padding-top: 15px;
+  gap: 12px;
+  border: 1px solid rgb(96 74 49 / 28%);
+  background: rgb(233 215 178 / 34%);
+  padding: 16px;
 }
 
-.campaign-create-form h3 {
+.campaign-create-heading {
+  display: flex;
   grid-column: 1 / -1;
-  margin: 0 0 2px;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 2px;
+}
+
+.campaign-create-heading > div {
+  display: grid;
+  gap: 1px;
+}
+
+.campaign-create-heading h3 {
+  margin: 0;
   font-family: var(--font-fell), Georgia, serif;
-  font-size: 18px;
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.campaign-create-heading p {
+  margin: 2px 0 0;
+  color: #715e48;
+  font-size: 12px;
 }
 
 .campaign-faction-field {
@@ -753,6 +878,56 @@ label:has(input[type='file']:focus-visible) {
   border-radius: 0;
   background: rgb(255 248 227 / 66%);
   font-size: 15px;
+}
+
+.campaign-create-form > [data-slot='input'] {
+  min-height: 44px;
+  border-color: #9b815d;
+  border-radius: 0;
+  background: rgb(255 248 227 / 74%);
+  font-size: 15px;
+}
+
+.campaign-create-form > [data-slot='button'] {
+  min-height: 44px;
+}
+
+@media (max-width: 620px) {
+  .campaign-manager-dialog {
+    width: calc(100vw - 18px);
+    max-height: calc(100dvh - 18px);
+    gap: 16px;
+    padding: 22px 16px;
+  }
+
+  .campaign-manager-portable,
+  .campaign-create-form {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-manager-portable .campaign-manager-section-icon {
+    display: none;
+  }
+
+  .campaign-manager-portable [data-slot='button'],
+  .campaign-create-form > [data-slot='button'] {
+    width: 100%;
+  }
+
+  .campaign-faction-field [data-slot='native-select'],
+  .campaign-create-form > [data-slot='input'] {
+    font-size: 16px;
+  }
+
+  .campaign-manager-dialog > [data-slot='dialog-close'] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .campaign-manager-band-action {
+    font-size: 10px;
+    padding: 5px 7px;
+  }
 }
 
 .campaign-faction-status {

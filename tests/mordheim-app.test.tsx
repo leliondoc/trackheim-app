@@ -32,7 +32,7 @@ describe('navigation principale', () => {
 
     expect(
       await screen.findByRole('heading', {
-        name: 'Vue d’ensemble',
+        name: 'Accueil',
       }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -45,6 +45,12 @@ describe('navigation principale', () => {
     expect(
       screen.queryByText(/registre local est illisible/i),
     ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /^Mode combat$/ }).querySelector('svg'),
+    ).toHaveClass('lucide-swords');
+    expect(
+      screen.getByRole('link', { name: /^Campagne$/ }).querySelector('svg'),
+    ).toHaveClass('lucide-scroll-text');
   });
 
   it('propose les 49 bandes dans le constructeur et conserve la sélection de la bibliothèque', async () => {
@@ -207,7 +213,7 @@ describe('navigation principale', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('écarte silencieusement une ancienne donnée de vérification invalide', async () => {
+  it('écarte silencieusement une sauvegarde invalide sans ancien format', async () => {
     localStorage.setItem(
       cleCopieLocale('campagne-principale'),
       '{ancienne-donnee-de-test',
@@ -216,7 +222,7 @@ describe('navigation principale', () => {
 
     expect(
       await screen.findByRole('heading', {
-        name: 'Vue d’ensemble',
+        name: 'Accueil',
       }),
     ).toBeInTheDocument();
     expect(
@@ -235,6 +241,7 @@ describe('navigation principale', () => {
     const campagne = await screen.findByRole('link', {
       name: /^Campagne$/,
     });
+    document.documentElement.scrollTop = 800;
     await utilisateur.click(campagne);
 
     await waitFor(() => {
@@ -243,6 +250,7 @@ describe('navigation principale', () => {
       expect(document.activeElement).toBe(
         document.getElementById('contenu-principal'),
       );
+      expect(document.documentElement.scrollTop).toBe(0);
     });
   });
 
@@ -308,6 +316,14 @@ describe('navigation principale', () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Vision d'Horreur")).toBeInTheDocument();
     expect(screen.getByText(/6 pouvoir/)).toBeInTheDocument();
+
+    await utilisateur.click(
+      screen.getByRole('button', { name: 'Fiche de la bande' }),
+    );
+    expect(location.hash).toBe('#/library/culte-des-possedes');
+    expect(
+      await screen.findByRole('heading', { name: 'Culte des Possédés' }),
+    ).toBeInTheDocument();
   });
 
   it('nomme précisément les contrôles d’expérience', async () => {
@@ -340,7 +356,7 @@ describe('navigation principale', () => {
       numero: 1,
       scenario: 'Escarmouche',
       adversaire: 'Skavens',
-      resultat: 'Victoire',
+      resultat: null,
       date: '2026-09-01',
       valeurAvant: 25,
       valeurAdverse: 30,
@@ -349,6 +365,9 @@ describe('navigation principale', () => {
       participants: {
         'capitaine-test': {
           combattantId: 'capitaine-test',
+          effectifInitial: 1,
+          pointsVieMaximumInitial: 1,
+          figurinesTable: [{ etatTable: 'Debout', pointsVieActuels: 1 }],
           horsCombat: 0,
           jetsBlessure: [],
           blessureResolue: false,
@@ -360,6 +379,7 @@ describe('navigation principale', () => {
           progressions: { version: 1, saisies: [] },
         },
       },
+      affectationsParticipants: {},
       exploration: {
         lancers: [],
         desConserves: [],
@@ -410,6 +430,26 @@ describe('navigation principale', () => {
     expect(screen.getByRole('button', { name: 'Sonné' })).toBeInTheDocument();
     expect(
       screen.getByLabelText('Points de Vie de Wilhelm Krieger'),
+    ).toBeInTheDocument();
+
+    await utilisateur.click(
+      screen.getByRole('button', {
+        name: 'Retirer un Point de Vie à Wilhelm Krieger',
+      }),
+    );
+    expect(
+      screen.getByRole('button', { name: 'Hors de combat' }),
+    ).toHaveAttribute('aria-pressed', 'true');
+
+    await utilisateur.click(screen.getByRole('link', { name: /^Campagne$/ }));
+    expect(
+      await screen.findByRole('heading', { name: /Bataille 1 en cours/i }),
+    ).toBeInTheDocument();
+    await utilisateur.click(screen.getByRole('button', { name: 'Victoire' }));
+    expect(
+      await screen.findByRole('heading', {
+        name: 'Bataille 1 : Escarmouche',
+      }),
     ).toBeInTheDocument();
   });
 

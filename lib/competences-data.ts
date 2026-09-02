@@ -1,8 +1,14 @@
 import type {
   CategorieCompetence,
+  Combattant,
+  EtatCampagne,
   FactionId,
   ProfilRecrue,
 } from './mordheim-data.ts';
+import {
+  pouvoirsMagiquesPourProfil,
+  profilEstLanceurMagie,
+} from './magic-data.ts';
 
 export type ChoixCompetence = {
   categorie: CategorieCompetence;
@@ -77,50 +83,12 @@ const competencesSpeciales: Partial<Record<FactionId, string[]>> = {
   ],
 };
 
-const lanceursDeSorts = new Set([
-  'possedes-magister',
-  'morts-vivants-necromancien',
-  'skavens-sorcier',
-  'soeurs-matriarche',
-]);
-
-const sortsParProfil: Record<string, string[]> = {
-  'possedes-magister': [
-    "Vision d'Horreur",
-    'Œil Divin',
-    'Sang Noir',
-    'Tentation du Chaos',
-    'Ailes Ténébreuses',
-    'Mot de Souffrance',
-  ],
-  'morts-vivants-necromancien': [
-    'Drain de Vie',
-    'Réanimation',
-    'Vision de Mort',
-    'Fatalité',
-    'Appel de Vanhel',
-    'Incantation de Réveil',
-  ],
-  'skavens-sorcier': [
-    'Maleflamme',
-    'Rejetons du Rat Cornu',
-    'Rongeviande',
-    'Fureur Noire',
-    'Œil du Warp',
-    'Malédiction du Sorcier',
-  ],
-  'soeurs-matriarche': [
-    'Le Marteau de Sigmar',
-    "Cœur d'Acier",
-    "Feu de l'Âme",
-    'Bouclier de Sigmar',
-    'Imposition des Mains',
-    'Armure du Juste',
-  ],
-};
-
-export function sortsPourProfil(profil: ProfilRecrue) {
-  return sortsParProfil[profil.id] ?? [];
+export function sortsPourProfil(
+  profil: ProfilRecrue,
+  combattant?: Combattant,
+  campagne?: EtatCampagne,
+) {
+  return pouvoirsMagiquesPourProfil(profil.id, { combattant, campagne });
 }
 
 /**
@@ -135,19 +103,20 @@ export function sortsPourHeritageMagique(factionId: FactionId) {
       : factionId === 'culte-des-possedes'
         ? 'possedes-magister'
         : null;
-  return profilId ? (sortsParProfil[profilId] ?? []) : [];
+  return profilId ? pouvoirsMagiquesPourProfil(profilId) : [];
 }
 
 function competenceAutorisee(
   nom: string,
   profil: ProfilRecrue,
   factionId: FactionId,
+  combattant?: Combattant,
 ) {
   if (nom === 'Langage de bataille') {
     return profil.chef && factionId !== 'morts-vivants';
   }
   if (nom === 'Sorcellerie' || nom === 'Guerrier-mage') {
-    return lanceursDeSorts.has(profil.id);
+    return profilEstLanceurMagie(profil.id, combattant);
   }
   if (nom === 'Connaissance des arcanes') {
     return !['repurgateurs', 'soeurs-de-sigmar'].includes(factionId);
@@ -161,6 +130,7 @@ function competenceAutorisee(
 export function competencesPourProfil(
   profil: ProfilRecrue,
   factionId: FactionId,
+  combattant?: Combattant,
 ): ChoixCompetence[] {
   return (profil.competencesDisponibles ?? []).flatMap((categorie) => {
     const noms =
@@ -168,7 +138,7 @@ export function competencesPourProfil(
         ? (competencesSpeciales[factionId] ?? [])
         : competencesStandard[categorie];
     return noms
-      .filter((nom) => competenceAutorisee(nom, profil, factionId))
+      .filter((nom) => competenceAutorisee(nom, profil, factionId, combattant))
       .map((nom) => ({ categorie, nom }));
   });
 }
