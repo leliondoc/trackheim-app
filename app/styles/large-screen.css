@@ -121,7 +121,11 @@
   }
 
   .band-profile-entry h4 {
-    font-size: 24px;
+    font-size: 28px;
+  }
+
+  .band-profile-entry > header > strong {
+    font-size: 22px;
   }
 
   .band-profile-stats dt {
@@ -811,13 +815,16 @@
     font-size: 36px;
   }
 
-  .band-rules-grid h4,
-  .band-profile-entry h4 {
+  .band-rules-grid h4 {
     font-size: 25px;
   }
 
+  .band-profile-entry h4 {
+    font-size: 30px;
+  }
+
   .band-profile-entry > header > strong {
-    font-size: 20px;
+    font-size: 23px;
   }
 
   .band-profile-stats dt {
@@ -825,7 +832,7 @@
   }
 
   .band-profile-stats dd {
-    font-size: 28px;
+    font-size: 30px;
   }
 
   .band-equipment-groups h4,
@@ -885,5 +892,13 @@
 
   .band-profile-stats dd {
     font-size: 30px;
+  }
+
+  .band-profile-entry h4 {
+    font-size: 32px;
+  }
+
+  .band-profile-entry > header > strong {
+    font-size: 25px;
   }
 }

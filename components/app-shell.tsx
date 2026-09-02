@@ -170,32 +170,42 @@ export function Topbar({
 
   return (
     <header className="topbar">
-      <div>
-        <p className="eyebrow">
-          {!campagne
-            ? 'Trackheim'
-            : campagne.campagneActive === false
-              ? 'Bande active'
-              : 'Campagne active'}
-        </p>
-        {campagne ? (
-          <button
-            className="campaign-switcher"
-            onClick={onCampagnes}
-            type="button"
-          >
-            <span>
-              {campagne.campagneActive === false
-                ? campagne.nomBande
-                : campagne.nomCampagne}
-            </span>
-            <ChevronDown aria-hidden="true" />
-          </button>
-        ) : (
-          <p className="campaign-switcher campaign-switcher-empty">
-            Aucune bande active
+      <div className="topbar-identity">
+        <div aria-label="Trackheim" className="mobile-topbar-brand">
+          <img
+            alt=""
+            aria-hidden="true"
+            src={`${import.meta.env.BASE_URL}img/trackheim-raven.png`}
+          />
+          <span>Trackheim</span>
+        </div>
+        <div className="topbar-context">
+          <p className="eyebrow">
+            {!campagne
+              ? 'Trackheim'
+              : campagne.campagneActive === false
+                ? 'Bande active'
+                : 'Campagne active'}
           </p>
-        )}
+          {campagne ? (
+            <button
+              className="campaign-switcher"
+              onClick={onCampagnes}
+              type="button"
+            >
+              <span>
+                {campagne.campagneActive === false
+                  ? campagne.nomBande
+                  : campagne.nomCampagne}
+              </span>
+              <ChevronDown aria-hidden="true" />
+            </button>
+          ) : (
+            <p className="campaign-switcher campaign-switcher-empty">
+              Aucune bande active
+            </p>
+          )}
+        </div>
       </div>
       <div className="topbar-actions">
         {campagne && (

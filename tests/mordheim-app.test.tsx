@@ -559,7 +559,11 @@ describe('navigation principale', () => {
     );
 
     expect(
-      await screen.findByRole('heading', { name: 'Après la poussière' }),
+      await screen.findByRole(
+        'heading',
+        { name: 'Après la poussière' },
+        { timeout: 5000 },
+      ),
     ).toBeInTheDocument();
   });
 

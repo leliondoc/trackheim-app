@@ -322,7 +322,7 @@
 .band-profile-entry {
   min-width: 0;
   background: rgb(232 215 180 / 48%);
-  padding: 16px;
+  padding: 18px;
 }
 .band-profile-entry > header {
   display: flex;
@@ -333,21 +333,21 @@
 .band-profile-entry > header span {
   display: block;
   color: #806b51;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 900;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 .band-profile-entry h4 {
   margin-top: 3px;
-  font-size: 20px;
+  font-size: 27px;
   line-height: 1.1;
 }
 .band-profile-entry > header > strong {
   flex: none;
   color: #762c25;
   font-family: var(--font-fell), Georgia, serif;
-  font-size: 17px;
+  font-size: 21px;
 }
 .band-profile-quota,
 .band-profile-maximums,
@@ -355,8 +355,8 @@
 .band-profile-rule {
   margin: 8px 0 0;
   color: #675642;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.55;
 }
 .band-profile-quota {
   color: #7d6a52;
@@ -376,13 +376,13 @@
 }
 .band-profile-stats dt {
   color: #867259;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 900;
 }
 .band-profile-stats dd {
   margin: 2px 0 0;
   font-family: var(--font-geist-sans), Arial, sans-serif;
-  font-size: 24px;
+  font-size: 28px;
   font-variant-numeric: tabular-nums;
   font-weight: 900;
   line-height: 1;

@@ -225,6 +225,13 @@ button {
   background: rgb(245 238 219 / 96%);
   padding: 12px clamp(20px, 3vw, 42px);
 }
+.topbar-identity,
+.topbar-context {
+  min-width: 0;
+}
+.mobile-topbar-brand {
+  display: none;
+}
 .eyebrow {
   margin: 0 0 3px;
   color: #897767;
