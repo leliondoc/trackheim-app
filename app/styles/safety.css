@@ -970,10 +970,12 @@ label:has(input[type='file']:focus-visible) {
 
 @media (max-width: 780px) {
   .sidebar {
-    overflow: visible;
+    overflow: hidden;
     border-top: 1px solid var(--frame-red);
     border-right: 0;
-    background: linear-gradient(180deg, #28211c, #14110f);
+    box-shadow:
+      inset 0 9px 18px rgb(0 0 0 / 24%),
+      0 -8px 28px rgb(20 14 10 / 24%);
   }
 
   .workspace::after {

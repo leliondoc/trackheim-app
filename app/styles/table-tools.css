@@ -23,6 +23,9 @@
   justify-items: center;
   gap: 3px;
 }
+.topbar-actions {
+  align-items: flex-end;
+}
 .text-scale-tool-icon {
   display: grid;
   height: 18px;

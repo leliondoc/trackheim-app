@@ -121,7 +121,7 @@
   }
 
   .band-profile-entry h4 {
-    font-size: 28px;
+    font-size: 32px;
   }
 
   .band-profile-entry > header > strong {
@@ -147,7 +147,10 @@
     font-size: 15px;
   }
 
-  .profile-card h3,
+  .profile-card h3 {
+    font-size: 32px;
+  }
+
   .library-card h3 {
     font-size: 23px;
   }
@@ -493,7 +496,10 @@
     padding: 20px;
   }
 
-  .profile-card h3,
+  .profile-card h3 {
+    font-size: 35px;
+  }
+
   .library-card h3 {
     font-size: 24px;
   }
@@ -820,7 +826,7 @@
   }
 
   .band-profile-entry h4 {
-    font-size: 30px;
+    font-size: 35px;
   }
 
   .band-profile-entry > header > strong {
@@ -895,10 +901,14 @@
   }
 
   .band-profile-entry h4 {
-    font-size: 32px;
+    font-size: 38px;
   }
 
   .band-profile-entry > header > strong {
     font-size: 25px;
+  }
+
+  .profile-card h3 {
+    font-size: 38px;
   }
 }
