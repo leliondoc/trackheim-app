@@ -49,6 +49,7 @@ import {
 import { Input } from '@/components/ui/input';
 import {
   NativeSelect,
+  NativeSelectOptGroup,
   NativeSelectOption,
 } from '@/components/ui/native-select';
 import { Progress, ProgressLabel } from '@/components/ui/progress';
@@ -971,9 +972,13 @@ function CampaignManagerDialog({
           }}
         >
           <h3>Nouvelle bande</h3>
-          <label className="campaign-faction-field">
+          <label
+            className="campaign-faction-field"
+            htmlFor="campaign-manager-faction"
+          >
             <span>Faction</span>
             <NativeSelect
+              id="campaign-manager-faction"
               aria-invalid={
                 factionSelectionnee && !factionPriseEnCharge ? true : undefined
               }
@@ -983,11 +988,7 @@ function CampaignManagerDialog({
               <NativeSelectOption disabled value="">
                 Choisir une faction…
               </NativeSelectOption>
-              {bandesBibliotheque.map((bande) => (
-                <NativeSelectOption key={bande.slug} value={bande.slug}>
-                  {bande.nom} · grade {bande.grade}
-                </NativeSelectOption>
-              ))}
+              <OptionsBandesParGrade />
             </NativeSelect>
           </label>
           <Input
@@ -1349,11 +1350,7 @@ function EmptyApplicationContent({
                 <NativeSelectOption disabled value="">
                   Choisir une faction…
                 </NativeSelectOption>
-                {bandesBibliotheque.map((bande) => (
-                  <NativeSelectOption key={bande.slug} value={bande.slug}>
-                    {bande.nom} · grade {bande.grade}
-                  </NativeSelectOption>
-                ))}
+                <OptionsBandesParGrade />
               </NativeSelect>
             </label>
             <label htmlFor="empty-warband-name">
@@ -4558,6 +4555,29 @@ function texteGrade(grade: '1a' | '1b' | '1c' | '2') {
   if (grade === '1c')
     return 'Bande expérimentale approuvée par des concepteurs.';
   return 'Création de fans testée et considérée fiable.';
+}
+
+const ordreGrades: BandeBibliotheque['grade'][] = ['1a', '1b', '1c', '2'];
+
+function libelleGroupeGrade(grade: BandeBibliotheque['grade']) {
+  if (grade === '1a') return 'Grade 1a · officiel';
+  if (grade === '1b') return 'Grade 1b · publié par Games Workshop';
+  if (grade === '1c') return 'Grade 1c · expérimental';
+  return 'Grade 2 · création de fans';
+}
+
+function OptionsBandesParGrade() {
+  return ordreGrades.map((grade) => (
+    <NativeSelectOptGroup key={grade} label={libelleGroupeGrade(grade)}>
+      {bandesBibliotheque
+        .filter((bande) => bande.grade === grade)
+        .map((bande) => (
+          <NativeSelectOption key={bande.slug} value={bande.slug}>
+            {bande.nom}
+          </NativeSelectOption>
+        ))}
+    </NativeSelectOptGroup>
+  ));
 }
 
 function descriptionEtape(index: number) {

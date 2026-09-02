@@ -67,7 +67,13 @@ describe('navigation principale', () => {
     expect(screen.getAllByRole('option')).toHaveLength(50);
     expect(selecteur).toHaveValue('strigannes');
     expect(
-      screen.getByRole('option', { name: 'Strigannes · grade 2' }),
+      screen.getByRole('option', { name: 'Strigannes' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('group', { name: 'Grade 1a · officiel' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('group', { name: 'Grade 2 · création de fans' }),
     ).toBeInTheDocument();
 
     await utilisateur.type(
