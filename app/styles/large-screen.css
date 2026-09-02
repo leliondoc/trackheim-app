@@ -740,4 +740,108 @@
   .band-support-state strong {
     font-size: 21px;
   }
+
+  .band-details-header h2 {
+    font-size: 44px;
+  }
+
+  .band-details-header p,
+  .band-rules-grid p {
+    font-size: 17px;
+  }
+
+  .band-source-summary dd,
+  .band-source-warning p,
+  .band-profile-quota,
+  .band-profile-maximums,
+  .band-profile-skills,
+  .band-profile-rule {
+    font-size: 15px;
+  }
+
+  .band-entry-source,
+  .band-profile-entry > header span,
+  .band-reference-equipment-lists > section > header .band-entry-source {
+    font-size: 12px;
+  }
+
+  .band-details-section-heading h3 {
+    font-size: 36px;
+  }
+
+  .band-rules-grid h4,
+  .band-profile-entry h4 {
+    font-size: 22px;
+  }
+
+  .band-profile-entry > header > strong {
+    font-size: 20px;
+  }
+
+  .band-profile-stats dt {
+    font-size: 11px;
+  }
+
+  .band-profile-stats dd {
+    font-size: 18px;
+  }
+
+  .band-equipment-groups h4,
+  .band-reference-equipment-lists > section > header h4,
+  .band-abilities-columns > section > h4 {
+    font-size: 21px;
+  }
+
+  .band-equipment-groups li > div > strong {
+    font-size: 17px;
+  }
+
+  .band-equipment-groups li > div > span,
+  .band-equipment-groups li small,
+  .band-reference-equipment-lists > section > header p {
+    font-size: 14px;
+  }
+
+  .band-equipment-groups li p {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 2200px) {
+  html,
+  body {
+    font-size: 20px;
+  }
+
+  .navigation-item {
+    font-size: 19px;
+  }
+
+  .band-details-header p,
+  .band-rules-grid p {
+    font-size: 18px;
+  }
+
+  .band-source-summary dd,
+  .band-source-warning p,
+  .band-profile-quota,
+  .band-profile-maximums,
+  .band-profile-skills,
+  .band-profile-rule {
+    font-size: 16px;
+  }
+
+  .band-entry-source,
+  .band-profile-entry > header span,
+  .band-reference-equipment-lists > section > header .band-entry-source {
+    font-size: 13px;
+  }
+
+  .band-profile-stats dt {
+    font-size: 12px;
+  }
+
+  .band-profile-stats dd {
+    font-size: 20px;
+  }
 }
