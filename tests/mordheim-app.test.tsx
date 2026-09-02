@@ -9,7 +9,7 @@ import {
   memoriserCampagneActive,
 } from '@/lib/campaign-storage';
 import type { EtatCampagne } from '@/lib/mordheim-data';
-import { campagneAvecCapitaineTest } from './fixtures';
+import { campagneAvecCapitaineTest, campagneVideTest } from './fixtures';
 
 function installerBandeTest(
   campagne: EtatCampagne = campagneAvecCapitaineTest(),
@@ -172,6 +172,20 @@ describe('navigation principale', () => {
       }),
     ).toBeInTheDocument();
 
+    await utilisateur.click(
+      screen.getByRole('link', { name: /^Mode combat$/ }),
+    );
+    expect(
+      await screen.findByRole('heading', { name: 'Préparez votre effectif' }),
+    ).toBeInTheDocument();
+
+    await utilisateur.click(screen.getByRole('link', { name: /^Sorts$/ }));
+    expect(
+      await screen.findByRole('heading', {
+        name: 'Ouvrez un registre de bande',
+      }),
+    ).toBeInTheDocument();
+
     await utilisateur.click(screen.getByRole('link', { name: /^Campagne$/ }));
     expect(
       await screen.findByRole('heading', {
@@ -230,6 +244,70 @@ describe('navigation principale', () => {
         document.getElementById('contenu-principal'),
       );
     });
+  });
+
+  it('conserve le réglage manuel de taille du texte', async () => {
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    const augmenter = await screen.findByRole('button', {
+      name: 'Augmenter la taille du texte',
+    });
+    await utilisateur.click(augmenter);
+
+    expect(screen.getByText('115 %')).toBeInTheDocument();
+    expect(document.querySelector('.application')).toHaveAttribute(
+      'data-text-size',
+      '115',
+    );
+    expect(localStorage.getItem('trackheim:taille-texte')).toBe('115');
+  });
+
+  it('ouvre les quatre formats d’export depuis la campagne', async () => {
+    const campagne = campagneAvecCapitaineTest();
+    campagne.campagneActive = true;
+    campagne.nomCampagne = 'La Chute de Mordheim';
+    installerBandeTest(campagne);
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    await utilisateur.click(
+      await screen.findByRole('link', { name: /^Campagne$/ }),
+    );
+    await utilisateur.click(
+      await screen.findByRole('button', { name: 'Exporter' }),
+    );
+
+    expect(
+      await screen.findByRole('button', { name: /Sauvegarde JSON/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Résumé texte/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Texte détaillé/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Imprimer ou enregistrer en PDF/i }),
+    ).toBeInTheDocument();
+  });
+
+  it('affiche le répertoire magique propre à la faction', async () => {
+    const campagne = campagneVideTest();
+    campagne.factionId = 'culte-des-possedes';
+    installerBandeTest(campagne);
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+
+    await utilisateur.click(
+      await screen.findByRole('link', { name: /^Sorts$/ }),
+    );
+
+    expect(
+      await screen.findByRole('heading', { name: 'Sorts et prières' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Vision d'Horreur")).toBeInTheDocument();
+    expect(screen.getByText(/6 pouvoir/)).toBeInTheDocument();
   });
 
   it('nomme précisément les contrôles d’expérience', async () => {
@@ -319,6 +397,20 @@ describe('navigation principale', () => {
     expect(
       screen.getByRole('button', { name: /Ajouter un combattant/i }),
     ).toBeDisabled();
+
+    await utilisateur.click(
+      screen.getByRole('link', { name: /^Mode combat$/ }),
+    );
+    expect(
+      await screen.findByRole('heading', { name: 'Escarmouche' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Tour suivant' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Sonné' })).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Points de Vie de Wilhelm Krieger'),
+    ).toBeInTheDocument();
   });
 
   it('crée une bande skaven avec ses propres profils', async () => {

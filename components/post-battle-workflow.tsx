@@ -426,6 +426,8 @@ export function PostBattleWorkflow({
       valeurAdverse,
       successeurChefId: null,
       etapeActive: 0,
+      tour: 1,
+      phase: 'Mouvement',
       participants,
       exploration: {
         lancers: [],
@@ -4591,6 +4593,8 @@ function MiniValeur({
 function creerSuiviCombattant(combattantId: string): SuiviCombattantBataille {
   return {
     combattantId,
+    etatTable: 'Debout',
+    notesTable: '',
     horsCombat: 0,
     jetsBlessure: [],
     blessureResolue: false,

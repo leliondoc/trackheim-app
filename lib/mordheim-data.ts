@@ -126,6 +126,11 @@ export type Partie = {
 
 export type SuiviCombattantBataille = {
   combattantId: string;
+  /** État courant sur la table, conservé avec la bataille active. */
+  etatTable?: 'Debout' | 'À terre' | 'Sonné' | 'Hors de combat';
+  /** Points de Vie restants pour la figurine ou l'ensemble du groupe. */
+  pointsVieActuels?: number;
+  notesTable?: string;
   horsCombat: number;
   jetsBlessure: number[];
   blessureResolue: boolean;
@@ -186,6 +191,8 @@ export type BatailleEnCours = {
   valeurAdverse: number;
   successeurChefId: string | null;
   etapeActive: number;
+  tour?: number;
+  phase?: 'Mouvement' | 'Tir' | 'Corps à corps' | 'Ralliement';
   participants: Record<string, SuiviCombattantBataille>;
   exploration: {
     lancers: number[];

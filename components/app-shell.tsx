@@ -3,10 +3,14 @@ import {
   ChevronDown,
   FlaskConical,
   Home,
+  Minus,
+  Plus,
   Search,
   Settings2,
+  Sparkles,
   Stamp,
   Swords,
+  Target,
   Users,
 } from 'lucide-react';
 import { Fragment } from 'react';
@@ -27,6 +31,8 @@ const navigation: Array<{
 }> = [
   { id: 'overview', libelle: 'Vue d’ensemble', icone: Home },
   { id: 'warband', libelle: 'Ma bande', icone: Users },
+  { id: 'combat', libelle: 'Mode combat', icone: Target },
+  { id: 'spells', libelle: 'Sorts', icone: Sparkles },
   { id: 'campaign', libelle: 'Campagne', icone: Swords },
   { id: 'library', libelle: 'Bibliothèque', icone: BookOpen },
 ];
@@ -129,14 +135,24 @@ export function Topbar({
   erreurSauvegarde,
   etatSauvegarde,
   rechercheOuverte,
+  tailleTexte,
+  tailleTexteMaximale,
+  tailleTexteMinimale,
   onCampagnes,
+  onAugmenterTailleTexte,
+  onDiminuerTailleTexte,
   onRecherche,
 }: {
   campagne: EtatCampagne | null;
   erreurSauvegarde: string | null;
   etatSauvegarde: EtatSauvegarde;
   rechercheOuverte: boolean;
+  tailleTexte: number;
+  tailleTexteMaximale: boolean;
+  tailleTexteMinimale: boolean;
   onCampagnes: () => void;
+  onAugmenterTailleTexte: () => void;
+  onDiminuerTailleTexte: () => void;
   onRecherche: () => void;
 }) {
   const libelles: Record<EtatSauvegarde, string> = {
@@ -189,6 +205,25 @@ export function Topbar({
             )}
           </span>
         )}
+        <div className="text-scale-control" aria-label="Taille du texte">
+          <button
+            aria-label="Réduire la taille du texte"
+            disabled={tailleTexteMinimale}
+            onClick={onDiminuerTailleTexte}
+            type="button"
+          >
+            <Minus aria-hidden="true" />
+          </button>
+          <output aria-live="polite">{tailleTexte} %</output>
+          <button
+            aria-label="Augmenter la taille du texte"
+            disabled={tailleTexteMaximale}
+            onClick={onAugmenterTailleTexte}
+            type="button"
+          >
+            <Plus aria-hidden="true" />
+          </button>
+        </div>
         <button
           aria-expanded={rechercheOuverte}
           aria-haspopup="dialog"

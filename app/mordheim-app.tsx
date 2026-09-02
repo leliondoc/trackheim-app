@@ -1,4 +1,12 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from 'react';
 import {
   ArrowLeft,
   BookOpen,
@@ -84,6 +92,9 @@ import {
   surcoutVeteran,
 } from '@/lib/mordheim-rules';
 import { RulesetProvenance } from '@/components/ruleset-provenance';
+import { CombatView } from '@/components/combat-view';
+import { SpellsView } from '@/components/spells-view';
+import { WarbandExportDialog } from '@/components/warband-export-dialog';
 import {
   IndicationNouvelOnglet,
   Sidebar,
@@ -132,6 +143,8 @@ type FiltreGrade = 'tous' | BandeBibliotheque['grade'];
 
 const ID_CAMPAGNE = 'campagne-principale';
 const ID_SESSION = crypto.randomUUID();
+const TAILLES_TEXTE = [90, 100, 115, 130] as const;
+const CLE_TAILLE_TEXTE = 'trackheim:taille-texte';
 
 const pagesRecherche: Array<{
   id: Vue;
@@ -150,6 +163,18 @@ const pagesRecherche: Array<{
     libelle: 'Ma bande',
     description: 'Recrues, équipement et progression',
     icone: Users,
+  },
+  {
+    id: 'combat',
+    libelle: 'Mode combat',
+    description: 'Tour, phase, états et Points de Vie à la table',
+    icone: Swords,
+  },
+  {
+    id: 'spells',
+    libelle: 'Sorts et prières',
+    description: 'Pouvoirs connus et répertoire de la bande',
+    icone: Sparkles,
   },
   {
     id: 'campaign',
@@ -197,6 +222,7 @@ export function MordheimApp() {
   const [configurationRequise, setConfigurationRequise] = useState(true);
   const [modeMemoire, setModeMemoire] = useState(false);
   const [conflitSauvegarde, setConflitSauvegarde] = useState(false);
+  const [tailleTexte, setTailleTexte] = useState(lireTailleTexte);
   const campagneActiveInitialisee = useRef(false);
   const idCampagneCourant = useRef(idCampagne);
   const campagneCourante = useRef<EtatCampagne | null>(campagne);
@@ -204,6 +230,27 @@ export function MordheimApp() {
   const derniereCampagneSauvegardee = useRef('');
   const contenuPrincipal = useRef<HTMLElement>(null);
   const navigationInitialisee = useRef(false);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(CLE_TAILLE_TEXTE, String(tailleTexte));
+    } catch {
+      // Le réglage reste actif pour la session si le stockage est bloqué.
+    }
+  }, [tailleTexte]);
+
+  function changerTailleTexte(direction: -1 | 1) {
+    setTailleTexte((tailleCourante) => {
+      const index = TAILLES_TEXTE.indexOf(
+        tailleCourante as (typeof TAILLES_TEXTE)[number],
+      );
+      const prochain = Math.max(
+        0,
+        Math.min(TAILLES_TEXTE.length - 1, index + direction),
+      );
+      return TAILLES_TEXTE[prochain];
+    });
+  }
 
   useEffect(() => {
     idCampagneCourant.current = idCampagne;
@@ -657,7 +704,15 @@ export function MordheimApp() {
   }
 
   return (
-    <div className="application">
+    <div
+      className="application"
+      data-text-size={tailleTexte}
+      style={
+        {
+          '--trackheim-text-scale': tailleTexte / 100,
+        } as CSSProperties
+      }
+    >
       <a className="skip-link" href="#contenu-principal">
         Aller au contenu principal
       </a>
@@ -670,7 +725,14 @@ export function MordheimApp() {
             erreurSauvegarde={erreurSauvegarde}
             etatSauvegarde={etatSauvegarde}
             rechercheOuverte={rechercheOuverte}
+            tailleTexte={tailleTexte}
+            tailleTexteMaximale={
+              tailleTexte === TAILLES_TEXTE[TAILLES_TEXTE.length - 1]
+            }
+            tailleTexteMinimale={tailleTexte === TAILLES_TEXTE[0]}
             onCampagnes={() => setGestionCampagnesOuverte(true)}
+            onAugmenterTailleTexte={() => changerTailleTexte(1)}
+            onDiminuerTailleTexte={() => changerTailleTexte(-1)}
             onRecherche={() => {
               if (!campagne) {
                 naviguerVers('library');
@@ -777,7 +839,18 @@ export function MordheimApp() {
                     synthese={synthese}
                     onCampagneChange={setCampagne}
                     onChangerBande={() => setGestionCampagnesOuverte(true)}
+                    onExport={exporterCampagne}
                   />
+                )}
+                {vue === 'combat' && (
+                  <CombatView
+                    campagne={campagne}
+                    onCampagneChange={setCampagne}
+                    onVueChange={naviguerVers}
+                  />
+                )}
+                {vue === 'spells' && (
+                  <SpellsView campagne={campagne} onVueChange={naviguerVers} />
                 )}
                 {vue === 'campaign' && (
                   <CampaignView
@@ -1399,6 +1472,46 @@ function EmptyApplicationContent({
     );
   }
 
+  if (vue === 'combat' || vue === 'spells') {
+    const combat = vue === 'combat';
+    return (
+      <section className="product-view empty-table-tool-view">
+        <PageHeader
+          eyebrow={combat ? 'Mode table' : 'Aide de jeu'}
+          title={combat ? 'Combat' : 'Sorts et prières'}
+          description={
+            combat
+              ? 'Le suivi de tour, des états et des Points de Vie utilise les combattants réellement engagés dans une bataille.'
+              : 'Les sorts appris et le répertoire de magie dépendent de la faction et des combattants de votre registre.'
+          }
+        />
+        <section className="empty-table-tool-card">
+          {combat ? (
+            <Swords aria-hidden="true" />
+          ) : (
+            <Sparkles aria-hidden="true" />
+          )}
+          <div>
+            <p className="eyebrow">Une bande est nécessaire</p>
+            <h2>
+              {combat
+                ? 'Préparez votre effectif'
+                : 'Ouvrez un registre de bande'}
+            </h2>
+            <p>
+              {combat
+                ? 'Créez la bande dans son onglet, puis lancez une bataille depuis Campagne.'
+                : 'Trackheim affichera uniquement les pouvoirs présents dans la fiche de la faction choisie.'}
+            </p>
+          </div>
+          <Button onClick={() => onVueChange('warband')} type="button">
+            <Users aria-hidden="true" /> Aller à Ma bande
+          </Button>
+        </section>
+      </section>
+    );
+  }
+
   if (vue === 'overview') {
     return (
       <section className="product-view empty-app-view">
@@ -1909,11 +2022,13 @@ function WarbandView({
   synthese,
   onCampagneChange,
   onChangerBande,
+  onExport,
 }: {
   campagne: EtatCampagne;
   synthese: Synthese;
   onCampagneChange: (campagne: EtatCampagne) => void;
   onChangerBande: () => void;
+  onExport: () => void;
 }) {
   const definition = obtenirDefinitionBande(campagne.factionId);
   const verrouillee = Boolean(campagne.batailleEnCours);
@@ -1956,6 +2071,7 @@ function WarbandView({
         description={`Recrutez, équipez et faites progresser chaque combattant. Les limites ${definition.nom} sont contrôlées automatiquement.`}
         action={
           <div className="page-header-actions">
+            <WarbandExportDialog campagne={campagne} onExportJson={onExport} />
             <Button
               className="primary-action"
               onClick={onChangerBande}
@@ -2844,9 +2960,7 @@ function CampaignView({
         title="Après la poussière"
         description="Faites les trois premières étapes devant votre adversaire, puis reprenez les achats quand vous le souhaitez."
         action={
-          <Button onClick={onExport} type="button" variant="outline">
-            <Download aria-hidden="true" /> Exporter la campagne
-          </Button>
+          <WarbandExportDialog campagne={campagne} onExportJson={onExport} />
         }
       />
 
@@ -4522,6 +4636,18 @@ function telechargerTexte(contenu: string, nomFichier: string) {
     lien.remove();
     URL.revokeObjectURL(url);
   }, 1_000);
+}
+
+function lireTailleTexte() {
+  try {
+    const valeur = Number(window.localStorage.getItem(CLE_TAILLE_TEXTE));
+    if (TAILLES_TEXTE.includes(valeur as (typeof TAILLES_TEXTE)[number])) {
+      return valeur;
+    }
+  } catch {
+    // La taille par défaut fonctionne sans stockage persistant.
+  }
+  return 100;
 }
 
 function messageErreurStockage(erreur: unknown) {

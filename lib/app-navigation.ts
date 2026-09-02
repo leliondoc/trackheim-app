@@ -1,6 +1,8 @@
 export const VUES = [
   'overview',
   'warband',
+  'combat',
+  'spells',
   'campaign',
   'library',
   'homebrew',

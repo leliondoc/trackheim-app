@@ -29,4 +29,5 @@ yarn-error.log*
 
 # generated files
 /outputs/
+/output/
 /work/

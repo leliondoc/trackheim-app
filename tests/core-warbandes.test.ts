@@ -236,7 +236,7 @@ describe('socle automatisé des huit bandes historiques', () => {
     assert.equal(sortsPourHeritageMagique('culte-des-possedes').length, 6);
     assert.equal(
       sortsPourHeritageMagique('soeurs-de-sigmar').includes(
-        'Marteau de Sigmar',
+        'Le Marteau de Sigmar',
       ),
       true,
     );

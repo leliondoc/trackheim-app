@@ -11,6 +11,8 @@ import {
 
 test('les vues possèdent des URL stables et partageables', () => {
   assert.equal(hashPourVue('campaign'), '#/campaign');
+  assert.equal(hashPourVue('combat'), '#/combat');
+  assert.equal(hashPourVue('spells'), '#/spells');
   assert.equal(vueDepuisHash('#/library'), 'library');
   assert.equal(vueDepuisHash('#/library/horde-orque'), 'library');
   assert.equal(hashPourBande('horde-orque'), '#/library/horde-orque');

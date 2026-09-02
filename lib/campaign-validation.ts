@@ -480,6 +480,21 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
     return 'batailleEnCours.etapeActive est invalide.';
   }
   if (
+    valeur.tour !== undefined &&
+    (!estEntierNaturel(valeur.tour) || valeur.tour < 1 || valeur.tour > 999)
+  ) {
+    return 'batailleEnCours.tour est invalide.';
+  }
+  if (
+    valeur.phase !== undefined &&
+    (typeof valeur.phase !== 'string' ||
+      !['Mouvement', 'Tir', 'Corps à corps', 'Ralliement'].includes(
+        valeur.phase,
+      ))
+  ) {
+    return 'batailleEnCours.phase est invalide.';
+  }
+  if (
     !estObjet(valeur.participants) ||
     Object.keys(valeur.participants).length > 200
   ) {
@@ -496,6 +511,28 @@ function validerBataille(valeur: unknown, idsCombattants: Set<string>) {
     }
     if (suivi.combattantId !== combattantId) {
       return `${chemin}.combattantId ne correspond pas à sa clé.`;
+    }
+    if (
+      suivi.etatTable !== undefined &&
+      (typeof suivi.etatTable !== 'string' ||
+        !['Debout', 'À terre', 'Sonné', 'Hors de combat'].includes(
+          suivi.etatTable,
+        ))
+    ) {
+      return `${chemin}.etatTable est invalide.`;
+    }
+    if (
+      suivi.pointsVieActuels !== undefined &&
+      (!estEntierNaturel(suivi.pointsVieActuels) ||
+        suivi.pointsVieActuels > 1_000)
+    ) {
+      return `${chemin}.pointsVieActuels est invalide.`;
+    }
+    if (
+      suivi.notesTable !== undefined &&
+      !estTexte(suivi.notesTable, 0, 2_000)
+    ) {
+      return `${chemin}.notesTable est invalide.`;
     }
     for (const cle of [
       'horsCombat',
