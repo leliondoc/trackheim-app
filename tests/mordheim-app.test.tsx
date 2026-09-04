@@ -6,16 +6,19 @@ import {
   waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { MordheimApp } from '@/app/mordheim-app';
 import {
   cleCopieLocale,
+  CLE_CAMPAGNE_ACTIVE,
   ecrireCopieLocale,
+  lireCopieLocale,
   memoriserCampagneActive,
 } from '@/lib/campaign-storage';
 import type { EtatCampagne } from '@/lib/mordheim-data';
 import { campagneAvecCapitaineTest, campagneVideTest } from './fixtures';
+import { serialiserCampagne } from '@/lib/campaign-transfer';
 
 function installerBandeTest(
   campagne: EtatCampagne = campagneAvecCapitaineTest(),
@@ -31,6 +34,99 @@ describe('navigation principale', () => {
   beforeEach(() => {
     localStorage.clear();
     history.replaceState(null, '', '#/overview');
+  });
+
+  it('préserve les changements intervenus pendant la lecture asynchrone d’une sauvegarde', async () => {
+    installerBandeTest();
+    history.replaceState(null, '', '#/campaign');
+    render(<MordheimApp />);
+    await screen.findByRole('heading', { name: 'Entrer dans la chronique' });
+    const utilisateur = userEvent.setup();
+    let terminer!: (texte: string) => void;
+    const attente = new Promise<string>((resolve) => {
+      terminer = resolve;
+    });
+    fireEvent.change(screen.getByLabelText(/Choisir un fichier JSON/), {
+      target: { files: [{ size: 1000, text: () => attente }] },
+    });
+    await utilisateur.type(
+      screen.getByRole('textbox', { name: 'Nom de la campagne à démarrer' }),
+      'Chronique nouvelle',
+    );
+    await utilisateur.click(
+      screen.getByRole('button', { name: /Démarrer la campagne/ }),
+    );
+    await waitFor(() => {
+      const lecture = lireCopieLocale(localStorage, 'campagne-principale');
+      expect(
+        lecture.statut === 'valide' && lecture.copie.campagne.nomCampagne,
+      ).toBe('Chronique nouvelle');
+    });
+    await act(async () => {
+      terminer(
+        serialiserCampagne({
+          ...campagneVideTest(),
+          nomBande: 'Bande importée',
+        }),
+      );
+    });
+    await screen.findByText('Bande importée');
+    const lecture = lireCopieLocale(localStorage, 'campagne-principale');
+    expect(
+      lecture.statut === 'valide' && lecture.copie.campagne.nomCampagne,
+    ).toBe('Chronique nouvelle');
+  });
+
+  it('conserve la version courante quand la mémorisation de la nouvelle bande échoue', async () => {
+    installerBandeTest();
+    render(<MordheimApp />);
+    const utilisateur = userEvent.setup();
+    await utilisateur.click(
+      await screen.findByRole('button', { name: 'Bande de test' }),
+    );
+    await utilisateur.selectOptions(
+      screen.getByRole('combobox', { name: 'Faction' }),
+      'mercenaires-reiklanders',
+    );
+    await utilisateur.type(
+      screen.getByRole('textbox', { name: 'Nom de la nouvelle bande' }),
+      'Nouvelle bande',
+    );
+    const ecrire = Storage.prototype.setItem.bind(localStorage);
+    const espion = vi
+      .spyOn(Storage.prototype, 'setItem')
+      .mockImplementation(function (this: Storage, cle, valeur) {
+        if (cle === CLE_CAMPAGNE_ACTIVE && valeur !== 'campagne-principale')
+          throw new DOMException('Quota pointeur', 'QuotaExceededError');
+        ecrire(cle, valeur);
+      });
+    try {
+      await utilisateur.click(
+        screen.getByRole('button', { name: /Créer la bande/ }),
+      );
+    } finally {
+      espion.mockRestore();
+    }
+    await utilisateur.keyboard('{Escape}');
+    await utilisateur.click(screen.getByRole('link', { name: /^Campagne$/ }));
+    await utilisateur.type(
+      screen.getByRole('textbox', { name: 'Nom de la campagne à démarrer' }),
+      'Après quota',
+    );
+    await utilisateur.click(
+      screen.getByRole('button', { name: /Démarrer la campagne/ }),
+    );
+    await waitFor(() => {
+      const lecture = lireCopieLocale(localStorage, 'campagne-principale');
+      expect(
+        lecture.statut === 'valide' && lecture.copie.campagne.nomCampagne,
+      ).toBe('Après quota');
+    });
+    expect(
+      screen.queryByRole('heading', {
+        name: 'Deux versions du registre existent',
+      }),
+    ).not.toBeInTheDocument();
   });
 
   it('ouvre l’application normalement sans imposer la création d’une bande', async () => {
@@ -134,7 +230,7 @@ describe('navigation principale', () => {
         name: /^Consulter les informations de /,
       }),
     ).toHaveLength(49);
-    expect(screen.getAllByText(/Fiche complète/)).toHaveLength(49);
+    expect(screen.getAllByText(/Fiche de référence ·/)).toHaveLength(49);
   });
 
   it('ouvre une fiche de bande détaillée avec une URL partageable', async () => {
@@ -252,7 +348,7 @@ describe('navigation principale', () => {
     expect(screen.queryByText('maitre-de-ceremonie, impur, frere')).toBeNull();
   });
 
-  it('écarte silencieusement une sauvegarde invalide sans ancien format', async () => {
+  it('préserve une sauvegarde invalide et propose de récupérer son original', async () => {
     localStorage.setItem(
       cleCopieLocale('campagne-principale'),
       '{ancienne-donnee-de-test',
@@ -265,11 +361,73 @@ describe('navigation principale', () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.queryByText(/registre local est illisible/i),
-    ).not.toBeInTheDocument();
+      screen.getByRole('heading', { name: 'Votre registre est conservé' }),
+    ).toBeInTheDocument();
     expect(
-      localStorage.getItem(cleCopieLocale('campagne-principale')),
-    ).toBeNull();
+      screen.getByRole('button', { name: 'Télécharger le registre original' }),
+    ).toBeInTheDocument();
+    expect(localStorage.getItem(cleCopieLocale('campagne-principale'))).toBe(
+      '{ancienne-donnee-de-test',
+    );
+  });
+
+  it('restaure directement depuis l’accueil sans créer une bande temporaire', async () => {
+    const utilisateur = userEvent.setup();
+    render(<MordheimApp />);
+    expect(
+      await screen.findByRole('button', { name: 'Restaurer une sauvegarde' }),
+    ).toBeInTheDocument();
+    const json = serialiserCampagne(campagneAvecCapitaineTest());
+    const fichier = new File([json], 'campagne.json', {
+      type: 'application/json',
+    });
+    Object.defineProperty(fichier, 'text', { value: async () => json });
+    await utilisateur.upload(
+      screen.getByLabelText('Fichier de sauvegarde Trackheim'),
+      fichier,
+    );
+    await utilisateur.click(
+      await screen.findByRole('link', { name: /^Ma bande$/ }),
+    );
+    expect(await screen.findByText('Wilhelm Krieger')).toBeInTheDocument();
+  });
+
+  it('reste utilisable quand le getter localStorage est interdit', async () => {
+    const stockage = vi
+      .spyOn(window, 'localStorage', 'get')
+      .mockImplementation(() => {
+        throw new DOMException('Refusé', 'SecurityError');
+      });
+    try {
+      const utilisateur = userEvent.setup();
+      render(<MordheimApp />);
+      expect(
+        await screen.findByRole('heading', { name: 'Accueil' }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Stockage indisponible : mode mémoire'),
+      ).toBeInTheDocument();
+      await utilisateur.click(
+        screen.getByRole('button', { name: 'Créer ma bande' }),
+      );
+      await utilisateur.selectOptions(
+        screen.getByRole('combobox', { name: 'Faction' }),
+        'mercenaires-reiklanders',
+      );
+      await utilisateur.type(
+        screen.getByRole('textbox', { name: 'Nom de la nouvelle bande' }),
+        'Bande en mémoire',
+      );
+      await utilisateur.click(
+        screen.getByRole('button', { name: 'Créer la bande' }),
+      );
+      expect(await screen.findByText('Bande en mémoire')).toBeInTheDocument();
+      expect(
+        screen.getByText('Mode mémoire : export indispensable'),
+      ).toBeInTheDocument();
+    } finally {
+      stockage.mockRestore();
+    }
   });
 
   it('synchronise la vue, l’URL, l’état actif et le focus', async () => {
@@ -478,7 +636,10 @@ describe('navigation principale', () => {
     );
     expect(
       screen.getByRole('button', { name: 'Hors de combat' }),
-    ).toHaveAttribute('aria-pressed', 'true');
+    ).toHaveAttribute('aria-pressed', 'false');
+    await utilisateur.click(
+      screen.getByRole('button', { name: 'Hors de combat' }),
+    );
 
     await utilisateur.click(screen.getByRole('link', { name: /^Campagne$/ }));
     expect(

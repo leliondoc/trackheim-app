@@ -1,7 +1,7 @@
 {
   "schema": "trackheim-warband-catalogue",
   "version": 1,
-  "verifieLe": "2026-09-02",
+  "verifieLe": "2026-09-04",
   "sourceCatalogue": "https://sites.google.com/view/grande-librairie-de-mordheim/bandes",
   "bandes": {
     "chasseurs-de-tresors-nains": {
@@ -18,9 +18,7 @@
       "langueDocument": "français",
       "pdfUrl": "https://drive.google.com/file/d/199iOwbkouMfOgxtdi5tbDQLal-ZmCcvk/view?usp=sharing",
       "pagesPdf": 10,
-      "avertissements": [
-        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
-      ]
+      "avertissements": []
     },
     "horde-orque": {
       "presentation": "Un chef orque mène une troupe attirée par les bagarres, le pillage et la pierre magique. La bande réunit la brutalité des orques et les effectifs plus instables des gobelins.",
@@ -102,9 +100,7 @@
       "langueDocument": "français",
       "pdfUrl": "https://drive.google.com/file/d/19d2iZDHQB1fLLz9ITUCSHALXvT1Cm9X0/view?usp=sharing",
       "pagesPdf": 5,
-      "avertissements": [
-        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
-      ]
+      "avertissements": []
     },
     "pillards-hommes-betes": {
       "presentation": "Ces hardes brutales quittent les forêts pour détruire les établissements humains et récupérer la pierre magique. Elles mêlent chefs bestiaux, gors, ungors et créatures du Chaos dans une force agressive.",
@@ -120,9 +116,7 @@
       "langueDocument": "français",
       "pdfUrl": "https://drive.google.com/file/d/1zoQZnMwOuEFKmRuRb-ltsZBd6GKIVkW8/view?usp=sharing",
       "pagesPdf": 5,
-      "avertissements": [
-        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
-      ]
+      "avertissements": []
     },
     "skavens-du-clan-eshin": {
       "presentation": "Le Clan Eshin infiltre Mordheim par ses tunnels afin de s'emparer de la malepierre sans révéler son abondance aux clans rivaux. Ses bandes privilégient la vitesse, la furtivité et les techniques d'assassinat.",
@@ -130,9 +124,7 @@
       "langueDocument": "français",
       "pdfUrl": "https://drive.google.com/file/d/1kAgHhx9tcEShv2PuNmagwDI2uVtVo7dz/view?usp=sharing",
       "pagesPdf": 7,
-      "avertissements": [
-        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
-      ]
+      "avertissements": []
     },
     "soeurs-de-sigmar": {
       "presentation": "Les religieuses du Roc de Sigmar ont survécu à la destruction de la cité et cherchent désormais à soustraire la pierre magique aux profanateurs. La bande réunit matriarches, novices et sœurs guerrières soutenues par les Prières de Sigmar.",
@@ -140,9 +132,7 @@
       "langueDocument": "français",
       "pdfUrl": "https://drive.google.com/file/d/1UWfMrQUoOoT64lWbm5uV-hg-K5t4Ae64/view?usp=sharing",
       "pagesPdf": 5,
-      "avertissements": [
-        "Le lien PDF actuellement présent dans l'application diffère du lien GLM publié et doit être remplacé."
-      ]
+      "avertissements": []
     },
     "amazones-l": {
       "presentation": "Les Amazones de Lustrie défendent leur île et explorent les ruines à la recherche d'artefacts des anciens Slanns. Cette version conserve l'équipement exotique et la puissance prévus pour le cadre de campagne lustrien.",
@@ -246,7 +236,9 @@
       "langueDocument": "français",
       "pdfUrl": "https://drive.google.com/file/d/1xge4dECLtnhCaq1oOc_KdfREN57zDQss/view?usp=drive_link",
       "pagesPdf": 8,
-      "avertissements": []
+      "avertissements": [
+        "La phrase de composition de la traduction est tronquée. Le plafond de 20 figurines provient de Forest Goblins, Nemesis Crown, version originale page 1."
+      ]
     },
     "guerriers-fantomes": {
       "presentation": "Des exilés de Nagarythe qui traquent les serviteurs du Roi Sorcier loin d’Ulthuan. Cette bande d’élite privilégie l’adresse, le tir et la mobilité, avec les limites propres à une petite troupe elfique.",

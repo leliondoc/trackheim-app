@@ -82,7 +82,20 @@
               "description": "Il connaît au départ une rune mineure tirée au hasard. Avant chaque bataille, il peut tenter d'inscrire une rune sur un objet. Chaque fois qu'il obtient une nouvelle compétence, il peut choisir d'apprendre une rune mineure supplémentaire à la place."
             }
           ],
-          "source": "Expédition Runique V1.2aFr, pages 2, 4, 5 et 7"
+          "source": "Expédition Runique V1.2aFr, pages 2, 4, 5 et 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 3,
+            "capaciteCombat": 7,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 5,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "apprenti-forgerune",
@@ -115,7 +128,20 @@
               "description": "Tant que l'Apprenti est présent, le Forgerune peut tenter d'inscrire deux objets avant une bataille au lieu d'un seul."
             }
           ],
-          "source": "Expédition Runique V1.2aFr, pages 2, 4 et 5"
+          "source": "Expédition Runique V1.2aFr, pages 2, 4 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 3,
+            "capaciteCombat": 7,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 5,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "tueur-de-trolls",
@@ -147,7 +173,20 @@
               "description": "Il ne peut employer ni arme de tir ni armure."
             }
           ],
-          "source": "Expédition Runique V1.2aFr, pages 2, 4 et 5"
+          "source": "Expédition Runique V1.2aFr, pages 2, 4 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 3,
+            "capaciteCombat": 7,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 5,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "longue-barbe",
@@ -175,7 +214,20 @@
               "description": "Il relance tout test de Commandement raté et doit conserver le second résultat."
             }
           ],
-          "source": "Expédition Runique V1.2aFr, page 6"
+          "source": "Expédition Runique V1.2aFr, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 3,
+            "capaciteCombat": 7,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 5,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "guerrier-des-clans",
@@ -198,7 +250,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Expédition Runique V1.2aFr, page 6"
+          "source": "Expédition Runique V1.2aFr, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 3,
+            "capaciteCombat": 7,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 5,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "arbaletrier-nain",
@@ -221,7 +286,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Expédition Runique V1.2aFr, page 6"
+          "source": "Expédition Runique V1.2aFr, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 3,
+            "capaciteCombat": 7,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 5,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "poil-au-menton",
@@ -244,7 +322,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Expédition Runique V1.2aFr, page 6"
+          "source": "Expédition Runique V1.2aFr, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 3,
+            "capaciteCombat": 7,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 5,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -267,45 +358,91 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
                 {
                   "nom": "Hache naine",
                   "cout": 15,
                   "note": "Parade. Deux haches permettent de relancer une parade ratée. Tranchante: modificateur supplémentaire de moins 1 à la sauvegarde adverse."
                 },
-                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
                 {
                   "nom": "Arme en gromril",
                   "cout": 0,
                   "formuleCout": "coût normal x 3",
-                  "note": "Accessible uniquement à la création parmi les armes normalement autorisées au profil."
+                  "note": "Accessible uniquement à la création parmi les armes normalement autorisées au profil.",
+                  "variantesArme": {
+                    "materiau": "gromril",
+                    "multiplicateur": 3,
+                    "multiplicateurCommerce": 4
+                  },
+                  "achatDesactive": "Choisir une arme en gromril avec son type et son coût complet.",
+                  "rareteCommerce": 11
                 }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Pistolet", "cout": 15 },
-                { "nom": "Paire de pistolets", "cout": 30 }
+                {
+                  "nom": "Pistolet",
+                  "cout": 15
+                },
+                {
+                  "nom": "Paire de pistolets",
+                  "cout": 30
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
                 {
                   "nom": "Armure en gromril",
                   "cout": 75,
                   "note": "Prix réservé à la création de la bande."
                 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -323,23 +460,52 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 }
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
-              "entrees": [{ "nom": "Arbalète", "cout": 25 }]
+              "entrees": [
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                }
+              ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -350,42 +516,53 @@
         {
           "titre": "Maître des lames",
           "description": "Une parade réussit sur un résultat supérieur ou égal au meilleur jet pour toucher adverse. Deux armes de parade permettent deux parades. Deux haches naines permettent en plus de relancer les parades ratées.",
-          "source": "Expédition Runique V1.2aFr, page 4"
+          "source": "Expédition Runique V1.2aFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Crâne épais",
           "description": "Le Héros possède une sauvegarde spéciale de 3+ pour transformer un résultat sonné en à terre. Avec un casque, cette sauvegarde passe à 2+ et remplace la règle normale du casque.",
-          "source": "Expédition Runique V1.2aFr, page 4"
+          "source": "Expédition Runique V1.2aFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Increvable",
           "description": "Après avoir été mis hors de combat, le Héros peut relancer une fois son jet de blessure grave et doit garder le second résultat.",
-          "source": "Expédition Runique V1.2aFr, page 4"
+          "source": "Expédition Runique V1.2aFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Prospecteur",
           "description": "Après une bataille, le Héros peut modifier de plus ou moins 1 l'un de ses dés d'exploration.",
-          "source": "Expédition Runique V1.2aFr, page 4"
+          "source": "Expédition Runique V1.2aFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Très coriace",
           "description": "Pour ce Héros, un jet de dégâts de 1 à 3 le met à terre, de 4 à 5 le sonne et 6 le met hors de combat.",
-          "source": "Expédition Runique V1.2aFr, page 4"
+          "source": "Expédition Runique V1.2aFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Charge furieuse",
           "description": "Un Tueur de Trolls double ses Attaques pendant le tour où il charge, mais subit moins 1 pour toucher pendant ce tour.",
-          "source": "Expédition Runique V1.2aFr, page 4"
+          "source": "Expédition Runique V1.2aFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["tueur-de-trolls"]
         },
         {
           "titre": "Tueur de monstres",
           "description": "Un Tueur de Trolls blesse toujours sur 4+, sauf si sa Force modifiée lui permet de blesser plus facilement.",
-          "source": "Expédition Runique V1.2aFr, page 4"
+          "source": "Expédition Runique V1.2aFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["tueur-de-trolls"]
         },
         {
           "titre": "Berserk",
           "description": "Un Tueur de Trolls gagne plus 1 à ses jets pour toucher pendant le tour où il charge.",
-          "source": "Expédition Runique V1.2aFr, page 4"
+          "source": "Expédition Runique V1.2aFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["tueur-de-trolls"]
         }
       ],
       "magie": [
@@ -520,7 +697,9 @@
               "description": "Il n'a besoin ni de nourriture ni d'eau. Les animaux vivants accompagnant la bande appliquent toutefois les règles d'eau normalement."
             }
           ],
-          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2, 3 et 4"
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2, 3 et 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "pretre-liche",
@@ -556,7 +735,9 @@
               "description": "Il ne peut porter aucune armure, car elle gênerait ses incantations."
             }
           ],
-          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2 et 4"
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2 et 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "acolyte",
@@ -584,7 +765,9 @@
               "description": "Il applique toutes les règles communes des Mort-vivants de la bande."
             }
           ],
-          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2 et 4"
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2 et 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "guerrier-squelette",
@@ -612,7 +795,8 @@
               "description": "Il applique toutes les règles communes des Mort-vivants et ne gagne jamais d'expérience."
             }
           ],
-          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 5"
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 5",
+          "gagneExperience": false
         },
         {
           "id": "garde-des-tombes",
@@ -640,7 +824,8 @@
               "description": "Il applique toutes les règles communes des Mort-vivants de la bande."
             }
           ],
-          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 5"
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 5",
+          "gagneExperience": false
         },
         {
           "id": "scorpion-des-tombes",
@@ -680,7 +865,8 @@
               "description": "Il ne peut utiliser ni arme ni armure."
             }
           ],
-          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 5"
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 5",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -700,20 +886,47 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Morgenstern", "cout": 15 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Fléau", "cout": 15 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc", "cout": 10 },
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
                 {
                   "nom": "Flèches d'aspic",
                   "cout": 10,
@@ -729,8 +942,14 @@
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Armure légère", "cout": 20 }
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                }
               ]
             }
           ],
@@ -748,10 +967,22 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Bâton", "cout": 3 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Morgenstern", "cout": 15 },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Bâton",
+                  "cout": 3
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
                 {
                   "nom": "Bâton serpent",
                   "cout": 30,
@@ -759,8 +990,14 @@
                 }
               ]
             },
-            { "nom": "Armes de tir", "entrees": [] },
-            { "nom": "Armures", "entrees": [] }
+            {
+              "nom": "Armes de tir",
+              "entrees": []
+            },
+            {
+              "nom": "Armures",
+              "entrees": []
+            }
           ],
           "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF pages 2 et 3"
         },
@@ -781,7 +1018,11 @@
                   "nom": "Char squelette",
                   "cout": 200,
                   "formuleCout": "200 + 10D6",
-                  "note": "Maximum un. Mouvement 8, ne court pas et double son mouvement en charge. Terrain difficile: D3 touches de Force 4, ou 2D3 touches de Force 6 pendant une charge. Un attelage mort réduit de moitié le mouvement et supprime les touches d'impact. Deux attelages morts immobilisent le char. Après plus d'un demi-mouvement, il inflige une touche de Force 4 avec moins 2 à la sauvegarde aux figurines sur sa trajectoire qui ratent leur Initiative. Le char est une grande cible. Une touche de tir atteint sur 1 à 2 l'attelage, sur 3 à 4 le char et sur 5 à 6 le conducteur."
+                  "note": "Maximum un. Mouvement 8, ne court pas et double son mouvement en charge. Terrain difficile: D3 touches de Force 4, ou 2D3 touches de Force 6 pendant une charge. Un attelage mort réduit de moitié le mouvement et supprime les touches d'impact. Deux attelages morts immobilisent le char. Après plus d'un demi-mouvement, il inflige une touche de Force 4 avec moins 2 à la sauvegarde aux figurines sur sa trajectoire qui ratent leur Initiative. Le char est une grande cible. Une touche de tir atteint sur 1 à 2 l'attelage, sur 3 à 4 le char et sur 5 à 6 le conducteur.",
+                  "coutCommerceFormule": "200 + 10D6",
+                  "coutCommerce": 200,
+                  "prixRecrutementFormule": "200 + 10D6",
+                  "prixRecrutementMinimum": 210
                 }
               ]
             }
@@ -793,7 +1034,8 @@
         {
           "titre": "Conduite de char",
           "description": "Cette compétence d'Érudition permet de conduire efficacement un char au combat. Sans elle, le conducteur ne peut pas charger.",
-          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 3"
+          "source": "Tomb Guardians, Khemri: The Land of the Dead, PDF page 3",
+          "apprenable": true
         }
       ],
       "magie": [
@@ -906,7 +1148,20 @@
               "description": "Il applique la règle commune Gladiateur de la bande."
             }
           ],
-          "source": "Gladiateurs V1.4eFr, pages 3, 4 et 6"
+          "source": "Gladiateurs V1.4eFr, pages 3, 4 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "veteran-de-l-arene",
@@ -934,7 +1189,20 @@
               "description": "Il applique la règle commune Gladiateur de la bande."
             }
           ],
-          "source": "Gladiateurs V1.4eFr, pages 3, 4 et 6"
+          "source": "Gladiateurs V1.4eFr, pages 3, 4 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "gladiateur-tueur-de-trolls",
@@ -982,7 +1250,20 @@
               "description": "Il est immunisé à la psychologie et ne teste jamais seul contre tous."
             }
           ],
-          "source": "Gladiateurs V1.4eFr, pages 3, 4 et 7"
+          "source": "Gladiateurs V1.4eFr, pages 3, 4 et 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 3,
+            "capaciteCombat": 7,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 5,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "gladiateur",
@@ -1010,7 +1291,20 @@
               "description": "Il applique la règle commune Gladiateur de la bande."
             }
           ],
-          "source": "Gladiateurs V1.4eFr, page 8"
+          "source": "Gladiateurs V1.4eFr, page 8",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "retiaire",
@@ -1042,7 +1336,20 @@
               "description": "Lorsqu'il est chargé, il peut réussir un test d'Initiative pour transformer cette charge en charge ratée."
             }
           ],
-          "source": "Gladiateurs V1.4eFr, page 8"
+          "source": "Gladiateurs V1.4eFr, page 8",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "gladiateur-ogre",
@@ -1069,7 +1376,10 @@
               "titre": "Gladiateur",
               "description": "Il applique la règle commune Gladiateur de la bande."
             },
-            { "titre": "Peur", "description": "Il provoque la peur." },
+            {
+              "titre": "Peur",
+              "description": "Il provoque la peur."
+            },
             {
               "titre": "Grande cible",
               "description": "Il peut toujours être pris pour cible, même si une cible plus proche est disponible."
@@ -1083,7 +1393,20 @@
               "description": "S'il devient Héros grâce à Ce gars est doué, il peut apprendre les compétences de Combat, de Force et les compétences spéciales de Gladiateur."
             }
           ],
-          "source": "Gladiateurs V1.4eFr, pages 3 et 9"
+          "source": "Gladiateurs V1.4eFr, pages 3 et 9",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 5,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 5,
+            "initiative": 6,
+            "attaques": 5,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -1153,16 +1476,31 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Hache naine",
                   "cout": 15,
                   "note": "Tueur de Trolls seulement."
                 },
-                { "nom": "Fléau", "cout": 15 },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                },
                 {
                   "nom": "Gantelet à pointes",
                   "cout": 15,
@@ -1172,7 +1510,14 @@
                   "nom": "Arme en gromril",
                   "cout": 0,
                   "formuleCout": "coût normal x 3",
-                  "note": "Tueur de Trolls seulement."
+                  "note": "Tueur de Trolls seulement.",
+                  "variantesArme": {
+                    "materiau": "gromril",
+                    "multiplicateur": 3,
+                    "multiplicateurCommerce": 4
+                  },
+                  "achatDesactive": "Choisir une arme en gromril avec son type et son coût complet.",
+                  "rareteCommerce": 11
                 }
               ]
             },
@@ -1184,7 +1529,11 @@
                   "cout": 20,
                   "note": "Ogre seulement."
                 },
-                { "nom": "Casque", "cout": 10, "note": "Ogre seulement." }
+                {
+                  "nom": "Casque",
+                  "cout": 10,
+                  "note": "Ogre seulement."
+                }
               ]
             }
           ],
@@ -1207,12 +1556,14 @@
                 {
                   "nom": "Trident",
                   "cout": 15,
-                  "note": "Rare 7, Gladiateurs seulement. Corps à corps, Force de l'utilisateur, frappe en premier au premier tour et Parade."
+                  "note": "Rare 7, Gladiateurs seulement. Corps à corps, Force de l'utilisateur, frappe en premier au premier tour et Parade.",
+                  "rareteCommerce": 7
                 },
                 {
                   "nom": "Gantelet à pointes",
                   "cout": 15,
-                  "note": "Rare 7, Gladiateurs seulement. Compte comme rondache et arme additionnelle, avec Parade. Associé à une épée, permet une relance de parade ratée par tour."
+                  "note": "Rare 7, Gladiateurs seulement. Compte comme rondache et arme additionnelle, avec Parade. Associé à une épée, permet une relance de parade ratée par tour.",
+                  "rareteCommerce": 7
                 },
                 {
                   "nom": "Javelot de gladiateur",
@@ -1229,42 +1580,55 @@
         {
           "titre": "Renversement",
           "description": "Au lieu d'une charge normale, le Gladiateur effectue une seule attaque avec plus 1 pour toucher et plus 1 en Force, sans bonus d'arme ni de capacité. Le coup est critique sur 5+.",
-          "source": "Gladiateurs V1.4eFr, page 4"
+          "source": "Gladiateurs V1.4eFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Volonté de fer",
           "description": "Quand il perd son dernier point de vie et serait mis hors de combat, le Gladiateur teste son Endurance. En cas de réussite, il continue à combattre. Au début de chaque tour suivant, il recommence avec un malus cumulatif de moins 1. Une nouvelle mise hors de combat le retire normalement.",
-          "source": "Gladiateurs V1.4eFr, page 4"
+          "source": "Gladiateurs V1.4eFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Gros bras",
           "description": "Le Gladiateur ignore les pénalités de Fatigue. Le bonus de Force d'une arme s'applique à tous les tours de corps à corps et pas seulement au premier.",
-          "source": "Gladiateurs V1.4eFr, page 4"
+          "source": "Gladiateurs V1.4eFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Maître d'armes",
           "description": "Le Gladiateur ignore les restrictions de Difficile à manier et peut combiner des armes normalement incompatibles.",
-          "source": "Gladiateurs V1.4eFr, page 4"
+          "source": "Gladiateurs V1.4eFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Vieux de la vieille",
           "description": "Le Gladiateur est immunisé à la psychologie.",
-          "source": "Gladiateurs V1.4eFr, page 4"
+          "source": "Gladiateurs V1.4eFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Berserk",
           "description": "Le Tueur gagne plus 1 pour toucher au corps à corps pendant le tour où il charge. Cette compétence ne se combine pas avec Charge furieuse.",
-          "source": "Gladiateurs V1.4eFr, page 4"
+          "source": "Gladiateurs V1.4eFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["gladiateur-tueur-de-trolls"],
+          "incompatibleAvec": ["Charge furieuse"]
         },
         {
           "titre": "Charge furieuse",
           "description": "Le Tueur double ses Attaques pendant le tour où il charge, mais subit moins 1 pour toucher pendant ce tour.",
-          "source": "Gladiateurs V1.4eFr, page 4"
+          "source": "Gladiateurs V1.4eFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["gladiateur-tueur-de-trolls"],
+          "incompatibleAvec": ["Berserk"]
         },
         {
           "titre": "Tueur de monstres",
           "description": "Le Tueur blesse toujours sur 4+, sauf si sa Force modifiée lui permet de blesser plus facilement.",
-          "source": "Gladiateurs V1.4eFr, page 4"
+          "source": "Gladiateurs V1.4eFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["gladiateur-tueur-de-trolls"]
         }
       ],
       "magie": [],
@@ -1277,9 +1641,9 @@
       "composition": {
         "budgetInitial": 500,
         "effectifMinimum": 3,
-        "effectifMaximum": null,
+        "effectifMaximum": 20,
         "maximumHeros": 6,
-        "source": "Gobelins des Forêts V1gFr, page 2"
+        "source": "Gobelins des Forêts V1gFr, page 2 ; maximum de 20 confirmé par Nemesis Crown, Forest Goblins, PDF p.1, https://broheim.net/downloads/warbands/supplement/nemesiscrown/Forest%20Goblins.pdf"
       },
       "regles": [
         {
@@ -1324,7 +1688,20 @@
               "description": "Il peut monter une Araignée Géante ou l'Araignée Gigantesque selon les règles de cavalerie."
             }
           ],
-          "source": "Gobelins des Forêts V1gFr, pages 2 et 4"
+          "source": "Gobelins des Forêts V1gFr, pages 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Nemesis Crown, Forest Goblins, PDF p.1, https://broheim.net/downloads/warbands/supplement/nemesiscrown/Forest%20Goblins.pdf"
         },
         {
           "id": "chaman-gobelin-des-forets",
@@ -1352,7 +1729,20 @@
               "description": "Il débute avec un sort aléatoire de Magie Gobeline."
             }
           ],
-          "source": "Gobelins des Forêts V1gFr, pages 2 et 4"
+          "source": "Gobelins des Forêts V1gFr, pages 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Nemesis Crown, Forest Goblins, PDF p.1, https://broheim.net/downloads/warbands/supplement/nemesiscrown/Forest%20Goblins.pdf"
         },
         {
           "id": "brav",
@@ -1380,7 +1770,20 @@
               "description": "Il applique la règle commune d'animosité. Lors d'une progression de compétence, il peut supprimer définitivement cette règle à la place d'apprendre une compétence."
             }
           ],
-          "source": "Gobelins des Forêts V1gFr, pages 2 et 4"
+          "source": "Gobelins des Forêts V1gFr, pages 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Nemesis Crown, Forest Goblins, PDF p.1, https://broheim.net/downloads/warbands/supplement/nemesiscrown/Forest%20Goblins.pdf"
         },
         {
           "id": "gobelin-des-forets",
@@ -1408,7 +1811,20 @@
               "description": "Il applique la règle commune d'animosité."
             }
           ],
-          "source": "Gobelins des Forêts V1gFr, page 5"
+          "source": "Gobelins des Forêts V1gFr, page 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Nemesis Crown, Forest Goblins, PDF p.1, https://broheim.net/downloads/warbands/supplement/nemesiscrown/Forest%20Goblins.pdf"
         },
         {
           "id": "dent-rouj",
@@ -1440,7 +1856,20 @@
               "description": "Il applique la règle commune d'animosité."
             }
           ],
-          "source": "Gobelins des Forêts V1gFr, page 5"
+          "source": "Gobelins des Forêts V1gFr, page 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Nemesis Crown, Forest Goblins, PDF p.1, https://broheim.net/downloads/warbands/supplement/nemesiscrown/Forest%20Goblins.pdf"
         },
         {
           "id": "lanceur",
@@ -1472,7 +1901,20 @@
               "description": "Il applique la règle commune d'animosité."
             }
           ],
-          "source": "Gobelins des Forêts V1gFr, page 5"
+          "source": "Gobelins des Forêts V1gFr, page 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Nemesis Crown, Forest Goblins, PDF p.1, https://broheim.net/downloads/warbands/supplement/nemesiscrown/Forest%20Goblins.pdf"
         },
         {
           "id": "araignee-gigantesque",
@@ -1495,7 +1937,10 @@
           },
           "competencesDisponibles": [],
           "regles": [
-            { "titre": "Peur", "description": "Elle provoque la peur." },
+            {
+              "titre": "Peur",
+              "description": "Elle provoque la peur."
+            },
             {
               "titre": "Grosse bête",
               "description": "Elle est une grande cible."
@@ -1521,7 +1966,8 @@
               "description": "Elle n'emploie ni arme ni armure."
             }
           ],
-          "source": "Gobelins des Forêts V1gFr, page 6"
+          "source": "Gobelins des Forêts V1gFr, page 6",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -1537,11 +1983,26 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Lance", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
                 {
                   "nom": "Bâton d'boss",
                   "cout": 20,
@@ -1552,7 +2013,10 @@
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc court", "cout": 5 },
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                },
                 {
                   "nom": "Sarbacane",
                   "cout": 25,
@@ -1563,8 +2027,14 @@
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             },
             {
@@ -1573,12 +2043,14 @@
                 {
                   "nom": "Attirail tribal des Dent Rouj'",
                   "cout": 40,
-                  "note": "Rare 9. Fixe et non revendable. Le porteur devient frénétique."
+                  "note": "Rare 9. Fixe et non revendable. Le porteur devient frénétique.",
+                  "rareteCommerce": 9
                 },
                 {
                   "nom": "Bidules magiques",
                   "cout": 50,
-                  "note": "Rare 9. Le Chaman peut relancer un jet d'incantation s'il obtient 4+ sur 1D6."
+                  "note": "Rare 9. Le Chaman peut relancer un jet d'incantation s'il obtient 4+ sur 1D6.",
+                  "rareteCommerce": 9
                 },
                 {
                   "nom": "Arme empoisonnée",
@@ -1602,19 +2074,42 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Lance", "cout": 5 },
-                { "nom": "Épée", "cout": 10 }
+                {
+                  "nom": "Lance",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc court", "cout": 5 },
-                { "nom": "Armes de jet", "cout": 15 },
-                { "nom": "Sarbacane", "cout": 25 }
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                },
+                {
+                  "nom": "Armes de jet",
+                  "cout": 15
+                },
+                {
+                  "nom": "Sarbacane",
+                  "cout": 25
+                }
               ]
             },
-            { "nom": "Armures", "entrees": [{ "nom": "Bouclier", "cout": 5 }] }
+            {
+              "nom": "Armures",
+              "entrees": [
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
+              ]
+            }
           ],
           "source": "Gobelins des Forêts V1gFr, pages 2 et 3"
         },
@@ -1628,7 +2123,8 @@
                 {
                   "nom": "Araignée géante",
                   "cout": 100,
-                  "note": "Rare 11, Gobelins seulement. M7, CC3, CT0, F3 avec attaques empoisonnées de Force 4, E3, PV1, I4, A1, Cd4. Ses attaques n'appliquent aucun malus de sauvegarde. Elle grimpe aux murs sans test et saute au plus 2 ps. Le cavalier teste son Initiative après un saut. Incompatible avec les loups géants."
+                  "note": "Rare 11, Gobelins seulement. M7, CC3, CT0, F3 avec attaques empoisonnées de Force 4, E3, PV1, I4, A1, Cd4. Ses attaques n'appliquent aucun malus de sauvegarde. Elle grimpe aux murs sans test et saute au plus 2 ps. Le cavalier teste son Initiative après un saut. Incompatible avec les loups géants.",
+                  "rareteCommerce": 11
                 }
               ]
             }
@@ -1636,7 +2132,15 @@
           "source": "Gobelins des Forêts V1gFr, page 7"
         }
       ],
-      "competencesSpeciales": [],
+      "competencesSpeciales": [
+        {
+          "titre": "Discipline",
+          "description": "Le Brave supprime définitivement sa règle Animosité au lieu d'apprendre une compétence.",
+          "source": "Nemesis Crown, Forest Goblins, PDF p.1",
+          "apprenable": true,
+          "profilsAutorises": ["brav"]
+        }
+      ],
       "magie": [
         {
           "titre": "Vent de Gork",
@@ -1676,7 +2180,7 @@
         }
       ],
       "ambiguites": [
-        "La phrase de composition s'arrête après Elle ne doit jamais comporter plus. Aucun maximum d'effectif n'est imprimé. effectifMaximum est donc null parce que la donnée est indéterminée, et non parce que l'effectif serait illimité.",
+        "La phrase de composition est tronquée dans la traduction GLM. Le maximum de 20 figurines est complété depuis la version originale Nemesis Crown, Forest Goblins, PDF p.1 : https://broheim.net/downloads/warbands/supplement/nemesiscrown/Forest%20Goblins.pdf.",
         "La règle Locale et la règle Natifs de l'Araignée Gigantesque expriment deux fois la même immunité aux pénalités de Mouvement en terrain boisé. Elles sont fusionnées dans la fiche sans ajouter d'effet."
       ]
     },
@@ -1748,7 +2252,20 @@
               "description": "Tout guerrier allié situé à 6 ps ou moins peut utiliser son Commandement pour ses tests."
             }
           ],
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 2, 3 et 5"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 5,
+            "capaciteCombat": 7,
+            "capaciteTir": 7,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "rodeur-des-ombres",
@@ -1771,7 +2288,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
           "regles": [],
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 2, 3 et 5"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 5,
+            "capaciteCombat": 7,
+            "capaciteTir": 7,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "tisseur-dombres",
@@ -1804,7 +2334,20 @@
               "description": "Il utilise la Magie des Ombres et ne peut lancer aucun sort s'il porte une armure."
             }
           ],
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 2, 3 et 5"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 5,
+            "capaciteCombat": 7,
+            "capaciteTir": 7,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "guerrier-fantome",
@@ -1827,7 +2370,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 5,
+            "capaciteCombat": 7,
+            "capaciteTir": 7,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "novice",
@@ -1850,7 +2406,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 5,
+            "capaciteCombat": 7,
+            "capaciteTir": 7,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -1872,31 +2441,65 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Lance", "cout": 10 },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
                 {
                   "nom": "Arme en ithilmar",
                   "cout": 0,
                   "formuleCout": "coût normal x 2",
-                  "note": "Héros seulement."
+                  "note": "Héros seulement.",
+                  "variantesArme": {
+                    "materiau": "ithilmar",
+                    "multiplicateur": 2,
+                    "multiplicateurCommerce": 3
+                  },
+                  "achatDesactive": "Choisir une arme en ithilmar avec son type et son coût complet.",
+                  "rareteCommerce": 9
                 }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arc long", "cout": 15 },
-                { "nom": "Arc elfique", "cout": 35 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arc long",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arc elfique",
+                  "cout": 35
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Heaume", "cout": 10 },
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 },
+                {
+                  "nom": "Heaume",
+                  "cout": 10
+                },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
                 {
                   "nom": "Armure en ithilmar",
                   "cout": 60,
@@ -1917,7 +2520,10 @@
                   "cout": 25,
                   "note": "Héros seulement. Une fois par partie, au début d'un tour, donne plus 1 Commandement, maximum 10, à toute la bande jusqu'au tour suivant. Il doit être utilisé juste avant un test de déroute."
                 },
-                { "nom": "Cape elfique", "cout": 75 },
+                {
+                  "nom": "Cape elfique",
+                  "cout": 75
+                },
                 {
                   "nom": "Vin elfique",
                   "cout": 30,
@@ -1944,7 +2550,11 @@
                   "nom": "Familier",
                   "cout": 20,
                   "formuleCout": "20 + 1D6",
-                  "note": "Rare 8. Le prix du rituel est payé même si le jet de rareté échoue. Un lanceur de sorts qui l'obtient peut relancer un jet d'incantation par tour et doit garder le second résultat. Le familier n'agit pas comme une figurine indépendante."
+                  "note": "Rare 8. Le prix du rituel est payé même si le jet de rareté échoue. Un lanceur de sorts qui l'obtient peut relancer un jet d'incantation par tour et doit garder le second résultat. Le familier n'agit pas comme une figurine indépendante.",
+                  "rareteCommerce": 8,
+                  "coutCommerceFormule": "20 + 1D6",
+                  "coutCommerce": 20,
+                  "commerceUniquement": true
                 }
               ]
             }
@@ -1956,32 +2566,46 @@
         {
           "titre": "Infiltration",
           "description": "Cette compétence fonctionne comme la compétence skaven du même nom.",
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6",
+          "apprenable": true
         },
         {
           "titre": "Voir dans les ténèbres",
           "description": "Si son mouvement suffit, le guerrier peut toujours tenter de charger un ennemi qu'il ne voit pas, sans la limite habituelle de 4 ps.",
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6",
+          "apprenable": true
         },
         {
           "titre": "Se cacher parmi les ombres",
           "description": "Un ennemi qui cherche ce guerrier caché divise son Initiative par deux avant de mesurer sa distance de détection.",
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6",
+          "apprenable": true
         },
         {
           "titre": "Tir silencieux",
           "description": "Le guerrier caché peut tirer ou lancer un sort sans révéler automatiquement sa position. Si la cible n'est pas immédiatement mise hors de combat, elle le repère en réussissant un test d'Initiative.",
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6",
+          "apprenable": true
         },
         {
           "titre": "Solide carrure",
           "description": "Le guerrier obtient accès aux compétences de Force. Le Tisseur d'Ombres ne peut pas la choisir et la bande ne peut jamais compter plus de deux elfes qui la possèdent.",
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6",
+          "apprenable": true,
+          "profilsAutorises": [
+            "maitre-des-ombres",
+            "rodeur-des-ombres",
+            "guerrier-fantome",
+            "novice"
+          ],
+          "maximumParBande": 2
         },
         {
           "titre": "Maître des runes",
           "description": "Tisseur d'Ombres seulement. Il ajoute 1 à ses jets de dissipation avec les Pierres runiques elfiques. Il peut aussi graver avant la bataille une rune temporaire sur l'arme ou l'armure d'un compagnon, qui accorde une relance unique de sauvegarde d'armure ou de parade pendant cette bataille.",
-          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6"
+          "source": "Guerriers Fantômes, Les Fils de Nagarythe, page 6",
+          "apprenable": true,
+          "profilsAutorises": ["tisseur-dombres"]
         }
       ],
       "magie": [
@@ -2103,7 +2727,20 @@
               "description": "Il utilise la Magie des Hommes-Lézards."
             }
           ],
-          "source": "Hommes-Lézards V1.1eFr, pages 3, 5 et 6"
+          "source": "Hommes-Lézards V1.1eFr, pages 3, 5 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 5,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 8
+          },
+          "sourceMaximums": "Lustria, Lizardmen, PDF p.2, https://broheim.net/downloads/warbands/supplement/lustria/Lizardmen.pdf"
         },
         {
           "id": "guerrier-totem-saurus",
@@ -2135,7 +2772,20 @@
               "description": "Il ne peut jamais apprendre de compétence d'Érudition ni utiliser d'arme de tir."
             }
           ],
-          "source": "Hommes-Lézards V1.1eFr, pages 3, 5 et 6"
+          "source": "Hommes-Lézards V1.1eFr, pages 3, 5 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 0,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 4,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Lustria, Lizardmen, PDF p.2, https://broheim.net/downloads/warbands/supplement/lustria/Lizardmen.pdf"
         },
         {
           "id": "skink-grande-crete",
@@ -2158,7 +2808,20 @@
           },
           "competencesDisponibles": ["Tir", "Vitesse", "Spéciale"],
           "regles": [],
-          "source": "Hommes-Lézards V1.1eFr, pages 3, 5 et 6"
+          "source": "Hommes-Lézards V1.1eFr, pages 3, 5 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 5,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 8
+          },
+          "sourceMaximums": "Lustria, Lizardmen, PDF p.2, https://broheim.net/downloads/warbands/supplement/lustria/Lizardmen.pdf"
         },
         {
           "id": "skink",
@@ -2181,7 +2844,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Hommes-Lézards V1.1eFr, page 7"
+          "source": "Hommes-Lézards V1.1eFr, page 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 5,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 3,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 8
+          },
+          "sourceMaximums": "Lustria, Lizardmen, PDF p.2, https://broheim.net/downloads/warbands/supplement/lustria/Lizardmen.pdf"
         },
         {
           "id": "saurus",
@@ -2213,7 +2889,20 @@
               "description": "Le nombre de Saurus ne peut dépasser celui des Hommes de main Skinks."
             }
           ],
-          "source": "Hommes-Lézards V1.1eFr, page 7"
+          "source": "Hommes-Lézards V1.1eFr, page 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 0,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 4,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Lustria, Lizardmen, PDF p.2, https://broheim.net/downloads/warbands/supplement/lustria/Lizardmen.pdf"
         },
         {
           "id": "kroxigor",
@@ -2244,7 +2933,10 @@
               "titre": "Aquatique",
               "description": "Il traverse les terrains aquatiques sans pénalité et y compte comme à couvert."
             },
-            { "titre": "Peur", "description": "Il provoque la peur." },
+            {
+              "titre": "Peur",
+              "description": "Il provoque la peur."
+            },
             {
               "titre": "Grand",
               "description": "Il peut toujours être choisi comme cible de tir, même si une cible plus proche est disponible."
@@ -2254,7 +2946,8 @@
               "description": "Il ne gagne jamais d'expérience."
             }
           ],
-          "source": "Hommes-Lézards V1.1eFr, page 7"
+          "source": "Hommes-Lézards V1.1eFr, page 7",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -2270,25 +2963,52 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Hache de pierre ou massue", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Hache de pierre ou massue",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
-            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armes de tir",
+              "entrees": []
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 50 },
+                {
+                  "nom": "Armure légère",
+                  "cout": 50
+                },
                 {
                   "nom": "Heaume d'os",
                   "cout": 10,
                   "note": "Utilise les règles du casque."
                 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             },
             {
@@ -2321,16 +3041,32 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Hache de pierre ou massue", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10, "note": "Héros seulement." },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Hache de pierre ou massue",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10,
+                  "note": "Héros seulement."
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc court", "cout": 5 },
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                },
                 {
                   "nom": "Bolas",
                   "cout": 5,
@@ -2341,11 +3077,15 @@
                   "cout": 10,
                   "note": "Portée 8 ps et Force de l'utilisateur, sans malus après un déplacement."
                 },
-                { "nom": "Couteaux de lancer", "cout": 15 },
+                {
+                  "nom": "Couteaux de lancer",
+                  "cout": 15
+                },
                 {
                   "nom": "Sarbacane",
                   "cout": 25,
-                  "note": "Rare 7. Portée 8 ps, Force 1. Le tireur caché reste caché sauf si la cible réussit son Initiative. Une touche naturelle de 6 blesse automatiquement, sans coup critique. La cible gagne plus 1 à sa sauvegarde ou une sauvegarde de 6+ si elle n'en avait pas."
+                  "note": "Rare 7. Portée 8 ps, Force 1. Le tireur caché reste caché sauf si la cible réussit son Initiative. Une touche naturelle de 6 blesse automatiquement, sans coup critique. La cible gagne plus 1 à sa sauvegarde ou une sauvegarde de 6+ si elle n'en avait pas.",
+                  "rareteCommerce": 7
                 }
               ]
             },
@@ -2357,8 +3097,14 @@
                   "cout": 10,
                   "note": "Prêtre Skink seulement. Utilise les règles du casque."
                 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 }
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                }
               ]
             },
             {
@@ -2409,12 +3155,14 @@
                 {
                   "nom": "Sang-froid",
                   "cout": 100,
-                  "note": "Rare 11, Skinks. M7, CC3, CT0, F4, E4, PV1, I3, A1, Cd3. Provoque la peur, teste la stupidité sous le Commandement du cavalier et ajoute 2 à sa sauvegarde au lieu de 1."
+                  "note": "Rare 11, Skinks. M7, CC3, CT0, F4, E4, PV1, I3, A1, Cd3. Provoque la peur, teste la stupidité sous le Commandement du cavalier et ajoute 2 à sa sauvegarde au lieu de 1.",
+                  "rareteCommerce": 11
                 },
                 {
                   "nom": "Mule",
                   "cout": 30,
-                  "note": "Rare 7. M6, CC2, CT0, F3, E3, PV1, I2, A0, Cd4. Se déplace de 2D6 ps quand elle est incontrôlable. Le cavalier ou meneur en contact doit réussir un test de Commandement pour la faire avancer. Sans contrôle, elle erre aléatoirement et fuit un combat proche. Elle ne combat ni ne charge."
+                  "note": "Rare 7. M6, CC2, CT0, F3, E3, PV1, I2, A0, Cd4. Se déplace de 2D6 ps quand elle est incontrôlable. Le cavalier ou meneur en contact doit réussir un test de Commandement pour la faire avancer. Sans contrôle, elle erre aléatoirement et fuit un combat proche. Elle ne combat ni ne charge.",
+                  "rareteCommerce": 7
                 }
               ]
             }
@@ -2426,22 +3174,30 @@
         {
           "titre": "Infiltration",
           "description": "Skink seulement. Au début de la partie, il peut être placé n'importe où, caché et à plus de 12 ps de tout ennemi.",
-          "source": "Hommes-Lézards V1.1eFr, page 5"
+          "source": "Hommes-Lézards V1.1eFr, page 5",
+          "apprenable": true,
+          "profilsAutorises": ["pretre-skink", "skink-grande-crete", "skink"]
         },
         {
           "titre": "Grand chasseur",
           "description": "Skink à Grande Crête seulement. Lorsqu'il est à couvert, le malus subi par les tirs qui le visent passe de moins 1 à moins 2.",
-          "source": "Hommes-Lézards V1.1eFr, page 5"
+          "source": "Hommes-Lézards V1.1eFr, page 5",
+          "apprenable": true,
+          "profilsAutorises": ["skink-grande-crete"]
         },
         {
           "titre": "Cri de guerre",
           "description": "Saurus seulement. Les ennemis en contact avec lui subissent moins 1 pour toucher au premier tour de corps à corps.",
-          "source": "Hommes-Lézards V1.1eFr, page 5"
+          "source": "Hommes-Lézards V1.1eFr, page 5",
+          "apprenable": true,
+          "profilsAutorises": ["guerrier-totem-saurus", "saurus"]
         },
         {
           "titre": "Peau de bois",
           "description": "Saurus seulement. Il n'est mis hors de combat que sur un résultat de 6 sur le jet de dégâts.",
-          "source": "Hommes-Lézards V1.1eFr, page 5"
+          "source": "Hommes-Lézards V1.1eFr, page 5",
+          "apprenable": true,
+          "profilsAutorises": ["guerrier-totem-saurus", "saurus"]
         }
       ],
       "magie": [
@@ -2545,7 +3301,20 @@
               "description": "Toute figurine alliée située à 6 ps ou moins peut utiliser son Commandement pour ses tests."
             }
           ],
-          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2 et 3"
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "moine",
@@ -2577,7 +3346,20 @@
               "description": "Contrairement aux autres membres, il n'est pas obligé de porter un arc."
             }
           ],
-          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2, 3 et 5"
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "champion-de-stirwood",
@@ -2600,7 +3382,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Force"],
           "regles": [],
-          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2 et 4"
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "petit-voleur",
@@ -2623,7 +3418,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
           "regles": [],
-          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2 et 4"
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, pages 1, 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "hors-la-loi",
@@ -2646,7 +3454,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 4"
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "tireur",
@@ -2669,7 +3490,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 4"
+          "source": "Hors-la-loi de la Forêt de Stirwood V1.5dFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -2692,18 +3526,39 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Marteau, masse ou bâton", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Marteau, masse ou bâton",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc court", "cout": 5 },
-                { "nom": "Arc", "cout": 10 },
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                },
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
                 {
                   "nom": "Arc long",
                   "cout": 15,
@@ -2719,8 +3574,14 @@
                   "cout": 20,
                   "note": "Héros et Tireurs seulement."
                 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             },
             {
@@ -2729,12 +3590,14 @@
                 {
                   "nom": "Flèches de chasse",
                   "cout": 30,
-                  "note": "Rare 8, Héros seulement. Disponibles sans jet de rareté au recrutement. Utilisables avec arc court, arc, arc long ou arc elfique. Ajoutent 1 à tous les jets de dégâts."
+                  "note": "Rare 8, Héros seulement. Disponibles sans jet de rareté au recrutement. Utilisables avec arc court, arc, arc long ou arc elfique. Ajoutent 1 à tous les jets de dégâts.",
+                  "rareteCommerce": 8
                 },
                 {
                   "nom": "Cape des bois",
                   "cout": 50,
-                  "note": "Rare 10, Héros seulement. Disponible sans jet de rareté au recrutement. À couvert par un arbre, buisson ou haie, les tirs subissent un malus supplémentaire de moins 1 et un sort d'attaque ne peut le cibler que sur 4+. L'effet est annulé si l'attaquant est à une distance inférieure ou égale à son Initiative."
+                  "note": "Rare 10, Héros seulement. Disponible sans jet de rareté au recrutement. À couvert par un arbre, buisson ou haie, les tirs subissent un malus supplémentaire de moins 1 et un sort d'attaque ne peut le cibler que sur 4+. L'effet est annulé si l'attaquant est à une distance inférieure ou égale à son Initiative.",
+                  "rareteCommerce": 10
                 }
               ]
             }
@@ -2832,7 +3695,20 @@
               "description": "Au recrutement, il peut acheter un pistolet pour 15 CO en plus de la liste commune."
             }
           ],
-          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 1, 2 et 4"
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 1, 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 7,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "maitre-queux",
@@ -2860,7 +3736,20 @@
               "description": "Tout Halfling situé à 6 ps ou moins peut relancer ses jets pour toucher ratés au corps à corps une fois par tour."
             }
           ],
-          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 1, 2 et 4"
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 1, 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 7,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "voleur-halfling",
@@ -2888,7 +3777,20 @@
               "description": "Il peut se cacher dans la moindre ombre ou derrière le moindre couvert. Les tirs qui le visent subissent toujours un malus supplémentaire de moins 1, cumulable avec les autres modificateurs."
             }
           ],
-          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 1, 2 et 4"
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF pages 1, 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 7,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "guerrier-halfling",
@@ -2911,7 +3813,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF page 3"
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF page 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 7,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "eclaireur-halfling",
@@ -2939,7 +3854,20 @@
               "description": "Il repère les ennemis cachés jusqu'à une distance égale à deux fois son Initiative en ps."
             }
           ],
-          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF page 3"
+          "source": "Knights of the Kitchen Table: A Mootlander Warband, Citadel Journal 36, PDF page 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 5,
+            "capaciteTir": 7,
+            "force": 3,
+            "endurance": 3,
+            "pointsVie": 3,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -2960,24 +3888,48 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Bâton", "cout": 3 }
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bâton",
+                  "cout": 3
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arc court", "cout": 5 },
-                { "nom": "Fronde", "cout": 2 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                },
+                {
+                  "nom": "Fronde",
+                  "cout": 2
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
                 {
                   "nom": "Casque marmite",
                   "cout": 8,

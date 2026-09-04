@@ -14,10 +14,22 @@ Les campagnes sont enregistrées dans le stockage local du navigateur. Aucun com
 
 Le stockage local appartient au navigateur : effacer les données du site supprime les campagnes qui n’ont pas été exportées.
 
-Trackheim ne crée aucun jeu de données de secours et ne tente pas de migrer un
-ancien format : une donnée locale qui ne respecte pas le format courant est
-écartée au chargement. Si une même campagne est ouverte dans deux onglets, un
-conflit explicite permet de choisir la version à conserver.
+Une donnée locale illisible ou d’un format non pris en charge reste conservée
+sans modification et peut être téléchargée pour récupération. Les différences
+de composition avec les règles courantes donnent un avertissement sans empêcher
+la sauvegarde des registres existants. Les imports restent soumis aux contrôles
+de structure, références connues et complexité. Si une même campagne est ouverte
+dans deux onglets, un conflit explicite permet de choisir la version à conserver.
+
+La restauration JSON est accessible dès l’accueil et depuis « Mes bandes ».
+Le stockage refusé par le navigateur active un mode mémoire avec export explicite.
+Les exports compacts et les anciens exports indentés sont acceptés, dans la limite
+de 512 Ko de données utiles et de 4 Mo pour le fichier d’import.
+
+Les 49 fiches distinguent la référence documentaire et le suivi proposé par
+l’application. Les règles particulières de table et certaines annexes se résolvent
+avec les sources et les notes du joueur ; leur présence dans une fiche ne signifie
+pas que chaque effet est automatique.
 
 ## Architecture
 

@@ -26,9 +26,12 @@ import {
   type SourceRegle,
 } from '@/lib/mordheim-rules';
 import { cn } from '@/lib/utils';
+import { bandesBibliotheque, type FactionId } from '@/lib/mordheim-data';
+import catalogueBandes from '@/lib/warbands/catalogue.json';
 
 export type RulesetProvenanceProps = {
   rulesetId: string;
+  factionId?: FactionId;
   variant?: 'compact' | 'detailed';
   className?: string;
 };
@@ -38,6 +41,7 @@ type EntreeSource = {
   source: SourceRegle;
   certification: CertificationRegle;
   note: string;
+  dateLibelle?: string;
 };
 
 const manifestes: Record<string, ManifesteRuleset> = {
@@ -54,6 +58,7 @@ const libellesAutorite: Record<AutoriteRegle, string> = {
   'errata-officiel': 'Errata officiel',
   'supplement-officiel': 'Supplément officiel',
   'edition-glm': 'Édition GLM',
+  'publication-bande': 'Document de bande',
   'clarification-concepteur': 'Clarification de concepteur',
   homebrew: 'Homebrew',
 };
@@ -94,13 +99,38 @@ function libelleResolution(manifeste: ManifesteRuleset, conflitId: string) {
     : 'Non définie';
 }
 
-function construireSources(manifeste: ManifesteRuleset): EntreeSource[] {
+function construireSourceBande(
+  factionId?: FactionId,
+): EntreeSource | undefined {
+  const bande = bandesBibliotheque.find(
+    (candidate) => candidate.slug === factionId,
+  );
+  if (!bande?.pdfUrl) return undefined;
+  return {
+    role: 'Bande active',
+    source: {
+      id: `catalogue-bande-${bande.slug}`,
+      titre: `${bande.nom} · grade ${bande.grade}`,
+      url: bande.pdfUrl,
+      version: bande.publication,
+      autorite: 'publication-bande',
+      dateVerification: catalogueBandes.verifieLe,
+    },
+    certification: 'non-vérifiée',
+    dateLibelle: 'Catalogue daté du',
+    note: `Document en ${bande.langueDocument}, ${bande.pagesPdf} pages PDF. Le grade qualifie la publication ; il ne certifie pas une prise en charge intégrale de ses règles. Vérifiez les règles particulières dans ce document. ${bande.avertissements.join(' ')}`.trim(),
+  };
+}
+
+function construireSources(
+  manifeste: ManifesteRuleset,
+  factionId?: FactionId,
+): EntreeSource[] {
   const coeur = trouverSource(manifeste.coeurSourceId);
   const representationFrId =
     referencesRegles.sequenceApresBataille.representationFrId ??
     sourcesRegles.livreComplet.id;
   const representationFr = trouverSource(representationFrId);
-  const versionBande = trouverSource(manifeste.versionBandeId);
 
   const entrees: Array<EntreeSource | undefined> = [
     coeur
@@ -130,14 +160,7 @@ function construireSources(manifeste: ManifesteRuleset): EntreeSource[] {
           note: 'Texte français d’affichage ; son autorité reste éditoriale.',
         }
       : undefined,
-    versionBande
-      ? {
-          role: 'Bande active',
-          source: versionBande,
-          certification: referencesRegles.bandesCore.certification,
-          note: 'Profils et listes des six bandes du livre de règles officiel.',
-        }
-      : undefined,
+    construireSourceBande(factionId),
   ];
 
   return entrees.filter((entree): entree is EntreeSource => Boolean(entree));
@@ -201,12 +224,14 @@ function ManifesteInconnu({
 
 function VersionCompacte({
   manifeste,
+  factionId,
   className,
 }: {
   manifeste: ManifesteRuleset;
+  factionId?: FactionId;
   className?: string;
 }) {
-  const sources = construireSources(manifeste);
+  const sources = construireSources(manifeste, factionId);
   const glmStrict = manifeste.id === rulesetGlmStrict.id;
 
   return (
@@ -219,15 +244,14 @@ function VersionCompacte({
         <div>
           <p className="font-heading font-semibold">{manifeste.nom}</p>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            1999 · Rules Review 2005 · six bandes officielles de base
+            Socle de campagne 1999 · Rules Review 2005
           </p>
         </div>
         <div className="flex flex-wrap gap-1.5">
           <Badge variant="secondary">
             {glmStrict ? 'Preset GLM strict' : 'Preset officiel'}
           </Badge>
-          <Badge variant="secondary">Autorité · Cœur officiel</Badge>
-          <Badge variant="outline">Certification · Primaire vérifiée</Badge>
+          <Badge variant="secondary">Socle · Cœur officiel</Badge>
           <Badge variant="outline">VF · Éditorial GLM</Badge>
           <Badge variant="outline">
             <CircleOff aria-hidden="true" data-icon="inline-start" />
@@ -241,15 +265,23 @@ function VersionCompacte({
           <span key={`${entree.role}-${entree.source.id}`}>
             <span className="text-muted-foreground">{entree.role} : </span>
             <LienSource source={entree.source} />
+            {entree.role === 'Bande active' ? (
+              <span className="text-muted-foreground">
+                {' '}
+                · prise en charge à vérifier dans la fiche
+              </span>
+            ) : null}
           </span>
         ))}
       </div>
 
       <p className="mt-3 pt-2 text-xs text-muted-foreground">
-        <span className="font-medium text-foreground">Résolution active :</span>{' '}
+        <span className="font-medium text-foreground">
+          Résolution active :
+        </span>{' '}
         succession magique :{' '}
         {libelleResolution(manifeste, 'succession-chef-lanceur-sort')} ; rapière
-        ; rapière : {libelleResolution(manifeste, 'reiklanders-rapiere')}.
+        : {libelleResolution(manifeste, 'reiklanders-rapiere')}.
       </p>
     </section>
   );
@@ -267,7 +299,7 @@ function SourceDetaillee({ entree }: { entree: EntreeSource }) {
             <LienSource source={entree.source} />
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {entree.source.version} · vérifiée le{' '}
+            {entree.source.version} · {entree.dateLibelle ?? 'vérifiée le'}{' '}
             {entree.source.dateVerification}
           </p>
         </div>
@@ -324,12 +356,14 @@ function ComparaisonPresets({ actifId }: { actifId: string }) {
 
 function VersionDetaillee({
   manifeste,
+  factionId,
   className,
 }: {
   manifeste: ManifesteRuleset;
+  factionId?: FactionId;
   className?: string;
 }) {
-  const sources = construireSources(manifeste);
+  const sources = construireSources(manifeste, factionId);
   const glmStrict = manifeste.id === rulesetGlmStrict.id;
 
   return (
@@ -353,7 +387,7 @@ function VersionDetaillee({
             <Badge variant="secondary">
               {glmStrict ? 'Preset GLM strict' : 'Preset officiel'}
             </Badge>
-            <Badge variant="outline">Socle 1999/2005 certifié</Badge>
+            <Badge variant="outline">Socle 1999/2005</Badge>
           </div>
         </div>
       </CardHeader>
@@ -391,8 +425,9 @@ function VersionDetaillee({
                 Modules optionnels désactivés
               </h3>
               <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                Aucun supplément, setting, homebrew ou clarification externe ne
-                modifie silencieusement ce manifeste.
+                Ces réglages concernent le socle de campagne. La source de la
+                bande active peut provenir d’un supplément ou d’un setting ; ses
+                règles particulières restent à vérifier séparément.
               </p>
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -435,6 +470,7 @@ function VersionDetaillee({
 
 export function RulesetProvenance({
   rulesetId,
+  factionId,
   variant = 'detailed',
   className,
 }: RulesetProvenanceProps) {
@@ -445,8 +481,20 @@ export function RulesetProvenance({
   }
 
   if (variant === 'compact') {
-    return <VersionCompacte manifeste={manifeste} className={className} />;
+    return (
+      <VersionCompacte
+        manifeste={manifeste}
+        factionId={factionId}
+        className={className}
+      />
+    );
   }
 
-  return <VersionDetaillee manifeste={manifeste} className={className} />;
+  return (
+    <VersionDetaillee
+      manifeste={manifeste}
+      factionId={factionId}
+      className={className}
+    />
+  );
 }

@@ -501,8 +501,9 @@ export const equipementsBandesCore: Equipement[] = [
       'Corps à corps',
       15,
       ['soeurs', 'augure'],
-      'Commotion. Arme sainte : +1 pour blesser les Possédés et les Morts-Vivants. Seules la Matriarche et les Sœurs supérieures peuvent en porter deux.',
+      'Force utilisateur +1. Commotion. Arme sainte : +1 pour blesser les Possédés et les Morts-Vivants. Seules la Matriarche et les Sœurs supérieures peuvent en porter deux.',
     ),
+    quantiteMax: 1,
     quantitesMaxParProfil: {
       'soeurs-matriarche': 2,
       'soeurs-superieure': 2,

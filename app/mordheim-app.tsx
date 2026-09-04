@@ -69,6 +69,7 @@ import {
   definitionsBandes,
   coutEquipementPourProfil,
   equipements,
+  compterArmesDeTir,
   equipementAutorise,
   etapesApresBataille,
   obtenirDefinitionBande,
@@ -108,8 +109,9 @@ import {
   importerCampagneDepuisJson,
   nomFichierCampagne,
   serialiserCampagne,
+  TAILLE_MAX_FICHIER_CAMPAGNE,
 } from '@/lib/campaign-transfer';
-import { TAILLE_MAX_PAYLOAD_CAMPAGNE } from '@/lib/campaign-validation';
+import { avertissementReglesCampagne } from '@/lib/campaign-validation';
 import {
   ConflitSauvegardeLocale,
   cleCopieLocale,
@@ -117,7 +119,9 @@ import {
   lireCampagneActive,
   lireCopieLocale,
   listerCopiesLocales,
+  listerCopiesARecuperer,
   memoriserCampagneActive,
+  obtenirStockageLocal,
   type ResumeCampagneLocale,
 } from '@/lib/campaign-storage';
 import {
@@ -224,6 +228,11 @@ export function MordheimApp() {
   const [gestionCampagnesOuverte, setGestionCampagnesOuverte] = useState(false);
   const [configurationRequise, setConfigurationRequise] = useState(true);
   const [modeMemoire, setModeMemoire] = useState(false);
+  const [copieARecuperer, setCopieARecuperer] = useState<{
+    id: string;
+    erreur: string;
+    contenuBrut: string;
+  } | null>(null);
   const [conflitSauvegarde, setConflitSauvegarde] = useState(false);
   const [tailleTexte, setTailleTexte] = useState(lireTailleTexte);
   const campagneActiveInitialisee = useRef(false);
@@ -231,12 +240,13 @@ export function MordheimApp() {
   const campagneCourante = useRef<EtatCampagne | null>(campagne);
   const versionStockage = useRef(0);
   const derniereCampagneSauvegardee = useRef('');
+  const derniereCampagneExportee = useRef('');
   const contenuPrincipal = useRef<HTMLElement>(null);
   const navigationInitialisee = useRef(false);
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(CLE_TAILLE_TEXTE, String(tailleTexte));
+      obtenirStockageLocal()?.setItem(CLE_TAILLE_TEXTE, String(tailleTexte));
     } catch {
       // Le réglage reste actif pour la session si le stockage est bloqué.
     }
@@ -305,9 +315,11 @@ export function MordheimApp() {
   useEffect(() => {
     function sauvegarderAvantFermeture() {
       if (!campagneCourante.current || conflitSauvegarde || modeMemoire) return;
+      const serialisee = JSON.stringify(campagneCourante.current);
+      if (serialisee === derniereCampagneSauvegardee.current) return;
       try {
         const copie = ecrireCopieLocale(
-          window.localStorage,
+          obtenirStockageLocal(),
           idCampagneCourant.current,
           campagneCourante.current,
           {
@@ -316,13 +328,22 @@ export function MordheimApp() {
           },
         );
         versionStockage.current = copie.versionStockage;
+        derniereCampagneSauvegardee.current = serialisee;
       } catch {
         // Le navigateur peut bloquer le stockage pendant sa fermeture.
       }
     }
+    function sauvegarderQuandMasquee() {
+      if (document.visibilityState === 'hidden') sauvegarderAvantFermeture();
+    }
     window.addEventListener('beforeunload', sauvegarderAvantFermeture);
-    return () =>
+    window.addEventListener('pagehide', sauvegarderAvantFermeture);
+    document.addEventListener('visibilitychange', sauvegarderQuandMasquee);
+    return () => {
       window.removeEventListener('beforeunload', sauvegarderAvantFermeture);
+      window.removeEventListener('pagehide', sauvegarderAvantFermeture);
+      document.removeEventListener('visibilitychange', sauvegarderQuandMasquee);
+    };
   }, [conflitSauvegarde, modeMemoire]);
 
   /* Le navigateur est la source de vérité : aucun compte ni serveur requis. */
@@ -332,7 +353,7 @@ export function MordheimApp() {
       if (annule) return;
       if (!campagneActiveInitialisee.current) {
         campagneActiveInitialisee.current = true;
-        const memorisee = lireCampagneActive(window.localStorage);
+        const memorisee = lireCampagneActive(obtenirStockageLocal());
         if (memorisee && memorisee !== idCampagne) {
           setIdCampagne(memorisee);
           return;
@@ -344,8 +365,9 @@ export function MordheimApp() {
       setErreurSauvegarde(null);
       setConflitSauvegarde(false);
       setModeMemoire(false);
+      setCopieARecuperer(null);
 
-      const lecture = lireCopieLocale(window.localStorage, idCampagne);
+      const lecture = lireCopieLocale(obtenirStockageLocal(), idCampagne);
       if (lecture.statut === 'indisponible') {
         versionStockage.current = 0;
         derniereCampagneSauvegardee.current = '';
@@ -360,16 +382,17 @@ export function MordheimApp() {
         return;
       }
       if (lecture.statut === 'invalide') {
-        try {
-          window.localStorage.removeItem(cleCopieLocale(idCampagne));
-        } catch {
-          // Le mode mémoire reste disponible si le navigateur bloque l'accès.
-        }
         versionStockage.current = 0;
+        derniereCampagneSauvegardee.current = '';
         setCampagne(null);
+        setCopieARecuperer({
+          id: idCampagne,
+          erreur: lecture.erreur,
+          contenuBrut: lecture.contenuBrut,
+        });
         setConfigurationRequise(true);
-        setErreurSauvegarde(null);
-        setEtatSauvegarde('sauvegarde-ok');
+        setErreurSauvegarde(lecture.erreur);
+        setEtatSauvegarde('erreur');
         setHydratationTerminee(true);
         return;
       }
@@ -387,7 +410,7 @@ export function MordheimApp() {
         } else {
           versionStockage.current = lecture.copie.versionStockage;
           setConfigurationRequise(false);
-          memoriserCampagneActive(window.localStorage, idCampagne);
+          memoriserCampagneActive(obtenirStockageLocal(), idCampagne);
         }
         setEtatSauvegarde('sauvegarde-ok');
       } catch {
@@ -416,7 +439,7 @@ export function MordheimApp() {
       setErreurSauvegarde(null);
       try {
         const copie = ecrireCopieLocale(
-          window.localStorage,
+          obtenirStockageLocal(),
           idCampagne,
           campagne,
           { auteur: ID_SESSION, versionAttendue: versionStockage.current },
@@ -450,7 +473,7 @@ export function MordheimApp() {
       if (event.key !== cleCopieLocale(idCampagne) || event.newValue === null) {
         return;
       }
-      const lecture = lireCopieLocale(window.localStorage, idCampagne);
+      const lecture = lireCopieLocale(obtenirStockageLocal(), idCampagne);
       if (
         lecture.statut === 'valide' &&
         lecture.copie.auteur !== ID_SESSION &&
@@ -502,7 +525,7 @@ export function MordheimApp() {
     }
     if (!ecrireCampagneCourante()) return;
     try {
-      memoriserCampagneActive(window.localStorage, id);
+      memoriserCampagneActive(obtenirStockageLocal(), id);
     } catch {
       setErreurSauvegarde(
         'Impossible de changer de bande tant que le stockage local est indisponible. Exportez d’abord la bande courante.',
@@ -517,16 +540,17 @@ export function MordheimApp() {
   }
 
   function creerBande(nomBande: string, factionId: FactionId) {
-    const id = `campagne-${Date.now().toString(36)}-${crypto.randomUUID().slice(0, 8)}`;
+    if (!ecrireCampagneCourante()) return;
+    const id = `campagne-${crypto.randomUUID()}`;
     const nouvelle = creerEtatCampagne(nomBande, factionId);
     if (!modeMemoire) {
       try {
-        const copie = ecrireCopieLocale(window.localStorage, id, nouvelle, {
+        const copie = ecrireCopieLocale(obtenirStockageLocal(), id, nouvelle, {
           auteur: ID_SESSION,
           versionAttendue: 0,
         });
+        memoriserCampagneActive(obtenirStockageLocal(), id);
         versionStockage.current = copie.versionStockage;
-        memoriserCampagneActive(window.localStorage, id);
       } catch (erreur) {
         setErreurSauvegarde(messageErreurStockage(erreur));
         setEtatSauvegarde('erreur');
@@ -539,6 +563,7 @@ export function MordheimApp() {
     setConfigurationRequise(false);
     setGestionCampagnesOuverte(false);
     setCampagne(nouvelle);
+    setCopieARecuperer(null);
     if (modeMemoire) {
       setHydratationTerminee(true);
       setEtatSauvegarde('erreur');
@@ -555,23 +580,30 @@ export function MordheimApp() {
       serialiserCampagne(campagne),
       nomFichierCampagne(campagne),
     );
+    derniereCampagneExportee.current = JSON.stringify(campagne);
   }
 
   function importerCampagne(texte: string) {
     try {
       const importee = importerCampagneDepuisJson(texte);
-      const id = `campagne-${Date.now().toString(36)}-${crypto.randomUUID().slice(0, 8)}`;
+      if (!ecrireCampagneCourante()) {
+        throw new Error(
+          'Conservez ou exportez la bande courante avant d’importer un autre registre.',
+        );
+      }
+      const id = `campagne-${crypto.randomUUID()}`;
       if (!modeMemoire) {
-        const copie = ecrireCopieLocale(window.localStorage, id, importee, {
+        const copie = ecrireCopieLocale(obtenirStockageLocal(), id, importee, {
           auteur: ID_SESSION,
           versionAttendue: 0,
         });
+        memoriserCampagneActive(obtenirStockageLocal(), id);
         versionStockage.current = copie.versionStockage;
-        memoriserCampagneActive(window.localStorage, id);
       }
       derniereCampagneSauvegardee.current = JSON.stringify(importee);
       setConfigurationRequise(false);
       setCampagne(importee);
+      setCopieARecuperer(null);
       setGestionCampagnesOuverte(false);
       if (modeMemoire) {
         setHydratationTerminee(true);
@@ -588,11 +620,17 @@ export function MordheimApp() {
           : 'La campagne n’a pas pu être importée.',
       );
       setEtatSauvegarde('erreur');
+      throw erreur;
     }
   }
 
   function ecrireCampagneCourante() {
     if (!campagne) return true;
+    if (
+      modeMemoire &&
+      derniereCampagneExportee.current === JSON.stringify(campagne)
+    )
+      return true;
     if (conflitSauvegarde || modeMemoire) {
       setErreurSauvegarde(
         'La bande courante n’est pas enregistrée. Exportez-la avant d’en ouvrir une autre.',
@@ -602,7 +640,7 @@ export function MordheimApp() {
     }
     try {
       const copie = ecrireCopieLocale(
-        window.localStorage,
+        obtenirStockageLocal(),
         idCampagne,
         campagne,
         { auteur: ID_SESSION, versionAttendue: versionStockage.current },
@@ -618,7 +656,7 @@ export function MordheimApp() {
   }
 
   function chargerVersionAutreOnglet() {
-    const lecture = lireCopieLocale(window.localStorage, idCampagne);
+    const lecture = lireCopieLocale(obtenirStockageLocal(), idCampagne);
     if (lecture.statut !== 'valide') return;
     versionStockage.current = lecture.copie.versionStockage;
     const campagneDistante = lecture.copie.campagne;
@@ -633,7 +671,7 @@ export function MordheimApp() {
     if (!campagne) return;
     try {
       const copie = ecrireCopieLocale(
-        window.localStorage,
+        obtenirStockageLocal(),
         idCampagne,
         campagne,
         {
@@ -755,6 +793,54 @@ export function MordheimApp() {
             ref={contenuPrincipal}
             tabIndex={-1}
           >
+            {hydratationTerminee && copieARecuperer && (
+              <section className="data-recovery-panel" role="alert">
+                <CircleAlert aria-hidden="true" />
+                <div>
+                  <h2>Votre registre est conservé</h2>
+                  <p>{copieARecuperer.erreur}</p>
+                  <p>
+                    Téléchargez l’original pour le récupérer. Vous pouvez
+                    consulter les règles, restaurer une sauvegarde ou créer une
+                    autre bande.
+                  </p>
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      telechargerTexte(
+                        copieARecuperer.contenuBrut,
+                        `${copieARecuperer.id}-recuperation.json`,
+                      )
+                    }
+                  >
+                    <Download aria-hidden="true" /> Télécharger le registre
+                    original
+                  </Button>
+                </div>
+              </section>
+            )}
+            {hydratationTerminee && modeMemoire && !campagne && (
+              <section className="storage-warning" role="alert">
+                <CircleAlert aria-hidden="true" />
+                <div>
+                  <strong>Stockage indisponible : mode mémoire</strong>
+                  <p>{erreurSauvegarde}</p>
+                </div>
+              </section>
+            )}
+            {campagne && avertissementReglesCampagne(campagne) && (
+              <section className="storage-warning" aria-live="polite">
+                <CircleAlert aria-hidden="true" />
+                <div>
+                  <strong>Composition à vérifier</strong>
+                  <p>
+                    {avertissementReglesCampagne(campagne)} Le registre est
+                    conservé. Vérifiez cette différence avec votre groupe de
+                    jeu.
+                  </p>
+                </div>
+              </section>
+            )}
             {!hydratationTerminee ? (
               <section className="campaign-loading" aria-live="polite">
                 <div className="campaign-loading-banner">
@@ -899,6 +985,7 @@ export function MordheimApp() {
                 recherche={rechercheBibliotheque}
                 grade={gradeBibliotheque}
                 onCreate={creerBande}
+                onImport={importerCampagne}
                 onGradeChange={setGradeBibliotheque}
                 onRechercheChange={setRechercheBibliotheque}
                 onVueChange={naviguerVers}
@@ -932,6 +1019,7 @@ export function MordheimApp() {
           idCourant={idCampagne}
           onCreate={creerBande}
           onExport={exporterCampagne}
+          onImport={importerCampagne}
           onOpenChange={setGestionCampagnesOuverte}
           onSelect={choisirCampagne}
           open
@@ -943,6 +1031,85 @@ export function MordheimApp() {
 
 type ResumeCampagne = ResumeCampagneLocale;
 
+function useImportSauvegarde(onImport: (texte: string) => void) {
+  const importCourant = useRef(onImport);
+  const lectureActive = useRef(0);
+  const [erreur, setErreur] = useState<string | null>(null);
+  const [enCours, setEnCours] = useState(false);
+  useEffect(() => {
+    importCourant.current = onImport;
+  }, [onImport]);
+  useEffect(
+    () => () => {
+      lectureActive.current += 1;
+    },
+    [],
+  );
+  async function importer(selection: File | undefined) {
+    if (!selection) return;
+    const numero = ++lectureActive.current;
+    setErreur(null);
+    setEnCours(true);
+    try {
+      if (selection.size > TAILLE_MAX_FICHIER_CAMPAGNE) {
+        throw new Error('Le fichier dépasse la limite de 4 Mo.');
+      }
+      const texte = await selection.text();
+      if (numero !== lectureActive.current) return;
+      importCourant.current(texte);
+    } catch (cause) {
+      if (numero === lectureActive.current)
+        setErreur(
+          cause instanceof Error
+            ? cause.message
+            : 'La sauvegarde n’a pas pu être restaurée.',
+        );
+    } finally {
+      if (numero === lectureActive.current) setEnCours(false);
+    }
+  }
+  return { importer, erreur, enCours };
+}
+
+function CampaignImportButton({
+  onImport,
+}: {
+  onImport: (texte: string) => void;
+}) {
+  const fichier = useRef<HTMLInputElement>(null);
+  const { importer, erreur, enCours } = useImportSauvegarde(onImport);
+  return (
+    <div className="campaign-import-control">
+      <Button
+        type="button"
+        variant="outline"
+        disabled={enCours}
+        onClick={() => fichier.current?.click()}
+      >
+        <Upload aria-hidden="true" />{' '}
+        {enCours ? 'Restauration…' : 'Restaurer une sauvegarde'}
+      </Button>
+      <input
+        ref={fichier}
+        type="file"
+        hidden
+        accept="application/json,.json"
+        aria-label="Fichier de sauvegarde Trackheim"
+        onChange={(event) => {
+          const selection = event.target.files?.[0];
+          event.target.value = '';
+          void importer(selection);
+        }}
+      />
+      {erreur && (
+        <p className="campaign-import-error" role="alert">
+          {erreur}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function CampaignManagerDialog({
   campagneCourante,
   configurationRequise,
@@ -952,6 +1119,7 @@ function CampaignManagerDialog({
   onSelect,
   onCreate,
   onExport,
+  onImport,
 }: {
   campagneCourante: EtatCampagne | null;
   configurationRequise: boolean;
@@ -961,6 +1129,7 @@ function CampaignManagerDialog({
   onSelect: (id: string) => void;
   onCreate: (nomBande: string, factionId: FactionId) => void;
   onExport: () => void;
+  onImport: (texte: string) => void;
 }) {
   const [nomBande, setNomBande] = useState('');
   const [factionSelectionnee, setFactionSelectionnee] = useState('');
@@ -969,7 +1138,7 @@ function CampaignManagerDialog({
   );
 
   const campagnes = useMemo(() => {
-    const locales = listerCopiesLocales(window.localStorage);
+    const locales = listerCopiesLocales(obtenirStockageLocal());
     const courante: ResumeCampagne | null = campagneCourante
       ? {
           id: idCourant,
@@ -991,6 +1160,7 @@ function CampaignManagerDialog({
           ),
         ];
   }, [campagneCourante, configurationRequise, idCourant]);
+  const copiesARecuperer = listerCopiesARecuperer(obtenirStockageLocal());
 
   function creer() {
     if (!factionPriseEnCharge || !nomBande.trim()) {
@@ -1040,6 +1210,32 @@ function CampaignManagerDialog({
           ))}
         </div>
 
+        <CampaignImportButton onImport={onImport} />
+        {copiesARecuperer.length > 0 && (
+          <section className="campaign-manager-portable">
+            <div>
+              <strong>Registres à récupérer</strong>
+              <p>Ces données sont conservées sans modification.</p>
+              {copiesARecuperer.map((copie) => (
+                <div key={copie.id}>
+                  <p>{copie.erreur}</p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() =>
+                      telechargerTexte(
+                        copie.contenuBrut,
+                        `${copie.id}-recuperation.json`,
+                      )
+                    }
+                  >
+                    Télécharger {copie.id}
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
         {!configurationRequise && (
           <section className="campaign-manager-portable">
             <span className="campaign-manager-section-icon" aria-hidden="true">
@@ -1365,6 +1561,7 @@ function EmptyApplicationContent({
   recherche,
   grade,
   onCreate,
+  onImport,
   onRechercheChange,
   onGradeChange,
   onVueChange,
@@ -1376,6 +1573,7 @@ function EmptyApplicationContent({
   recherche: string;
   grade: FiltreGrade;
   onCreate: (nomBande: string, factionId: FactionId) => void;
+  onImport: (texte: string) => void;
   onRechercheChange: (recherche: string) => void;
   onGradeChange: (grade: FiltreGrade) => void;
   onVueChange: (vue: Vue) => void;
@@ -1577,13 +1775,14 @@ function EmptyApplicationContent({
               >
                 <BookOpen aria-hidden="true" /> Parcourir les 49 bandes
               </Button>
+              <CampaignImportButton onImport={onImport} />
             </div>
           </div>
 
           <aside className="empty-overview-rules">
             <img alt="" aria-hidden="true" src="./img/trackheim-raven.png" />
             <div className="empty-overview-rules-copy">
-              <p className="eyebrow">Une campagne complète</p>
+              <p className="eyebrow">Votre suivi de campagne</p>
               <h3>Du recrutement aux séquelles</h3>
               <ol className="empty-overview-flow">
                 <li>
@@ -2324,6 +2523,9 @@ function RecruitDialog({
   const [nom, setNom] = useState('');
   const [quantite, setQuantite] = useState(1);
   const [selectionEquipement, setSelectionEquipement] = useState<string[]>([]);
+  const [prixVariables, setPrixVariables] = useState<Record<string, string>>(
+    {},
+  );
   const [marqueChaos, setMarqueChaos] = useState<MarqueChaos | ''>('');
 
   const groupeCible = campagne.combattants.find((item) => item.id === groupeId);
@@ -2335,12 +2537,42 @@ function RecruitDialog({
     (item) => item.accordeDagueDeBase,
   );
   const equipementRecrue = groupeCible?.equipementIds ?? selectionEquipement;
+  const equipementDesactive = equipementRecrue.some(
+    (id) => equipementParId(id).achatDesactive,
+  );
+  const objetsPrixVariable = [...new Set(equipementRecrue)]
+    .map(equipementParId)
+    .filter(
+      (item) =>
+        item.prixRecrutementFormule &&
+        !(groupeCible && item.rareteCommerce !== undefined) &&
+        !(
+          campagne.homebrew.actifs &&
+          campagne.homebrew.coutsEquipements[item.id] !== undefined
+        ),
+    );
+  const prixManquant = objetsPrixVariable.some((item) => {
+    const prix = Number(prixVariables[item.id]);
+    return (
+      !prixVariables[item.id]?.trim() ||
+      !Number.isSafeInteger(prix) ||
+      prix < (item.prixRecrutementMinimum ?? 1)
+    );
+  });
+  function prixEquipementRetenu(item: Equipement) {
+    if (objetsPrixVariable.some((objet) => objet.id === item.id)) {
+      const prix = Number(prixVariables[item.id]);
+      return Number.isSafeInteger(prix) &&
+        prix >= (item.prixRecrutementMinimum ?? 1)
+        ? prix
+        : (item.prixRecrutementMinimum ?? item.cout);
+    }
+    return coutEquipement(item, campagne, profil);
+  }
   const nombreArmesCorpsACorps = equipementRecrue.filter(
     (id) => equipementParId(id).categorie === 'Corps à corps',
   ).length;
-  const nombreArmesTir = equipementRecrue.filter(
-    (id) => equipementParId(id).categorie === 'Tir',
-  ).length;
+  const nombreArmesTir = compterArmesDeTir(equipementRecrue);
   const limiteArmesDepassee = nombreArmesCorpsACorps > 2 || nombreArmesTir > 2;
   const quantiteDemandee =
     profil.categorie === 'Héros' ? 1 : Math.max(1, Math.min(5, quantite));
@@ -2378,7 +2610,7 @@ function RecruitDialog({
       return {
         total:
           accumulateur.total +
-          coutEquipement(equipement, campagne, profil) * multiplicateur,
+          prixEquipementRetenu(equipement) * multiplicateur,
         mutations:
           accumulateur.mutations +
           (equipement.categorie === 'Mutation' ? 1 : 0),
@@ -2444,6 +2676,7 @@ function RecruitDialog({
     setNom('');
     setQuantite(1);
     setSelectionEquipement([]);
+    setPrixVariables({});
     setMarqueChaos('');
   }
 
@@ -2466,7 +2699,9 @@ function RecruitDialog({
       stockRareInsuffisant ||
       mutationsInsuffisantes ||
       marqueChaosManquante ||
-      limiteArmesDepassee
+      limiteArmesDepassee ||
+      prixManquant ||
+      equipementDesactive
     )
       return;
 
@@ -2544,11 +2779,13 @@ function RecruitDialog({
 
   function basculerEquipement(id: string, selectionne: boolean) {
     const equipement = equipementParId(id);
+    if (selectionne && equipement.achatDesactive) return;
     if (
       selectionne &&
       ((equipement.categorie === 'Corps à corps' &&
         nombreArmesCorpsACorps >= 2) ||
-        (equipement.categorie === 'Tir' && nombreArmesTir >= 2))
+        (equipement.categorie === 'Tir' &&
+          compterArmesDeTir([...equipementRecrue, id]) > 2))
     ) {
       return;
     }
@@ -2559,12 +2796,14 @@ function RecruitDialog({
 
   function modifierQuantiteEquipement(id: string, variation: number) {
     const equipement = equipementParId(id);
+    if (variation > 0 && equipement.achatDesactive) return;
     const maximum = quantiteMaxEquipement(equipement, profil);
     if (
       variation > 0 &&
       ((equipement.categorie === 'Corps à corps' &&
         nombreArmesCorpsACorps >= 2) ||
-        (equipement.categorie === 'Tir' && nombreArmesTir >= 2))
+        (equipement.categorie === 'Tir' &&
+          compterArmesDeTir([...equipementRecrue, id]) > 2))
     ) {
       return;
     }
@@ -2777,7 +3016,8 @@ function RecruitDialog({
                 const categoriePleine =
                   (item.categorie === 'Corps à corps' &&
                     nombreArmesCorpsACorps >= 2) ||
-                  (item.categorie === 'Tir' && nombreArmesTir >= 2);
+                  (item.categorie === 'Tir' &&
+                    compterArmesDeTir([...equipementRecrue, item.id]) > 2);
                 return (
                   <div className="equipment-option" key={item.id}>
                     {maximum === 1 ? (
@@ -2835,7 +3075,8 @@ function RecruitDialog({
                     <b>
                       {groupeCible && item.rareteCommerce !== undefined
                         ? 'Magot'
-                        : `${coutEquipement(item, campagne, profil)} CO`}
+                        : (item.prixRecrutementFormule ??
+                          `${coutEquipement(item, campagne, profil)} CO`)}
                     </b>
                   </div>
                 );
@@ -2843,6 +3084,27 @@ function RecruitDialog({
             </div>
           </div>
 
+          {objetsPrixVariable.map((item) => (
+            <label className="field-group" key={item.id}>
+              <span>Prix par exemplaire de {item.nom}</span>
+              <small>
+                Lancez {item.prixRecrutementFormule} puis saisissez le prix
+                retenu en CO.
+              </small>
+              <Input
+                type="number"
+                min={item.prixRecrutementMinimum ?? 1}
+                step={1}
+                value={prixVariables[item.id] ?? ''}
+                onChange={(event) =>
+                  setPrixVariables((courants) => ({
+                    ...courants,
+                    [item.id]: event.target.value,
+                  }))
+                }
+              />
+            </label>
+          ))}
           {(limiteAtteinte ||
             bandePleine ||
             fondsInsuffisants ||
@@ -2852,26 +3114,32 @@ function RecruitDialog({
             stockRareInsuffisant ||
             mutationsInsuffisantes ||
             marqueChaosManquante ||
-            limiteArmesDepassee) && (
+            limiteArmesDepassee ||
+            prixManquant ||
+            equipementDesactive) && (
             <div className="form-alert" role="alert">
               <CircleAlert />{' '}
-              {fondsInsuffisants
-                ? `Trésor insuffisant : il manque ${cout - campagne.couronnes} CO.`
-                : limiteArmesDepassee
-                  ? 'Un combattant ne peut porter que deux armes de corps à corps et deux armes de tir.'
-                  : marqueChaosManquante
-                    ? 'Choisissez la marque du Devin. Elle détermine son répertoire magique.'
-                    : mutationsInsuffisantes
-                      ? `${profil.nom} doit recevoir au moins ${profil.minimumMutations} mutation à la création.`
-                      : stockRareInsuffisant
-                        ? 'Le magot ne contient pas assez d’exemplaires des objets rares portés par ce groupe.'
-                        : veteranIndisponible
-                          ? `Réserve vétéran insuffisante : ${experienceVeteransDemandee} XP requis, ${Math.max(0, (disponibiliteVeterans ?? 0) - experienceVeteransDepensee)} encore disponible.`
-                          : groupeDepasse
-                            ? 'Un groupe d’hommes de main ne peut pas dépasser cinq membres.'
-                            : chefDejaRecrute
-                              ? 'Une bande ne peut pas recruter un second Chef.'
-                              : 'La limite de ce profil ou de la bande est atteinte.'}
+              {equipementDesactive
+                ? 'Ce groupe utilise une ancienne entrée d’équipement à préciser. Remplacez-la par une arme définie avant de le renforcer.'
+                : prixManquant
+                  ? 'Saisissez le prix des équipements à coût variable avant de recruter.'
+                  : fondsInsuffisants
+                    ? `Trésor insuffisant : il manque ${cout - campagne.couronnes} CO.`
+                    : limiteArmesDepassee
+                      ? 'Un combattant ne peut porter que deux armes de corps à corps et deux armes de tir.'
+                      : marqueChaosManquante
+                        ? 'Choisissez la marque du Devin. Elle détermine son répertoire magique.'
+                        : mutationsInsuffisantes
+                          ? `${profil.nom} doit recevoir au moins ${profil.minimumMutations} mutation à la création.`
+                          : stockRareInsuffisant
+                            ? 'Le magot ne contient pas assez d’exemplaires des objets rares portés par ce groupe.'
+                            : veteranIndisponible
+                              ? `Réserve vétéran insuffisante : ${experienceVeteransDemandee} XP requis, ${Math.max(0, (disponibiliteVeterans ?? 0) - experienceVeteransDepensee)} encore disponible.`
+                              : groupeDepasse
+                                ? 'Un groupe d’hommes de main ne peut pas dépasser cinq membres.'
+                                : chefDejaRecrute
+                                  ? 'Une bande ne peut pas recruter un second Chef.'
+                                  : 'La limite de ce profil ou de la bande est atteinte.'}
             </div>
           )}
 
@@ -2896,7 +3164,9 @@ function RecruitDialog({
                 stockRareInsuffisant ||
                 mutationsInsuffisantes ||
                 marqueChaosManquante ||
-                limiteArmesDepassee
+                limiteArmesDepassee ||
+                prixManquant ||
+                equipementDesactive
               }
             >
               {groupeCible ? 'Renforcer le groupe' : 'Recruter'}
@@ -2921,7 +3191,8 @@ function CampaignView({
 }) {
   const synthese = calculerSynthese(campagne);
   const [nomNouvelleCampagne, setNomNouvelleCampagne] = useState('');
-  const [erreurImport, setErreurImport] = useState<string | null>(null);
+  const { importer: rejoindreCampagne, erreur: erreurImport } =
+    useImportSauvegarde(onImport);
   const fichierImport = useRef<HTMLInputElement>(null);
 
   function demarrerCampagne() {
@@ -2933,25 +3204,6 @@ function CampaignView({
       nomCampagne: nom,
     });
     setNomNouvelleCampagne('');
-  }
-
-  async function rejoindreCampagne(fichier: File | undefined) {
-    if (!fichier) return;
-    setErreurImport(null);
-    try {
-      if (fichier.size > TAILLE_MAX_PAYLOAD_CAMPAGNE + 4096) {
-        throw new Error('Le fichier dépasse la limite de 512 Ko.');
-      }
-      onImport(await fichier.text());
-    } catch (erreur) {
-      setErreurImport(
-        erreur instanceof Error
-          ? erreur.message
-          : 'La campagne n’a pas pu être importée.',
-      );
-    } finally {
-      if (fichierImport.current) fichierImport.current.value = '';
-    }
   }
 
   function modifierRessource(
@@ -3018,9 +3270,11 @@ function CampaignView({
               <input
                 accept="application/json,.json"
                 className="sr-only"
-                onChange={(event) =>
-                  void rejoindreCampagne(event.target.files?.[0])
-                }
+                onChange={(event) => {
+                  const selection = event.target.files?.[0];
+                  event.target.value = '';
+                  void rejoindreCampagne(selection);
+                }}
                 ref={fichierImport}
                 type="file"
               />
@@ -3048,6 +3302,7 @@ function CampaignView({
       />
 
       <RulesetProvenance
+        factionId={campagne.factionId}
         className="campaign-ruleset-summary"
         rulesetId={campagne.rulesetId}
         variant="compact"
@@ -3227,7 +3482,11 @@ function SettingsView({
         })}
       </fieldset>
 
-      <RulesetProvenance rulesetId={campagne.rulesetId} variant="detailed" />
+      <RulesetProvenance
+        factionId={campagne.factionId}
+        rulesetId={campagne.rulesetId}
+        variant="detailed"
+      />
 
       <section className="project-legal-notice" aria-labelledby="legal-title">
         <div className="project-legal-heading">
@@ -3386,6 +3645,49 @@ function SectionsFicheBandeReference({
       <p className="band-entry-source">
         {sourceBandeLisible(fiche.composition.source)}
       </p>
+
+      <details className="band-details-section">
+        <summary>Ce que Trackheim prend en charge</summary>
+        <p>
+          Le constructeur calcule les achats, l’effectif et la valeur de bande.
+          L’assistant suit blessures, expérience, exploration et commerce à
+          partir de vos jets.
+        </p>
+        <p>
+          Les effets particuliers en partie, les récompenses de lieux, les
+          véhicules et montures demandent une résolution avec le PDF. Inscrivez
+          les conséquences dans les notes et ajustez les ressources concernées.
+          Les jets supplémentaires d’exploration se déclarent dans leur étape
+          avec leur source.
+        </p>
+        {fiche.profils.some(
+          (profil) =>
+            !['Héros', 'Homme de main', 'Hommes de main'].includes(
+              profil.categorie,
+            ) || profil.cout === null,
+        ) && (
+          <p>
+            <strong>Obtention particulière :</strong>{' '}
+            {fiche.profils
+              .filter(
+                (profil) =>
+                  !['Héros', 'Homme de main', 'Hommes de main'].includes(
+                    profil.categorie,
+                  ) || profil.cout === null,
+              )
+              .map((profil) => `${profil.nom} (${profil.categorie})`)
+              .join(', ')}
+            . Consultez leur règle d’obtention ; ces entrées ne sont pas des
+            recrues ordinaires.
+          </p>
+        )}
+        {fiche.ambiguites.length > 0 && (
+          <p>
+            {fiche.ambiguites.length} précision(s) de source figurent à la fin
+            de cette fiche.
+          </p>
+        )}
+      </details>
 
       {fiche.regles.length ? (
         <section
@@ -3765,7 +4067,7 @@ function LibraryView({
                             : `de ${fiche.composition.effectifMinimum} à ${fiche.composition.effectifMaximum} combattants`}
                         </p>
                         <span className="library-card-support complete">
-                          Fiche complète · {fiche.profils.length} profils
+                          Fiche de référence · {fiche.profils.length} profils
                         </span>
                       </>
                     ) : definition ? (
@@ -4678,6 +4980,7 @@ function equipementsPourProfil(
   creationDeBande: boolean,
 ) {
   return equipements.filter((item) => {
+    if (item.achatDesactive) return false;
     if (item.commerceUniquement) return false;
     if (!creationDeBande && item.rareteCommerce !== undefined) return false;
     if (!creationDeBande && item.categorie === 'Mutation') return false;
@@ -4735,7 +5038,7 @@ function telechargerTexte(contenu: string, nomFichier: string) {
 
 function lireTailleTexte() {
   try {
-    const valeur = Number(window.localStorage.getItem(CLE_TAILLE_TEXTE));
+    const valeur = Number(obtenirStockageLocal()?.getItem(CLE_TAILLE_TEXTE));
     if (TAILLES_TEXTE.includes(valeur as (typeof TAILLES_TEXTE)[number])) {
       return valeur;
     }

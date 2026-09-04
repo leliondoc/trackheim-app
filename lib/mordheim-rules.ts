@@ -11,6 +11,7 @@ export type AutoriteRegle =
   | 'errata-officiel'
   | 'supplement-officiel'
   | 'edition-glm'
+  | 'publication-bande'
   | 'clarification-concepteur'
   | 'homebrew';
 
@@ -97,7 +98,6 @@ export type ManifesteRuleset = {
   nom: string;
   coeurSourceId: string;
   errataIds: string[];
-  versionBandeId: string;
   modulesOptionnels: string[];
   clarifications: string[];
   resolutionsConflits: Record<string, string>;
@@ -113,7 +113,6 @@ export const rulesetOfficiel: ManifesteRuleset = {
   nom: 'Mordheim officiel + Rules Review 2005',
   coeurSourceId: 'mordheim-1999-campagnes',
   errataIds: ['mordheim-rules-review-2005'],
-  versionBandeId: 'mordheim-1999-bandes-core',
   modulesOptionnels: [],
   clarifications: [],
   resolutionsConflits: {
@@ -136,63 +135,63 @@ export const rulesetGlmStrict: ManifesteRuleset = {
 export const referencesRegles = {
   sequenceApresBataille: ref(
     'mordheim-1999-campagnes',
-    'pp. 77–78',
+    'pp. imprimées 77–78 (PDF pp. 1–2)',
     'coeur',
     'primaire-vérifiée',
     'pp. 116–117',
   ),
   valeurBande: ref(
     'mordheim-1999-campagnes',
-    'p. 77',
+    'p. imprimée 77 (PDF p. 1)',
     'coeur',
     'primaire-vérifiée',
     'p. 116',
   ),
   blessuresGraves: ref(
     'mordheim-1999-campagnes',
-    'pp. 79–80',
+    'pp. imprimées 79–80 (PDF pp. 3–4)',
     'coeur',
     'primaire-vérifiée',
     'pp. 118–119',
   ),
   experience: ref(
     'mordheim-1999-campagnes',
-    'pp. 81–85',
+    'pp. imprimées 81–85 (PDF pp. 5–9)',
     'coeur',
     'primaire-vérifiée',
     'pp. 120–124',
   ),
   exploration: ref(
     'mordheim-1999-campagnes',
-    'pp. 95–104',
+    'pp. imprimées 93–100 (PDF pp. 17–24)',
     'coeur',
     'primaire-vérifiée',
     'pp. 134–143',
   ),
   ventePierre: ref(
     'mordheim-1999-campagnes',
-    'p. 103',
+    'p. imprimée 101 (PDF p. 25)',
     'coeur',
     'primaire-vérifiée',
     'p. 142',
   ),
   commerce: ref(
     'mordheim-1999-campagnes',
-    'pp. 105–107',
+    'pp. imprimées 102–104 (PDF pp. 26–28)',
     'coeur',
     'primaire-vérifiée',
     'pp. 144–146',
   ),
   francsTireurs: ref(
     'mordheim-1999-campagnes',
-    'pp. 108–112',
+    'pp. imprimées 105–109 (PDF pp. 29–33)',
     'coeur',
     'primaire-vérifiée',
     'pp. 147–151',
   ),
   dramatis: ref(
     'mordheim-1999-campagnes',
-    'p. 111',
+    'p. imprimée 111 (PDF p. 34)',
     'coeur',
     'primaire-vérifiée',
     'p. 152',

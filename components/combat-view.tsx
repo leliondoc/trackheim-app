@@ -51,11 +51,12 @@ export function CombatView({
   onVueChange: (vue: Vue) => void;
 }) {
   const bataille = campagne.batailleEnCours;
+  const combatTermine = campagne.etapesApresBataille[0];
 
   function modifierBataille(
     transformation: (courante: BatailleEnCours) => BatailleEnCours,
   ) {
-    if (!campagne.batailleEnCours) return;
+    if (!campagne.batailleEnCours || combatTermine) return;
     onCampagneChange({
       ...campagne,
       revision: campagne.revision + 1,
@@ -153,73 +154,85 @@ export function CombatView({
         </Button>
       </header>
 
-      <section className="combat-turn-panel" aria-label="Tour et phase">
-        <div className="combat-round-control">
-          <Button
-            aria-label="Tour précédent"
-            disabled={tour <= 1}
-            onClick={() =>
-              modifierBataille((courante) => ({
-                ...courante,
-                tour: Math.max(1, tour - 1),
-              }))
-            }
-            size="icon"
-            type="button"
-            variant="outline"
-          >
-            <ChevronLeft aria-hidden="true" />
-          </Button>
-          <output aria-live="polite">
-            <small>Tour</small>
-            <strong>{tour}</strong>
-          </output>
-          <Button
-            aria-label="Tour suivant"
-            onClick={() =>
-              modifierBataille((courante) => ({
-                ...courante,
-                tour: Math.min(999, tour + 1),
-              }))
-            }
-            size="icon"
-            type="button"
-            variant="outline"
-          >
-            <ChevronRight aria-hidden="true" />
-          </Button>
-        </div>
-        <div className="combat-phase-control">
-          {phases.map((candidate) => (
-            <button
-              aria-pressed={phase === candidate}
-              key={candidate}
+      {combatTermine ? (
+        <p aria-live="polite">
+          Le bilan des blessures est validé. Le suivi du combat est maintenant
+          en lecture seule ; poursuivez l’après-bataille depuis Campagne.
+        </p>
+      ) : null}
+      <fieldset
+        disabled={combatTermine}
+        className="contents"
+        aria-label="Suivi du combat"
+      >
+        <section className="combat-turn-panel" aria-label="Tour et phase">
+          <div className="combat-round-control">
+            <Button
+              aria-label="Tour précédent"
+              disabled={tour <= 1}
               onClick={() =>
                 modifierBataille((courante) => ({
                   ...courante,
-                  phase: candidate,
+                  tour: Math.max(1, tour - 1),
                 }))
               }
+              size="icon"
               type="button"
+              variant="outline"
             >
-              {candidate}
-            </button>
+              <ChevronLeft aria-hidden="true" />
+            </Button>
+            <output aria-live="polite">
+              <small>Tour</small>
+              <strong>{tour}</strong>
+            </output>
+            <Button
+              aria-label="Tour suivant"
+              onClick={() =>
+                modifierBataille((courante) => ({
+                  ...courante,
+                  tour: Math.min(999, tour + 1),
+                }))
+              }
+              size="icon"
+              type="button"
+              variant="outline"
+            >
+              <ChevronRight aria-hidden="true" />
+            </Button>
+          </div>
+          <div className="combat-phase-control">
+            {phases.map((candidate) => (
+              <button
+                aria-pressed={phase === candidate}
+                key={candidate}
+                onClick={() =>
+                  modifierBataille((courante) => ({
+                    ...courante,
+                    phase: candidate,
+                  }))
+                }
+                type="button"
+              >
+                {candidate}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <div className="combatant-table-grid">
+          {participants.map(({ combattant, suivi }) => (
+            <CombatantTableCard
+              combattant={combattant}
+              key={combattant.id}
+              onChange={(modification) =>
+                modifierSuivi(combattant.id, modification)
+              }
+              suivi={suivi}
+            />
           ))}
         </div>
-      </section>
-
-      <div className="combatant-table-grid">
-        {participants.map(({ combattant, suivi }) => (
-          <CombatantTableCard
-            combattant={combattant}
-            key={combattant.id}
-            onChange={(modification) =>
-              modifierSuivi(combattant.id, modification)
-            }
-            suivi={suivi}
-          />
-        ))}
-      </div>
+      </fieldset>
 
       {participants.length === 0 ? (
         <section className="combat-empty-state compact">
@@ -256,7 +269,11 @@ function CombatantTableCard({
   const equipement = nomsEquipementsCombattant(combattant);
   const sorts = combattant.competences
     .filter((competence) => competence.startsWith('Sort ou prière : '))
-    .map((competence) => competence.replace('Sort ou prière : ', ''));
+    .map((competence) => {
+      const titre = competence.replace('Sort ou prière : ', '');
+      const reductions = combattant.ameliorationsSorts?.[titre];
+      return reductions ? `${titre} (difficulté −${reductions})` : titre;
+    });
   const autresCompetences = combattant.competences.filter(
     (competence) => !competence.startsWith('Sort ou prière : '),
   );
@@ -426,7 +443,10 @@ function FigurineTableControl({
         <Heart aria-hidden="true" />
         <Button
           aria-label={`Retirer un Point de Vie à ${libelle}`}
-          disabled={figurine.pointsVieActuels === 0}
+          disabled={
+            figurine.etatTable === 'Hors de combat' ||
+            figurine.blessureAResoudre === true
+          }
           onClick={() =>
             onChange({
               pointsVieActuels: Math.max(0, figurine.pointsVieActuels - 1),
@@ -454,10 +474,32 @@ function FigurineTableControl({
           <Plus aria-hidden="true" />
         </Button>
       </section>
+      {figurine.blessureAResoudre ? (
+        <section
+          className="bg-muted/40 p-3 text-sm"
+          aria-label={`Blessure à résoudre pour ${libelle}`}
+          role="alert"
+        >
+          <strong>Blessure à résoudre à zéro PV</strong>
+          <p>
+            Effectuez le jet de blessure et choisissez son résultat ci-dessous.
+            Appliquez les règles du profil, de l’arme et du coup critique :
+            nain, dague ou autre exception peuvent modifier la résolution. Aucun
+            résultat standard n’est appliqué automatiquement.
+          </p>
+          <p>
+            Seul « Hors de combat » compte comme une perte. Se relever ne rend
+            pas de Point de Vie.
+          </p>
+        </section>
+      ) : null}
       <div className="combat-state-control" aria-label={`État de ${libelle}`}>
         {etats.map((candidate) => (
           <button
             aria-pressed={figurine.etatTable === candidate}
+            disabled={
+              figurine.blessureAResoudre === true && candidate === 'Debout'
+            }
             key={candidate}
             onClick={() => onChange({ etatTable: candidate })}
             type="button"

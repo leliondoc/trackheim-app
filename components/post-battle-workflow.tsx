@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   AlertTriangle,
+  BookOpen,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -60,12 +61,15 @@ import {
 } from '@/lib/battle-state';
 import {
   competencesPourProfil,
+  erreurCompetencesSpecialesBande,
   sortsPourHeritageMagique,
   sortsPourProfil,
 } from '@/lib/competences-data';
 import {
   equipements,
+  compterArmesDeTir,
   equipementAutorise,
+  quantiteMaxEquipement,
   obtenirDefinitionBande,
   type BatailleEnCours,
   type CategorieCompetence,
@@ -173,6 +177,23 @@ const MARQUE_CAMPAGNE_CLOSE = '[Campagne close : aucun successeur éligible]';
 const HERITAGE_PRIERE = 'Héritage du Chef : tirer une nouvelle prière';
 const HERITAGE_SORT = 'Héritage du Chef : tirer un nouveau sort';
 const CHOIX_HERITAGE_PREFIXE = '__heritage-magique__:';
+const CHOIX_AMELIORATION_SORT_PREFIXE = '__ameliorer-sort__:';
+
+function sortDuChoixAmelioration(decision: string) {
+  return decision.startsWith(CHOIX_AMELIORATION_SORT_PREFIXE)
+    ? decision.slice(CHOIX_AMELIORATION_SORT_PREFIXE.length)
+    : null;
+}
+
+function profilEffectif(combattant: Combattant, profil?: ProfilRecrue) {
+  return profil && combattant.herosPromu
+    ? {
+        ...profil,
+        categorie: 'Héros' as const,
+        competencesDisponibles: combattant.competencesDisponiblesPromu ?? [],
+      }
+    : profil;
+}
 
 function possedeHeritageMagique(combattant: Combattant) {
   return combattant.competences.some(
@@ -220,16 +241,17 @@ function creerBrouillonBataille(): BrouillonBataille {
   };
 }
 
-const maximumsHumains: Record<keyof Statistiques, number> = {
-  mouvement: 4,
-  capaciteCombat: 6,
-  capaciteTir: 6,
-  force: 4,
-  endurance: 4,
-  pointsVie: 3,
-  initiative: 6,
-  attaques: 4,
-  commandement: 9,
+// Bornes de saisie pour une progression arbitrée, sans inférer de plafond racial.
+const maximumsSaisieManuelle: Statistiques = {
+  mouvement: 10,
+  capaciteCombat: 10,
+  capaciteTir: 10,
+  force: 10,
+  endurance: 10,
+  pointsVie: 10,
+  initiative: 10,
+  attaques: 10,
+  commandement: 10,
 };
 
 /**
@@ -600,6 +622,19 @@ export function PostBattleWorkflow({
     ).length +
     (bataille.resultat === 'Victoire' ? 1 : 0) +
     (augurePresente ? 1 : 0);
+  const bonusDesExploration = bataille.exploration.bonusDes ?? {
+    lances: 0,
+    conserves: 0,
+    source: '',
+  };
+  const desExplorationAttendus =
+    desExplorationDeBase + bonusDesExploration.lances;
+  const desExplorationConservables = Math.min(
+    6,
+    desExplorationDeBase -
+      (augurePresente ? 1 : 0) +
+      bonusDesExploration.conserves,
+  );
   const candidatsChef = candidatsSuccession(
     campagne.combattants,
     profilsParId,
@@ -662,6 +697,18 @@ export function PostBattleWorkflow({
   }
 
   function appliquerBlessures() {
+    if (
+      Object.values(bataille.participants).some((participant) =>
+        participant.figurinesTable.some(
+          (figurine) => figurine.blessureAResoudre,
+        ),
+      )
+    ) {
+      setErreur(
+        'Résolvez les jets de blessure en attente dans Combat avant de valider le bilan.',
+      );
+      return;
+    }
     const validation = validerBlessures(
       combattantsParticipants,
       bataille,
@@ -915,10 +962,18 @@ export function PostBattleWorkflow({
       if (!suivi || suivi.experienceAppliquee) return [combattant];
       const bilan = bilanExperience(combattant);
       const dossier = lireProgressions(bilan.progressions, suivi.progressions);
-      const profil = profilsParId.get(combattant.profilId);
+      const profil = profilEffectif(
+        combattant,
+        profilsParId.get(combattant.profilId),
+      );
       const statistiquesInitiales =
         profil?.statistiques ?? combattant.statistiques;
-      const maximums = profil?.maximums ?? maximumsHumains;
+      const maximums = profil?.maximums ?? maximumsSaisieManuelle;
+      const progressionManuelle =
+        profil?.progressionManuelle ||
+        (!profil?.maximums
+          ? 'Plafond de caractéristiques à vérifier dans la source de la bande.'
+          : undefined);
       const competencesAutorisees = new Set(
         profil
           ? [
@@ -926,6 +981,7 @@ export function PostBattleWorkflow({
                 profil,
                 campagne.factionId,
                 combattant,
+                campagne,
               ).map((competence) => competence.nom),
               ...sortsPourProfil(profil, combattant, campagne).map(
                 (sort) => `Sort ou prière : ${sort}`,
@@ -945,6 +1001,7 @@ export function PostBattleWorkflow({
         statistiquesInitiales,
         maximums,
         competencesAutorisees,
+        progressionManuelle,
       );
       if (erreurProgression) {
         erreurs.push(`${combattant.nom} : ${erreurProgression}`);
@@ -985,6 +1042,7 @@ export function PostBattleWorkflow({
               profilPromu,
               campagne.factionId,
               combattant,
+              campagne,
             ).map((competence) => competence.nom)
           : [],
       );
@@ -1000,6 +1058,7 @@ export function PostBattleWorkflow({
         statistiquesInitiales,
         maximums,
         competencesPromuAutorisees,
+        progressionManuelle,
       );
       if (erreurPromu) {
         erreurs.push(
@@ -1031,6 +1090,7 @@ export function PostBattleWorkflow({
           statistiquesInitiales,
           maximums,
           new Set(),
+          progressionManuelle,
         );
         if (erreurGroupe) {
           erreurs.push(
@@ -1115,6 +1175,12 @@ export function PostBattleWorkflow({
       return [groupeRestant, promu];
     });
 
+    const erreurCompetences = erreurCompetencesSpecialesBande(
+      campagne.factionId,
+      combattants,
+      campagne.combattants,
+    );
+    if (erreurCompetences) erreurs.push(erreurCompetences);
     if (erreurs.length > 0) {
       setErreur(erreurs.join(' '));
       return;
@@ -1141,8 +1207,25 @@ export function PostBattleWorkflow({
         ...courante.exploration,
         lancers,
         desConserves: [],
+        indicesConserves: [],
         fragmentsTrouves: 0,
         appliquee: false,
+      },
+    }));
+  }
+
+  function modifierBonusExploration(
+    modification: Partial<typeof bonusDesExploration>,
+  ) {
+    publierBataille((courante) => ({
+      ...courante,
+      exploration: {
+        ...courante.exploration,
+        bonusDes: { ...bonusDesExploration, ...modification },
+        ...(modification.lances !== undefined ||
+        modification.conserves !== undefined
+          ? { desConserves: [], indicesConserves: [], fragmentsTrouves: 0 }
+          : {}),
       },
     }));
   }
@@ -1151,12 +1234,20 @@ export function PostBattleWorkflow({
     const indices = indicesDesConserves(
       bataille.exploration.lancers,
       bataille.exploration.desConserves,
+      bataille.exploration.indicesConserves,
     );
+    if (augurePresente && conserve && index < 2) {
+      const autreDeAugure = index === 0 ? 1 : 0;
+      const position = indices.indexOf(autreDeAugure);
+      if (position >= 0) indices.splice(position, 1);
+    }
     const nouveauxIndices = conserve
       ? [...new Set([...indices, index])]
       : indices.filter((position) => position !== index);
-    if (nouveauxIndices.length > 6) {
-      setErreur('Six dés au maximum peuvent être conservés.');
+    if (nouveauxIndices.length > desExplorationConservables) {
+      setErreur(
+        `${desExplorationConservables} dés au maximum peuvent être conservés pour cette exploration.`,
+      );
       return;
     }
     setErreur(null);
@@ -1167,6 +1258,7 @@ export function PostBattleWorkflow({
         desConserves: nouveauxIndices.map(
           (position) => courante.exploration.lancers[position],
         ),
+        indicesConserves: nouveauxIndices,
         appliquee: false,
       },
     }));
@@ -1174,15 +1266,45 @@ export function PostBattleWorkflow({
 
   function appliquerExploration() {
     try {
-      if (bataille.exploration.lancers.length !== desExplorationDeBase) {
+      if (bataille.exploration.appliquee) return;
+      if (
+        !Number.isInteger(bonusDesExploration.lances) ||
+        !Number.isInteger(bonusDesExploration.conserves) ||
+        bonusDesExploration.lances < 0 ||
+        bonusDesExploration.lances > 24 ||
+        bonusDesExploration.conserves < 0 ||
+        bonusDesExploration.conserves > bonusDesExploration.lances ||
+        (bonusDesExploration.lances > 0 && !bonusDesExploration.source.trim())
+      ) {
         setErreur(
-          `Il faut exactement ${desExplorationDeBase} dés : un par Héros survivant non hors de combat${bataille.resultat === 'Victoire' ? ', un pour la victoire' : ''}${augurePresente ? ' et le dé supplémentaire de l’Augure' : ''}. Saisissez directement le résultat final après les éventuelles relances.`,
+          'Précisez des bonus de dés valides et leur règle ou récompense source.',
         );
         return;
       }
+      if (bataille.exploration.lancers.length !== desExplorationAttendus) {
+        setErreur(
+          `Il faut exactement ${desExplorationAttendus} dés, bonus compris. Saisissez directement le résultat final après les éventuelles relances.`,
+        );
+        return;
+      }
+      const indices = indicesDesConserves(
+        bataille.exploration.lancers,
+        bataille.exploration.desConserves,
+        bataille.exploration.indicesConserves,
+      );
+      if (indices.length !== bataille.exploration.desConserves.length) {
+        setErreur('Les dés conservés doivent provenir des dés lancés.');
+        return;
+      }
       const resultat = resoudreExploration(bataille.exploration.desConserves);
-      if (resultat.des.length === 0) {
-        setErreur('Conservez au moins un dé d’exploration.');
+      if (resultat.des.length !== desExplorationConservables) {
+        setErreur(
+          `Conservez exactement ${desExplorationConservables} dés pour cette exploration.`,
+        );
+        return;
+      }
+      if (augurePresente && indices.filter((index) => index < 2).length > 1) {
+        setErreur('Conservez un seul des deux dés de l’Augure.');
         return;
       }
       if (resultat.combinaison && !bataille.exploration.noteResultat.trim()) {
@@ -1209,6 +1331,7 @@ export function PostBattleWorkflow({
           exploration: {
             ...bataille.exploration,
             fragmentsTrouves: resultat.fragments,
+            indicesConserves: indices,
             noteResultat: noteLieu,
             appliquee: true,
           },
@@ -1280,7 +1403,8 @@ export function PostBattleWorkflow({
       !hero ||
       categorieCombattant(hero, profilsParId) !== 'Héros' ||
       obtenirSuiviParticipant(bataille, hero.id)?.horsCombat !== 0 ||
-      !equipement?.rareteCommerce
+      !equipement?.rareteCommerce ||
+      equipement.achatDesactive
     ) {
       setErreur('Sélectionnez un Héros et un objet rare.');
       return;
@@ -1369,6 +1493,14 @@ export function PostBattleWorkflow({
   function acheterObjetRare(jetId: string) {
     const jet = bataille.jetsRarete.find((item) => item.id === jetId);
     if (!jet || !jet.reussi || jet.achete) return;
+    const equipement = equipementsParId.get(jet.equipementId);
+    if (!equipement || equipement.achatDesactive) {
+      setErreur(
+        equipement?.achatDesactive ??
+          'Cet objet n’est plus disponible à l’achat.',
+      );
+      return;
+    }
     if (jet.prix > campagne.couronnes) {
       setErreur('Le trésor ne permet pas cet achat.');
       return;
@@ -1395,6 +1527,7 @@ export function PostBattleWorkflow({
     const equipement = equipementsParId.get(objetCommunId);
     if (
       !equipement ||
+      equipement.achatDesactive ||
       equipement.rareteCommerce !== undefined ||
       equipement.patchGlm ||
       equipement.cout <= 0
@@ -1646,6 +1779,12 @@ export function PostBattleWorkflow({
   }
 
   function finaliserBataille() {
+    if (!blessuresResolues) {
+      setErreur(
+        'Résolvez les blessures et les jets de combat en attente avant de finaliser la bataille.',
+      );
+      return;
+    }
     const resultat = bataille.resultat;
     if (resultat === null) {
       setErreur('Renseignez le résultat de la bataille avant de la finaliser.');
@@ -1713,7 +1852,11 @@ export function PostBattleWorkflow({
   }
 
   const blessuresResolues = Object.values(bataille.participants).every(
-    (participant) => participant.blessureResolue,
+    (participant) =>
+      participant.blessureResolue &&
+      !participant.figurinesTable.some(
+        (figurine) => figurine.blessureAResoudre,
+      ),
   );
   const successionResolue =
     chefPresent || bataille.notes.includes(MARQUE_CAMPAGNE_CLOSE);
@@ -1886,12 +2029,15 @@ export function PostBattleWorkflow({
         <EtapeExploration
           bataille={bataille}
           desExplorationDeBase={desExplorationDeBase}
+          desExplorationAttendus={desExplorationAttendus}
+          desExplorationConservables={desExplorationConservables}
           augurePresente={augurePresente}
           saisieLancers={
             lancersExploration || bataille.exploration.lancers.join(', ')
           }
           resultat={resultatExploration}
           onLancersChange={saisirLancersExploration}
+          onBonusChange={modifierBonusExploration}
           onDeConserveChange={basculerDeConserve}
           onNoteChange={(note) =>
             publierBataille((courante) => ({
@@ -3147,21 +3293,19 @@ function EtapeExperience({
           const suivi = obtenirSuiviParticipant(bataille, combattant.id)!;
           const bilan = bilanExperience(combattant);
           const profil = profilsParId.get(combattant.profilId);
-          const profilCompetences =
-            profil && combattant.herosPromu
-              ? {
-                  ...profil,
-                  categorie: 'Héros' as const,
-                  competencesDisponibles:
-                    combattant.competencesDisponiblesPromu ?? [],
-                }
-              : profil;
+          const profilCompetences = profilEffectif(combattant, profil);
+          const progressionManuelle =
+            profil?.progressionManuelle ||
+            (!profil?.maximums
+              ? 'Plafond de caractéristiques à vérifier dans la source de la bande.'
+              : undefined);
           const choixCompetences = profilCompetences
             ? [
                 ...competencesPourProfil(
                   profilCompetences,
                   factionId,
                   combattant,
+                  campagne,
                 ),
                 ...sortsPourProfil(profilCompetences, combattant, campagne).map(
                   (sort) => ({
@@ -3282,6 +3426,20 @@ function EtapeExperience({
 
               {bilan.progressions > 0 && (
                 <div className="grid gap-3 rounded-md bg-stone-500/10 p-3">
+                  {progressionManuelle && (
+                    <Alert>
+                      <BookOpen />
+                      <AlertTitle>
+                        Progression à arbitrer avec le document source
+                      </AlertTitle>
+                      <AlertDescription>
+                        {progressionManuelle} Pour chaque hausse, indiquez la
+                        caractéristique obtenue et justifiez le plafond autorisé
+                        dans la note. Les Hommes de main restent limités à +1
+                        par caractéristique initiale.
+                      </AlertDescription>
+                    </Alert>
+                  )}
                   <div>
                     <strong>
                       {bilan.progressions} progression
@@ -3293,6 +3451,24 @@ function EtapeExperience({
                     </p>
                   </div>
                   {saisies.map((saisie, index) => {
+                    const pouvoirsConnus = new Set(
+                      combattant.competences
+                        .filter((competence) =>
+                          competence.startsWith('Sort ou prière : '),
+                        )
+                        .map((competence) =>
+                          competence.slice('Sort ou prière : '.length),
+                        ),
+                    );
+                    for (const precedente of saisies.slice(0, index)) {
+                      if (precedente.decision.startsWith('Sort ou prière : ')) {
+                        pouvoirsConnus.add(
+                          precedente.decision.slice('Sort ou prière : '.length),
+                        );
+                      }
+                      const heritage = sortDuChoixHeritage(precedente.decision);
+                      if (heritage) pouvoirsConnus.add(heritage);
+                    }
                     const sortHerite = sortDuChoixHeritage(saisie.decision);
                     const resultat = progressionSure(
                       saisie.jet,
@@ -3321,6 +3497,7 @@ function EtapeExperience({
                           profilPromu,
                           factionId,
                           combattant,
+                          campagne,
                         ).filter(
                           (competence) =>
                             !combattant.competences.includes(competence.nom),
@@ -3458,7 +3635,22 @@ function EtapeExperience({
                                         {competence.nom}
                                       </NativeSelectOption>
                                     ))}
+                                    {[...pouvoirsConnus].map((sort) => (
+                                      <NativeSelectOption
+                                        key={`ameliorer-${sort}`}
+                                        value={`${CHOIX_AMELIORATION_SORT_PREFIXE}${sort}`}
+                                      >
+                                        Améliorer {sort} : difficulté −1
+                                      </NativeSelectOption>
+                                    ))}
                                   </NativeSelect>
+                                  {pouvoirsConnus.size > 0 && (
+                                    <small className="text-muted-foreground">
+                                      Si le sort ou la prière tiré est déjà
+                                      connu, choisissez son amélioration ou
+                                      relancez selon la règle.
+                                    </small>
+                                  )}
                                   {choixCompetences.length === 0 && (
                                     <small className="text-muted-foreground">
                                       Aucune nouvelle compétence disponible dans
@@ -3623,7 +3815,8 @@ function EtapeExperience({
                                           </NativeSelectOption>
                                         </NativeSelect>
                                       )}
-                                    {saisie.decisionPromu === CHOIX_AUTRE && (
+                                    {(saisie.decisionPromu === CHOIX_AUTRE ||
+                                      progressionManuelle) && (
                                       <Textarea
                                         aria-label={`Note de progression immédiate du Héros promu depuis ${combattant.nom}`}
                                         disabled={verrouille}
@@ -3713,8 +3906,9 @@ function EtapeExperience({
                                           </NativeSelectOption>
                                         </NativeSelect>
                                       )}
-                                      {saisie.decisionGroupeRestant ===
-                                        CHOIX_AUTRE && (
+                                      {(saisie.decisionGroupeRestant ===
+                                        CHOIX_AUTRE ||
+                                        progressionManuelle) && (
                                         <Textarea
                                           aria-label={`Note de progression du groupe restant ${combattant.nom}`}
                                           disabled={verrouille}
@@ -3737,6 +3931,7 @@ function EtapeExperience({
                                 </div>
                               )}
                               {(saisie.decision === CHOIX_AUTRE ||
+                                progressionManuelle ||
                                 resultat?.id === 'gars-doue') && (
                                 <Textarea
                                   aria-label={`Note de progression ${index + 1} pour ${combattant.nom}`}
@@ -3769,10 +3964,13 @@ function EtapeExperience({
 function EtapeExploration({
   bataille,
   desExplorationDeBase,
+  desExplorationAttendus,
+  desExplorationConservables,
   augurePresente,
   saisieLancers,
   resultat,
   onLancersChange,
+  onBonusChange,
   onDeConserveChange,
   onNoteChange,
   onApply,
@@ -3780,10 +3978,17 @@ function EtapeExploration({
 }: {
   bataille: BatailleEnCours;
   desExplorationDeBase: number;
+  desExplorationAttendus: number;
+  desExplorationConservables: number;
   augurePresente: boolean;
   saisieLancers: string;
   resultat: ReturnType<typeof resoudreExploration> | null;
   onLancersChange: (texte: string) => void;
+  onBonusChange: (
+    modification: Partial<
+      NonNullable<BatailleEnCours['exploration']['bonusDes']>
+    >,
+  ) => void;
   onDeConserveChange: (index: number, conserve: boolean) => void;
   onNoteChange: (note: string) => void;
   onApply: () => void;
@@ -3792,12 +3997,18 @@ function EtapeExploration({
   const indices = indicesDesConserves(
     bataille.exploration.lancers,
     bataille.exploration.desConserves,
+    bataille.exploration.indicesConserves,
   );
+  const bonus = bataille.exploration.bonusDes ?? {
+    lances: 0,
+    conserves: 0,
+    source: '',
+  };
   return (
     <CarteEtape
       numero={3}
       titre="Revenus et exploration"
-      description="Saisissez tous les dés lancés, puis choisissez vous-même jusqu’à six résultats à conserver."
+      description="Saisissez les dés autorisés puis conservez le nombre de résultats indiqué."
       icone={<Gem />}
       action={
         bataille.exploration.appliquee ? (
@@ -3806,7 +4017,10 @@ function EtapeExploration({
           </Button>
         ) : (
           <Button onClick={onApply}>
-            <Gem /> Ajouter les fragments
+            <Gem />{' '}
+            {desExplorationAttendus === 0
+              ? 'Valider sans exploration'
+              : 'Ajouter les fragments'}
           </Button>
         )
       }
@@ -3815,13 +4029,89 @@ function EtapeExploration({
         <Dices />
         <AlertTitle>{desExplorationDeBase} dés de base attendus</AlertTitle>
         <AlertDescription>
-          Saisissez exactement ces dés, après les éventuelles relances de
-          compétences ou d’objets. Vous choisissez au maximum six dés à
-          conserver ; le moteur ne privilégie pas automatiquement la somme.
+          <strong className="block">
+            {desExplorationAttendus} dés à lancer au total ·{' '}
+            {desExplorationConservables} à conserver
+          </strong>
+          {desExplorationAttendus === 0
+            ? 'Aucun Héros ne peut explorer et aucun bonus ne fournit de dé : aucun fragment trouvé. Vous pouvez valider cette étape.'
+            : `La bande fournit ${desExplorationDeBase} dés de base. Saisissez les résultats après les éventuelles relances de compétences ou d’objets. La limite globale reste de six résultats conservés.`}
           {augurePresente &&
-            ' Le total inclut le second dé de l’Augure : ne conservez qu’un seul de ses deux résultats.'}
+            ' Saisissez les deux dés de l’Augure en premier. Un seul de ces deux résultats peut être conservé.'}
         </AlertDescription>
       </Alert>
+      <fieldset
+        className="grid gap-3 rounded-md border border-stone-500/20 p-3"
+        disabled={bataille.exploration.appliquee}
+      >
+        <legend className="px-1 text-sm font-medium">
+          Bonus de compétences, objets ou récompenses
+        </legend>
+        <p className="text-sm text-muted-foreground">
+          Indiquez les dés supplémentaires et combien peuvent être conservés.
+          Exemple : un dé supplémentaire à défausser donne +1 lancé et +0
+          conservable.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Champ
+            libelle="Dés supplémentaires lancés"
+            htmlFor="exploration-bonus-lances"
+          >
+            <Input
+              id="exploration-bonus-lances"
+              type="number"
+              min={0}
+              max={24}
+              value={bonus.lances}
+              onChange={(event) => {
+                const lances = Math.max(
+                  0,
+                  Math.min(24, entierDepuisTexte(event.target.value)),
+                );
+                onBonusChange({
+                  lances,
+                  conserves: Math.min(bonus.conserves, lances),
+                });
+              }}
+            />
+          </Champ>
+          <Champ
+            libelle="Résultats supplémentaires conservables"
+            htmlFor="exploration-bonus-conserves"
+          >
+            <Input
+              id="exploration-bonus-conserves"
+              type="number"
+              min={0}
+              max={bonus.lances}
+              value={bonus.conserves}
+              onChange={(event) =>
+                onBonusChange({
+                  conserves: Math.max(
+                    0,
+                    Math.min(
+                      bonus.lances,
+                      entierDepuisTexte(event.target.value),
+                    ),
+                  ),
+                })
+              }
+            />
+          </Champ>
+        </div>
+        <Champ
+          libelle="Règle ou récompense source du bonus"
+          htmlFor="exploration-bonus-source"
+        >
+          <Textarea
+            id="exploration-bonus-source"
+            maxLength={2000}
+            value={bonus.source}
+            onChange={(event) => onBonusChange({ source: event.target.value })}
+            placeholder="Nom de la compétence, objet ou lieu, page du PDF et effet appliqué…"
+          />
+        </Champ>
+      </fieldset>
       <Champ
         libelle="Résultats des dés, séparés par des espaces ou virgules"
         htmlFor="exploration-rolls"
@@ -3837,7 +4127,8 @@ function EtapeExploration({
       {bataille.exploration.lancers.length > 0 && (
         <div className="grid gap-3">
           <p className="text-sm font-medium">
-            Dés conservés ({bataille.exploration.desConserves.length} / 6)
+            Dés conservés ({bataille.exploration.desConserves.length} /{' '}
+            {desExplorationConservables})
           </p>
           <div className="flex flex-wrap gap-2">
             {bataille.exploration.lancers.map((de, index) => (
@@ -3848,6 +4139,7 @@ function EtapeExploration({
               >
                 <Checkbox
                   id={`exploration-die-${index}`}
+                  aria-label={`${augurePresente && index < 2 ? `Augure ${index + 1}` : `Dé ${index + 1}`} : ${de}`}
                   checked={indices.includes(index)}
                   disabled={bataille.exploration.appliquee}
                   onCheckedChange={(checked) =>
@@ -3856,6 +4148,11 @@ function EtapeExploration({
                 />
                 <span className="grid size-8 place-items-center rounded border font-semibold">
                   {de}
+                </span>
+                <span className="text-xs">
+                  {augurePresente && index < 2
+                    ? `Augure ${index + 1}`
+                    : `Dé ${index + 1}`}
                 </span>
               </label>
             ))}
@@ -4075,6 +4372,7 @@ function EtapeRarete({
   );
   const rares = equipements.filter(
     (equipement) =>
+      !equipement.achatDesactive &&
       equipement.rareteCommerce &&
       Array.from(profilsParId.values()).some((profil) =>
         equipementAutorise(profil, equipement),
@@ -4468,6 +4766,7 @@ function EtapeRecrutement({
   const definition = obtenirDefinitionBande(campagne.factionId);
   const communs = equipements.filter(
     (equipement) =>
+      !equipement.achatDesactive &&
       equipement.cout > 0 &&
       equipement.rareteCommerce === undefined &&
       !equipement.patchGlm &&
@@ -5301,6 +5600,7 @@ function validerProgressions(
   statistiquesInitiales: Statistiques,
   maximums: Statistiques,
   competencesAutorisees: Set<string>,
+  progressionManuelle?: string,
 ) {
   /* Les jets multiples se contrôlent dans l'ordre : chaque hausse modifie la suivante. */
   const statistiquesSimulees = { ...combattant.statistiques };
@@ -5323,6 +5623,24 @@ function validerProgressions(
     }
     const resultat = progressionSure(saisie.jet, categorie);
     if (!resultat) return 'chaque progression exige un jet 2D6 valide.';
+    const sortAmeliore = sortDuChoixAmelioration(saisie.decision);
+    if (sortAmeliore) {
+      if (
+        resultat.id !== 'competence' ||
+        !competencesSimulees.has(competenceMagique(sortAmeliore))
+      ) {
+        return 'seul un sort ou une prière déjà connu peut être amélioré sur une nouvelle compétence.';
+      }
+      const dejaApplique = combattant.ameliorationsSorts?.[sortAmeliore] ?? 0;
+      const dansCetteSequence = saisies
+        .slice(0, index + 1)
+        .filter(
+          (entree) => sortDuChoixAmelioration(entree.decision) === sortAmeliore,
+        ).length;
+      if (dejaApplique + dansCetteSequence > 100)
+        return 'ce pouvoir atteint la limite des améliorations enregistrables.';
+      continue;
+    }
     const choix = choixProgression(resultat, categorie);
     if (
       (choix.length > 1 ||
@@ -5357,6 +5675,9 @@ function validerProgressions(
       continue;
     }
     if (resultat.id === 'gars-doue') continue;
+    if (progressionManuelle && !saisie.note.trim()) {
+      return 'cette hausse nécessite une note indiquant la règle source et le plafond de caractéristique autorisé.';
+    }
     const caracteristique =
       saisie.decision === CHOIX_AUTRE
         ? CHOIX_AUTRE
@@ -5398,6 +5719,7 @@ function appliquerProgressionsCombattant(
 ) {
   const statistiques = { ...combattant.statistiques };
   let competences = [...combattant.competences];
+  const ameliorationsSorts = { ...combattant.ameliorationsSorts };
   const progressions = [...combattant.progressions];
 
   for (const saisie of saisies) {
@@ -5413,6 +5735,15 @@ function appliquerProgressionsCombattant(
     }
     const resultat = progressionSure(saisie.jet, categorie);
     if (!resultat) continue;
+    const sortAmeliore = sortDuChoixAmelioration(saisie.decision);
+    if (sortAmeliore && resultat.id === 'competence') {
+      ameliorationsSorts[sortAmeliore] =
+        (ameliorationsSorts[sortAmeliore] ?? 0) + 1;
+      progressions.push(
+        `Sort ou prière amélioré : ${sortAmeliore}, difficulté −1`,
+      );
+      continue;
+    }
     if (resultat.id === 'competence') {
       if (!competences.includes(saisie.decision))
         competences.push(saisie.decision);
@@ -5442,7 +5773,13 @@ function appliquerProgressionsCombattant(
     progressions.push(`${resultat.titre}${details ? ` : ${details}` : ''}`);
   }
 
-  return { ...combattant, statistiques, competences, progressions };
+  return {
+    ...combattant,
+    statistiques,
+    competences,
+    progressions,
+    ...(Object.keys(ameliorationsSorts).length ? { ameliorationsSorts } : {}),
+  };
 }
 
 function cleCaracteristique(libelle: string): keyof Statistiques | null {
@@ -5508,7 +5845,24 @@ function extraireDes(texte: string) {
     .filter((valeur) => Number.isInteger(valeur) && valeur >= 1 && valeur <= 6);
 }
 
-function indicesDesConserves(lancers: number[], conserves: number[]) {
+function indicesDesConserves(
+  lancers: number[],
+  conserves: number[],
+  selection?: number[],
+) {
+  if (selection) {
+    return selection.length === conserves.length &&
+      new Set(selection).size === selection.length &&
+      selection.every(
+        (index, position) =>
+          Number.isInteger(index) &&
+          index >= 0 &&
+          index < lancers.length &&
+          lancers[index] === conserves[position],
+      )
+      ? [...selection]
+      : [];
+  }
   const utilises = new Set<number>();
   const indices: number[] = [];
   for (const conserve of conserves) {
@@ -5552,6 +5906,22 @@ function peutRecevoirEquipement(
 ) {
   const profil = profilsParId.get(combattant.profilId);
   if (!profil) return false;
+  if (equipement.achatDesactive) return false;
+  const ids = [...combattant.equipementIds, equipement.id];
+  if (
+    ids.filter((id) => id === equipement.id).length >
+    quantiteMaxEquipement(equipement, profil)
+  )
+    return false;
+  if (
+    compterArmesDeTir(ids) > 2 ||
+    ids.filter(
+      (id) =>
+        equipements.find((objet) => objet.id === id)?.categorie ===
+        'Corps à corps',
+    ).length > 2
+  )
+    return false;
   return equipementAutorise(
     profil,
     equipement,
@@ -5571,6 +5941,9 @@ function construireNotesPartie(bataille: BatailleEnCours) {
     bataille.notes.trim(),
     bataille.exploration.noteResultat.trim()
       ? `Exploration : ${bataille.exploration.noteResultat.trim()}`
+      : '',
+    bataille.exploration.bonusDes?.lances
+      ? `Bonus d’exploration : +${bataille.exploration.bonusDes.lances} dés lancés, +${bataille.exploration.bonusDes.conserves} résultats conservables. Source : ${bataille.exploration.bonusDes.source}`
       : '',
     ...lignesPersonnel,
   ]

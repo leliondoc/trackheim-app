@@ -53,6 +53,20 @@ test('la feuille imprimable neutralise le contenu saisi par le joueur', () => {
   assert.match(html, /overflow-wrap: anywhere/);
 });
 
+test('les exports détaillés et imprimés conservent les améliorations de sorts', () => {
+  const campagne = campagneAvecCapitaineTest();
+  campagne.combattants[0].competences = ['Sort ou prière : Réanimation'];
+  campagne.combattants[0].ameliorationsSorts = { Réanimation: 2 };
+  assert.match(
+    construireExportTexteDetaille(campagne),
+    /Réanimation : difficulté −2/,
+  );
+  assert.match(
+    construireFeuilleImprimable(campagne),
+    /Réanimation : difficulté −2/,
+  );
+});
+
 test('la feuille imprimable protège les contenus longs et les fiches multipages', () => {
   const campagne = campagneAvecCapitaineTest();
   campagne.nomBande = 'B'.repeat(160);

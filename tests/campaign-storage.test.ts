@@ -8,7 +8,15 @@ import {
   ecrireCopieLocale,
   lireCopieLocale,
 } from '../lib/campaign-storage.ts';
-import { campagneVideTest } from './fixtures.ts';
+import { campagneVideTest, campagneAvecCapitaineTest } from './fixtures.ts';
+import {
+  avertissementReglesCampagne,
+  validerCampagneV4,
+} from '../lib/campaign-validation.ts';
+import {
+  importerCampagneDepuisJson,
+  serialiserCampagne,
+} from '../lib/campaign-transfer.ts';
 
 class StockageMemoire implements Storage {
   #donnees = new Map<string, string>();
@@ -58,6 +66,27 @@ test('une sauvegarde sans métadonnées du format actuel est refusée', () => {
   assert.equal(
     lireCopieLocale(stockage, 'campagne-principale').statut,
     'invalide',
+  );
+});
+
+test('une différence de règles conserve le registre historique et produit un avertissement', () => {
+  const stockage = new StockageMemoire();
+  const campagne = campagneAvecCapitaineTest();
+  campagne.combattants[0].statistiques.force = 5;
+  assert.equal(validerCampagneV4(campagne).ok, false);
+  assert.match(avertissementReglesCampagne(campagne) ?? '', /maximum/);
+  ecrireCopieLocale(stockage, 'campagne-principale', campagne, {
+    auteur: 'test',
+  });
+  const lecture = lireCopieLocale(stockage, 'campagne-principale');
+  assert.equal(lecture.statut, 'valide');
+  assert.deepEqual(
+    lecture.statut === 'valide' ? lecture.copie.campagne : null,
+    campagne,
+  );
+  assert.deepEqual(
+    importerCampagneDepuisJson(serialiserCampagne(campagne)),
+    campagne,
   );
 });
 

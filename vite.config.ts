@@ -1,6 +1,8 @@
 import tailwindcss from '@tailwindcss/postcss';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
+import { readdirSync, statSync } from 'node:fs';
+import { join } from 'node:path';
 import { defineConfig } from 'vite';
 
 const depot = process.env.GITHUB_REPOSITORY?.split('/')[1];
@@ -52,7 +54,12 @@ export default defineConfig({
       name: 'service-worker-hors-ligne-trackheim',
       apply: 'build',
       generateBundle(_options, bundle) {
-        const fichiers = ['./', ...Object.keys(bundle)].filter(
+        const publicDir = fileURLToPath(new URL('./public', import.meta.url));
+        const publics = readdirSync(publicDir, { recursive: true })
+          .map(String)
+          .filter((path) => statSync(join(publicDir, path)).isFile())
+          .map((path) => path.replaceAll('\\', '/'));
+        const fichiers = ['./', ...Object.keys(bundle), ...publics].filter(
           (fichier) => fichier !== 'sw.js',
         );
         const version = `trackheim-${Date.now()}`;
@@ -61,9 +68,10 @@ export default defineConfig({
           fileName: 'sw.js',
           source: `const CACHE=${JSON.stringify(version)};
 const PRECACHE=${JSON.stringify(fichiers)};
-self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(PRECACHE.map(path=>new URL(path,self.registration.scope).href))).then(()=>self.skipWaiting())));
+const lireCache=request=>caches.open(CACHE).then(cache=>cache.match(request,{ignoreVary:true}));
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(PRECACHE.map(path=>new Request(new URL(path,self.registration.scope),{cache:'reload'}))))));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('trackheim-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',event=>{const request=event.request;if(request.method!=='GET')return;const url=new URL(request.url);if(url.origin!==self.location.origin)return;const sauvegarder=response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(request,copy)));}return response;};if(request.mode==='navigate'){event.respondWith(fetch(request).then(sauvegarder).catch(()=>caches.match(request).then(cached=>cached||caches.match(new URL('./',self.registration.scope).href))));return;}event.respondWith(caches.match(request).then(cached=>cached||fetch(request).then(sauvegarder)));});`,
+self.addEventListener('fetch',event=>{const request=event.request;if(request.method!=='GET')return;const url=new URL(request.url);if(url.origin!==self.location.origin)return;const sauvegarder=response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(request,copy)));}return response;};if(request.mode==='navigate'){event.respondWith(fetch(request,{cache:'no-cache'}).then(sauvegarder).catch(()=>lireCache(request).then(cached=>cached||lireCache(new URL('./',self.registration.scope).href))));return;}event.respondWith(lireCache(request).then(cached=>cached||fetch(request).then(sauvegarder)));});`,
         });
       },
     },

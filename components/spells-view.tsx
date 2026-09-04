@@ -80,9 +80,29 @@ export function SpellsView({
                 </header>
                 {connus.length ? (
                   <ul>
-                    {connus.map((sort) => (
-                      <li key={sort}>{sort}</li>
-                    ))}
+                    {connus.map((sort) => {
+                      const amelioration =
+                        combattant.ameliorationsSorts?.[sort] ?? 0;
+                      const difficulteInitiale = fiche?.magie.find(
+                        (pouvoir) => pouvoir.titre.trim() === sort,
+                      )?.difficulte;
+                      return (
+                        <li key={sort}>
+                          {sort}
+                          {difficulteInitiale !== undefined ? (
+                            <span>
+                              {' '}
+                              · Difficulté {difficulteInitiale - amelioration}
+                              {amelioration
+                                ? ` (base ${difficulteInitiale}, −${amelioration})`
+                                : ''}
+                            </span>
+                          ) : amelioration > 0 ? (
+                            <span> · Difficulté réduite de {amelioration}</span>
+                          ) : null}
+                        </li>
+                      );
+                    })}
                   </ul>
                 ) : (
                   <p className="spells-empty-copy">

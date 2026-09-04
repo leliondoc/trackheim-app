@@ -173,26 +173,31 @@ function normaliserFigurine(
 ): SuiviFigurineBataille {
   let pointsVieActuels = bornerEntier(figurine.pointsVieActuels, 0, maximumPv);
   let etatTable = figurine.etatTable;
-  const retourEnJeu =
-    (modification.pointsVieActuels ?? 0) > 0 ||
-    (modification.etatTable !== undefined &&
-      modification.etatTable !== 'Hors de combat');
-  const sortie =
-    modification.etatTable === 'Hors de combat' ||
-    modification.pointsVieActuels === 0;
+  let blessureAResoudre = figurine.blessureAResoudre;
 
-  if (sortie && !retourEnJeu) {
-    etatTable = 'Hors de combat';
-    pointsVieActuels = 0;
-  } else if (retourEnJeu) {
+  // Zéro PV provoque une blessure à résoudre, pas une perte automatique.
+  // Le joueur applique le résultat adapté à l'arme et aux règles du profil.
+  if (modification.etatTable !== undefined) {
+    blessureAResoudre = false;
+  } else if ((modification.pointsVieActuels ?? 0) > 0) {
     if (etatTable === 'Hors de combat') etatTable = 'Debout';
-    pointsVieActuels = Math.max(1, pointsVieActuels);
-  } else if (pointsVieActuels === 0 || etatTable === 'Hors de combat') {
-    etatTable = 'Hors de combat';
+    blessureAResoudre = false;
+  } else if (
+    modification.pointsVieActuels === 0 &&
+    etatTable !== 'Hors de combat'
+  ) {
+    blessureAResoudre = true;
+  }
+  if (etatTable === 'Hors de combat') {
     pointsVieActuels = 0;
+    blessureAResoudre = false;
   }
 
-  return { etatTable, pointsVieActuels };
+  return {
+    etatTable,
+    pointsVieActuels,
+    ...(blessureAResoudre !== undefined ? { blessureAResoudre } : {}),
+  };
 }
 
 function definirNombreHorsCombat(

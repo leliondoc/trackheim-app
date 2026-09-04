@@ -78,6 +78,9 @@ export function construireExportTexteDetaille(campagne: EtatCampagne) {
       ligneStatistiques(combattant),
       `Équipement : ${nomsEquipements(combattant).join(', ') || 'Aucun équipement enregistré'}`,
       `Compétences : ${combattant.competences.join(', ') || 'Aucune'}`,
+      ...(ameliorationsMagiques(combattant)
+        ? [`Sorts et prières améliorés : ${ameliorationsMagiques(combattant)}`]
+        : []),
       `Blessures : ${combattant.blessures.join(', ') || 'Aucune'}`,
       `Progressions : ${combattant.progressions.join(', ') || 'Aucune'}`,
     );
@@ -124,6 +127,7 @@ export function construireFeuilleImprimable(campagne: EtatCampagne) {
         <dl>
           <div><dt>Équipement</dt><dd>${echapper(nomsEquipements(combattant).join(', ') || 'Aucun équipement enregistré')}</dd></div>
           <div><dt>Compétences</dt><dd>${echapper(combattant.competences.join(', ') || 'Aucune')}</dd></div>
+          ${ameliorationsMagiques(combattant) ? `<div><dt>Sorts et prières améliorés</dt><dd>${echapper(ameliorationsMagiques(combattant))}</dd></div>` : ''}
           <div><dt>Blessures</dt><dd>${echapper(combattant.blessures.join(', ') || 'Aucune')}</dd></div>
           ${combattant.notes.trim() ? `<div><dt>Notes</dt><dd>${echapper(combattant.notes.trim())}</dd></div>` : ''}
         </dl>
@@ -176,6 +180,12 @@ function valeurBande(campagne: EtatCampagne) {
 
 function nomsEquipements(combattant: Combattant) {
   return nomsEquipementsCombattant(combattant);
+}
+
+function ameliorationsMagiques(combattant: Combattant) {
+  return Object.entries(combattant.ameliorationsSorts ?? {})
+    .map(([titre, nombre]) => `${titre} : difficulté −${nombre}`)
+    .join(', ');
 }
 
 function ligneStatistiques(combattant: Combattant) {

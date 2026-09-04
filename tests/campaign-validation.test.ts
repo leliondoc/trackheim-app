@@ -7,6 +7,10 @@ import {
   validerCampagneV4,
 } from '../lib/campaign-validation.ts';
 import { creerSuiviCombattant } from '../lib/battle-state.ts';
+import {
+  importerCampagneDepuisJson,
+  serialiserCampagne,
+} from '../lib/campaign-transfer.ts';
 import { obtenirProfil, type BatailleEnCours } from '../lib/mordheim-data.ts';
 import { campagneAvecCapitaineTest, campagneVideTest } from './fixtures.ts';
 
@@ -103,11 +107,65 @@ describe('contrat persistant des campagnes', () => {
     assert.equal(validerCampagneV4(campagne).ok, true);
 
     bataille.participants[combattant.id].figurinesTable[0].pointsVieActuels = 0;
-    assert.equal(validerCampagneV4(campagne).ok, false);
-
+    assert.equal(validerCampagneV4(campagne).ok, true);
+    bataille.participants[combattant.id].figurinesTable[0].blessureAResoudre =
+      true;
+    assert.equal(validerCampagneV4(campagne).ok, true);
     bataille.participants[combattant.id].figurinesTable[0].etatTable =
       'Hors de combat';
     bataille.participants[combattant.id].horsCombat = 0;
+    assert.equal(validerCampagneV4(campagne).ok, false);
+  });
+
+  it('conserve les limites de sécurité même sans vérifier la composition historique', () => {
+    const campagne = campagneAvecCapitaineTest();
+    campagne.combattants[0].quantite = 1_000_000;
+    assert.equal(
+      validerCampagneV4(campagne, { verifierReglesDeBande: false }).ok,
+      false,
+    );
+    campagne.combattants[0].quantite = 1;
+    campagne.combattants[0].statistiques.pointsVie = 1_000_000;
+    assert.equal(
+      validerCampagneV4(campagne, { verifierReglesDeBande: false }).ok,
+      false,
+    );
+  });
+
+  it('préserve les nouveaux états de combat, bonus et améliorations dans un export restauré', () => {
+    const campagne = campagneAvecCapitaineTest();
+    const combattant = campagne.combattants[0];
+    combattant.competences = ['Sort ou prière : Réanimation'];
+    combattant.ameliorationsSorts = { Réanimation: 2 };
+    const bataille = batailleMinimale();
+    bataille.participants[combattant.id] = creerSuiviCombattant(combattant);
+    bataille.participants[combattant.id].figurinesTable[0] = {
+      etatTable: 'Debout',
+      pointsVieActuels: 0,
+      blessureAResoudre: true,
+    };
+    bataille.exploration = {
+      ...bataille.exploration,
+      lancers: [4, 4],
+      desConserves: [4],
+      indicesConserves: [1],
+      bonusDes: { lances: 1, conserves: 0, source: '' },
+    };
+    campagne.batailleEnCours = bataille;
+    assert.equal(validerCampagneV4(campagne).ok, true);
+    assert.deepEqual(
+      importerCampagneDepuisJson(serialiserCampagne(campagne)),
+      campagne,
+    );
+    bataille.exploration.appliquee = true;
+    assert.equal(validerCampagneV4(campagne).ok, false);
+    bataille.exploration.bonusDes!.source =
+      'Traînard : dé supplémentaire à défausser';
+    assert.equal(validerCampagneV4(campagne).ok, true);
+    bataille.exploration.indicesConserves = [2];
+    assert.equal(validerCampagneV4(campagne).ok, false);
+    bataille.exploration.indicesConserves = [1];
+    combattant.ameliorationsSorts = { 'Sort inconnu': 1 };
     assert.equal(validerCampagneV4(campagne).ok, false);
   });
 

@@ -33,6 +33,12 @@ export type RegleBandeReference = {
   titre: string;
   description: string;
   source?: string;
+  apprenable?: boolean;
+  profilsAutorises?: string[];
+  reserveAuChef?: boolean;
+  prerequis?: string[];
+  incompatibleAvec?: string[];
+  maximumParBande?: number;
 };
 
 export type ProfilBandeReference = {
@@ -51,6 +57,10 @@ export type ProfilBandeReference = {
   minimum: number;
   maximum: number | null;
   experienceInitiale: number;
+  gagneExperience: boolean;
+  maximums?: Record<keyof StatistiquesBandeReference, number>;
+  sourceMaximums?: string;
+  progressionManuelle?: string;
   statistiques: StatistiquesBandeReference;
   competencesDisponibles: string[];
   regles: Array<Omit<RegleBandeReference, 'source'>>;
@@ -62,6 +72,21 @@ export type EntreeEquipementBandeReference = {
   cout: number;
   formuleCout?: string;
   note?: string;
+  achatDesactive?: string;
+  variantesArme?: {
+    materiau: string;
+    multiplicateur: number;
+    multiplicateurCommerce?: number;
+    supplement?: number;
+    armes?: string[];
+  };
+  prixRecrutementFormule?: string;
+  prixRecrutementMinimum?: number;
+  rareteCommerce?: number;
+  coutCommerce?: number;
+  coutCommerceFormule?: string;
+  commerceUniquement?: boolean;
+  quantiteMax?: number;
 };
 
 export type ListeEquipementBandeReference = {

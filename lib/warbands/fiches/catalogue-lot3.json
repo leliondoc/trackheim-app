@@ -58,7 +58,20 @@
               "description": "Les membres de la bande situés à 6 ps ou moins peuvent utiliser son Commandement."
             }
           ],
-          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4"
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "berserk-norse",
@@ -90,7 +103,20 @@
               "description": "Il utilise la liste d'équipement des Héros mais ne porte jamais d'armure."
             }
           ],
-          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4"
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "wulfen-norse",
@@ -113,7 +139,10 @@
           },
           "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
           "regles": [
-            { "titre": "Peur", "description": "Le Wulfen cause la peur." },
+            {
+              "titre": "Peur",
+              "description": "Le Wulfen cause la peur."
+            },
             {
               "titre": "Bestial",
               "description": "Il est immunisé à la psychologie et ne peut jamais devenir Chef de bande."
@@ -123,7 +152,9 @@
               "description": "Il utilise uniquement ses griffes et crocs, sans arme ni armure, et ne subit pas la pénalité d'un combattant désarmé."
             }
           ],
-          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4"
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "bondi-norse",
@@ -146,7 +177,20 @@
           },
           "competencesDisponibles": ["Combat", "Force", "Vitesse", "Spéciale"],
           "regles": [],
-          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4"
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1, 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "maraudeur-norse",
@@ -169,7 +213,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Norses VF GLM V1.1bFr, pages 1 et 5"
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "chasseur-norse",
@@ -192,7 +249,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Norses VF GLM V1.1bFr, pages 1 et 5"
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "loup-norse",
@@ -224,7 +294,8 @@
               "description": "La bande ne peut recruter des Loups que si elle possède un Wulfen. Si le Wulfen meurt ou manque la bataille, les Loups ne peuvent pas participer jusqu'à son remplacement ou son retour."
             }
           ],
-          "source": "PDF Norses VF GLM V1.1bFr, pages 1 et 5"
+          "source": "PDF Norses VF GLM V1.1bFr, pages 1 et 5",
+          "gagneExperience": false
         },
         {
           "id": "mule-norse",
@@ -264,7 +335,8 @@
               "description": "Elle ne combat ni ne charge. Une Mule non montée chargée devient incontrôlable et fuit directement à l'opposé de l'attaquant."
             }
           ],
-          "source": "PDF Norses VF GLM V1.1bFr, page 6"
+          "source": "PDF Norses VF GLM V1.1bFr, page 6",
+          "gagneExperience": false
         },
         {
           "id": "cheval-norse",
@@ -292,7 +364,8 @@
               "description": "Le Cheval est réservé aux Humains et suit les règles de cavalerie de l'article Guerriers Montés."
             }
           ],
-          "source": "PDF Norses VF GLM V1.1bFr, page 6"
+          "source": "PDF Norses VF GLM V1.1bFr, page 6",
+          "gagneExperience": false
         },
         {
           "id": "destrier-norse",
@@ -324,7 +397,8 @@
               "description": "Le Destrier est réservé aux Humains et suit les règles de cavalerie de l'article Guerriers Montés."
             }
           ],
-          "source": "PDF Norses VF GLM V1.1bFr, page 6"
+          "source": "PDF Norses VF GLM V1.1bFr, page 6",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -340,11 +414,26 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Fléau", "cout": 15 }
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                }
               ]
             },
             {
@@ -360,9 +449,18 @@
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -380,11 +478,26 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
@@ -400,9 +513,18 @@
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -420,11 +542,26 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
@@ -435,14 +572,23 @@
                   "cout": 5,
                   "note": "Portée 8 ps, Force du porteur. Arme de lancer sans pénalité de tir après déplacement."
                 },
-                { "nom": "Arc", "cout": 10 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -453,27 +599,33 @@
         {
           "titre": "Expert du bouclier",
           "description": "Avec un bouclier, le Héros obtient sa sauvegarde d'armure de 6+ et peut aussi parer.",
-          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+          "source": "PDF Norses VF GLM V1.1bFr, page 3",
+          "apprenable": true
         },
         {
           "titre": "Frappe destructrice",
           "description": "Les attaques du Héros ne peuvent jamais être parées.",
-          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+          "source": "PDF Norses VF GLM V1.1bFr, page 3",
+          "apprenable": true
         },
         {
           "titre": "Charge berserk",
           "description": "Lorsqu'il charge avec une hache ou une arme à deux mains, le Héros relance ses jets pour toucher ratés.",
-          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+          "source": "PDF Norses VF GLM V1.1bFr, page 3",
+          "apprenable": true
         },
         {
           "titre": "Jargon des batailles",
           "description": "Réservée au Chef. La portée d'utilisation de son Commandement passe de 6 à 12 ps.",
-          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+          "source": "PDF Norses VF GLM V1.1bFr, page 3",
+          "apprenable": true,
+          "reserveAuChef": true
         },
         {
           "titre": "Intrépidité",
           "description": "Le Héros ne teste jamais Seul contre tous et peut relancer ses tests de peur ratés.",
-          "source": "PDF Norses VF GLM V1.1bFr, page 3"
+          "source": "PDF Norses VF GLM V1.1bFr, page 3",
+          "apprenable": true
         }
       ],
       "magie": [],
@@ -552,7 +704,9 @@
               "description": "Lorsqu'un Orque de main rate l'Animosité à moins de 6 ps, le Boss peut lui infliger une touche automatique d'une Force choisie par le joueur. Si la cible reste debout, ajoutez cette Force au résultat de son tableau d'Animosité."
             }
           ],
-          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2, 4 et 5"
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2, 4 et 5",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "orque-noir",
@@ -586,7 +740,9 @@
               "description": "Il commence avec une sauvegarde d'armure naturelle de 6+, cumulable avec l'équipement."
             }
           ],
-          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2, 4 et 5"
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2, 4 et 5",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "ptitmek",
@@ -614,7 +770,9 @@
               "description": "À partir de 25 points d'expérience, il peut payer 10 CO pour subir son rituel. Lors de sa prochaine acquisition de compétence, il peut remplacer celle-ci par la règle Orque noir. Il devient alors un Orque Noir et gagne les mêmes accès à l'équipement et aux compétences."
             }
           ],
-          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2, 4 et 5"
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2, 4 et 5",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "kastagneur-orque",
@@ -642,7 +800,9 @@
               "description": "Il est soumis à l'Animosité de la bande."
             }
           ],
-          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 6"
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 6",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "chasseur-orque-noir",
@@ -674,7 +834,9 @@
               "description": "Le nombre de Chasseurs ne peut dépasser celui des Kastagneurs. Si une perte rompt cet équilibre, la prochaine recrue doit être un Kastagneur."
             }
           ],
-          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 6"
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 6",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "dingboy",
@@ -710,7 +872,9 @@
               "description": "Il doit courir ou charger au maximum vers l'ennemi visible le plus proche, les alliés ne bloquant pas sa ligne de vue. Sans ennemi visible, il se déplace normalement. Il gagne une Attaque au corps à corps, hors profil et hors maximum racial. Il n'utilise ni armure ni arme de tir. Il ne peut devenir Chef et son Commandement ne sert aux tests de Déroute que si les Ding'boyz sont les seuls survivants de la bande."
             }
           ],
-          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 6"
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 6",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "troll-orque-noir",
@@ -737,7 +901,10 @@
               "titre": "Équipement",
               "description": "Il ne peut recevoir ni arme ni armure."
             },
-            { "titre": "Peur", "description": "Il cause la peur." },
+            {
+              "titre": "Peur",
+              "description": "Il cause la peur."
+            },
             {
               "titre": "Zéro de QI",
               "description": "Il ne gagne jamais d'expérience."
@@ -763,7 +930,8 @@
               "description": "Il suit la règle de Grande cible."
             }
           ],
-          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 7"
+          "source": "PDF Orques Noirs VF GLM V1hFr, pages 2 et 7",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -779,32 +947,65 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Kikoup'",
                   "cout": 10,
                   "note": "Compte comme une morgenstern."
                 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arbalète", "cout": 25 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -822,23 +1023,49 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Kikoup'",
                   "cout": 10,
                   "note": "Compte comme une morgenstern."
                 },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
-            { "nom": "Tir", "entrees": [{ "nom": "Arc", "cout": 10 }] },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
+              ]
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -856,24 +1083,53 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Kikoup'",
                   "cout": 10,
                   "note": "Compte comme une morgenstern."
                 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
-            { "nom": "Tir", "entrees": [{ "nom": "Arc", "cout": 10 }] },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
+              ]
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -891,15 +1147,27 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Kikoup'",
                   "cout": 10,
                   "note": "Compte comme une morgenstern."
                 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             }
           ],
@@ -917,29 +1185,53 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Kikoup'",
                   "cout": 10,
                   "note": "Compte comme une morgenstern."
                 },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arbalète", "cout": 25 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -950,27 +1242,33 @@
         {
           "titre": "Têt'dure",
           "description": "Le Héros évite un résultat sonné sur 3+ et devient seulement à terre. Avec un casque, cette sauvegarde passe à 2+ et remplace la règle normale du casque.",
-          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Waaagh",
           "description": "Le Héros ajoute 1D3 ps à sa portée de charge.",
-          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "On y va",
           "description": "Le Héros ignore les tests de peur et de terreur lorsqu'il charge.",
-          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Rev'nez ici",
           "description": "Réservée au Chef. La bande relance ses tests de Déroute ratés tant que le Chef n'est pas hors de combat.",
-          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4",
+          "apprenable": true,
+          "reserveAuChef": true
         },
         {
           "titre": "Coup d'boule",
           "description": "Toute figurine mise à terre par le Héros au corps à corps est considérée comme sonnée.",
-          "source": "PDF Orques Noirs VF GLM V1hFr, page 4"
+          "source": "PDF Orques Noirs VF GLM V1hFr, page 4",
+          "apprenable": true
         }
       ],
       "magie": [],
@@ -1033,7 +1331,20 @@
               "description": "Il hait tous les Morts-Vivants."
             }
           ],
-          "source": "PDF Arabian Tomb Raiders VO, pages 14 à 16 du document, pages PDF 1 à 3"
+          "source": "PDF Arabian Tomb Raiders VO, pages 14 à 16 du document, pages PDF 1 à 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "champion-arabien",
@@ -1061,7 +1372,20 @@
               "description": "Il hait tous les Morts-Vivants."
             }
           ],
-          "source": "PDF Arabian Tomb Raiders VO, pages 14 à 16 du document, pages PDF 1 à 3"
+          "source": "PDF Arabian Tomb Raiders VO, pages 14 à 16 du document, pages PDF 1 à 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "mystique-nomade",
@@ -1093,7 +1417,20 @@
               "description": "Il hait tous les Morts-Vivants."
             }
           ],
-          "source": "PDF Arabian Tomb Raiders VO, pages 14 à 16 du document, pages PDF 1 à 3"
+          "source": "PDF Arabian Tomb Raiders VO, pages 14 à 16 du document, pages PDF 1 à 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "bedouin",
@@ -1121,7 +1458,20 @@
               "description": "La bande ajoute 1 à son jet de recherche lors de l'équipement ou du commerce. Ce bonus reste limité à 1 même avec deux Bédouins."
             }
           ],
-          "source": "PDF Arabian Tomb Raiders VO, page 17 du document, page PDF 4"
+          "source": "PDF Arabian Tomb Raiders VO, page 17 du document, page PDF 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "guerrier-nomade",
@@ -1144,7 +1494,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Arabian Tomb Raiders VO, page 17 du document, page PDF 4"
+          "source": "PDF Arabian Tomb Raiders VO, page 17 du document, page PDF 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "esclave-arabien",
@@ -1172,7 +1535,20 @@
               "description": "Il gagne de l'expérience normalement, mais si son groupe obtient Ce gars est doué, le Chef exécute l'Esclave concerné et le retire de la feuille. Le reste du groupe relance alors sa progression."
             }
           ],
-          "source": "PDF Arabian Tomb Raiders VO, page 17 du document, page PDF 4"
+          "source": "PDF Arabian Tomb Raiders VO, page 17 du document, page PDF 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -1194,33 +1570,69 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Épée ou cimeterre", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Fléau", "cout": 15 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Épée ou cimeterre",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Arc court", "cout": 5 },
-                { "nom": "Arc", "cout": 10 },
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                },
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
                 {
                   "nom": "Tufenk",
                   "cout": 15,
                   "note": "Le profil de l'arme n'est pas défini dans ce PDF de bande."
                 },
-                { "nom": "Arquebuse", "cout": 35 }
+                {
+                  "nom": "Arquebuse",
+                  "cout": 35
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Armure légère", "cout": 20 }
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                }
               ]
             }
           ],
@@ -1238,18 +1650,38 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Gourdin", "cout": 3 },
+                {
+                  "nom": "Gourdin",
+                  "cout": 3
+                },
                 {
                   "nom": "Katar",
                   "cout": 5,
                   "note": "Le profil de l'arme n'est pas défini dans ce PDF de bande."
                 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
-            { "nom": "Tir", "entrees": [] },
-            { "nom": "Armures", "entrees": [{ "nom": "Bouclier", "cout": 5 }] }
+            {
+              "nom": "Tir",
+              "entrees": []
+            },
+            {
+              "nom": "Armures",
+              "entrees": [
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
+              ]
+            }
           ],
           "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2"
         }
@@ -1258,17 +1690,20 @@
         {
           "titre": "Ver des sables",
           "description": "Le Héros peut se dissimuler à découvert en s'enfouissant dans le sable. Cette aptitude ne fonctionne pas à l'intérieur des bâtiments.",
-          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2"
+          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2",
+          "apprenable": true
         },
         {
           "titre": "Frappe et fuite",
           "description": "Le Héros peut courir puis tirer, avec un malus de 2 pour toucher au lieu du malus de 1 appliqué après un déplacement.",
-          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2"
+          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2",
+          "apprenable": true
         },
         {
           "titre": "Résistant aux intempéries",
           "description": "Les conditions météorologiques, dont la chaleur, n'affectent plus le Héros.",
-          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2"
+          "source": "PDF Arabian Tomb Raiders VO, page 15 du document, page PDF 2",
+          "apprenable": true
         }
       ],
       "magie": [
@@ -1405,7 +1840,20 @@
               "description": "Tout Pirate à 6 ps ou moins peut utiliser son Commandement."
             }
           ],
-          "source": "PDF Pirates VF GLM V1hFr, pages 2, 3 et 9"
+          "source": "PDF Pirates VF GLM V1hFr, pages 2, 3 et 9",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "quartier-maitre-pirate",
@@ -1428,7 +1876,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Force", "Spéciale"],
           "regles": [],
-          "source": "PDF Pirates VF GLM V1hFr, pages 2, 3 et 9"
+          "source": "PDF Pirates VF GLM V1hFr, pages 2, 3 et 9",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "mousse-pirate",
@@ -1451,7 +1912,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
           "regles": [],
-          "source": "PDF Pirates VF GLM V1hFr, pages 2, 3 et 9"
+          "source": "PDF Pirates VF GLM V1hFr, pages 2, 3 et 9",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "matelot-pirate",
@@ -1474,7 +1948,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Pirates VF GLM V1hFr, pages 2 et 10"
+          "source": "PDF Pirates VF GLM V1hFr, pages 2 et 10",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "artilleur-pirate",
@@ -1502,7 +1989,20 @@
               "description": "L'Artilleur qui porte l'unique pierrier forme toujours un groupe d'Hommes de main à lui seul. S'il est séparé d'un groupe existant, il conserve son expérience et ses compétences."
             }
           ],
-          "source": "PDF Pirates VF GLM V1hFr, pages 2 et 10"
+          "source": "PDF Pirates VF GLM V1hFr, pages 2 et 10",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "bosco-pirate",
@@ -1534,7 +2034,20 @@
               "description": "Il relance les tests d'Initiative ratés pour franchir un vide, effectuer une charge plongeante ou monter et descendre avec une corde."
             }
           ],
-          "source": "PDF Pirates VF GLM V1hFr, pages 2 et 10"
+          "source": "PDF Pirates VF GLM V1hFr, pages 2 et 10",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "enrole-pirate",
@@ -1578,7 +2091,8 @@
               "description": "Les Enrôlés en fuite ou hors de combat ne comptent jamais pour déterminer le seuil de test de Déroute."
             }
           ],
-          "source": "PDF Pirates VF GLM V1hFr, pages 1, 2 et 11"
+          "source": "PDF Pirates VF GLM V1hFr, pages 1, 2 et 11",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -1600,8 +2114,14 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau ou masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Marteau ou masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
                 {
                   "nom": "Gaffe",
                   "cout": 8,
@@ -1617,7 +2137,10 @@
                   "cout": 10,
                   "note": "Compte comme une épée."
                 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
@@ -1628,8 +2151,15 @@
                   "cout": 3,
                   "note": "Portée 6 ps, Force du porteur moins 1. Pas de pénalité de longue portée, mais malus de 1 après mouvement. La cible blessée gagne 1 à sa sauvegarde ou une sauvegarde de 6+."
                 },
-                { "nom": "Arbalète", "cout": 25 },
-                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "note": "30 CO la paire."
+                },
                 {
                   "nom": "Pistolet de duel",
                   "cout": 30,
@@ -1645,9 +2175,18 @@
                   "cout": 5,
                   "note": "Sauvegarde de 6+, cumulable seulement avec casque ou rondache. Compte comme armure pour l'interdiction de lancer des sorts et ne peut être revendu."
                 },
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Rondache", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -1665,8 +2204,14 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau ou masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Marteau ou masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
                 {
                   "nom": "Crochet",
                   "cout": 8,
@@ -1677,21 +2222,36 @@
                   "cout": 10,
                   "note": "Compte comme une épée."
                 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Cabillot", "cout": 3 },
-                { "nom": "Arc", "cout": 10 }
+                {
+                  "nom": "Cabillot",
+                  "cout": 3
+                },
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Cuir durci", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 }
+                {
+                  "nom": "Cuir durci",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -1709,8 +2269,14 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau ou masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Marteau ou masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
                 {
                   "nom": "Sabre d'abordage",
                   "cout": 10,
@@ -1721,18 +2287,29 @@
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "note": "30 CO la paire."
+                },
                 {
                   "nom": "Pistolet de duel",
                   "cout": 30,
                   "note": "60 CO la paire."
                 },
-                { "nom": "Tromblon", "cout": 30 },
-                { "nom": "Arquebuse", "cout": 35 },
+                {
+                  "nom": "Tromblon",
+                  "cout": 30
+                },
+                {
+                  "nom": "Arquebuse",
+                  "cout": 35
+                },
                 {
                   "nom": "Pierrier",
                   "cout": 65,
-                  "note": "Rare 8, un seul par bande. Le porteur perd 1 en Mouvement et Initiative. L'arme ne tire jamais deux fois par tour, ne tire pas après déplacement, demande un tour complet de rechargement et applique toujours les incidents optionnels de poudre noire sans réduction de prix."
+                  "note": "Rare 8, un seul par bande. Le porteur perd 1 en Mouvement et Initiative. L'arme ne tire jamais deux fois par tour, ne tire pas après déplacement, demande un tour complet de rechargement et applique toujours les incidents optionnels de poudre noire sans réduction de prix.",
+                  "rareteCommerce": 8
                 },
                 {
                   "nom": "Boulet de pierrier",
@@ -1754,9 +2331,18 @@
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Cuir durci", "cout": 5 },
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Cuir durci",
+                  "cout": 5
+                },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -1785,23 +2371,32 @@
                   "nom": "Boussole",
                   "cout": 45,
                   "formuleCout": "45 + 2D6 CO",
-                  "note": "Rare 9. Quand le scénario fait lancer 1D6 pour le premier déploiement, la bande peut relancer son dé une seule fois. Plusieurs boussoles ne donnent pas plusieurs relances et si les deux bandes en ont, aucune relance n'est permise."
+                  "note": "Rare 9. Quand le scénario fait lancer 1D6 pour le premier déploiement, la bande peut relancer son dé une seule fois. Plusieurs boussoles ne donnent pas plusieurs relances et si les deux bandes en ont, aucune relance n'est permise.",
+                  "rareteCommerce": 9,
+                  "coutCommerceFormule": "45 + 2D6 CO",
+                  "coutCommerce": 45,
+                  "commerceUniquement": true
                 },
                 {
                   "nom": "Perroquet",
                   "cout": 15,
-                  "note": "Rare 8, Capitaine et officiers. Un ennemi au contact teste son Commandement ou subit 1 pour toucher pendant son premier tour de combat contre le propriétaire."
+                  "note": "Rare 8, Capitaine et officiers. Un ennemi au contact teste son Commandement ou subit 1 pour toucher pendant son premier tour de combat contre le propriétaire.",
+                  "rareteCommerce": 8
                 },
                 {
                   "nom": "Jolly Roger",
                   "cout": 40,
                   "formuleCout": "40 + 2D6 CO",
-                  "note": "Commun, un seul par bande. Les Pirates à 12 ps ou moins ne sont jamais seuls contre tous, sauf les Enrôlés. Le porteur occupe une main et ne peut jamais employer d'arme à deux mains pendant la bataille."
+                  "note": "Commun, un seul par bande. Les Pirates à 12 ps ou moins ne sont jamais seuls contre tous, sauf les Enrôlés. Le porteur occupe une main et ne peut jamais employer d'arme à deux mains pendant la bataille.",
+                  "coutCommerceFormule": "40 + 2D6 CO",
+                  "coutCommerce": 40,
+                  "commerceUniquement": true
                 },
                 {
                   "nom": "Longue-vue",
                   "cout": 20,
-                  "note": "Rare 8. Au début du tour, elle révèle sur 4+ un ennemi caché visible. Le porteur peut se déplacer mais ne peut ni courir ni charger ce tour."
+                  "note": "Rare 8. Au début du tour, elle révèle sur 4+ un ennemi caché visible. Le porteur peut se déplacer mais ne peut ni courir ni charger ce tour.",
+                  "rareteCommerce": 8
                 },
                 {
                   "nom": "Crochet",
@@ -1817,7 +2412,11 @@
                   "nom": "Carte au trésor",
                   "cout": 75,
                   "formuleCout": "75 + 4D6 CO",
-                  "note": "Rare 10, usage unique et remplace l'Exploration. Sur 1, gain de 1D6 fois 5 CO. Sur 2, un fragment et 2D6 fois 10 CO. Sur 3, une bière de Bugman et 2D6 fois 10 CO. Sur 4, l'achat suivant traite un objet de prix comme commun, puis rapporte 2D6 fois 10 CO et donne 1 Commandement au prochain jet d'Enrôlement lié à une capture, des Vagabonds ou des Prisonniers. Sur 5, un Héros teste son Initiative, gagne dans tous les cas 3D6 fois 10 CO, trouve aussi un porte-bonheur s'il réussit et rate la prochaine partie s'il échoue. Sur 6, la bande gagne 1D3 + 2 fragments et une carte de Mordheim."
+                  "note": "Rare 10, usage unique et remplace l'Exploration. Sur 1, gain de 1D6 fois 5 CO. Sur 2, un fragment et 2D6 fois 10 CO. Sur 3, une bière de Bugman et 2D6 fois 10 CO. Sur 4, l'achat suivant traite un objet de prix comme commun, puis rapporte 2D6 fois 10 CO et donne 1 Commandement au prochain jet d'Enrôlement lié à une capture, des Vagabonds ou des Prisonniers. Sur 5, un Héros teste son Initiative, gagne dans tous les cas 3D6 fois 10 CO, trouve aussi un porte-bonheur s'il réussit et rate la prochaine partie s'il échoue. Sur 6, la bande gagne 1D3 + 2 fragments et une carte de Mordheim.",
+                  "rareteCommerce": 10,
+                  "coutCommerceFormule": "75 + 4D6 CO",
+                  "coutCommerce": 75,
+                  "commerceUniquement": true
                 }
               ]
             }
@@ -1829,32 +2428,39 @@
         {
           "titre": "Interprète de chants marins",
           "description": "Au début de sa phase de Corps à corps, le Héros choisit un adversaire au contact. Sur un test de Commandement raté, cet adversaire perd une Attaque pour le tour. Les Morts-Vivants et autres créatures non vivantes ne sont pas affectés.",
-          "source": "PDF Pirates VF GLM V1hFr, page 8"
+          "source": "PDF Pirates VF GLM V1hFr, page 8",
+          "apprenable": true
         },
         {
           "titre": "Pied marin",
           "description": "En cas de chute, le Héros ignore l'ensemble des 1D3 touches sur 4+. S'il est mis à terre ou sonné à moins de 1 ps d'un précipice, il relance son test d'Initiative pour éviter de tomber.",
-          "source": "PDF Pirates VF GLM V1hFr, page 8"
+          "source": "PDF Pirates VF GLM V1hFr, page 8",
+          "apprenable": true
         },
         {
           "titre": "Maître du sabre d'abordage",
           "description": "Avec une épée, le Héros pare sur un jet égal ou supérieur au meilleur jet pour toucher adverse. Cette amélioration fonctionne seulement à couvert, dans un bâtiment ou à 2 ps ou moins d'un élément de décor.",
-          "source": "PDF Pirates VF GLM V1hFr, page 8"
+          "source": "PDF Pirates VF GLM V1hFr, page 8",
+          "apprenable": true
         },
         {
           "titre": "Constitution solide",
           "description": "Le Héros annule l'effet critique d'un Coup Critique sur 5+ et traite alors la blessure normalement.",
-          "source": "PDF Pirates VF GLM V1hFr, page 8"
+          "source": "PDF Pirates VF GLM V1hFr, page 8",
+          "apprenable": true
         },
         {
           "titre": "Voix tonitruante",
           "description": "Réservée au Capitaine. Une fois par tour, s'il est debout et hors combat, il permet à un Pirate à 8 ps ou moins de relancer un test raté qui le ferait fuir un combat ou un test de Ralliement.",
-          "source": "PDF Pirates VF GLM V1hFr, page 8"
+          "source": "PDF Pirates VF GLM V1hFr, page 8",
+          "apprenable": true,
+          "reserveAuChef": true
         },
         {
           "titre": "Bretteur",
           "description": "À la fin de toute phase de Corps à corps, le Héros encore au contact peut tester son Commandement. En cas de réussite, il effectue un Mouvement normal sans courir ni charger pour rompre le combat sans subir de coup. En cas d'échec, il reste engagé.",
-          "source": "PDF Pirates VF GLM V1hFr, page 8"
+          "source": "PDF Pirates VF GLM V1hFr, page 8",
+          "apprenable": true
         }
       ],
       "magie": [],
@@ -1908,7 +2514,20 @@
               "description": "Tout membre situé à moins de 6 ps peut utiliser son Commandement."
             }
           ],
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4 et 5"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "precheur-sorcier-pestilens",
@@ -1936,7 +2555,20 @@
               "description": "Il utilise la Magie du Rat Cornu."
             }
           ],
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4, 5 et 7"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4, 5 et 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "moine-de-la-peste",
@@ -1965,7 +2597,20 @@
             "Spéciale"
           ],
           "regles": [],
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4 et 5"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "initie-de-la-peste",
@@ -1988,7 +2633,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
           "regles": [],
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4 et 5"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1, 4 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "novice-de-la-peste",
@@ -2011,7 +2669,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1 et 6"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "rat-geant-pestilens",
@@ -2039,7 +2710,8 @@
               "description": "Il ne reçoit aucun équipement."
             }
           ],
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1 et 6"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1 et 6",
+          "gagneExperience": false
         },
         {
           "id": "rat-familier-pestilens",
@@ -2071,7 +2743,8 @@
               "description": "Il gagne de l'expérience comme Homme de main. Sur un résultat Ce gars est doué, il gagne à la place Lancement de sorts amélioré. Tant qu'il se trouve à 6 ps ou moins du Prêcheur-Sorcier, celui-ci ajoute 1 à ses jets de lancement. Le bonus est cumulatif si ce résultat est acquis plusieurs fois."
             }
           ],
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 2"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 2",
+          "gagneExperience": false
         },
         {
           "id": "rat-ogre-pestilens",
@@ -2098,7 +2771,10 @@
               "titre": "Équipement",
               "description": "Il utilise uniquement ses crocs, griffes et force brute, sans arme ni armure."
             },
-            { "titre": "Peur", "description": "Il cause la peur." },
+            {
+              "titre": "Peur",
+              "description": "Il cause la peur."
+            },
             {
               "titre": "Stupidité",
               "description": "Il est soumis à la stupidité sauf lorsqu'un Héros skaven est à moins de 6 ps."
@@ -2112,7 +2788,8 @@
               "description": "Il suit la règle de Grande cible."
             }
           ],
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1 et 6"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, pages 1 et 6",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -2133,11 +2810,26 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Fléau", "cout": 15 },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                },
                 {
                   "nom": "Dague de la peste",
                   "cout": 15,
@@ -2146,17 +2838,35 @@
                 {
                   "nom": "Encensoir à peste",
                   "cout": 40,
-                  "note": "Rare 9, à deux mains, Force du porteur plus 2 au premier tour de chaque combat seulement. Toute cible touchée teste son Endurance et subit une blessure automatique supplémentaire en cas d'échec, un 6 blessant toujours. Le porteur teste aussi et est blessé sur 6. Morts-Vivants et Possédés sont immunisés."
+                  "note": "Rare 9, à deux mains, Force du porteur plus 2 au premier tour de chaque combat seulement. Toute cible touchée teste son Endurance et subit une blessure automatique supplémentaire en cas d'échec, un 6 blessant toujours. Le porteur teste aussi et est blessé sur 6. Morts-Vivants et Possédés sont immunisés.",
+                  "rareteCommerce": 9
                 }
               ]
             },
-            { "nom": "Tir", "entrees": [{ "nom": "Fronde", "cout": 2 }] },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Fronde",
+                  "cout": 2
+                }
+              ]
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -2174,18 +2884,44 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
-            { "nom": "Tir", "entrees": [{ "nom": "Fronde", "cout": 2 }] },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Fronde",
+                  "cout": 2
+                }
+              ]
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -2207,35 +2943,53 @@
                   "nom": "Parchemin de Rat Familier",
                   "cout": 25,
                   "formuleCout": "25 + 1D6 CO",
-                  "note": "Rare 8. Transforme avant la bataille un Rat Géant en Rat Familier si la bande en possède un. À 6 ps ou moins de son familier, le Prêcheur-Sorcier peut relancer une fois par partie un jet de sort et doit accepter le second résultat. Un seul familier par Prêcheur-Sorcier."
+                  "note": "Rare 8. Transforme avant la bataille un Rat Géant en Rat Familier si la bande en possède un. À 6 ps ou moins de son familier, le Prêcheur-Sorcier peut relancer une fois par partie un jet de sort et doit accepter le second résultat. Un seul familier par Prêcheur-Sorcier.",
+                  "rareteCommerce": 8,
+                  "coutCommerceFormule": "25 + 1D6 CO",
+                  "coutCommerce": 25,
+                  "commerceUniquement": true
                 },
                 {
                   "nom": "Fragments de malepierre incandescents",
                   "cout": 100,
                   "formuleCout": "100 + 1D6 fois 10 CO",
-                  "note": "Rare 9. Placés dans un encensoir, ils imposent 1 pour toucher aux tirs qui visent le porteur. Remplacent la cape elfique pour cette bande."
+                  "note": "Rare 9. Placés dans un encensoir, ils imposent 1 pour toucher aux tirs qui visent le porteur. Remplacent la cape elfique pour cette bande.",
+                  "rareteCommerce": 9,
+                  "coutCommerceFormule": "100 + 1D6 fois 10 CO",
+                  "coutCommerce": 100,
+                  "commerceUniquement": true
                 },
                 {
                   "nom": "Amulette de malepierre",
                   "cout": 10,
-                  "note": "Rare 5. Permet de relancer un dé pendant la bataille ou, si elle n'a pas servi et que le Héros peut explorer, un dé d'Exploration. Remplace la patte de lapin."
+                  "note": "Rare 5. Permet de relancer un dé pendant la bataille ou, si elle n'a pas servi et que le Héros peut explorer, un dé d'Exploration. Remplace la patte de lapin.",
+                  "rareteCommerce": 5
                 },
                 {
                   "nom": "Liber Bubonicus",
                   "cout": 200,
                   "formuleCout": "200 + 1D6 fois 25 CO",
-                  "note": "Rare 12, usage unique et un seul utilisateur par campagne. Un Prêcheur-Sorcier apprend définitivement un sort aléatoire du Rat Cornu. Un Prêtre de la Peste avec Sorcellerie peut à la place devenir sorcier du Rat Cornu et apprendre un sort aléatoire. Remplace le grimoire de magie."
+                  "note": "Rare 12, usage unique et un seul utilisateur par campagne. Un Prêcheur-Sorcier apprend définitivement un sort aléatoire du Rat Cornu. Un Prêtre de la Peste avec Sorcellerie peut à la place devenir sorcier du Rat Cornu et apprendre un sort aléatoire. Remplace le grimoire de magie.",
+                  "rareteCommerce": 12,
+                  "coutCommerceFormule": "200 + 1D6 fois 25 CO",
+                  "coutCommerce": 200,
+                  "commerceUniquement": true
                 },
                 {
                   "nom": "Bannière du Clan Pestilens",
                   "cout": 10,
-                  "note": "Rare 5, une par bande. Les figurines à 12 ps ou moins relancent une fois chaque test raté de Seul contre tous. Le manche compte comme une arme à deux mains. Remplace la bannière ordinaire."
+                  "note": "Rare 5, une par bande. Les figurines à 12 ps ou moins relancent une fois chaque test raté de Seul contre tous. Le manche compte comme une arme à deux mains. Remplace la bannière ordinaire.",
+                  "rareteCommerce": 5
                 },
                 {
                   "nom": "Liturgicus Infectus",
                   "cout": 30,
                   "formuleCout": "30 + 2D6 CO",
-                  "note": "Rare 8. Au début d'un tour ou juste avant un test de Déroute, la bande peut le chanter pour gagner 1 en Commandement jusqu'à la fin du tour. Remplace le cor de guerre."
+                  "note": "Rare 8. Au début d'un tour ou juste avant un test de Déroute, la bande peut le chanter pour gagner 1 en Commandement jusqu'à la fin du tour. Remplace le cor de guerre.",
+                  "rareteCommerce": 8,
+                  "coutCommerceFormule": "30 + 2D6 CO",
+                  "coutCommerce": 30,
+                  "commerceUniquement": true
                 }
               ]
             }
@@ -2247,27 +3001,35 @@
         {
           "titre": "Insensible à la douleur",
           "description": "Nécessite Dur à cuire. Le Héros traite les résultats sonné comme à terre.",
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4",
+          "apprenable": true,
+          "prerequis": ["Résistant"]
         },
         {
           "titre": "Frénésie mortelle",
           "description": "Au début de son tour, le Héros peut gagner une Attaque et 1D3 ps de Mouvement pour le tour. À la fin du tour, il subit 1D3 touches de Force 3 sans sauvegarde.",
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Porteur d'encensoir à peste",
           "description": "Nécessite Frénésie mortelle. Le Héros gagne la frénésie et ne peut employer que l'encensoir à peste comme arme de corps à corps.",
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4",
+          "apprenable": true,
+          "prerequis": ["Frénésie mortelle"]
         },
         {
           "titre": "Corps putréfié",
           "description": "Le Héros devient immunisé aux poisons et maladies. S'il est mis hors de combat après un test d'Endurance raté provoqué par son encensoir, il ne fait pas de Blessure Grave après la partie.",
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Contagieux",
           "description": "Nécessite Corps putréfié. Toute figurine qui met le Héros hors de combat teste son Endurance. Un échec lui inflige une blessure automatique et un 6 blesse toujours. Morts-Vivants et Possédés sont immunisés.",
-          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4"
+          "source": "PDF Skavens du Clan Pestilens VF GLM V1eFr, page 4",
+          "apprenable": true,
+          "prerequis": ["Corps putréfié"]
         }
       ],
       "magie": [
@@ -2392,7 +3154,20 @@
               "description": "Tout combattant à 6 ps ou moins peut utiliser son Commandement."
             }
           ],
-          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2, 3 et 5"
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "champion-tileen",
@@ -2425,7 +3200,20 @@
             "Trantio: Vitesse"
           ],
           "regles": [],
-          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2, 3 et 5"
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "recrue-tileenne",
@@ -2458,7 +3246,20 @@
             "Trantio: Force"
           ],
           "regles": [],
-          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2, 3 et 5"
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "guerrier-tileen",
@@ -2481,7 +3282,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2 et 6"
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "duelliste-tileen",
@@ -2509,7 +3323,20 @@
               "description": "Au corps à corps uniquement, il est considéré comme utilisant un bouclier."
             }
           ],
-          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2 et 6"
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "tireur-delite-tileen",
@@ -2532,7 +3359,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2 et 6"
+          "source": "PDF Tiléens VF GLM V1.1eFr, pages 2 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "mule-tileenne",
@@ -2572,7 +3412,8 @@
               "description": "Elle ne combat ni ne charge. Une Mule non montée chargée devient incontrôlable et fuit à l'opposé de l'attaquant."
             }
           ],
-          "source": "PDF Tiléens VF GLM V1.1eFr, page 7"
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 7",
+          "gagneExperience": false
         },
         {
           "id": "cheval-tileen",
@@ -2600,7 +3441,8 @@
               "description": "Réservé aux Humains et soumis aux règles de cavalerie de l'article Guerriers Montés."
             }
           ],
-          "source": "PDF Tiléens VF GLM V1.1eFr, page 7"
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 7",
+          "gagneExperience": false
         },
         {
           "id": "destrier-tileen",
@@ -2632,7 +3474,8 @@
               "description": "Réservé aux Humains et soumis aux règles de cavalerie de l'article Guerriers Montés."
             }
           ],
-          "source": "PDF Tiléens VF GLM V1.1eFr, page 7"
+          "source": "PDF Tiléens VF GLM V1.1eFr, page 7",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -2654,19 +3497,43 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
                 {
                   "nom": "Pique",
                   "cout": 12,
                   "note": "Portée de corps à corps jusqu'à 3 ps. À deux mains, une seule attaque par tour et frappe toujours en premier au premier tour, même contre une autre règle identique. Réservée aux créatures de taille humaine ou plus grande."
                 },
-                { "nom": "Morgenstern", "cout": 15 },
-                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
                 {
                   "nom": "Rapière",
                   "cout": 15,
@@ -2677,23 +3544,45 @@
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "note": "30 CO la paire."
+                },
                 {
                   "nom": "Pistolet de duel",
                   "cout": 25,
                   "note": "50 CO la paire."
                 },
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arbalète", "cout": 25 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -2711,32 +3600,66 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 }
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "note": "30 CO la paire."
+                },
                 {
                   "nom": "Pistolet de duel",
                   "cout": 25,
                   "note": "50 CO la paire."
                 },
-                { "nom": "Arc long", "cout": 15 },
-                { "nom": "Arbalète", "cout": 25 },
-                { "nom": "Arquebuse", "cout": 35 },
-                { "nom": "Long fusil d'Hochland", "cout": 200 }
+                {
+                  "nom": "Arc long",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
+                {
+                  "nom": "Arquebuse",
+                  "cout": 35
+                },
+                {
+                  "nom": "Long fusil d'Hochland",
+                  "cout": 200
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -2821,7 +3744,20 @@
               "description": "Il est toujours le Chef et applique les règles de succession, de commerce et d'ouverture aux autres joueurs décrites pour la bande."
             }
           ],
-          "source": "PDF Merchant Caravans VO, pages 1 à 3"
+          "source": "PDF Merchant Caravans VO, pages 1 à 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "apprenti-marchand",
@@ -2844,7 +3780,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Érudition", "Vitesse"],
           "regles": [],
-          "source": "PDF Merchant Caravans VO, pages 2 et 3"
+          "source": "PDF Merchant Caravans VO, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "chevalier-avant-garde",
@@ -2880,7 +3829,20 @@
               "description": "Il est payé par le Marchand et ne peut jamais devenir Chef."
             }
           ],
-          "source": "PDF Merchant Caravans VO, pages 2 et 3"
+          "source": "PDF Merchant Caravans VO, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "magicien-caravane",
@@ -2912,7 +3874,20 @@
               "description": "Il est payé par le Marchand et ne peut jamais devenir Chef."
             }
           ],
-          "source": "PDF Merchant Caravans VO, pages 2 et 3"
+          "source": "PDF Merchant Caravans VO, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "epee-louee",
@@ -2935,7 +3910,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Merchant Caravans VO, pages 2 et 4"
+          "source": "PDF Merchant Caravans VO, pages 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "tireur-caravane",
@@ -2958,7 +3946,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Merchant Caravans VO, pages 2 et 4"
+          "source": "PDF Merchant Caravans VO, pages 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "garde-noir-caravane",
@@ -2990,7 +3991,20 @@
               "description": "Il ne peut jamais devenir Héros. Tout résultat Ce gars est doué est relancé."
             }
           ],
-          "source": "PDF Merchant Caravans VO, pages 2 et 4"
+          "source": "PDF Merchant Caravans VO, pages 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "roulotte-de-commerce",
@@ -3034,7 +4048,8 @@
               "description": "Après un test de Déroute raté, si personne ne la conduit, le vainqueur la capture. Il peut voler son contenu, garder le véhicule s'il y est autorisé ou négocier sa rançon selon Capturé. Une bande qui capture la Roulotte ne peut pas rechercher d'objets rares après la bataille, sauf si toute la Caravane a été mise hors de combat."
             }
           ],
-          "source": "PDF Merchant Caravans VO, pages 2 et 5"
+          "source": "PDF Merchant Caravans VO, pages 2 et 5",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -3055,8 +4070,14 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Rapière",
                   "cout": 15,
@@ -3067,7 +4088,11 @@
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." },
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "note": "30 CO la paire."
+                },
                 {
                   "nom": "Pistolet de duel",
                   "cout": 30,
@@ -3078,10 +4103,22 @@
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             },
             {
@@ -3119,9 +4156,18 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Pique",
                   "cout": 10,
@@ -3134,14 +4180,34 @@
                 }
               ]
             },
-            { "nom": "Tir", "entrees": [{ "nom": "Arbalète", "cout": 25 }] },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                }
+              ]
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -3159,9 +4225,18 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Gourdin", "cout": 3 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Gourdin",
+                  "cout": 3
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
                 {
                   "nom": "Katana",
                   "cout": 20,
@@ -3172,10 +4247,22 @@
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -3186,27 +4273,37 @@
         {
           "titre": "Corruption",
           "description": "Lorsqu'un test de Déroute est requis, le Marchand peut payer 5 CO pour chaque membre non Héros encore en jeu, Francs-Tireurs compris. Un membre déjà hors de combat cesse alors de compter pour le test. Si le test reste requis, il est effectué normalement. La compétence peut être réutilisée tant que la bande peut payer.",
-          "source": "PDF Merchant Caravans VO, page 4"
+          "source": "PDF Merchant Caravans VO, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["marchand-caravane"]
         },
         {
           "titre": "Revenu douteux",
           "description": "Après une bataille où il n'a pas été mis hors de combat et avant toute dépense, le Marchand peut tester son Commandement. Une réussite rapporte autant de CO qu'il possède de points d'expérience. Un échec fait perdre jusqu'à cette même somme.",
-          "source": "PDF Merchant Caravans VO, page 4"
+          "source": "PDF Merchant Caravans VO, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["marchand-caravane"]
         },
         {
           "titre": "Vente en gros",
           "description": "Après chaque bataille où il n'est pas hors de combat, le Marchand peut rechercher 1D3 + 1 objets rares au lieu d'un seul.",
-          "source": "PDF Merchant Caravans VO, page 4"
+          "source": "PDF Merchant Caravans VO, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["marchand-caravane"]
         },
         {
           "titre": "Négociateur",
           "description": "Le Marchand ajoute 1 au jet qui détermine le prix obtenu par sa règle Commerce.",
-          "source": "PDF Merchant Caravans VO, page 4"
+          "source": "PDF Merchant Caravans VO, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["marchand-caravane"]
         },
         {
           "titre": "Bien introduit",
           "description": "Au lieu d'une recherche rare ordinaire, le Marchand peut chercher au marché noir: Parchemin de dissipation pour 50 + 4D6 CO, rareté 12; Artefact mineur pour 200 + 1D6 fois 15 CO, rareté 16; Artefact magique pour 350 + 1D6 fois 25 CO, rareté 18; Parchemin magique pour 100 CO, rareté 14. Les objets ainsi achetés ne peuvent jamais être revendus.",
-          "source": "PDF Merchant Caravans VO, page 4"
+          "source": "PDF Merchant Caravans VO, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["marchand-caravane"]
         }
       ],
       "magie": [
@@ -3304,7 +4401,9 @@
               "description": "Il peut acheter les armes et armures naines, mais ne peut pas lancer de sort s'il porte une armure."
             }
           ],
-          "source": "PDF The Sons of Hashut VO, pages 1 à 3 et 5"
+          "source": "PDF The Sons of Hashut VO, pages 1 à 3 et 5",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "centaure-taureau-hashut",
@@ -3332,7 +4431,9 @@
               "description": "Les tirs contre lui gagnent 1 pour toucher et peuvent le viser même s'il n'est pas la cible la plus proche. Il ajoute 20 à la valeur de bande au lieu de 5."
             }
           ],
-          "source": "PDF The Sons of Hashut VO, pages 1 à 4"
+          "source": "PDF The Sons of Hashut VO, pages 1 à 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "champion-nain-du-chaos",
@@ -3355,7 +4456,9 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Force", "Spéciale"],
           "regles": [],
-          "source": "PDF The Sons of Hashut VO, pages 1, 2 et 4"
+          "source": "PDF The Sons of Hashut VO, pages 1, 2 et 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "guerrier-nain-du-chaos",
@@ -3378,7 +4481,9 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF The Sons of Hashut VO, pages 1 et 4"
+          "source": "PDF The Sons of Hashut VO, pages 1 et 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "tromblonnier-nain-du-chaos",
@@ -3401,7 +4506,9 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF The Sons of Hashut VO, pages 1 et 4"
+          "source": "PDF The Sons of Hashut VO, pages 1 et 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "hobgobelin-hashut",
@@ -3433,7 +4540,9 @@
               "description": "Chaque Hobgobelin hors de combat compte comme une demi-figurine pour le seuil de Déroute. Il ne peut jamais devenir Héros et tout résultat Ce gars est doué est relancé."
             }
           ],
-          "source": "PDF The Sons of Hashut VO, pages 1, 2 et 4"
+          "source": "PDF The Sons of Hashut VO, pages 1, 2 et 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         }
       ],
       "listesEquipement": [
@@ -3454,32 +4563,64 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
                 {
                   "nom": "Arme d'obsidienne",
                   "cout": 60,
                   "formuleCout": "30 ou 60 CO selon deux indications contradictoires du PDF",
-                  "note": "Rare 10. Épée, hache ou marteau uniquement. Conserve les règles de l'arme, ajoute 1 en Force et retire 1 en Initiative au corps à corps."
+                  "note": "Rare 10. Épée, hache ou marteau uniquement. Conserve les règles de l'arme, ajoute 1 en Force et retire 1 en Initiative au corps à corps.",
+                  "rareteCommerce": 10
                 }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." }
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "note": "30 CO la paire."
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -3497,9 +4638,18 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 }
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                }
               ]
             },
             {
@@ -3508,17 +4658,31 @@
                 {
                   "nom": "Tromblon nain du Chaos",
                   "cout": 40,
-                  "note": "Rare 9, portée 16 ps, Force 3. Tracez une ligne droite de 16 ps sur 1 ps de large, toutes les figurines traversées sont automatiquement touchées. Après chaque tir, il faut un tour complet pour recharger, donc l'arme ne tire qu'un tour sur deux."
+                  "note": "Rare 9, portée 16 ps, Force 3. Tracez une ligne droite de 16 ps sur 1 ps de large, toutes les figurines traversées sont automatiquement touchées. Après chaque tir, il faut un tour complet pour recharger, donc l'arme ne tire qu'un tour sur deux.",
+                  "rareteCommerce": 9
                 },
-                { "nom": "Pistolet", "cout": 15, "note": "30 CO la paire." }
+                {
+                  "nom": "Pistolet",
+                  "cout": 15,
+                  "note": "30 CO la paire."
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -3536,27 +4700,46 @@
                   "cout": 2,
                   "note": "La première dague est gratuite."
                 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Dagues empoisonnées",
                   "cout": 15,
-                  "note": "Rare 9, paire de dagues. Donne une attaque additionnelle, 1 en Initiative pour déterminer l'ordre, compte comme enduite en permanence de Lotus Noir et ne peut recevoir un autre poison. La cible blessée gagne 1 à sa sauvegarde ou une sauvegarde de 6+."
+                  "note": "Rare 9, paire de dagues. Donne une attaque additionnelle, 1 en Initiative pour déterminer l'ordre, compte comme enduite en permanence de Lotus Noir et ne peut recevoir un autre poison. La cible blessée gagne 1 à sa sauvegarde ou une sauvegarde de 6+.",
+                  "rareteCommerce": 9
                 }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Arc court", "cout": 5 },
-                { "nom": "Arc", "cout": 10 }
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                },
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -3567,22 +4750,26 @@
         {
           "titre": "Vrai dur",
           "description": "Pour ce Héros, 1 à 3 au jet de dégâts donne à terre, 4 ou 5 donne sonné et 6 donne hors de combat.",
-          "source": "PDF The Sons of Hashut VO, page 4"
+          "source": "PDF The Sons of Hashut VO, page 4",
+          "apprenable": true
         },
         {
           "titre": "Extra coriace",
           "description": "Le Héros peut relancer son jet de Blessure Grave après la partie et doit conserver le second résultat.",
-          "source": "PDF The Sons of Hashut VO, page 4"
+          "source": "PDF The Sons of Hashut VO, page 4",
+          "apprenable": true
         },
         {
           "titre": "Haine sans limite",
           "description": "Le Héros est sujet à la haine contre toutes les figurines adverses.",
-          "source": "PDF The Sons of Hashut VO, page 4"
+          "source": "PDF The Sons of Hashut VO, page 4",
+          "apprenable": true
         },
         {
           "titre": "Crâne épais",
           "description": "Le Héros dispose d'une sauvegarde spéciale de 3+ lorsqu'il devrait être sonné.",
-          "source": "PDF The Sons of Hashut VO, page 4"
+          "source": "PDF The Sons of Hashut VO, page 4",
+          "apprenable": true
         }
       ],
       "magie": [

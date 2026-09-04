@@ -70,7 +70,20 @@
               "description": "Il ne peut jamais utiliser de lance de cavalerie."
             }
           ],
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 1, 3 et 5"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 1, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "damoiselle",
@@ -102,7 +115,20 @@
               "description": "Elle ne choisit que les armes de corps à corps et l'équipement divers de la liste des Paysans Archers."
             }
           ],
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 1, 3 et 5"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 1, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "chevalier-errant",
@@ -129,13 +155,29 @@
               "titre": "Chevalier",
               "description": "Il applique Chevalerie, Faveur du Seigneur et Vertu de Pureté."
             },
-            { "titre": "Vaniteux", "description": "Il refuse tout casque." },
+            {
+              "titre": "Vaniteux",
+              "description": "Il refuse tout casque."
+            },
             {
               "titre": "Impétueux",
               "description": "Après les déclarations de charge, s'il n'est pas engagé et n'a pas chargé, il doit charger un ennemi debout à portée. Il peut réussir un test de Commandement pour se déplacer normalement ou conserver une cible à terre ou sonnée; en cas d'échec, il charge l'ennemi debout le plus proche. Une charge forcée ignore peur et effets psychologiques qui l'empêcheraient de charger."
             }
           ],
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 1, 3 et 5"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, pages 1, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "ecuyer",
@@ -167,7 +209,20 @@
               "description": "Avec Ce gars est doué, il peut rester Écuyer Héros et choisir deux catégories parmi Combat, Érudition, Force et Vitesse, ou devenir Chevalier Errant. Dans ce dernier cas, il reçoit Chevalier, Vaniteux et Impétueux à la place de son amélioration, obtient Spéciale plus deux catégories, adopte immédiatement la liste des Chevaliers et ne peut plus utiliser d'arme de tir. Cette promotion peut dépasser la limite de trois Chevaliers Errants."
             }
           ],
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 6"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "pelerin-du-graal",
@@ -194,7 +249,10 @@
               "titre": "Basse caste",
               "description": "Il progresse normalement mais relance toujours Ce gars est doué et ne devient jamais Héros."
             },
-            { "titre": "Haine", "description": "Il hait tous ses ennemis." },
+            {
+              "titre": "Haine",
+              "description": "Il hait tous ses ennemis."
+            },
             {
               "titre": "Têtu",
               "description": "Il relance une fois tout test de Commandement raté et garde le second résultat."
@@ -204,7 +262,20 @@
               "description": "Il peut porter une relique sacrée malgré son statut d'Homme de main et devient frénétique. Si tout son groupe n'en possède pas, le porteur forme son propre groupe."
             }
           ],
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 6"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "paysan-archer",
@@ -232,7 +303,20 @@
               "description": "Il progresse normalement mais relance toujours Ce gars est doué et ne devient jamais Héros."
             }
           ],
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 6"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -243,17 +327,36 @@
             {
               "nom": "Armes de corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Lance", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "Première gratuite."
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Épée bâtarde",
                   "cout": 15,
                   "note": "Force plus 1, frappe en dernier, interdit arme additionnelle et rondache mais permet un bouclier. Ne pare pas."
                 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Morgenstern", "cout": 15 },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
                 {
                   "nom": "Lance de cavalerie",
                   "cout": 20,
@@ -261,27 +364,51 @@
                 }
               ]
             },
-            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armes de tir",
+              "entrees": []
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
                 {
                   "nom": "Écu",
                   "cout": 10,
                   "note": "Sauvegarde 5+ à pied, 6+ monté; si une armure existe déjà, bonus respectif de 2 ou 1, sans dépasser 1+."
                 },
-                { "nom": "Caparaçon bretonnien", "cout": 30 }
+                {
+                  "nom": "Caparaçon bretonnien",
+                  "cout": 30
+                }
               ]
             },
             {
               "nom": "Divers",
               "entrees": [
-                { "nom": "Destrier", "cout": 80 },
-                { "nom": "Porte-bonheur", "cout": 10 }
+                {
+                  "nom": "Destrier",
+                  "cout": 80
+                },
+                {
+                  "nom": "Porte-bonheur",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -294,28 +421,65 @@
             {
               "nom": "Armes de corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "Première gratuite."
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
                 {
                   "nom": "Épée courte",
                   "cout": 7,
                   "note": "Parade, mais l'ennemi gagne 1 à sa sauvegarde ou 6+ s'il n'en avait pas."
                 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 5 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 5
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
-            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armes de tir",
+              "entrees": []
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                }
               ]
             },
             {
@@ -338,25 +502,53 @@
             {
               "nom": "Armes de corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée courte", "cout": 7 },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "Première gratuite."
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée courte",
+                  "cout": 7
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arc long", "cout": 15 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arc long",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             },
             {
@@ -387,12 +579,14 @@
                 {
                   "nom": "Destrier",
                   "cout": 80,
-                  "note": "Rare 11, Humains. M8 CC3 CT0 F3 E3 PV1 I3 A1 Cd5. Le cavalier relance une fois chaque test de contrôle raté."
+                  "note": "Rare 11, Humains. M8 CC3 CT0 F3 E3 PV1 I3 A1 Cd5. Le cavalier relance une fois chaque test de contrôle raté.",
+                  "rareteCommerce": 11
                 },
                 {
                   "nom": "Cheval",
                   "cout": 40,
-                  "note": "Rare 8, Humains. M8 CC1 CT0 F3 E3 PV1 I3 A0 Cd5."
+                  "note": "Rare 8, Humains. M8 CC1 CT0 F3 E3 PV1 I3 A0 Cd5.",
+                  "rareteCommerce": 8
                 }
               ]
             }
@@ -404,52 +598,72 @@
         {
           "titre": "Vertu de renommée",
           "description": "Une seule fois, le Chevalier peut apprendre une Vertu issue de la liste classique des Chevaliers Bretonniens reproduite dans la fiche.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete", "chevalier-errant"]
         },
         {
           "titre": "Vertu de discipline",
           "description": "Une fois par bataille, si le Héros n'est ni à terre, ni sonné, ni hors de combat, il peut relancer un test de déroute raté.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete", "chevalier-errant"]
         },
         {
           "titre": "Vertu d'impétuosité",
           "description": "Lorsqu'il charge, le Héros ajoute 1D3 ps à son Mouvement, le dé étant lancé avant son déplacement.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete", "chevalier-errant"]
         },
         {
           "titre": "Vertu de pureté",
           "description": "Tout sort qui cible le Héros est dissipé sur 4+.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete", "chevalier-errant"]
         },
         {
           "titre": "Vertu de bravoure",
           "description": "Au corps à corps contre une figurine de Force supérieure à la sienne, le Héros relance ses jets pour toucher ratés.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete", "chevalier-errant"]
         },
         {
           "titre": "Vertu de noble dédain",
           "description": "Le Héros hait tout ennemi équipé d'une arme de tir.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete", "chevalier-errant"]
         },
         {
           "titre": "Vœu de la Quête",
           "description": "Chevalier de la Quête seulement. Lorsqu'il charge, est chargé par ou combat un ennemi qui provoque la peur, il relance une fois tout test de Commandement, y compris de déroute, et garde le second résultat.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete"]
         },
         {
           "titre": "Coup de bouclier",
           "description": "Chaque tour, le Chevalier effectue une attaque supplémentaire avec bouclier ou écu, à Force moins 1, traitée comme un coup de massue.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete", "chevalier-errant"]
         },
         {
           "titre": "Muscles saillants",
           "description": "Il conserve après le premier tour les bonus de Force des fléaux et morgensterns.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete", "chevalier-errant"]
         },
         {
           "titre": "Infatigable",
           "description": "À pied, il ignore la pénalité de Mouvement de l'armure. Les modificateurs non magiques ne réduisent jamais sa sauvegarde sous 5+ et ne peuvent l'ignorer.",
-          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4"
+          "source": "Gardiens de Chapelle Bretonniens V1hFr, page 4",
+          "apprenable": true,
+          "profilsAutorises": ["chevalier-de-la-quete", "chevalier-errant"]
         }
       ],
       "magie": [
@@ -565,7 +779,9 @@
               "description": "Seul le Chef actuel peut choisir les compétences de Force."
             }
           ],
-          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 7"
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 7",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "chaman-gobelin",
@@ -597,7 +813,9 @@
               "description": "Avant la bataille, il peut administrer de un à trois champignons à un groupe de Guerriers Gobelins. Chaque champignon donne un effet tiré sur 1D6, mais tout doublon annule et gâche l'ensemble: Animosité sur 1 à 2, Initiative moins 1, immunité à la peur et à seul contre tous, sauvegarde améliorée de 1 avec minimum 6+, haine de tous les ennemis, ou frénésie suivie de stupidité si elle est perdue."
             }
           ],
-          "source": "Gobelins de la Nuit V1.2gFr, pages 7 et 8"
+          "source": "Gobelins de la Nuit V1.2gFr, pages 7 et 8",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "homme-de-main-gobelin",
@@ -620,7 +838,9 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Vitesse", "Spéciale"],
           "regles": [],
-          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 7"
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 7",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "berger-de-squigs",
@@ -648,7 +868,9 @@
               "description": "Les Squigs à 6 ps ou moins, ou à 12 ps avec un aiguillon, utilisent son Commandement. Pendant la phase de ralliement, un Squig incontrôlé à portée redevient contrôlé si le Berger réussit un test de Commandement."
             }
           ],
-          "source": "Gobelins de la Nuit V1.2gFr, pages 7 et 8"
+          "source": "Gobelins de la Nuit V1.2gFr, pages 7 et 8",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "guerrier-gobelin",
@@ -676,7 +898,9 @@
               "description": "Il applique la règle d'Animosité tant qu'il reste Homme de main. Un Héros promu la perd."
             }
           ],
-          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 9"
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 9",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "fanatique",
@@ -704,7 +928,9 @@
               "description": "Il doit consommer un champignon bonnet de fou avant chaque bataille ou ne participe pas. Il ignore l'Animosité et relance Ce gars est doué, sans jamais devenir Héros."
             }
           ],
-          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 9"
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 9",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "squig-des-cavernes",
@@ -740,7 +966,8 @@
               "description": "Il ne gagne pas d'expérience, ne grimpe pas aux échelles mais peut escalader et sauter."
             }
           ],
-          "source": "Gobelins de la Nuit V1.2gFr, pages 9 et 10"
+          "source": "Gobelins de la Nuit V1.2gFr, pages 9 et 10",
+          "gagneExperience": false
         },
         {
           "id": "snotling",
@@ -772,7 +999,8 @@
               "description": "Tous les Snotlings ensemble comptent comme un seul membre pour la taille de bande et les tests de déroute. Chacun vaut une demi-unité d'expérience pour la valeur de bande, arrondie à l'inférieur, et ne gagne jamais d'expérience."
             }
           ],
-          "source": "Gobelins de la Nuit V1.2gFr, page 10"
+          "source": "Gobelins de la Nuit V1.2gFr, page 10",
+          "gagneExperience": false
         },
         {
           "id": "squig-geant",
@@ -804,7 +1032,8 @@
               "description": "Il cause la peur, est une grande cible et ne gagne pas d'expérience. Il remplace l'option Troll, les deux ne pouvant coexister."
             }
           ],
-          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 10"
+          "source": "Gobelins de la Nuit V1.2gFr, pages 2 et 10",
+          "gagneExperience": false
         },
         {
           "id": "troll",
@@ -844,7 +1073,8 @@
               "description": "Il peut remplacer ses attaques par une touche automatique de Force 5 qui ignore les sauvegardes d'armure."
             }
           ],
-          "source": "Gobelins de la Nuit V1.2gFr, page 11"
+          "source": "Gobelins de la Nuit V1.2gFr, page 11",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -860,38 +1090,90 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
-                { "nom": "Bâton", "cout": 3 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Bâton de chef", "cout": 20 },
-                { "nom": "Dagues empoisonnées", "cout": 25 }
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "Première gratuite."
+                },
+                {
+                  "nom": "Bâton",
+                  "cout": 3
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Bâton de chef",
+                  "cout": 20
+                },
+                {
+                  "nom": "Dagues empoisonnées",
+                  "cout": 25
+                }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Fronde", "cout": 2 },
-                { "nom": "Arc court", "cout": 5 },
-                { "nom": "Couteaux de lancer", "cout": 15 }
+                {
+                  "nom": "Fronde",
+                  "cout": 2
+                },
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                },
+                {
+                  "nom": "Couteaux de lancer",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Armure légère", "cout": 20 }
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                }
               ]
             },
             {
               "nom": "Divers",
               "entrees": [
-                { "nom": "Filet", "cout": 5 },
-                { "nom": "Aiguillon à Squig", "cout": 15 },
-                { "nom": "Champignon bonnet de fou", "cout": 15 }
+                {
+                  "nom": "Filet",
+                  "cout": 5
+                },
+                {
+                  "nom": "Aiguillon à Squig",
+                  "cout": 15
+                },
+                {
+                  "nom": "Champignon bonnet de fou",
+                  "cout": 15
+                }
               ]
             }
           ],
@@ -904,26 +1186,61 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2 },
-                { "nom": "Bâton", "cout": 3 },
-                { "nom": "Lance", "cout": 5 },
-                { "nom": "Épée", "cout": 10 }
+                {
+                  "nom": "Dague",
+                  "cout": 2
+                },
+                {
+                  "nom": "Bâton",
+                  "cout": 3
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                }
               ]
             },
-            { "nom": "Tir", "entrees": [{ "nom": "Arc court", "cout": 5 }] },
+            {
+              "nom": "Tir",
+              "entrees": [
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                }
+              ]
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Armure légère", "cout": 20 }
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                }
               ]
             },
             {
               "nom": "Divers",
               "entrees": [
-                { "nom": "Filet", "cout": 5 },
-                { "nom": "Aiguillon à Squig", "cout": 15 },
-                { "nom": "Champignon bonnet de fou", "cout": 15 }
+                {
+                  "nom": "Filet",
+                  "cout": 5
+                },
+                {
+                  "nom": "Aiguillon à Squig",
+                  "cout": 15
+                },
+                {
+                  "nom": "Champignon bonnet de fou",
+                  "cout": 15
+                }
               ]
             }
           ],
@@ -936,14 +1253,28 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Boulet et chaîne", "cout": 15 },
-                { "nom": "Dagues empoisonnées", "cout": 25 }
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Boulet et chaîne",
+                  "cout": 15
+                },
+                {
+                  "nom": "Dagues empoisonnées",
+                  "cout": 25
+                }
               ]
             },
             {
               "nom": "Divers",
-              "entrees": [{ "nom": "Champignon bonnet de fou", "cout": 15 }]
+              "entrees": [
+                {
+                  "nom": "Champignon bonnet de fou",
+                  "cout": 15
+                }
+              ]
             }
           ],
           "source": "Gobelins de la Nuit V1.2gFr, pages 3, 5 et 6"
@@ -953,47 +1284,59 @@
         {
           "titre": "Cultivateur de champignons",
           "description": "À la place d'une recherche rare, le Héros obtient 1D3 moins 1 champignons bonnets de fou, utilisables à la bataille suivante mais jamais vendables ni échangeables.",
-          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+          "source": "Gobelins de la Nuit V1.2gFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Caché dans l'ombre",
           "description": "L'Initiative utilisée pour repérer le Héros caché est divisée par deux, arrondie au supérieur.",
-          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+          "source": "Gobelins de la Nuit V1.2gFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Poseur de filet",
           "description": "S'il porte un filet lorsqu'il est chargé, le Héros peut le perdre pour réduire la distance de charge adverse de 1D6 ps. Si l'ennemi ne peut plus atteindre, la charge échoue.",
-          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+          "source": "Gobelins de la Nuit V1.2gFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Sournois",
           "description": "Le Héros peut charger depuis une cachette sans voir sa cible, sans test d'Initiative et sans limite de 4 ps. En cas de réussite, la CC et l'Initiative de la cible sont divisées par deux au premier round.",
-          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+          "source": "Gobelins de la Nuit V1.2gFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Chevaucheur de Squig",
           "description": "Le Héros peut être jumelé à un Squig des Cavernes ou Géant et se déplacer avec lui. Le cavalier et la monture attaquent séparément; les tirs touchent le cavalier sur 1 à 2 et le Squig sur 3 à 6. Une monture mise à terre ou hors de combat éjecte le cavalier avec une touche de Force 2 sans sauvegarde. Un cavalier neutralisé laisse ensuite le Squig agir normalement. Après un déplacement double ou triple, un jet supérieur à la Force du cavalier sur 1D6 l'éjecte avec la même touche.",
-          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+          "source": "Gobelins de la Nuit V1.2gFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Infiltration",
           "description": "Après le placement adverse, le Héros se déploie hors de vue à plus de 12 ps de tout ennemi. Si les deux camps infiltrent, le plus petit résultat sur 1D6 se place en premier.",
-          "source": "Gobelins de la Nuit V1.2gFr, page 4"
+          "source": "Gobelins de la Nuit V1.2gFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Squigs gazeux",
           "description": "Lorsqu'un Squig des Cavernes non dressé est mis hors de combat, il explose sur 1. Toutes les figurines dans un rayon de 1D6 ps subissent une touche de Force 3 et le Squig meurt définitivement.",
-          "source": "Gobelins de la Nuit V1.2gFr, page 8"
+          "source": "Gobelins de la Nuit V1.2gFr, page 8",
+          "apprenable": true,
+          "profilsAutorises": ["berger-de-squigs"]
         },
         {
           "titre": "Menacer",
           "description": "Pendant le mouvement, le Berger peut tester son Commandement pour faire relancer le mouvement des Squigs à 6 ps, ou 12 ps avec un aiguillon.",
-          "source": "Gobelins de la Nuit V1.2gFr, page 8"
+          "source": "Gobelins de la Nuit V1.2gFr, page 8",
+          "apprenable": true,
+          "profilsAutorises": ["berger-de-squigs"]
         },
         {
           "titre": "Dressage",
           "description": "Un seul Squig devient dressé, gagne de l'expérience comme un Homme de main mais relance Ce gars est doué. Il est retiré si le Berger meurt. Si le Squig meurt, un nouveau peut être choisi. Un Squig dressé ne meurt après une mise hors de combat que sur 1 et transforme plusieurs résultats graves en récupération complète. Si le Berger tombe hors de combat, le Squig dressé est retiré de la bataille et est traité comme blessé grave.",
-          "source": "Gobelins de la Nuit V1.2gFr, page 8"
+          "source": "Gobelins de la Nuit V1.2gFr, page 8",
+          "apprenable": true,
+          "profilsAutorises": ["berger-de-squigs"]
         }
       ],
       "magie": [
@@ -1110,7 +1453,20 @@
               "description": "Il ne reçoit pas de dague gratuite et ne se bat jamais avec une dague."
             }
           ],
-          "source": "Maneaters, Border Town Burning, pages 1 et 4"
+          "source": "Maneaters, Border Town Burning, pages 1 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 5,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 5,
+            "initiative": 6,
+            "attaques": 5,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "jeune-sang",
@@ -1133,7 +1489,20 @@
           },
           "competencesDisponibles": ["Combat", "Force", "Spéciale"],
           "regles": [],
-          "source": "Maneaters, Border Town Burning, pages 1 et 4"
+          "source": "Maneaters, Border Town Burning, pages 1 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 5,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 5,
+            "initiative": 6,
+            "attaques": 5,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "guide-ogre",
@@ -1165,7 +1534,20 @@
               "description": "Il ne porte aucun Gnoblar, ignore seul contre tous et ne devient jamais chef."
             }
           ],
-          "source": "Maneaters, Border Town Burning, pages 1 et 4"
+          "source": "Maneaters, Border Town Burning, pages 1 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 5,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 5,
+            "initiative": 6,
+            "attaques": 5,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "buffle-ogre",
@@ -1193,7 +1575,20 @@
               "description": "Lors d'une charge, il peut remplacer une attaque par une attaque avec plus 1 pour toucher qui met automatiquement à terre si elle touche."
             }
           ],
-          "source": "Maneaters, Border Town Burning, page 5"
+          "source": "Maneaters, Border Town Burning, page 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 5,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 5,
+            "initiative": 6,
+            "attaques": 5,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "demi-portion",
@@ -1216,7 +1611,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Maneaters, Border Town Burning, page 5"
+          "source": "Maneaters, Border Town Burning, page 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 5,
+            "force": 5,
+            "endurance": 5,
+            "pointsVie": 5,
+            "initiative": 6,
+            "attaques": 5,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "dents-de-sabre",
@@ -1248,7 +1656,8 @@
               "description": "Il ne gagne pas d'expérience et sa mise hors de combat ne compte pas pour les tests de déroute."
             }
           ],
-          "source": "Maneaters, Border Town Burning, page 5"
+          "source": "Maneaters, Border Town Burning, page 5",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -1264,13 +1673,34 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Couperet ou hache", "cout": 5 },
-                { "nom": "Gourdin ogre", "cout": 10 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Morgenstern", "cout": 15 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Poing de fer", "cout": 15 },
+                {
+                  "nom": "Couperet ou hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Gourdin ogre",
+                  "cout": 10
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Poing de fer",
+                  "cout": 15
+                },
                 {
                   "nom": "Longue épée cathayenne",
                   "cout": 75,
@@ -1285,16 +1715,30 @@
                   "nom": "Mortier portatif",
                   "cout": 80,
                   "formuleCout": "80 + 2D6 CO",
-                  "note": "Rare 12, portée 24 ps, Force 4, déplacement ou tir, préparation, dispersion sur un échec et incident de poudre sur tout résultat non Boum."
+                  "note": "Rare 12, portée 24 ps, Force 4, déplacement ou tir, préparation, dispersion sur un échec et incident de poudre sur tout résultat non Boum.",
+                  "rareteCommerce": 12,
+                  "coutCommerceFormule": "80 + 2D6 CO",
+                  "coutCommerce": 80,
+                  "prixRecrutementFormule": "80 + 2D6 CO",
+                  "prixRecrutementMinimum": 82
                 }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             },
             {
@@ -1332,11 +1776,26 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Couperet", "cout": 5 },
-                { "nom": "Gourdin", "cout": 10 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Couperet",
+                  "cout": 5
+                },
+                {
+                  "nom": "Gourdin",
+                  "cout": 10
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
@@ -1345,15 +1804,22 @@
                 {
                   "nom": "Arbalète harpon",
                   "cout": 50,
-                  "note": "Rare 10, portée 30 ps, Force 5, déplacement ou tir et préparation."
+                  "note": "Rare 10, portée 30 ps, Force 5, déplacement ou tir et préparation.",
+                  "rareteCommerce": 10
                 }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -1364,32 +1830,46 @@
         {
           "titre": "Maître d'armes",
           "description": "Le Héros peut combiner une arme difficile à manier et une arme à une main, mais jamais deux armes difficiles à manier.",
-          "source": "Maneaters, Border Town Burning, page 2"
+          "source": "Maneaters, Border Town Burning, page 2",
+          "apprenable": true
         },
         {
           "titre": "Rot grossier",
           "description": "Une fois contre chaque nouvel ennemi engagé, tous les adversaires en contact ratant un test de Commandement subissent moins 1 pour toucher ce tour.",
-          "source": "Maneaters, Border Town Burning, page 2"
+          "source": "Maneaters, Border Town Burning, page 2",
+          "apprenable": true
         },
         {
           "titre": "Mangeur d'hommes",
           "description": "Une seule fois et hors Guide, le Héros apprend immédiatement une compétence de Tir ou d'Érudition.",
-          "source": "Maneaters, Border Town Burning, page 2"
+          "source": "Maneaters, Border Town Burning, page 2",
+          "apprenable": true,
+          "profilsAutorises": [
+            "capitaine-ogre",
+            "jeune-sang",
+            "buffle-ogre",
+            "demi-portion"
+          ]
         },
         {
           "titre": "Charge buffle",
           "description": "Lors d'une charge, le Héros peut remplacer une attaque par une attaque avec plus 1 pour toucher qui met automatiquement à terre.",
-          "source": "Maneaters, Border Town Burning, page 2"
+          "source": "Maneaters, Border Town Burning, page 2",
+          "apprenable": true
         },
         {
           "titre": "Chien de guerre",
           "description": "Réservée au chef, elle autorise les francs-tireurs mercenaires. À sa mort, ils quittent tous la bande.",
-          "source": "Maneaters, Border Town Burning, page 2"
+          "source": "Maneaters, Border Town Burning, page 2",
+          "apprenable": true,
+          "reserveAuChef": true
         },
         {
           "titre": "Rugissement",
           "description": "Le chef peut relancer le premier test de déroute raté de chaque bataille.",
-          "source": "Maneaters, Border Town Burning, page 2"
+          "source": "Maneaters, Border Town Burning, page 2",
+          "apprenable": true,
+          "reserveAuChef": true
         }
       ],
       "magie": [],
@@ -1459,7 +1939,20 @@
               "description": "S'il meurt, un nouvel Émissaire doit être recruté au plus vite. D'ici là, la bande ne peut acheter ni guerriers ni équipement; le remplaçant devient chef."
             }
           ],
-          "source": "Battle Monks of Cathay, Border Town Burning, pages 1 et 3"
+          "source": "Battle Monks of Cathay, Border Town Burning, pages 1 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "officier",
@@ -1482,7 +1975,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Force", "Vitesse"],
           "regles": [],
-          "source": "Battle Monks of Cathay, Border Town Burning, pages 1 et 3"
+          "source": "Battle Monks of Cathay, Border Town Burning, pages 1 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "dragon",
@@ -1516,7 +2022,20 @@
               "description": "À mains nues, il ne subit aucun malus et gagne une attaque. Les blessures non armées deviennent critiques sur 5 ou 6. Avec un bâton, seules ses attaques non armées en bénéficient."
             }
           ],
-          "source": "Battle Monks of Cathay, Border Town Burning, pages 1 et 3"
+          "source": "Battle Monks of Cathay, Border Town Burning, pages 1 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "soldat",
@@ -1539,7 +2058,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Battle Monks of Cathay, Border Town Burning, page 4"
+          "source": "Battle Monks of Cathay, Border Town Burning, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "moine-guerrier",
@@ -1567,7 +2099,20 @@
               "description": "À mains nues, il ne subit aucun malus et gagne une attaque."
             }
           ],
-          "source": "Battle Monks of Cathay, Border Town Burning, page 4"
+          "source": "Battle Monks of Cathay, Border Town Burning, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "paysan-enrage",
@@ -1603,7 +2148,8 @@
               "description": "Il ne gagne pas d'expérience, ne compte pas pour la déroute lorsqu'il tombe et toute blessure le met immédiatement hors de combat."
             }
           ],
-          "source": "Battle Monks of Cathay, Border Town Burning, page 4"
+          "source": "Battle Monks of Cathay, Border Town Burning, page 4",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -1614,10 +2160,23 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Katana", "cout": 20 },
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "Première gratuite."
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Katana",
+                  "cout": 20
+                },
                 {
                   "nom": "Longue épée cathayenne",
                   "cout": 75,
@@ -1628,27 +2187,61 @@
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Pistolet de duel", "cout": 30 },
-                { "nom": "Paire de pistolets de duel", "cout": 60 },
-                { "nom": "Arquebuse", "cout": 35 },
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arbalète", "cout": 25 }
+                {
+                  "nom": "Pistolet de duel",
+                  "cout": 30
+                },
+                {
+                  "nom": "Paire de pistolets de duel",
+                  "cout": 60
+                },
+                {
+                  "nom": "Arquebuse",
+                  "cout": 35
+                },
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Divers",
               "entrees": [
-                { "nom": "Cape de soie", "cout": 40 },
-                { "nom": "Cheval", "cout": 30, "note": "Émissaire seulement." }
+                {
+                  "nom": "Cape de soie",
+                  "cout": 40
+                },
+                {
+                  "nom": "Cheval",
+                  "cout": 30,
+                  "note": "Émissaire seulement."
+                }
               ]
             }
           ],
@@ -1661,15 +2254,27 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Bâton de combat",
                   "cout": 15,
                   "note": "Plus 1 Initiative et parade; ne se combine pas avec une autre arme, un bouclier ou une rondache, mais permet une attaque non armée."
                 },
-                { "nom": "Katana", "cout": 20 },
+                {
+                  "nom": "Katana",
+                  "cout": 20
+                },
                 {
                   "nom": "Bâtons enchaînés",
                   "cout": 20,
@@ -1683,12 +2288,19 @@
                 {
                   "nom": "Crochet de pêche",
                   "cout": 10,
-                  "note": "Rare 7, portée 3 ps, Force 3; peut tenter de mettre à terre avec un test de Force modifié."
+                  "note": "Rare 7, portée 3 ps, Force 3; peut tenter de mettre à terre avec un test de Force modifié.",
+                  "rareteCommerce": 7
                 },
-                { "nom": "Étoiles de lancer", "cout": 15 }
+                {
+                  "nom": "Étoiles de lancer",
+                  "cout": 15
+                }
               ]
             },
-            { "nom": "Armures", "entrees": [] }
+            {
+              "nom": "Armures",
+              "entrees": []
+            }
           ],
           "source": "Battle Monks of Cathay, Border Town Burning, pages 2 et 3"
         }
@@ -1697,27 +2309,33 @@
         {
           "titre": "Concentration de l'énergie",
           "description": "À mains nues, le Héros peut sacrifier autant d'Attaques qu'il veut pour gagner plus 1 Force par attaque sacrifiée.",
-          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2",
+          "apprenable": true
         },
         {
           "titre": "Vitesse de l'éclair",
           "description": "Le Héros peut courir ou charger jusqu'à trois fois son Mouvement et peut courir à moins de 8 ps d'un ennemi.",
-          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2",
+          "apprenable": true
         },
         {
           "titre": "Saut de la foi",
           "description": "Sa charge ne peut pas être interceptée. Il peut quitter un combat sans test de Commandement et charger pendant ce même tour.",
-          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2",
+          "apprenable": true
         },
         {
           "titre": "Bouclier humain",
           "description": "Avec au moins deux ennemis au contact, après l'attaque du premier et avant celle du second, un test d'Initiative réussi fait subir au premier les attaques du second. Il est libéré après la phase; un échec n'a aucun effet.",
-          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2",
+          "apprenable": true
         },
         {
           "titre": "Belliciste",
           "description": "Seul l'Émissaire peut choisir cette compétence. Avant la bataille, un test de Commandement réussi recrute 1D3 plus 1 Paysans Enragés temporaires, même au-delà du maximum, chacun avec la haine.",
-          "source": "Battle Monks of Cathay, Border Town Burning, page 2"
+          "source": "Battle Monks of Cathay, Border Town Burning, page 2",
+          "apprenable": true,
+          "profilsAutorises": ["emissaire"]
         }
       ],
       "magie": [],
@@ -1787,7 +2405,9 @@
               "description": "Il cause la peur, ignore psychologie et poison, ne quitte pas le combat et transforme sonné en à terre."
             }
           ],
-          "source": "Restless Dead, Border Town Burning, pages 2 et 4"
+          "source": "Restless Dead, Border Town Burning, pages 2 et 4",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "necromancien",
@@ -1819,7 +2439,20 @@
               "description": "Pour rechercher un objet rare, il lance 3D6 et conserve les deux meilleurs dés."
             }
           ],
-          "source": "Restless Dead, Border Town Burning, pages 2 et 4"
+          "source": "Restless Dead, Border Town Burning, pages 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "garde-des-tombes",
@@ -1851,7 +2484,9 @@
               "description": "Il cause la peur, ignore psychologie et poison, ne court pas, ne cherche pas d'objet rare et transforme sonné en à terre."
             }
           ],
-          "source": "Restless Dead, Border Town Burning, pages 2 et 5"
+          "source": "Restless Dead, Border Town Burning, pages 2 et 5",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "zombie",
@@ -1879,7 +2514,8 @@
               "description": "Il ne porte aucun équipement, cause la peur, ne court pas, ignore psychologie et poison, transforme sonné en à terre et ne gagne pas d'expérience."
             }
           ],
-          "source": "Restless Dead, Border Town Burning, page 5"
+          "source": "Restless Dead, Border Town Burning, page 5",
+          "gagneExperience": false
         },
         {
           "id": "squelette",
@@ -1907,7 +2543,8 @@
               "description": "Il cause la peur, ne court pas, ignore psychologie et poison, transforme sonné en à terre et ne gagne pas d'expérience."
             }
           ],
-          "source": "Restless Dead, Border Town Burning, page 5"
+          "source": "Restless Dead, Border Town Burning, page 5",
+          "gagneExperience": false
         },
         {
           "id": "revenant",
@@ -1939,7 +2576,9 @@
               "description": "Il gagne de l'expérience. Promu Héros, il ne cherche pas d'objet rare, choisit Combat ou Force et obtient Lames de revenant."
             }
           ],
-          "source": "Restless Dead, Border Town Burning, page 5"
+          "source": "Restless Dead, Border Town Burning, page 5",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "epouvantail",
@@ -1983,7 +2622,8 @@
               "description": "Il cause la peur, ignore psychologie et poison, transforme sonné en à terre et ne gagne pas d'expérience."
             }
           ],
-          "source": "Restless Dead, Border Town Burning, page 6"
+          "source": "Restless Dead, Border Town Burning, page 6",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -2000,31 +2640,77 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 }
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "Première gratuite."
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Arc court", "cout": 5 },
-                { "nom": "Arc", "cout": 10 }
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                },
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -2035,27 +2721,32 @@
         {
           "titre": "Cadavre explosif",
           "description": "Avant la bataille, désignez secrètement un Zombie. Lorsqu'il charge ou est chargé, il est retiré définitivement et toutes les figurines dans un rayon de 1D6 ps subissent 1D3 touches de Force 4. Tué à distance, il n'explose pas. Un seul cadavre peut être actif.",
-          "source": "Restless Dead, Border Town Burning, page 3"
+          "source": "Restless Dead, Border Town Burning, page 3",
+          "apprenable": true
         },
         {
           "titre": "Parleur aux morts",
           "description": "Avant chaque bataille, ajoutez 1D3 Zombies gratuits et temporaires. Ils dépassent le maximum mais comptent normalement pour la valeur de bande et ne deviennent pas explosifs.",
-          "source": "Restless Dead, Border Town Burning, page 3"
+          "source": "Restless Dead, Border Town Burning, page 3",
+          "apprenable": true
         },
         {
           "titre": "Toucher spectral",
           "description": "À la place de ses attaques, le Héros effectue une attaque non armée. Une touche blesse automatiquement; la Liche récupère aussi un point de Vie perdu sans dépasser son total initial. Aucun effet sur Possédés et Morts-vivants.",
-          "source": "Restless Dead, Border Town Burning, page 3"
+          "source": "Restless Dead, Border Town Burning, page 3",
+          "apprenable": true
         },
         {
           "titre": "Rite interdit",
           "description": "Si le Héros renonce à sa recherche rare, la prochaine bataille fournit une réserve de 1D3 plus 1 modificateurs de plus 1 aux jets d'incantation, répartis librement.",
-          "source": "Restless Dead, Border Town Burning, page 3"
+          "source": "Restless Dead, Border Town Burning, page 3",
+          "apprenable": true
         },
         {
           "titre": "Invocateur",
           "description": "La taille maximale de la bande augmente de 1.",
-          "source": "Restless Dead, Border Town Burning, page 3"
+          "source": "Restless Dead, Border Town Burning, page 3",
+          "apprenable": true
         }
       ],
       "magie": [
@@ -2172,7 +2863,9 @@
               "description": "Il commence avec Sacrifice rituel et un sort de Hashut aléatoire."
             }
           ],
-          "source": "Nains du Chaos V1gFr, pages 1 et 7"
+          "source": "Nains du Chaos V1gFr, pages 1 et 7",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "geolier",
@@ -2200,7 +2893,9 @@
               "description": "Il cause la peur aux Humains."
             }
           ],
-          "source": "Nains du Chaos V1gFr, pages 1 et 7"
+          "source": "Nains du Chaos V1gFr, pages 1 et 7",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "centaure-taureau",
@@ -2228,7 +2923,9 @@
               "description": "Il ne porte aucune arme de tir et ajoute 20 à sa valeur de bande."
             }
           ],
-          "source": "Nains du Chaos V1gFr, pages 1 et 7"
+          "source": "Nains du Chaos V1gFr, pages 1 et 7",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "mouchard",
@@ -2256,7 +2953,9 @@
               "description": "Il relance toujours Ce gars est doué et ne devient jamais Héros."
             }
           ],
-          "source": "Nains du Chaos V1gFr, page 8"
+          "source": "Nains du Chaos V1gFr, page 8",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "guerrier-nain-du-chaos",
@@ -2279,7 +2978,9 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Nains du Chaos V1gFr, page 8"
+          "source": "Nains du Chaos V1gFr, page 8",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         }
       ],
       "listesEquipement": [
@@ -2295,45 +2996,89 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
+                {
+                  "nom": "Dague",
+                  "cout": 2
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
                 {
                   "nom": "Fouet d'acier",
                   "cout": 10,
                   "note": "Geôlier seulement; plus 1 Attaque en charge ou contre le chargeur et frappe en premier."
                 },
-                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
                 {
                   "nom": "Pince",
                   "cout": 25,
-                  "note": "Rare 10, Geôlier, deux mains; un ennemi mis hors de combat est capturé sauf grande cible ou animal."
+                  "note": "Rare 10, Geôlier, deux mains; un ennemi mis hors de combat est capturé sauf grande cible ou animal.",
+                  "rareteCommerce": 10
                 }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Pistolet", "cout": 15 },
-                { "nom": "Paire de pistolets", "cout": 30 },
-                { "nom": "Tromblon", "cout": 30 },
-                { "nom": "Arquebuse", "cout": 35 }
+                {
+                  "nom": "Pistolet",
+                  "cout": 15
+                },
+                {
+                  "nom": "Paire de pistolets",
+                  "cout": 30
+                },
+                {
+                  "nom": "Tromblon",
+                  "cout": 30
+                },
+                {
+                  "nom": "Arquebuse",
+                  "cout": 35
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
                 {
                   "nom": "Exosquelette",
                   "cout": 225,
-                  "note": "Rare 14, sauvegarde 4+, plus 3 Mouvement, coût réduit de 1 CO par point d'expérience, lié au porteur et compatible avec la magie mais pas avec bouclier ou rondache."
+                  "note": "Rare 14, sauvegarde 4+, plus 3 Mouvement, coût réduit de 1 CO par point d'expérience, lié au porteur et compatible avec la magie mais pas avec bouclier ou rondache.",
+                  "rareteCommerce": 14
                 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             },
             {
@@ -2342,7 +3087,8 @@
                 {
                   "nom": "Machine du Chaos",
                   "cout": 195,
-                  "note": "Rare 10, char démoniaque transportant jusqu'à six captifs, les grandes cibles comptant double."
+                  "note": "Rare 10, char démoniaque transportant jusqu'à six captifs, les grandes cibles comptant double.",
+                  "rareteCommerce": 10
                 }
               ]
             }
@@ -2356,25 +3102,52 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Dague",
+                  "cout": 2
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Tir",
               "entrees": [
-                { "nom": "Fronde", "cout": 2 },
-                { "nom": "Arc", "cout": 10 }
+                {
+                  "nom": "Fronde",
+                  "cout": 2
+                },
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -2385,47 +3158,57 @@
         {
           "titre": "Dur à cuire",
           "description": "Le Héros relance son résultat de blessure grave.",
-          "source": "Nains du Chaos V1gFr, page 6"
+          "source": "Nains du Chaos V1gFr, page 6",
+          "apprenable": true
         },
         {
           "titre": "Ingénieur du Chaos",
           "description": "Le Héros gagne plus 3 pour trouver armure du Chaos, exosquelette ou arme d'obsidienne, ignore leurs restrictions de découverte et de don, mais ne gagne pas automatiquement le droit de les porter.",
-          "source": "Nains du Chaos V1gFr, page 6"
+          "source": "Nains du Chaos V1gFr, page 6",
+          "apprenable": true
         },
         {
           "titre": "Très résistant",
           "description": "Sur la table des blessures, 1 à 3 met à terre, 4 à 5 sonne et 6 met hors de combat.",
-          "source": "Nains du Chaos V1gFr, page 6"
+          "source": "Nains du Chaos V1gFr, page 6",
+          "apprenable": true
         },
         {
           "titre": "Crâne très épais",
           "description": "Sur 3+, un résultat sonné devient à terre; avec un casque, la sauvegarde passe à 2+.",
-          "source": "Nains du Chaos V1gFr, page 6"
+          "source": "Nains du Chaos V1gFr, page 6",
+          "apprenable": true
         },
         {
           "titre": "Chercheur de ressources",
           "description": "Le Héros peut modifier de plus ou moins 1 un dé d'exploration.",
-          "source": "Nains du Chaos V1gFr, page 6"
+          "source": "Nains du Chaos V1gFr, page 6",
+          "apprenable": true
         },
         {
           "titre": "Tyran",
           "description": "Réservée au chef: s'il n'est ni à terre ni sonné, il relance les tests de déroute ratés. S'il tombe hors de combat, la bande teste immédiatement.",
-          "source": "Nains du Chaos V1gFr, page 6"
+          "source": "Nains du Chaos V1gFr, page 6",
+          "apprenable": true,
+          "reserveAuChef": true
         },
         {
           "titre": "Arme d'obsidienne",
           "description": "Option d'équipement à quatre fois le prix normal, Rare 12. Elle donne plus 1 Force mais corrompt son porteur et est interdite aux Nains, Elfes, Sœurs, Répurgateurs et prêtres. Le porteur frappe en dernier.",
-          "source": "Nains du Chaos V1gFr, page 3"
+          "source": "Nains du Chaos V1gFr, page 3",
+          "apprenable": false
         },
         {
           "titre": "Armure du Chaos",
           "description": "185 CO, Rare 13, sauvegarde 4+, coût réduit de 1 CO par point d'expérience, liée au porteur, compatible avec les sorts, incompatible avec bouclier et rondache. Sa rareté augmente de 1 par précédente mise hors de combat du porteur.",
-          "source": "Nains du Chaos V1gFr, page 4"
+          "source": "Nains du Chaos V1gFr, page 4",
+          "apprenable": false
         },
         {
           "titre": "Machine du Chaos",
           "description": "Char doté d'une machine E8 PV4, de roues E6 PV1 et d'un démon M6 E6 PV3. Un Nain du Chaos conduit; seuls des captifs voyagent, six places et deux pour une grande cible. Une perte de contrôle utilise la table des chars; un résultat 5 libère le démon puis la machine avance droit et s'immobilise. Les captifs proviennent des blessures Capturé ou des pinces, peuvent être libérés en détruisant la machine ou avec les clés d'un Geôlier hors de combat. Envoyer tous les captifs à Hashut immobilise la machine et un Héros pour une bataille puis accorde expérience au chef, à plusieurs Héros, ou 2D3 expérience et 1D6 fois 5 CO selon 1D6.",
-          "source": "Nains du Chaos V1gFr, page 5"
+          "source": "Nains du Chaos V1gFr, page 5",
+          "apprenable": false
         }
       ],
       "magie": [
@@ -2571,7 +3354,9 @@
               "description": "En l'absence du brouillard mystique, elle craint tous les ennemis."
             }
           ],
-          "source": "Arpenteurs Fimirs V1.6fFr, pages 3 et 6"
+          "source": "Arpenteurs Fimirs V1.6fFr, pages 3 et 6",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "fimir-demoniaque",
@@ -2598,13 +3383,18 @@
               "titre": "Combat naturel",
               "description": "Il n'utilise aucune arme mais peut porter une armure."
             },
-            { "titre": "Peur", "description": "Il cause la peur." },
+            {
+              "titre": "Peur",
+              "description": "Il cause la peur."
+            },
             {
               "titre": "Âme démoniaque",
               "description": "Il bénéficie d'une sauvegarde de 4+ contre les sorts et prières."
             }
           ],
-          "source": "Arpenteurs Fimirs V1.6fFr, pages 3 et 6"
+          "source": "Arpenteurs Fimirs V1.6fFr, pages 3 et 6",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "jeune-noble-fimir",
@@ -2636,7 +3426,9 @@
               "description": "Sans brouillard mystique, il craint tous les ennemis et devient stupide."
             }
           ],
-          "source": "Arpenteurs Fimirs V1.6fFr, pages 3 et 6"
+          "source": "Arpenteurs Fimirs V1.6fFr, pages 3 et 6",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "shearl",
@@ -2664,7 +3456,9 @@
               "description": "Il cause la peur. Sans brouillard mystique, il craint tous les ennemis et devient stupide."
             }
           ],
-          "source": "Arpenteurs Fimirs V1.6fFr, page 7"
+          "source": "Arpenteurs Fimirs V1.6fFr, page 7",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "guerrier-fimir",
@@ -2704,7 +3498,9 @@
               "description": "Il compte pour deux membres. Après une blessure grave, 1 le tue et 2 à 6 ne lui inflige aucune séquelle. Promu Héros, il perd Stupidité et Monstrueux puis utilise le tableau normal."
             }
           ],
-          "source": "Arpenteurs Fimirs V1.6fFr, page 7"
+          "source": "Arpenteurs Fimirs V1.6fFr, page 7",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         }
       ],
       "listesEquipement": [
@@ -2719,26 +3515,57 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2 },
-                { "nom": "Masse ou bâton", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Fléau", "cout": 15 },
-                { "nom": "Morgenstern", "cout": 15 },
-                { "nom": "Arme à deux mains", "cout": 15 },
+                {
+                  "nom": "Dague",
+                  "cout": 2
+                },
+                {
+                  "nom": "Masse ou bâton",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
                 {
                   "nom": "Pince",
                   "cout": 25,
-                  "note": "Rare 10, deux mains; capture une cible hors de combat sauf grande cible ou animal."
+                  "note": "Rare 10, deux mains; capture une cible hors de combat sauf grande cible ou animal.",
+                  "rareteCommerce": 10
                 }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 }
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                }
               ]
             },
             {
@@ -2748,7 +3575,12 @@
                   "nom": "Pendule de pierre magique",
                   "cout": 25,
                   "formuleCout": "25 + 3D6 CO",
-                  "note": "Rare 9; après la bataille, un test de Commandement réussi permet de relancer un dé d'exploration, sans relancer une relance."
+                  "note": "Rare 9; après la bataille, un test de Commandement réussi permet de relancer un dé d'exploration, sans relancer une relance.",
+                  "rareteCommerce": 9,
+                  "coutCommerceFormule": "25 + 3D6 CO",
+                  "coutCommerce": 25,
+                  "prixRecrutementFormule": "25 + 3D6 CO",
+                  "prixRecrutementMinimum": 28
                 }
               ]
             }
@@ -2762,19 +3594,43 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Dague",
+                  "cout": 2
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 }
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                }
               ]
             }
           ],
@@ -2785,7 +3641,8 @@
         {
           "titre": "Mutations disponibles",
           "description": "Âme démoniaque 20: sauvegarde 4+ contre magie; pince 50: un bras devient une attaque supplémentaire à Force plus 1; tentacule 35: retire une Attaque à un adversaire, minimum 1; sabots fendus 40: plus 1 Mouvement; sang acide 30: chaque blessure reçue au corps à corps inflige une touche de Force 3 aux contacts; épines 35: touche automatique de Force 1 aux contacts au début du combat; queue de scorpion 40: attaque supplémentaire de Force 5, Force 2 contre immunisés au poison; bras supplémentaire 40: main, bouclier ou rondache en plus; hideux 40: peur; corps cristallin 60: Endurance 6 et un seul point de Vie, sans progression de ces caractéristiques; massif 50: plus 2 Force et moins 4 Commandement; morsure venimeuse 50: attaque de Force 5, ou améliore une morsure existante, Force 2 contre immunisés; queue préhensile 50: attaque supplémentaire ou port d'un objet à une main; peau écailleuse 60: sauvegarde naturelle 5+; ailes 45: vol plané de 2 ps horizontal par 1 ps de chute.",
-          "source": "Arpenteurs Fimirs V1.6fFr, pages 8 et 9"
+          "source": "Arpenteurs Fimirs V1.6fFr, pages 8 et 9",
+          "apprenable": false
         }
       ],
       "magie": [
@@ -2924,7 +3781,20 @@
               "description": "Les alliés à 6 ps ou moins utilisent son Commandement."
             }
           ],
-          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 5"
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "devin",
@@ -2956,7 +3826,20 @@
               "description": "À son recrutement, choisissez Serpent, Corbeau, Chien, Aigle ou Chaos Universel."
             }
           ],
-          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 5"
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "damne",
@@ -2983,7 +3866,10 @@
               "titre": "Inconstance",
               "description": "Sa CC, Force et Endurance valent chacune 1D6 et ses Attaques 1D3. Chaque valeur est relancée une fois par tour au besoin."
             },
-            { "titre": "Peur", "description": "Il cause la peur." },
+            {
+              "titre": "Peur",
+              "description": "Il cause la peur."
+            },
             {
               "titre": "Progression variable",
               "description": "Lorsqu'une caractéristique variable progresse, lancez son dé. Le résultat peut remplacer définitivement la valeur; sinon la progression est perdue, sans appliquer les maxima habituels."
@@ -2993,7 +3879,9 @@
               "description": "Une fois toutes ses caractéristiques fixées, il peut s'équiper normalement. À 90 expérience, toute caractéristique encore variable le transforme en Enfant du Chaos, ou le fait quitter la bande si elle en possède déjà un."
             }
           ],
-          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 6"
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 6",
+          "gagneExperience": true,
+          "progressionManuelle": "Le plafond propre à ce profil doit être confirmé dans son document source avant chaque progression de caractéristique. Consigner la caractéristique, la valeur et la référence retenues avec le groupe de jeu."
         },
         {
           "id": "champion",
@@ -3016,7 +3904,20 @@
           },
           "competencesDisponibles": ["Combat", "Force", "Spéciale"],
           "regles": [],
-          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 6"
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 1, 2 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "maraudeur",
@@ -3039,7 +3940,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "Maraudeurs du Chaos V1.11bFr, page 7"
+          "source": "Maraudeurs du Chaos V1.11bFr, page 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "chien-du-chaos",
@@ -3067,7 +3981,8 @@
               "description": "Il n'utilise aucun équipement, combat sans malus et ne gagne pas d'expérience."
             }
           ],
-          "source": "Maraudeurs du Chaos V1.11bFr, page 7"
+          "source": "Maraudeurs du Chaos V1.11bFr, page 7",
+          "gagneExperience": false
         },
         {
           "id": "enfant-du-chaos",
@@ -3103,7 +4018,8 @@
               "description": "Il cause la peur, réussit automatiquement tout test de Commandement, ne gagne pas d'expérience et est une grande cible."
             }
           ],
-          "source": "Maraudeurs du Chaos V1.11bFr, page 7"
+          "source": "Maraudeurs du Chaos V1.11bFr, page 7",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -3114,38 +4030,81 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Morgenstern", "cout": 15 },
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "Première gratuite."
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
                 {
                   "nom": "Fouet barbelé",
                   "cout": 15,
-                  "note": "Rare 9; interdit la parade, donne plus 1 Attaque de claquement et peut donner plus 1 Attaque aux Chiens à 4 ps."
+                  "note": "Rare 9; interdit la parade, donne plus 1 Attaque de claquement et peut donner plus 1 Attaque aux Chiens à 4 ps.",
+                  "rareteCommerce": 9
                 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Fléau", "cout": 15 },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                },
                 {
                   "nom": "Grande hache du Chaos",
                   "cout": 25,
-                  "note": "Rare 8 et Choisi par le Chaos; Force plus 2, deux mains, frappe en dernier, modificateur d'armure supplémentaire de moins 1."
+                  "note": "Rare 8 et Choisi par le Chaos; Force plus 2, deux mains, frappe en dernier, modificateur d'armure supplémentaire de moins 1.",
+                  "rareteCommerce": 8
                 }
               ]
             },
-            { "nom": "Tir", "entrees": [] },
+            {
+              "nom": "Tir",
+              "entrees": []
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
                 {
                   "nom": "Armure du Chaos",
                   "cout": 185,
-                  "note": "Rare 13, sauvegarde 4+, coût réduit de 1 CO par expérience, liée au porteur et compatible avec la magie mais pas avec bouclier ou rondache."
+                  "note": "Rare 13, sauvegarde 4+, coût réduit de 1 CO par expérience, liée au porteur et compatible avec la magie mais pas avec bouclier ou rondache.",
+                  "rareteCommerce": 13
                 }
               ]
             }
@@ -3159,13 +4118,35 @@
             {
               "nom": "Corps à corps",
               "entrees": [
-                { "nom": "Dague", "cout": 2, "note": "Première gratuite." },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Morgenstern", "cout": 15 },
-                { "nom": "Fléau", "cout": 15 }
+                {
+                  "nom": "Dague",
+                  "cout": 2,
+                  "note": "Première gratuite."
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                }
               ]
             },
             {
@@ -3181,9 +4162,18 @@
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -3194,37 +4184,47 @@
         {
           "titre": "Mutant",
           "description": "Le Héros peut acheter une mutation. Avec la Marque d'Onogal, il peut choisir une Bénédiction de Nurgle. Cette compétence est répétable.",
-          "source": "Maraudeurs du Chaos V1.11bFr, page 3"
+          "source": "Maraudeurs du Chaos V1.11bFr, page 3",
+          "apprenable": true
         },
         {
           "titre": "Corps tatoué",
           "description": "Réservée au Chef: l'Œil des Dieux se déclenche sur 10+, ou 11+ pour un Norse.",
-          "source": "Maraudeurs du Chaos V1.11bFr, page 3"
+          "source": "Maraudeurs du Chaos V1.11bFr, page 3",
+          "apprenable": true,
+          "reserveAuChef": true
         },
         {
           "titre": "Courage du guerrier",
           "description": "Réservée au Chef: il relance les tests de déroute et devient immunisé à la peur et à seul contre tous.",
-          "source": "Maraudeurs du Chaos V1.11bFr, page 3"
+          "source": "Maraudeurs du Chaos V1.11bFr, page 3",
+          "apprenable": true,
+          "reserveAuChef": true
         },
         {
           "titre": "Balayage",
           "description": "Avec Homme fort, chaque mise hors de combat par arme à deux mains autorise une attaque immédiate contre un autre ennemi au contact.",
-          "source": "Maraudeurs du Chaos V1.11bFr, page 3"
+          "source": "Maraudeurs du Chaos V1.11bFr, page 3",
+          "apprenable": true,
+          "prerequis": ["Homme fort"]
         },
         {
           "titre": "Choisi par le Chaos",
           "description": "Le Héros adopte le profil maximal des Guerriers du Chaos et la liste d'équipement des Héros.",
-          "source": "Maraudeurs du Chaos V1.11bFr, pages 2 et 3"
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 2 et 3",
+          "apprenable": true
         },
         {
           "titre": "Mutations",
           "description": "Les mutations disponibles sont Âme démoniaque 20, Pince 50, Tentacule 35, Sabots fendus 40, Sang acide 30, Épines 35, Queue de scorpion 40, Bras supplémentaire 40, Hideux 40, Corps cristallin 60, Massif 50, Morsure venimeuse 50, Queue préhensile 50, Peau écailleuse 60 et Ailes 45. Leurs effets sont sauvegarde magique, attaques ou membres supplémentaires, modifications de caractéristiques, touches de riposte, peur, armure naturelle ou vol plané selon l'entrée.",
-          "source": "Maraudeurs du Chaos V1.11bFr, pages 11 et 12"
+          "source": "Maraudeurs du Chaos V1.11bFr, pages 11 et 12",
+          "apprenable": false
         },
         {
           "titre": "Bénédictions d'Onogal",
           "description": "Courant de corruption 25 donne un tir de portée 6 ps et Force 3 sans sauvegarde; Nuage de mouches 25 impose moins 1 aux touches de corps à corps; Hideux 40 cause la peur; Pourriture d'Onogal 50 immunise au poison et transmet une maladie sur un 6 pour blesser, avec perte permanente d'Endurance; Marque d'Onogal 35 donne plus 1 point de Vie et immunité au poison; Horreur boursouflée 40 donne plus 1 Vie et Endurance mais moins 1 Mouvement.",
-          "source": "Maraudeurs du Chaos V1.11bFr, page 13"
+          "source": "Maraudeurs du Chaos V1.11bFr, page 13",
+          "apprenable": false
         }
       ],
       "magie": [

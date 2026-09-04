@@ -7,6 +7,7 @@ import {
   serialiserCampagne,
 } from '../lib/campaign-transfer.ts';
 import { campagneVideTest } from './fixtures.ts';
+import { validerCampagneV4 } from '../lib/campaign-validation.ts';
 
 void test('une campagne exportée peut être réimportée sans perte', () => {
   const campagne = {
@@ -42,4 +43,22 @@ void test('le nom de fichier est portable', () => {
     }),
     'a-l-ombre-soeurs-de-sigmar.json',
   );
+});
+
+void test('restaure une grande campagne valide, y compris un ancien export indenté', () => {
+  const campagne = campagneVideTest();
+  campagne.parties = Array.from({ length: 1000 }, (_, i) => ({
+    id: `partie-${i}`,
+    scenario: 'Escarmouche',
+    adversaire: 'Autre',
+    resultat: 'Victoire',
+    date: '2026-09-04',
+    notes: 'x'.repeat(360),
+  }));
+  assert.equal(validerCampagneV4(campagne).ok, true);
+  const exportCompact = serialiserCampagne(campagne);
+  const ancienExport = JSON.stringify(JSON.parse(exportCompact), null, 2);
+  assert.ok(new TextEncoder().encode(ancienExport).byteLength > 512 * 1024);
+  assert.deepEqual(importerCampagneDepuisJson(exportCompact), campagne);
+  assert.deepEqual(importerCampagneDepuisJson(ancienExport), campagne);
 });

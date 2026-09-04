@@ -9,6 +9,15 @@ import type { EtatCampagne } from './mordheim-data.ts';
 export const CLE_CAMPAGNE_ACTIVE = 'trackheim:v1:campagne-active';
 export const PREFIXE_CAMPAGNE = 'trackheim:v1:campagne:';
 
+/** Le getter lui-même peut lever SecurityError, avant tout appel à getItem. */
+export function obtenirStockageLocal(): Storage | null {
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
+}
+
 export type CopieLocale = {
   campagne: EtatCampagne;
   date: string;
@@ -47,9 +56,9 @@ export function cleCopieLocale(idCampagne: string) {
   return `${PREFIXE_CAMPAGNE}${idCampagne}`;
 }
 
-export function lireCampagneActive(stockage: Storage) {
+export function lireCampagneActive(stockage: Storage | null) {
   try {
-    const memorisee = stockage.getItem(CLE_CAMPAGNE_ACTIVE);
+    const memorisee = stockage?.getItem(CLE_CAMPAGNE_ACTIVE);
     return memorisee && estIdentifiantCampagneValide(memorisee)
       ? memorisee
       : null;
@@ -58,19 +67,21 @@ export function lireCampagneActive(stockage: Storage) {
   }
 }
 
-export function memoriserCampagneActive(stockage: Storage, id: string) {
+export function memoriserCampagneActive(stockage: Storage | null, id: string) {
   if (!estIdentifiantCampagneValide(id)) {
     throw new Error('L’identifiant de campagne est invalide.');
   }
+  if (!stockage) throw new Error('Le navigateur refuse le stockage local.');
   stockage.setItem(CLE_CAMPAGNE_ACTIVE, id);
 }
 
 export function lireCopieLocale(
-  stockage: Storage,
+  stockage: Storage | null,
   idCampagne: string,
 ): LectureCopieLocale {
   let contenuBrut: string | null;
   try {
+    if (!stockage) throw new Error('Stockage indisponible');
     contenuBrut = stockage.getItem(cleCopieLocale(idCampagne));
   } catch {
     return {
@@ -115,7 +126,9 @@ export function lireCopieLocale(
       contenuBrut,
     };
   }
-  const validation = validerCampagneV4(valeur.campagne);
+  const validation = validerCampagneV4(valeur.campagne, {
+    verifierReglesDeBande: false,
+  });
   if (!validation.ok) {
     return {
       statut: 'invalide',
@@ -136,7 +149,7 @@ export function lireCopieLocale(
 }
 
 export function ecrireCopieLocale(
-  stockage: Storage,
+  stockage: Storage | null,
   idCampagne: string,
   campagne: EtatCampagne,
   options: {
@@ -145,7 +158,10 @@ export function ecrireCopieLocale(
     forcer?: boolean;
   },
 ) {
-  const validation = validerCampagneV4(campagne);
+  if (!stockage) throw new Error('Le navigateur refuse le stockage local.');
+  const validation = validerCampagneV4(campagne, {
+    verifierReglesDeBande: false,
+  });
   if (!validation.ok) {
     throw new Error(
       `La campagne à sauvegarder est invalide : ${validation.erreur}`,
@@ -153,6 +169,7 @@ export function ecrireCopieLocale(
   }
 
   const lecture = lireCopieLocale(stockage, idCampagne);
+  if (lecture.statut === 'indisponible') throw new Error(lecture.erreur);
   if (lecture.statut === 'invalide' && !options.forcer) {
     throw new Error(
       'Une sauvegarde locale illisible existe déjà. Exportez-la avant de la remplacer.',
@@ -186,9 +203,12 @@ export function ecrireCopieLocale(
   return copie;
 }
 
-export function listerCopiesLocales(stockage: Storage): ResumeCampagneLocale[] {
+export function listerCopiesLocales(
+  stockage: Storage | null,
+): ResumeCampagneLocale[] {
   const resultats: ResumeCampagneLocale[] = [];
   try {
+    if (!stockage) return [];
     for (let index = 0; index < stockage.length; index += 1) {
       const cle = stockage.key(index);
       if (!cle?.startsWith(PREFIXE_CAMPAGNE)) continue;
@@ -211,6 +231,25 @@ export function listerCopiesLocales(stockage: Storage): ResumeCampagneLocale[] {
   return resultats.sort((a, b) =>
     (b.miseAJour ?? '').localeCompare(a.miseAJour ?? ''),
   );
+}
+
+export function listerCopiesARecuperer(stockage: Storage | null) {
+  const resultats: Array<{ id: string; erreur: string; contenuBrut: string }> =
+    [];
+  try {
+    if (!stockage) return resultats;
+    for (let index = 0; index < stockage.length; index += 1) {
+      const cle = stockage.key(index);
+      if (!cle?.startsWith(PREFIXE_CAMPAGNE)) continue;
+      const id = cle.slice(PREFIXE_CAMPAGNE.length);
+      if (!estIdentifiantCampagneValide(id)) continue;
+      const lecture = lireCopieLocale(stockage, id);
+      if (lecture.statut === 'invalide') resultats.push({ id, ...lecture });
+    }
+  } catch {
+    // Les copies déjà lues restent récupérables si le stockage devient indisponible.
+  }
+  return resultats;
 }
 
 function estObjet(valeur: unknown): valeur is Record<string, unknown> {

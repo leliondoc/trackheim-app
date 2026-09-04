@@ -1,5 +1,6 @@
 import {
   bandesBibliotheque,
+  compterArmesDeTir,
   definitionsBandes,
   equipements,
   equipementAutorise,
@@ -41,10 +42,13 @@ export function estRevisionValide(valeur: unknown): valeur is number {
 }
 
 /**
- * Vérifie strictement la forme persistée de la campagne v4 sans réinterpréter
- * les règles du jeu.
+ * Vérifie la forme persistée. Le contrôle optionnel de composition ne doit
+ * jamais empêcher la conservation d'un registre issu d'une ancienne édition.
  */
-export function validerCampagneV4(valeur: unknown): ValidationCampagne {
+export function validerCampagneV4(
+  valeur: unknown,
+  options: { verifierReglesDeBande?: boolean } = {},
+): ValidationCampagne {
   const erreurComplexite = validerComplexiteJson(valeur);
   if (erreurComplexite) return echec(erreurComplexite);
   if (!estObjet(valeur)) return echec('La campagne doit être un objet JSON.');
@@ -110,8 +114,10 @@ export function validerCampagneV4(valeur: unknown): ValidationCampagne {
     new Set(definition.profils.map((profil) => profil.id)),
   );
   if (erreurCombattants) return echec(erreurCombattants);
-  const erreurMetier = validerReglesMetier(valeur, definition);
-  if (erreurMetier) return echec(erreurMetier);
+  if (options.verifierReglesDeBande !== false) {
+    const erreurMetier = validerReglesMetier(valeur, definition);
+    if (erreurMetier) return echec(erreurMetier);
+  }
   const combattantsParId = new Map(
     (valeur.combattants as ObjetJson[]).map((combattant) => [
       String(combattant.id),
@@ -138,6 +144,15 @@ export function validerCampagneV4(valeur: unknown): ValidationCampagne {
   if (erreurHomebrew) return echec(erreurHomebrew);
 
   return { ok: true, campagne: valeur as unknown as EtatCampagne };
+}
+
+export function avertissementReglesCampagne(campagne: EtatCampagne) {
+  const definition = definitionsBandes.find(
+    (item) => item.id === campagne.factionId,
+  );
+  return definition
+    ? validerReglesMetier(campagne as unknown as ObjetJson, definition)
+    : null;
 }
 
 function validerReglesMetier(
@@ -189,18 +204,19 @@ function validerReglesMetier(
       return `${String(combattant.nom)} ne peut pas être Chef sans être un Héros.`;
     }
 
-    const maximums =
-      profil.maximums ?? maximumsCompatiblesAvecLeProfil(profil.statistiques);
+    const maximums = profil.maximums;
     const statistiques = combattant.statistiques as ObjetJson;
-    for (const cle of Object.keys(maximums) as Array<keyof typeof maximums>) {
-      if (Number(statistiques[cle]) > maximums[cle]) {
+    for (const cle of Object.keys(maximums ?? {}) as Array<
+      keyof NonNullable<typeof maximums>
+    >) {
+      if (maximums && Number(statistiques[cle]) > maximums[cle]) {
         return `${String(combattant.nom)} dépasse son maximum de ${String(cle)}.`;
       }
     }
 
     const ids = combattant.equipementIds as string[];
     let armesCorpsACorps = 0;
-    let armesDeTir = 0;
+    const armesDeTir = compterArmesDeTir(ids);
     const compteurs = new Map<string, number>();
     for (const id of ids) {
       const equipement = equipements.find((item) => item.id === id)!;
@@ -209,7 +225,6 @@ function validerReglesMetier(
       }
       compteurs.set(id, (compteurs.get(id) ?? 0) + 1);
       if (equipement.categorie === 'Corps à corps') armesCorpsACorps += 1;
-      if (equipement.categorie === 'Tir') armesDeTir += 1;
     }
     if (armesCorpsACorps > 2 || armesDeTir > 2) {
       return `${String(combattant.nom)} dépasse la limite de deux armes de corps à corps ou de tir.`;
@@ -228,29 +243,6 @@ function validerReglesMetier(
     }
   }
   return null;
-}
-
-const maximumsHumains = {
-  mouvement: 4,
-  capaciteCombat: 6,
-  capaciteTir: 6,
-  force: 4,
-  endurance: 4,
-  pointsVie: 3,
-  initiative: 6,
-  attaques: 4,
-  commandement: 9,
-};
-
-function maximumsCompatiblesAvecLeProfil(
-  statistiques: (typeof profils)[number]['statistiques'],
-) {
-  return Object.fromEntries(
-    Object.entries(maximumsHumains).map(([cle, maximum]) => [
-      cle,
-      Math.max(maximum, statistiques[cle as keyof typeof statistiques]),
-    ]),
-  ) as typeof maximumsHumains;
 }
 
 function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
@@ -354,7 +346,11 @@ function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
     if (!estTexte(combattant.notes, 0, 10_000)) {
       return `${chemin}.notes est invalide.`;
     }
-    if (!estEntierNaturel(combattant.quantite) || combattant.quantite < 1) {
+    if (
+      !estEntierNaturel(combattant.quantite) ||
+      combattant.quantite < 1 ||
+      combattant.quantite > 200
+    ) {
       return `${chemin}.quantite est invalide.`;
     }
     if (typeof combattant.chef !== 'boolean')
@@ -400,6 +396,30 @@ function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
       if (erreur) return erreur;
     }
 
+    if (combattant.ameliorationsSorts !== undefined) {
+      if (
+        !estObjet(combattant.ameliorationsSorts) ||
+        Object.keys(combattant.ameliorationsSorts).length > 100
+      ) {
+        return `${chemin}.ameliorationsSorts est invalide.`;
+      }
+      for (const [titre, reduction] of Object.entries(
+        combattant.ameliorationsSorts,
+      )) {
+        if (
+          !estTexte(titre, 1, 400) ||
+          !estEntierNaturel(reduction) ||
+          reduction < 1 ||
+          reduction > 100 ||
+          !(combattant.competences as string[]).includes(
+            `Sort ou prière : ${titre}`,
+          )
+        ) {
+          return `${chemin}.ameliorationsSorts ne correspond pas à un pouvoir connu.`;
+        }
+      }
+    }
+
     if (!estEntierNaturel(combattant.partiesManquees)) {
       return `${chemin}.partiesManquees est invalide.`;
     }
@@ -422,7 +442,8 @@ function validerStatistiques(valeur: unknown, chemin: string) {
     'commandement',
   ];
   for (const cle of cles) {
-    if (!estEntierNaturel(valeur[cle])) return `${chemin}.${cle} est invalide.`;
+    if (!estEntierNaturel(valeur[cle]) || valeur[cle] > 1_000)
+      return `${chemin}.${cle} est invalide.`;
   }
   return null;
 }
@@ -596,8 +617,20 @@ function validerBataille(
         return `${cheminFigurine} est invalide.`;
       }
       const horsCombat = figurine.etatTable === 'Hors de combat';
-      if (horsCombat !== (figurine.pointsVieActuels === 0)) {
+      if (horsCombat && figurine.pointsVieActuels !== 0) {
         return `${cheminFigurine} contient un état et des Points de Vie incohérents.`;
+      }
+      if (
+        figurine.blessureAResoudre !== undefined &&
+        typeof figurine.blessureAResoudre !== 'boolean'
+      ) {
+        return `${cheminFigurine}.blessureAResoudre est invalide.`;
+      }
+      if (
+        figurine.blessureAResoudre === true &&
+        (horsCombat || figurine.pointsVieActuels !== 0)
+      ) {
+        return `${cheminFigurine} ne peut avoir une blessure en attente dans cet état.`;
       }
       if (horsCombat) horsCombatCalcules += 1;
     }
@@ -791,6 +824,38 @@ function validerBataille(
   }
   if (!estTexte(valeur.exploration.noteResultat, 0, 10_000)) {
     return 'batailleEnCours.exploration.noteResultat est invalide.';
+  }
+  const indices = valeur.exploration.indicesConserves;
+  if (indices !== undefined) {
+    const lancers = valeur.exploration.lancers as number[];
+    const conserves = valeur.exploration.desConserves as number[];
+    if (
+      !Array.isArray(indices) ||
+      indices.length !== conserves.length ||
+      new Set(indices).size !== indices.length ||
+      indices.some(
+        (indice, position) =>
+          !estEntierNaturel(indice) ||
+          indice >= lancers.length ||
+          lancers[indice] !== conserves[position],
+      )
+    ) {
+      return 'batailleEnCours.exploration.indicesConserves ne correspond pas aux dés conservés.';
+    }
+  }
+  const bonus = valeur.exploration.bonusDes;
+  if (bonus !== undefined) {
+    if (
+      !estObjet(bonus) ||
+      !estEntierNaturel(bonus.lances) ||
+      bonus.lances > 24 ||
+      !estEntierNaturel(bonus.conserves) ||
+      bonus.conserves > bonus.lances ||
+      !estTexte(bonus.source, 0, 2_000) ||
+      (valeur.exploration.appliquee && bonus.lances > 0 && !bonus.source.trim())
+    ) {
+      return 'batailleEnCours.exploration.bonusDes est invalide ou sa source manque.';
+    }
   }
 
   if (!estObjet(valeur.vente)) return 'batailleEnCours.vente est invalide.';

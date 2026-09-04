@@ -77,7 +77,20 @@
               "description": "S'il touche le même adversaire avec ses deux attaques à mains nues pendant le même round, il peut remplacer leur résolution par une étreinte. Chaque joueur lance 1D6 et ajoute la Force de son combattant. Si le total du Domnu est supérieur ou égal, la cible subit automatiquement une blessure sans sauvegarde d'armure. Si le total adverse est supérieur, la cible se libère sans dommage."
             }
           ],
-          "source": "PDF Channel Rats VO, pages 3 et 5"
+          "source": "PDF Channel Rats VO, pages 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "petru-striganne",
@@ -117,7 +130,20 @@
               "description": "Avant chaque bataille, un seul Héros de la bande peut boire une potion. Lancez 1D6. Sur 1, il perd 1 en Endurance pour toute la bataille, jusqu'à obtenir un 6 sur 1D6 pendant une phase de récupération. Sur 2 ou 3, il gagne 1 en Force jusqu'à obtenir un 1 pendant une phase de récupération. Sur 4 ou 5, il gagne 1 en Endurance selon la même durée. Sur 6, il gagne 1 Point de Vie pour toute la bataille, mais ce point supplémentaire ne peut pas être récupéré après avoir été perdu."
             }
           ],
-          "source": "PDF Channel Rats VO, pages 3 et 5"
+          "source": "PDF Channel Rats VO, pages 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "retameur-striganne",
@@ -154,7 +180,20 @@
               "description": "Si la barque ou la barge est immobile et ne s'est pas déplacée au tour précédent, un Rétameur en contact peut réparer un emplacement endommagé, par exemple une pagaie ou un mât. Il ne fait rien d'autre ce tour et le véhicule ne peut pas bouger. La réparation est impossible si un ennemi est en contact avec le Rétameur ou l'embarcation."
             }
           ],
-          "source": "PDF Channel Rats VO, pages 3 et 5"
+          "source": "PDF Channel Rats VO, pages 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "jeune-vagabond-striganne",
@@ -191,7 +230,20 @@
               "description": "Pendant la phase de tir, il peut provoquer un ennemi visible au lieu de tirer. La cible effectue un test de Commandement. En cas de réussite, rien ne se passe. En cas d'échec, elle doit consacrer sa prochaine phase de mouvement à tenter d'engager le provocateur au corps à corps."
             }
           ],
-          "source": "PDF Channel Rats VO, pages 3 et 6"
+          "source": "PDF Channel Rats VO, pages 3 et 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "striganne",
@@ -214,7 +266,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Channel Rats VO, pages 3 et 7"
+          "source": "PDF Channel Rats VO, pages 3 et 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "oeil-mort-striganne",
@@ -250,7 +315,20 @@
               "description": "Il applique la compétence Expert en armes du livre de règles de Mordheim, page 122 de la source VO citée."
             }
           ],
-          "source": "PDF Channel Rats VO, pages 3 et 7"
+          "source": "PDF Channel Rats VO, pages 3 et 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "fugitif-striganne",
@@ -278,7 +356,20 @@
               "description": "Une figurine du sexe opposé, par exemple une Sœur de Sigmar, une Amazone ou une Ranger kislevite, doit réussir un test de Commandement pour pouvoir le charger."
             }
           ],
-          "source": "PDF Channel Rats VO, pages 3 et 7"
+          "source": "PDF Channel Rats VO, pages 3 et 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "vagabond-striganne",
@@ -301,7 +392,20 @@
           },
           "competencesDisponibles": [],
           "regles": [],
-          "source": "PDF Channel Rats VO, pages 3 et 7"
+          "source": "PDF Channel Rats VO, pages 3 et 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "homme-osier-striganne",
@@ -337,7 +441,8 @@
               "description": "Sur 4 ou plus, il ignore un résultat obtenu sur le tableau des dégâts et continue à combattre. Ce jet n'est pas une sauvegarde d'armure et n'est pas modifié par la Force. Il ne fonctionne pas contre les blessures infligées par la magie ou une arme magique."
             }
           ],
-          "source": "PDF Channel Rats VO, page 4"
+          "source": "PDF Channel Rats VO, page 4",
+          "gagneExperience": false
         },
         {
           "id": "main-coureuse-striganne",
@@ -369,7 +474,8 @@
               "description": "Elle reste cachée en permanence, sauf lorsqu'elle attaque un combattant ennemi."
             }
           ],
-          "source": "PDF Channel Rats VO, page 4"
+          "source": "PDF Channel Rats VO, page 4",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -390,17 +496,26 @@
               "entrees": [
                 {
                   "nom": "Dague",
-                  "cout": 0,
+                  "cout": 2,
                   "formuleCout": "première gratuite, suivante 2 CO"
                 },
-                { "nom": "Hache", "cout": 5 },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
                 {
                   "nom": "Gaffe",
                   "cout": 8,
                   "note": "Force de l'utilisateur moins 1. Frappe en premier et arme à deux mains."
                 },
-                { "nom": "Coutelas ou épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Coutelas ou épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
@@ -411,39 +526,64 @@
                   "cout": 3,
                   "note": "Portée 6 ps, Force de l'utilisateur moins 1. Arme de jet et confère 1 à la sauvegarde d'armure ennemie."
                 },
-                { "nom": "Filet", "cout": 5 },
+                {
+                  "nom": "Filet",
+                  "cout": 5
+                },
                 {
                   "nom": "Ligne à hameçon",
                   "cout": 10,
-                  "note": "Rare 7. Portée 3 ps, Force 3. Arme de jet sans pénalité de portée ni de mouvement. Peut viser une figurine engagée si le porteur ne l'est pas. Au lieu des dégâts, le tireur peut réussir son jet pour toucher puis un test de Force pour mettre la cible à terre. Ce test gagne 1 contre une grande cible. Une monture mise à terre fait chuter son cavalier selon le résultat 3 à 4 du tableau de chute de monture."
+                  "note": "Rare 7. Portée 3 ps, Force 3. Arme de jet sans pénalité de portée ni de mouvement. Peut viser une figurine engagée si le porteur ne l'est pas. Au lieu des dégâts, le tireur peut réussir son jet pour toucher puis un test de Force pour mettre la cible à terre. Ce test gagne 1 contre une grande cible. Une monture mise à terre fait chuter son cavalier selon le résultat 3 à 4 du tableau de chute de monture.",
+                  "rareteCommerce": 7
                 },
-                { "nom": "Couteaux de lancer", "cout": 15 },
+                {
+                  "nom": "Couteaux de lancer",
+                  "cout": 15
+                },
                 {
                   "nom": "Pistolet",
                   "cout": 15,
                   "formuleCout": "30 CO la paire"
                 },
-                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
                 {
                   "nom": "Tromblon",
                   "cout": 30,
                   "note": "Rétameur uniquement."
                 },
-                { "nom": "Arquebuse", "cout": 35 }
+                {
+                  "nom": "Arquebuse",
+                  "cout": 35
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Rondache", "cout": 5 },
-                { "nom": "Cuir renforcé", "cout": 5 },
-                { "nom": "Armure légère", "cout": 20 }
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Cuir renforcé",
+                  "cout": 5
+                },
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                }
               ]
             },
             {
               "nom": "Équipement divers",
               "entrees": [
-                { "nom": "Corde et grappin", "cout": 5 },
+                {
+                  "nom": "Corde et grappin",
+                  "cout": 5
+                },
                 {
                   "nom": "Patte de lapin",
                   "cout": 5,
@@ -452,24 +592,33 @@
                 {
                   "nom": "Boussole",
                   "cout": 45,
-                  "note": "Rare 9, Rétameur uniquement. Si son porteur participe à la bataille, la bande peut relancer son jet pour déterminer quel camp se déploie en premier. Si les deux camps en possèdent une, aucune relance n'est permise."
+                  "note": "Rare 9, Rétameur uniquement. Si son porteur participe à la bataille, la bande peut relancer son jet pour déterminer quel camp se déploie en premier. Si les deux camps en possèdent une, aucune relance n'est permise.",
+                  "rareteCommerce": 9
                 },
                 {
                   "nom": "Longue-vue",
                   "cout": 75,
                   "note": "Rétameur uniquement."
                 },
-                { "nom": "Barque fluviale", "cout": 100 },
-                { "nom": "Barge fluviale", "cout": 200 },
+                {
+                  "nom": "Barque fluviale",
+                  "cout": 100
+                },
+                {
+                  "nom": "Barge fluviale",
+                  "cout": 200
+                },
                 {
                   "nom": "Homme d'osier",
                   "cout": 50,
-                  "note": "Rare 12, Petru uniquement. Son profil et ses règles figurent parmi les profils de cette fiche."
+                  "note": "Rare 12, Petru uniquement. Son profil et ses règles figurent parmi les profils de cette fiche.",
+                  "rareteCommerce": 12
                 },
                 {
                   "nom": "Main Coureuse",
                   "cout": 40,
-                  "note": "Rare 11. Son profil et ses règles figurent parmi les profils de cette fiche."
+                  "note": "Rare 11. Son profil et ses règles figurent parmi les profils de cette fiche.",
+                  "rareteCommerce": 11
                 }
               ]
             }
@@ -485,20 +634,38 @@
               "entrees": [
                 {
                   "nom": "Dague",
-                  "cout": 0,
+                  "cout": 2,
                   "formuleCout": "première gratuite, suivante 2 CO"
                 },
-                { "nom": "Masse ou bâton", "cout": 3 },
-                { "nom": "Coutelas ou épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Masse ou bâton",
+                  "cout": 3
+                },
+                {
+                  "nom": "Coutelas ou épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Équipement divers",
               "entrees": [
-                { "nom": "Patte de lapin", "cout": 5 },
-                { "nom": "Porte-bonheur", "cout": 10 },
-                { "nom": "Cartes de tarot", "cout": 50 }
+                {
+                  "nom": "Patte de lapin",
+                  "cout": 5
+                },
+                {
+                  "nom": "Porte-bonheur",
+                  "cout": 10
+                },
+                {
+                  "nom": "Cartes de tarot",
+                  "cout": 50
+                }
               ]
             }
           ],
@@ -509,32 +676,38 @@
         {
           "titre": "Connaissance des mythes et légendes",
           "description": "Pendant l'exploration, si le Héros n'a pas été mis hors de combat, vous pouvez relancer un dé. Le second résultat doit être conservé, même s'il est moins favorable.",
-          "source": "PDF Channel Rats VO, page 7"
+          "source": "PDF Channel Rats VO, page 7",
+          "apprenable": true
         },
         {
           "titre": "Charge brutale",
           "description": "Lorsqu'il charge, le Héros peut tenter de mettre sa cible à terre à la place de ses attaques normales. Il effectue un unique jet pour toucher avec un bonus de 1. Aucun jet pour blesser n'est requis. Si l'attaque touche, l'adversaire est mis à terre.",
-          "source": "PDF Channel Rats VO, page 7"
+          "source": "PDF Channel Rats VO, page 7",
+          "apprenable": true
         },
         {
           "titre": "Chanteur",
           "description": "Toute figurine amie située à 6 ps ou moins peut relancer un test de Commandement raté en bénéficiant de 1 en Commandement, y compris pour un test de déroute.",
-          "source": "PDF Channel Rats VO, page 7"
+          "source": "PDF Channel Rats VO, page 7",
+          "apprenable": true
         },
         {
           "titre": "Combattant à mains nues",
           "description": "Le Héros ne subit aucune pénalité lorsqu'il combat sans arme et gagne 1 Attaque dans cette situation.",
-          "source": "PDF Channel Rats VO, page 7"
+          "source": "PDF Channel Rats VO, page 7",
+          "apprenable": true
         },
         {
           "titre": "Charmeur d'animaux",
           "description": "Le Héros peut contrôler jusqu'à cinq animaux tant qu'ils restent à 6 ps ou moins de lui. Pendant la phase de mouvement, tout animal hors de cette portée se déplace de 1D6 ps dans une direction aléatoire. S'il entre en contact avec une figurine amie ou ennemie, il l'attaque comme s'il avait chargé.",
-          "source": "PDF Channel Rats VO, page 7"
+          "source": "PDF Channel Rats VO, page 7",
+          "apprenable": true
         },
         {
           "titre": "Infiltration",
           "description": "Le Héros est déployé après la bande adverse, n'importe où hors de sa ligne de vue et à plus de 12 ps de tout ennemi. Si les deux joueurs possèdent des infiltrateurs, chacun lance 1D6 et le résultat le plus bas se déploie en premier.",
-          "source": "PDF Channel Rats VO, page 7"
+          "source": "PDF Channel Rats VO, page 7",
+          "apprenable": true
         }
       ],
       "magie": [

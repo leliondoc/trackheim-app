@@ -54,7 +54,20 @@
               "description": "Normalement, les alliés à 6 ps ou moins utilisent son Commandement. La règle reiklander porte cette distance à 12 ps."
             }
           ],
-          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+          "source": "Mercenaires V2LRBFr, pages 3 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "champion",
@@ -77,7 +90,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Force"],
           "regles": [],
-          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+          "source": "Mercenaires V2LRBFr, pages 3 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "recrue",
@@ -100,7 +126,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
           "regles": [],
-          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+          "source": "Mercenaires V2LRBFr, pages 3 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "guerrier",
@@ -128,7 +167,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Mercenaires V2LRBFr, page 4"
+          "source": "Mercenaires V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "tireur",
@@ -160,7 +212,20 @@
               "description": "La CT de base 3 est portée à 4 par la règle reiklander."
             }
           ],
-          "source": "Mercenaires V2LRBFr, pages 1 et 4"
+          "source": "Mercenaires V2LRBFr, pages 1 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "bretteur",
@@ -192,7 +257,20 @@
               "description": "Lorsqu'il charge avec des épées normales, il relance ses jets pour toucher ratés. Aucun effet avec une arme à deux mains ou une autre arme."
             }
           ],
-          "source": "Mercenaires V2LRBFr, page 4"
+          "source": "Mercenaires V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -214,20 +292,47 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Morgenstern", "cout": 15 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
                 {
                   "nom": "Pistolet",
                   "cout": 15,
@@ -238,17 +343,35 @@
                   "cout": 25,
                   "formuleCout": "50 CO la paire"
                 },
-                { "nom": "Arc", "cout": 10 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -266,34 +389,73 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
                 {
                   "nom": "Pistolet",
                   "cout": 15,
                   "formuleCout": "30 CO la paire"
                 },
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arc long", "cout": 15 },
-                { "nom": "Tromblon", "cout": 30 },
-                { "nom": "Arquebuse", "cout": 35 },
-                { "nom": "Long fusil d'Hochland", "cout": 200 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arc long",
+                  "cout": 15
+                },
+                {
+                  "nom": "Tromblon",
+                  "cout": 30
+                },
+                {
+                  "nom": "Arquebuse",
+                  "cout": 35
+                },
+                {
+                  "nom": "Long fusil d'Hochland",
+                  "cout": 200
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -357,7 +519,20 @@
               "description": "La Force de base 3 est portée à 4."
             }
           ],
-          "source": "Mercenaires V2LRBFr, pages 2 à 4"
+          "source": "Mercenaires V2LRBFr, pages 2 à 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "champion",
@@ -385,7 +560,20 @@
               "description": "La Force de base 3 est portée à 4."
             }
           ],
-          "source": "Mercenaires V2LRBFr, pages 2 à 4"
+          "source": "Mercenaires V2LRBFr, pages 2 à 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "recrue",
@@ -408,7 +596,20 @@
           },
           "competencesDisponibles": ["Combat", "Force", "Vitesse"],
           "regles": [],
-          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+          "source": "Mercenaires V2LRBFr, pages 3 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "guerrier",
@@ -436,7 +637,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Mercenaires V2LRBFr, page 4"
+          "source": "Mercenaires V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "tireur",
@@ -464,7 +678,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Mercenaires V2LRBFr, page 4"
+          "source": "Mercenaires V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "bretteur",
@@ -496,7 +723,20 @@
               "description": "En charge avec des épées normales, relance les jets pour toucher ratés. Aucun effet avec une arme à deux mains ou une autre arme."
             }
           ],
-          "source": "Mercenaires V2LRBFr, page 4"
+          "source": "Mercenaires V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -518,20 +758,47 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Morgenstern", "cout": 15 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
                 {
                   "nom": "Pistolet",
                   "cout": 15,
@@ -542,17 +809,35 @@
                   "cout": 25,
                   "formuleCout": "50 CO la paire"
                 },
-                { "nom": "Arc", "cout": 10 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -570,34 +855,73 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
                 {
                   "nom": "Pistolet",
                   "cout": 15,
                   "formuleCout": "30 CO la paire"
                 },
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arc long", "cout": 15 },
-                { "nom": "Tromblon", "cout": 30 },
-                { "nom": "Arquebuse", "cout": 35 },
-                { "nom": "Long fusil d'Hochland", "cout": 200 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arc long",
+                  "cout": 15
+                },
+                {
+                  "nom": "Tromblon",
+                  "cout": 30
+                },
+                {
+                  "nom": "Arquebuse",
+                  "cout": 35
+                },
+                {
+                  "nom": "Long fusil d'Hochland",
+                  "cout": 200
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -662,7 +986,20 @@
               "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
             }
           ],
-          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+          "source": "Mercenaires V2LRBFr, pages 3 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "champion",
@@ -685,7 +1022,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
           "regles": [],
-          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+          "source": "Mercenaires V2LRBFr, pages 3 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "recrue",
@@ -708,7 +1058,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Vitesse"],
           "regles": [],
-          "source": "Mercenaires V2LRBFr, pages 3 et 4"
+          "source": "Mercenaires V2LRBFr, pages 3 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "guerrier",
@@ -736,7 +1099,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Mercenaires V2LRBFr, page 4"
+          "source": "Mercenaires V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "tireur",
@@ -764,7 +1140,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Mercenaires V2LRBFr, page 4"
+          "source": "Mercenaires V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "bretteur",
@@ -796,7 +1185,20 @@
               "description": "En charge avec des épées normales, relance les jets pour toucher ratés. Aucun effet avec une arme à deux mains ou une autre arme."
             }
           ],
-          "source": "Mercenaires V2LRBFr, page 4"
+          "source": "Mercenaires V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -818,20 +1220,47 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Morgenstern", "cout": 15 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
                 {
                   "nom": "Pistolet",
                   "cout": 15,
@@ -842,17 +1271,35 @@
                   "cout": 25,
                   "formuleCout": "50 CO la paire"
                 },
-                { "nom": "Arc", "cout": 10 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -870,34 +1317,73 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
                 {
                   "nom": "Pistolet",
                   "cout": 15,
                   "formuleCout": "30 CO la paire"
                 },
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arc long", "cout": 15 },
-                { "nom": "Tromblon", "cout": 30 },
-                { "nom": "Arquebuse", "cout": 35 },
-                { "nom": "Long fusil d'Hochland", "cout": 200 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arc long",
+                  "cout": 15
+                },
+                {
+                  "nom": "Tromblon",
+                  "cout": 30
+                },
+                {
+                  "nom": "Arquebuse",
+                  "cout": 35
+                },
+                {
+                  "nom": "Long fusil d'Hochland",
+                  "cout": 200
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -955,7 +1441,20 @@
               "description": "Utilise les Rituels du Chaos."
             }
           ],
-          "source": "Culte des Possédés V2.2aFr, pages 2 et 3"
+          "source": "Culte des Possédés V2.2aFr, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "possede",
@@ -982,13 +1481,29 @@
               "titre": "Équipement",
               "description": "N'utilise jamais ni arme ni armure."
             },
-            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Peur",
+              "description": "Provoque la peur."
+            },
             {
               "titre": "Mutations",
               "description": "Peut commencer avec une ou plusieurs mutations, payées en plus du coût du profil."
             }
           ],
-          "source": "Culte des Possédés V2.2aFr, pages 2, 3 et 5"
+          "source": "Culte des Possédés V2.2aFr, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 8,
+            "capaciteTir": 0,
+            "force": 6,
+            "endurance": 6,
+            "pointsVie": 4,
+            "initiative": 7,
+            "attaques": 5,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "mutant",
@@ -1016,7 +1531,20 @@
               "description": "Doit commencer avec au moins une mutation, payée en plus du coût du profil."
             }
           ],
-          "source": "Culte des Possédés V2.2aFr, pages 2, 3 et 5"
+          "source": "Culte des Possédés V2.2aFr, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "damne",
@@ -1048,7 +1576,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Culte des Possédés V2.2aFr, page 4"
+          "source": "Culte des Possédés V2.2aFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "initie",
@@ -1076,7 +1617,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Culte des Possédés V2.2aFr, page 4"
+          "source": "Culte des Possédés V2.2aFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "homme-bete",
@@ -1104,7 +1658,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Culte des Possédés V2.2aFr, page 4"
+          "source": "Culte des Possédés V2.2aFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 7,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 4,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -1120,28 +1687,64 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc court", "cout": 10 },
-                { "nom": "Arc", "cout": 15 }
+                {
+                  "nom": "Arc court",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arc",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -1159,22 +1762,55 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Fléau", "cout": 15 }
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                }
               ]
             },
-            { "nom": "Armes de tir", "entrees": [] },
+            {
+              "nom": "Armes de tir",
+              "entrees": []
+            },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Casque", "cout": 10 },
-                { "nom": "Bouclier", "cout": 5 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                }
               ]
             }
           ],
@@ -1191,12 +1827,14 @@
                   "nom": "Arme en obsidienne",
                   "cout": 0,
                   "formuleCout": "Quatre fois le prix de l'arme normale",
-                  "note": "Rare 12. +1 Force au corps à corps, frappe toujours en dernier et ne peut pas être utilisée par Nains, Elfes, Sœurs de Sigmar, Répurgateurs ou Prêtres."
+                  "note": "Rare 12. +1 Force au corps à corps, frappe toujours en dernier et ne peut pas être utilisée par Nains, Elfes, Sœurs de Sigmar, Répurgateurs ou Prêtres.",
+                  "rareteCommerce": 12
                 },
                 {
                   "nom": "Armure du Chaos",
                   "cout": 185,
-                  "note": "Rare 13, sauvegarde 4+. Réduit de 1 CO par point d'expérience. Fusionne au Héros et ne peut être retirée ni transmise. N'empêche pas de lancer des sorts, mais un lanceur ne peut la combiner avec bouclier ou rondache. +1 au jet de rareté par ennemi mis hors de combat à la partie précédente."
+                  "note": "Rare 13, sauvegarde 4+. Réduit de 1 CO par point d'expérience. Fusionne au Héros et ne peut être retirée ni transmise. N'empêche pas de lancer des sorts, mais un lanceur ne peut la combiner avec bouclier ou rondache. +1 au jet de rareté par ennemi mis hors de combat à la partie précédente.",
+                  "rareteCommerce": 13
                 }
               ]
             }
@@ -1208,82 +1846,98 @@
         {
           "titre": "Âme démoniaque",
           "description": "Mutation, 20 CO. Sauvegarde spéciale de 4+ contre les sorts et prières.",
-          "source": "Culte des Possédés V2.2aFr, page 5"
+          "source": "Culte des Possédés V2.2aFr, page 5",
+          "apprenable": false
         },
         {
           "titre": "Pince",
           "description": "Mutation, 50 CO. Le bras ne porte pas d'arme et donne une attaque supplémentaire à Force +1.",
-          "source": "Culte des Possédés V2.2aFr, page 5"
+          "source": "Culte des Possédés V2.2aFr, page 5",
+          "apprenable": false
         },
         {
           "titre": "Tentacule",
           "description": "Mutation, 35 CO. Au corps à corps, retire 1 Attaque à un adversaire choisi, jusqu'à un minimum de 1.",
-          "source": "Culte des Possédés V2.2aFr, page 5"
+          "source": "Culte des Possédés V2.2aFr, page 5",
+          "apprenable": false
         },
         {
           "titre": "Sabots fendus",
           "description": "Mutation, 40 CO. +1 Mouvement.",
-          "source": "Culte des Possédés V2.2aFr, page 5"
+          "source": "Culte des Possédés V2.2aFr, page 5",
+          "apprenable": false
         },
         {
           "titre": "Sang acide",
           "description": "Mutation, 30 CO. Après chaque blessure subie au corps à corps, toutes les figurines au contact subissent une touche F3 sans coup critique.",
-          "source": "Culte des Possédés V2.2aFr, page 5"
+          "source": "Culte des Possédés V2.2aFr, page 5",
+          "apprenable": false
         },
         {
           "titre": "Épines",
           "description": "Mutation, 35 CO. Au début de chaque phase de corps à corps, toute figurine au contact subit une touche automatique F1 sans coup critique.",
-          "source": "Culte des Possédés V2.2aFr, page 5"
+          "source": "Culte des Possédés V2.2aFr, page 5",
+          "apprenable": false
         },
         {
           "titre": "Queue de scorpion",
           "description": "Mutation, 40 CO. Une attaque supplémentaire F5 à chaque phase de corps à corps, réduite à F2 contre une cible immunisée au poison.",
-          "source": "Culte des Possédés V2.2aFr, page 5"
+          "source": "Culte des Possédés V2.2aFr, page 5",
+          "apprenable": false
         },
         {
           "titre": "Bras supplémentaire",
           "description": "Mutation, 40 CO. Le bras porte une arme à une main et donne une attaque supplémentaire, ou porte un bouclier ou une rondache. Dans ce dernier cas, l'Attaque supplémentaire est conservée mais aucune arme supplémentaire ne peut être portée.",
-          "source": "Culte des Possédés V2.2aFr, page 5"
+          "source": "Culte des Possédés V2.2aFr, page 5",
+          "apprenable": false
         },
         {
           "titre": "Hideux",
           "description": "Mutation, 40 CO. Provoque la peur.",
-          "source": "Culte des Possédés V2.2aFr, page 5"
+          "source": "Culte des Possédés V2.2aFr, page 5",
+          "apprenable": false
         },
         {
           "titre": "Corps cristallin",
           "description": "Mutation, 60 CO. Fixe Endurance à 6 et PV à 1. Ces valeurs ne progressent plus et les augmentations correspondantes sont relancées.",
-          "source": "Culte des Possédés V2.2aFr, page 6"
+          "source": "Culte des Possédés V2.2aFr, page 6",
+          "apprenable": false
         },
         {
           "titre": "Brute épaisse",
           "description": "Mutation, 50 CO. +2 Force et -4 Commandement.",
-          "source": "Culte des Possédés V2.2aFr, page 6"
+          "source": "Culte des Possédés V2.2aFr, page 6",
+          "apprenable": false
         },
         {
           "titre": "Morsure venimeuse",
           "description": "Mutation, 50 CO. Donne une attaque de morsure F5, F2 contre une cible immunisée au poison. Si une morsure existe déjà, elle reçoit seulement cet effet.",
-          "source": "Culte des Possédés V2.2aFr, page 6"
+          "source": "Culte des Possédés V2.2aFr, page 6",
+          "apprenable": false
         },
         {
           "titre": "Queue préhensile",
           "description": "Mutation, 50 CO. Donne une attaque de queue pouvant employer une arme à une main, un bouclier ou une rondache autorisés. Une figurine incapable d'utiliser des armes le reste. Avec plusieurs queues, une seule est choisie à chaque phase.",
-          "source": "Culte des Possédés V2.2aFr, page 6"
+          "source": "Culte des Possédés V2.2aFr, page 6",
+          "apprenable": false
         },
         {
           "titre": "Peau écailleuse",
           "description": "Mutation, 60 CO. Sauvegarde naturelle 5+, jamais réduite au-delà de 6+ par les modificateurs. Un critique sans sauvegarde l'annule. Les autres protections peuvent l'améliorer.",
-          "source": "Culte des Possédés V2.2aFr, page 6"
+          "source": "Culte des Possédés V2.2aFr, page 6",
+          "apprenable": false
         },
         {
           "titre": "Ailes",
           "description": "Mutation, 45 CO. Permet de planer depuis une hauteur: pour chaque 1 ps descendu, avance de 2 ps horizontalement.",
-          "source": "Culte des Possédés V2.2aFr, page 6"
+          "source": "Culte des Possédés V2.2aFr, page 6",
+          "apprenable": false
         },
         {
           "titre": "Récompenses du Seigneur des Ombres",
           "description": "Au lieu d'une compétence, Magister ou Mutant lance 2D6: 2, il quitte la bande; 3 à 6, rien; 7 à 8, mutation, avec perte d'une caractéristique au choix sur 1 ou choix d'une mutation sur 2+; 9 à 10, Armure du Chaos 4+ sans pénalité ni blocage magique; 11, arme démon +1 F et +1 pour toucher sans règle de son type; 12, possession donnant +1 CC, +1 F, +1 A et +1 PV hors maxima, perte de 1D3 compétences, plus aucune arme ou armure sauf dons du Chaos.",
-          "source": "Culte des Possédés V2.2aFr, page 8"
+          "source": "Culte des Possédés V2.2aFr, page 8",
+          "apprenable": false
         }
       ],
       "magie": [
@@ -1375,7 +2029,20 @@
               "description": "Il hait tous les lanceurs de sorts."
             }
           ],
-          "source": "Répurgateurs V2LRBFr, pages 2 et 3"
+          "source": "Répurgateurs V2LRBFr, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "repurgateur",
@@ -1403,7 +2070,20 @@
               "description": "Il hait tous les lanceurs de sorts."
             }
           ],
-          "source": "Répurgateurs V2LRBFr, pages 2 et 3"
+          "source": "Répurgateurs V2LRBFr, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "pretre-guerrier",
@@ -1431,7 +2111,20 @@
               "description": "Utilise les Prières de Sigmar. Elles ne sont pas des sorts, fonctionnent en armure et ignorent les protections spéciales contre les sorts."
             }
           ],
-          "source": "Répurgateurs V2LRBFr, pages 2, 3 et 5"
+          "source": "Répurgateurs V2LRBFr, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "chien-de-guerre",
@@ -1459,7 +2152,8 @@
               "description": "N'utilise ni arme ni armure et ne gagne jamais d'expérience."
             }
           ],
-          "source": "Répurgateurs V2LRBFr, page 4"
+          "source": "Répurgateurs V2LRBFr, page 4",
+          "gagneExperience": false
         },
         {
           "id": "flagellant",
@@ -1495,7 +2189,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Répurgateurs V2LRBFr, pages 2 et 4"
+          "source": "Répurgateurs V2LRBFr, pages 2 et 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf ; Commandement 10 fixe du profil imprimé : Répurgateurs V2LRBFr, pages 2 et 4"
         },
         {
           "id": "seide",
@@ -1523,7 +2230,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Répurgateurs V2LRBFr, page 4"
+          "source": "Répurgateurs V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -1543,33 +2263,69 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arbalète", "cout": 25 },
+                {
+                  "nom": "Arbalète",
+                  "cout": 25
+                },
                 {
                   "nom": "Pistolet",
                   "cout": 15,
                   "formuleCout": "30 CO la paire"
                 },
-                { "nom": "Arbalète de poing", "cout": 35 }
+                {
+                  "nom": "Arbalète de poing",
+                  "cout": 35
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -1582,13 +2338,28 @@
             {
               "nom": "Armes de corps à corps",
               "entrees": [
-                { "nom": "Fléau", "cout": 15 },
-                { "nom": "Morgenstern", "cout": 15 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                },
+                {
+                  "nom": "Morgenstern",
+                  "cout": 15
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
-            { "nom": "Armes de tir", "entrees": [] },
-            { "nom": "Armures", "entrees": [] }
+            {
+              "nom": "Armes de tir",
+              "entrees": []
+            },
+            {
+              "nom": "Armures",
+              "entrees": []
+            }
           ],
           "source": "Répurgateurs V2LRBFr, page 2"
         },
@@ -1604,27 +2375,60 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arc court", "cout": 5 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -1719,7 +2523,20 @@
               "description": "Utilise les Prières de Sigmar."
             }
           ],
-          "source": "Sœurs de Sigmar V2LRBFr, pages 2, 3 et 5"
+          "source": "Sœurs de Sigmar V2LRBFr, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "soeur-superieure",
@@ -1748,7 +2565,20 @@
             "Spéciale"
           ],
           "regles": [],
-          "source": "Sœurs de Sigmar V2LRBFr, pages 2 et 3"
+          "source": "Sœurs de Sigmar V2LRBFr, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "augure",
@@ -1780,7 +2610,20 @@
               "description": "Relance ses tests de caractéristiques ratés et ses jets pour toucher au tir ou au corps à corps, en gardant le second résultat. Si elle n'est pas hors de combat, lancez deux dés supplémentaires indiqués par la règle pendant l'Exploration."
             }
           ],
-          "source": "Sœurs de Sigmar V2LRBFr, pages 2 et 3"
+          "source": "Sœurs de Sigmar V2LRBFr, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "novice",
@@ -1808,7 +2651,20 @@
               "description": "Achetées par groupes de 1 à 5."
             }
           ],
-          "source": "Sœurs de Sigmar V2LRBFr, page 4"
+          "source": "Sœurs de Sigmar V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "soeur",
@@ -1836,7 +2692,20 @@
               "description": "Achetées par groupes de 1 à 5."
             }
           ],
-          "source": "Sœurs de Sigmar V2LRBFr, page 4"
+          "source": "Sœurs de Sigmar V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         }
       ],
       "listesEquipement": [
@@ -1858,34 +2727,81 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Marteau de guerre sigmarite", "cout": 15 },
-                { "nom": "Fléau", "cout": 15 },
-                { "nom": "Fouet d'acier", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau de guerre sigmarite",
+                  "cout": 15
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                },
+                {
+                  "nom": "Fouet d'acier",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                }
               ]
             },
             {
               "nom": "Armes de tir",
-              "entrees": [{ "nom": "Fronde", "cout": 2 }]
+              "entrees": [
+                {
+                  "nom": "Fronde",
+                  "cout": 2
+                }
+              ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Rondache", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Divers, Héroïnes seulement",
               "entrees": [
-                { "nom": "Livre Saint", "cout": 120 },
-                { "nom": "Eau bénite", "cout": 10 },
-                { "nom": "Relique sacrée", "cout": 15 }
+                {
+                  "nom": "Livre Saint",
+                  "cout": 120
+                },
+                {
+                  "nom": "Eau bénite",
+                  "cout": 10
+                },
+                {
+                  "nom": "Relique sacrée",
+                  "cout": 15
+                }
               ]
             }
           ],
@@ -1924,27 +2840,32 @@
         {
           "titre": "Signe de Sigmar",
           "description": "Au premier tour de corps à corps, chaque adversaire Possédé ou Mort-Vivant perd 1 Attaque contre la Sœur, minimum 1.",
-          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+          "source": "Sœurs de Sigmar V2LRBFr, page 2",
+          "apprenable": true
         },
         {
           "titre": "Protection de Sigmar",
           "description": "Tout sort lancé sur elle est dissipé sur 4+. Un sort dissipé n'affecte aucune autre figurine.",
-          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+          "source": "Sœurs de Sigmar V2LRBFr, page 2",
+          "apprenable": true
         },
         {
           "titre": "Farouche détermination",
           "description": "Matriarche seulement. Permet de relancer les tests de Déroute ratés.",
-          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+          "source": "Sœurs de Sigmar V2LRBFr, page 2",
+          "apprenable": true
         },
         {
           "titre": "Fureur du juste",
           "description": "La Sœur hait les bandes de Skavens, Possédés et Morts-Vivants.",
-          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+          "source": "Sœurs de Sigmar V2LRBFr, page 2",
+          "apprenable": true
         },
         {
           "titre": "Foi inébranlable",
           "description": "Relance les tests de peur et ignore Seul contre tous lorsqu'elle combat plusieurs adversaires.",
-          "source": "Sœurs de Sigmar V2LRBFr, page 2"
+          "source": "Sœurs de Sigmar V2LRBFr, page 2",
+          "apprenable": true
         }
       ],
       "magie": [
@@ -2023,7 +2944,10 @@
               "titre": "Chef",
               "description": "Les alliés à 6 ps ou moins peuvent employer son Commandement."
             },
-            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Peur",
+              "description": "Provoque la peur."
+            },
             {
               "titre": "Immunité à la psychologie",
               "description": "Ignore toute psychologie et n'abandonne jamais un combat."
@@ -2037,7 +2961,20 @@
               "description": "Tout résultat sonné devient à terre."
             }
           ],
-          "source": "Morts-Vivants V2LRBFr, pages 2 et 3"
+          "source": "Morts-Vivants V2LRBFr, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 8,
+            "capaciteTir": 6,
+            "force": 7,
+            "endurance": 6,
+            "pointsVie": 4,
+            "initiative": 9,
+            "attaques": 4,
+            "commandement": 10
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "necromancien",
@@ -2060,9 +2997,25 @@
           },
           "competencesDisponibles": ["Érudition", "Vitesse"],
           "regles": [
-            { "titre": "Sorcier", "description": "Utilise la Nécromancie." }
+            {
+              "titre": "Sorcier",
+              "description": "Utilise la Nécromancie."
+            }
           ],
-          "source": "Morts-Vivants V2LRBFr, pages 2, 3 et 5"
+          "source": "Morts-Vivants V2LRBFr, pages 2, 3 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "paria",
@@ -2085,7 +3038,20 @@
           },
           "competencesDisponibles": ["Combat", "Force"],
           "regles": [],
-          "source": "Morts-Vivants V2LRBFr, pages 2 et 3"
+          "source": "Morts-Vivants V2LRBFr, pages 2 et 3",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 4,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 6,
+            "attaques": 4,
+            "commandement": 9
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "zombie",
@@ -2112,7 +3078,10 @@
               "titre": "Sans équipement",
               "description": "Ne peut recevoir ni arme ni armure."
             },
-            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Peur",
+              "description": "Provoque la peur."
+            },
             {
               "titre": "Apathie",
               "description": "Ne peut pas courir, mais charge normalement."
@@ -2134,7 +3103,8 @@
               "description": "Ne gagne jamais d'expérience."
             }
           ],
-          "source": "Morts-Vivants V2LRBFr, page 4"
+          "source": "Morts-Vivants V2LRBFr, page 4",
+          "gagneExperience": false
         },
         {
           "id": "goule",
@@ -2161,13 +3131,29 @@
               "titre": "Sans équipement",
               "description": "N'utilise aucun équipement, hormis ses os comme armes contondantes."
             },
-            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Peur",
+              "description": "Provoque la peur."
+            },
             {
               "titre": "Groupe",
               "description": "Achetées par groupes de 1 à 5."
             }
           ],
-          "source": "Morts-Vivants V2LRBFr, page 4"
+          "source": "Morts-Vivants V2LRBFr, page 4",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 5,
+            "capaciteCombat": 5,
+            "capaciteTir": 2,
+            "force": 4,
+            "endurance": 5,
+            "pointsVie": 3,
+            "initiative": 5,
+            "attaques": 5,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "loup-funeste",
@@ -2202,7 +3188,10 @@
               "titre": "Apathie",
               "description": "Ne peut pas courir, mais charge normalement."
             },
-            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Peur",
+              "description": "Provoque la peur."
+            },
             {
               "titre": "Immunité à la psychologie",
               "description": "Ignore la psychologie et ne quitte jamais un combat."
@@ -2220,7 +3209,8 @@
               "description": "Tout résultat sonné devient à terre."
             }
           ],
-          "source": "Morts-Vivants V2LRBFr, page 4"
+          "source": "Morts-Vivants V2LRBFr, page 4",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -2236,29 +3226,68 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Masse", "cout": 3 },
-                { "nom": "Marteau", "cout": 3 },
-                { "nom": "Hache", "cout": 5 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Arme à deux mains", "cout": 15 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 }
+                {
+                  "nom": "Masse",
+                  "cout": 3
+                },
+                {
+                  "nom": "Marteau",
+                  "cout": 3
+                },
+                {
+                  "nom": "Hache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arme à deux mains",
+                  "cout": 15
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Arc", "cout": 10 },
-                { "nom": "Arc court", "cout": 5 }
+                {
+                  "nom": "Arc",
+                  "cout": 10
+                },
+                {
+                  "nom": "Arc court",
+                  "cout": 5
+                }
               ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Armure lourde", "cout": 50 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Armure lourde",
+                  "cout": 50
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -2353,7 +3382,20 @@
               "description": "Chaque blessure infligée, au tir ou au corps à corps, impose -1 supplémentaire à la sauvegarde ennemie."
             }
           ],
-          "source": "Skavens du Clan Eshin V2LRBFr, pages 4 et 5"
+          "source": "Skavens du Clan Eshin V2LRBFr, pages 4 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "skaven-noir",
@@ -2382,7 +3424,20 @@
             "Spéciale"
           ],
           "regles": [],
-          "source": "Skavens du Clan Eshin V2LRBFr, pages 4 et 5"
+          "source": "Skavens du Clan Eshin V2LRBFr, pages 4 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "sorcier-eshin",
@@ -2410,7 +3465,20 @@
               "description": "Utilise la Magie du Rat Cornu."
             }
           ],
-          "source": "Skavens du Clan Eshin V2LRBFr, pages 4, 5 et 7"
+          "source": "Skavens du Clan Eshin V2LRBFr, pages 4, 5 et 7",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "coureur-nocturne",
@@ -2433,7 +3501,20 @@
           },
           "competencesDisponibles": ["Combat", "Tir", "Spéciale"],
           "regles": [],
-          "source": "Skavens du Clan Eshin V2LRBFr, pages 4 et 5"
+          "source": "Skavens du Clan Eshin V2LRBFr, pages 4 et 5",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "vermineux",
@@ -2461,7 +3542,20 @@
               "description": "Achetés par groupes de 1 à 5."
             }
           ],
-          "source": "Skavens du Clan Eshin V2LRBFr, page 6"
+          "source": "Skavens du Clan Eshin V2LRBFr, page 6",
+          "gagneExperience": true,
+          "maximums": {
+            "mouvement": 6,
+            "capaciteCombat": 6,
+            "capaciteTir": 6,
+            "force": 4,
+            "endurance": 4,
+            "pointsVie": 3,
+            "initiative": 7,
+            "attaques": 4,
+            "commandement": 7
+          },
+          "sourceMaximums": "Mordheim, Campaigns & Optional Rules, PDF p.6 / p.82, https://broheim.net/downloads/rules/Mordheim%20-%20Part%203%20-%20Campaigns%20%26%20Optional%20Rules.pdf"
         },
         {
           "id": "rat-geant",
@@ -2493,7 +3587,8 @@
               "description": "Ne gagne jamais d'expérience."
             }
           ],
-          "source": "Skavens du Clan Eshin V2LRBFr, page 6"
+          "source": "Skavens du Clan Eshin V2LRBFr, page 6",
+          "gagneExperience": false
         },
         {
           "id": "rat-ogre",
@@ -2520,7 +3615,10 @@
               "titre": "Sans équipement",
               "description": "N'utilise ni arme ni armure."
             },
-            { "titre": "Peur", "description": "Provoque la peur." },
+            {
+              "titre": "Peur",
+              "description": "Provoque la peur."
+            },
             {
               "titre": "Stupidité",
               "description": "Suit la stupidité sauf si un Héros Skaven est à 6 ps ou moins."
@@ -2534,7 +3632,8 @@
               "description": "Suit la règle Grande cible pour les tirs."
             }
           ],
-          "source": "Skavens du Clan Eshin V2LRBFr, page 6"
+          "source": "Skavens du Clan Eshin V2LRBFr, page 6",
+          "gagneExperience": false
         }
       ],
       "listesEquipement": [
@@ -2550,20 +3649,47 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Fléau", "cout": 15 },
-                { "nom": "Lance", "cout": 10 },
-                { "nom": "Hallebarde", "cout": 10 },
-                { "nom": "Lames suintantes", "cout": 50 },
-                { "nom": "Griffes de combat", "cout": 35 }
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Fléau",
+                  "cout": 15
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                },
+                {
+                  "nom": "Hallebarde",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lames suintantes",
+                  "cout": 50
+                },
+                {
+                  "nom": "Griffes de combat",
+                  "cout": 35
+                }
               ]
             },
             {
               "nom": "Armes de tir",
               "entrees": [
-                { "nom": "Fronde", "cout": 2 },
-                { "nom": "Étoiles de jet", "cout": 15 },
-                { "nom": "Sarbacane", "cout": 25 },
+                {
+                  "nom": "Fronde",
+                  "cout": 2
+                },
+                {
+                  "nom": "Étoiles de jet",
+                  "cout": 15
+                },
+                {
+                  "nom": "Sarbacane",
+                  "cout": 25
+                },
                 {
                   "nom": "Pistolet à malepierre",
                   "cout": 35,
@@ -2574,9 +3700,18 @@
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Rondache", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Rondache",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -2594,21 +3729,44 @@
                   "cout": 2,
                   "note": "La première est gratuite."
                 },
-                { "nom": "Gourdin", "cout": 3 },
-                { "nom": "Épée", "cout": 10 },
-                { "nom": "Lance", "cout": 10 }
+                {
+                  "nom": "Gourdin",
+                  "cout": 3
+                },
+                {
+                  "nom": "Épée",
+                  "cout": 10
+                },
+                {
+                  "nom": "Lance",
+                  "cout": 10
+                }
               ]
             },
             {
               "nom": "Armes de tir",
-              "entrees": [{ "nom": "Fronde", "cout": 2 }]
+              "entrees": [
+                {
+                  "nom": "Fronde",
+                  "cout": 2
+                }
+              ]
             },
             {
               "nom": "Armures",
               "entrees": [
-                { "nom": "Armure légère", "cout": 20 },
-                { "nom": "Bouclier", "cout": 5 },
-                { "nom": "Casque", "cout": 10 }
+                {
+                  "nom": "Armure légère",
+                  "cout": 20
+                },
+                {
+                  "nom": "Bouclier",
+                  "cout": 5
+                },
+                {
+                  "nom": "Casque",
+                  "cout": 10
+                }
               ]
             }
           ],
@@ -2624,23 +3782,27 @@
                 {
                   "nom": "Sarbacane",
                   "cout": 25,
-                  "note": "Rare 7, portée 8 ps, F1, sauvegarde ennemie +1. Sur un 6 pour toucher, blesse automatiquement comme Lotus noir, sans critique. Peut tirer caché; la cible révèle le tireur sur un test d'Initiative réussi."
+                  "note": "Rare 7, portée 8 ps, F1, sauvegarde ennemie +1. Sur un 6 pour toucher, blesse automatiquement comme Lotus noir, sans critique. Peut tirer caché; la cible révèle le tireur sur un test d'Initiative réussi.",
+                  "rareteCommerce": 7
                 },
                 {
                   "nom": "Pistolet à malepierre",
                   "cout": 35,
                   "formuleCout": "70 CO la paire",
-                  "note": "Rare 11, portée 8 ps, F5, sauvegarde -3, tire un tour sur deux."
+                  "note": "Rare 11, portée 8 ps, F5, sauvegarde -3, tire un tour sur deux.",
+                  "rareteCommerce": 11
                 },
                 {
                   "nom": "Griffes de combat",
                   "cout": 35,
-                  "note": "Rare 7. Paire donnant +1 Attaque, +1 Initiative pour escalader, parade avec une relance comme épée et rondache. Interdit toute autre arme pendant la partie."
+                  "note": "Rare 7. Paire donnant +1 Attaque, +1 Initiative pour escalader, parade avec une relance comme épée et rondache. Interdit toute autre arme pendant la partie.",
+                  "rareteCommerce": 7
                 },
                 {
                   "nom": "Lames suintantes",
                   "cout": 50,
-                  "note": "Rare 9, paire donnant +1 Attaque et parade. Effet Lotus noir permanent, aucun autre poison ne peut être ajouté."
+                  "note": "Rare 9, paire donnant +1 Attaque et parade. Effet Lotus noir permanent, aucun autre poison ne peut être ajouté.",
+                  "rareteCommerce": 9
                 }
               ]
             }
@@ -2652,27 +3814,32 @@
         {
           "titre": "Frénésie mortelle",
           "description": "Au début du tour, déclarez l'usage. Pour ce tour, +1 Attaque et +1D3 ps de Mouvement. À la fin du tour, subit 1D3 touches F3 sans sauvegarde.",
-          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Queue de combat",
           "description": "La queue tient un bouclier, une épée ou une dague, donnant une attaque supplémentaire avec l'arme ou +1 sauvegarde avec le bouclier.",
-          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Grimpeur né",
           "description": "Réussit automatiquement les escalades sans test d'Initiative.",
-          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Infiltration",
           "description": "Se déploie après l'adversaire, hors de vue et à plus de 12 ps de tout ennemi. Si les deux camps infiltrent, le plus faible résultat sur 1D6 se place d'abord.",
-          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4",
+          "apprenable": true
         },
         {
           "titre": "Art de la mort silencieuse",
           "description": "Combat à mains nues sans pénalité comme avec deux armes, donc +1 Attaque. Les critiques surviennent sur 5 ou 6 pour blesser, sauf si 5+ est requis, auquel cas seulement sur 6. Avec des griffes de combat, donne +2 Attaques au lieu de +1.",
-          "source": "Skavens du Clan Eshin V2LRBFr, page 4"
+          "source": "Skavens du Clan Eshin V2LRBFr, page 4",
+          "apprenable": true
         }
       ],
       "magie": [

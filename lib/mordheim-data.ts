@@ -53,8 +53,10 @@ export type ProfilRecrue = {
   statistiques: Statistiques;
   /** Valeur imprimée non numérique, par exemple le Mouvement 2D6 d’un Squig. */
   statistiquesSpeciales?: Partial<Record<keyof Statistiques, string>>;
-  /** Plafonds raciaux utilisés pour les progressions ; humain par défaut. */
+  /** Plafonds raciaux vérifiés. Leur absence exige un arbitrage explicite. */
   maximums?: Statistiques;
+  sourceMaximums?: string;
+  progressionManuelle?: string;
   competencesDisponibles?: CategorieCompetence[];
   listesEquipement: ListeEquipementId[];
   chef?: boolean;
@@ -73,7 +75,7 @@ export type Equipement = {
   listesEquipement: ListeEquipementId[];
   /** Cette entrée matérialise la dague gratuite reçue au recrutement. */
   accordeDagueDeBase?: boolean;
-  /** Nombre d’exemplaires portables par combattant (une paire vaut deux). */
+  /** Nombre d’exemplaires de cette entrée portables par combattant. */
   quantiteMax?: number;
   quantitesMaxParProfil?: Record<string, number>;
   /** Restriction nominative imprimée dans la liste de bande. */
@@ -91,6 +93,10 @@ export type Equipement = {
   commerceUniquement?: boolean;
   /** Ajout éditorial GLM, inactif dans le preset officiel strict. */
   patchGlm?: boolean;
+  /** Ancienne entrée conservée pour lire les sauvegardes, remplacée à l'achat. */
+  achatDesactive?: string;
+  prixRecrutementFormule?: string;
+  prixRecrutementMinimum?: number;
 };
 
 export type Combattant = {
@@ -120,6 +126,8 @@ export type Combattant = {
   /** Coût historique total du groupe, utile quand des recrues vétéranes le rejoignent. */
   coutAcquisitionTotal: number;
   competences: string[];
+  /** Baisses de difficulté acquises, indexées par titre exact du pouvoir. */
+  ameliorationsSorts?: Record<string, number>;
   blessures: string[];
   progressions: string[];
   partiesManquees: number;
@@ -148,6 +156,7 @@ export type EtatFigurineTable =
 export type SuiviFigurineBataille = {
   etatTable: EtatFigurineTable;
   pointsVieActuels: number;
+  blessureAResoudre?: boolean;
 };
 
 export type SuiviCombattantBataille = {
@@ -237,6 +246,8 @@ export type BatailleEnCours = {
    */
   affectationsParticipants: Record<string, AffectationParticipantBataille>;
   exploration: {
+    bonusDes?: { lances: number; conserves: number; source: string };
+    indicesConserves?: number[];
     lancers: number[];
     desConserves: number[];
     fragmentsTrouves: number;
@@ -1324,6 +1335,9 @@ function creerProfilsReference(slug: FactionId) {
         minimum: profil.minimum,
         maximum: profil.maximum,
         experienceInitiale: profil.experienceInitiale,
+        maximums: profil.maximums,
+        sourceMaximums: profil.sourceMaximums,
+        progressionManuelle: profil.progressionManuelle,
         ...statsReference,
         competencesDisponibles:
           competencesDisponibles.length > 0
@@ -1336,9 +1350,7 @@ function creerProfilsReference(slug: FactionId) {
             `${regle.titre} ${regle.description}`,
           ),
         ),
-        gagneExperience:
-          !/ne gagne jamais d'expérience|aucune expérience/i.test(regles) &&
-          !/véhicule/i.test(profil.categorie),
+        gagneExperience: profil.gagneExperience,
         regleSpeciale: regles || undefined,
       };
     });
@@ -1350,29 +1362,113 @@ const equipementsReference: Equipement[] = bandesBibliotheque.flatMap(
     const fiche = fichesBandesReference[bande.slug];
     return fiche.listesEquipement.flatMap((liste, indexListe) =>
       liste.categories.flatMap((categorie, indexCategorie) =>
-        categorie.entrees.map((entree, indexEntree) => ({
-          id: `ref-${bande.slug}-l${indexListe}-c${indexCategorie}-e${indexEntree}`,
-          nom: entree.nom,
-          categorie: categorieEquipementReference(categorie.nom),
-          cout: entree.cout,
-          listesEquipement: [idListeReference(bande.slug, indexListe)],
-          accordeDagueDeBase: /^dague$/i.test(entree.nom.trim()),
-          profilsAutorises: profilsAutorisesReference(
-            bande.slug as FactionId,
-            entree.note,
-          ),
-          quantiteMax:
-            /\bpaire\b/i.test(entree.nom) ||
-            (/\bpaire\b/i.test(entree.formuleCout ?? '') &&
-              !new RegExp(`${entree.cout * 2}\\s*CO`, 'i').test(
-                entree.formuleCout ?? '',
-              ))
-              ? 1
-              : undefined,
-          regleSpeciale: [entree.formuleCout, entree.note]
-            .filter(Boolean)
-            .join('. '),
-        })),
+        categorie.entrees.flatMap((entree, indexEntree): Equipement[] => {
+          const original: Equipement = {
+            id: `ref-${bande.slug}-l${indexListe}-c${indexCategorie}-e${indexEntree}`,
+            nom: entree.nom,
+            categorie: categorieEquipementReference(categorie.nom),
+            cout: entree.cout,
+            achatDesactive: entree.achatDesactive,
+            prixRecrutementFormule: entree.prixRecrutementFormule,
+            prixRecrutementMinimum: entree.prixRecrutementMinimum,
+            rareteCommerce: entree.rareteCommerce,
+            coutCommerce: entree.coutCommerce,
+            coutCommerceFormule: entree.coutCommerceFormule,
+            commerceUniquement: entree.commerceUniquement,
+            listesEquipement: [idListeReference(bande.slug, indexListe)],
+            accordeDagueDeBase: /^dague$/i.test(entree.nom.trim()),
+            profilsAutorises: profilsAutorisesReference(
+              bande.slug as FactionId,
+              entree.note,
+            ),
+            quantiteMax:
+              entree.quantiteMax ??
+              (/\bpaire\b/i.test(entree.nom) ? 1 : undefined),
+            regleSpeciale: [entree.formuleCout, entree.note]
+              .filter(Boolean)
+              .join('. '),
+          };
+          const variantes: Equipement[] = [];
+          const materiau = entree.variantesArme;
+          if (materiau) {
+            for (const [
+              indexBaseListe,
+              baseListe,
+            ] of fiche.listesEquipement.entries()) {
+              for (const [
+                indexBaseCategorie,
+                baseCategorie,
+              ] of baseListe.categories.entries()) {
+                if (
+                  categorieEquipementReference(baseCategorie.nom) !==
+                  'Corps à corps'
+                )
+                  continue;
+                for (const [
+                  indexBaseEntree,
+                  arme,
+                ] of baseCategorie.entrees.entries()) {
+                  if (
+                    arme.cout <= 0 ||
+                    arme.variantesArme ||
+                    arme.achatDesactive ||
+                    arme.commerceUniquement
+                  )
+                    continue;
+                  if (materiau.armes && !materiau.armes.includes(arme.nom))
+                    continue;
+                  const restrictionsBase = profilsAutorisesReference(
+                    bande.slug as FactionId,
+                    arme.note,
+                  );
+                  const autorises = liste.profils
+                    .filter((id) => baseListe.profils.includes(id))
+                    .map((id) => idProfilReference(bande.slug as FactionId, id))
+                    .filter(
+                      (id) =>
+                        (!original.profilsAutorises ||
+                          original.profilsAutorises.includes(id)) &&
+                        (!restrictionsBase || restrictionsBase.includes(id)),
+                    );
+                  if (autorises.length === 0) continue;
+                  const prix =
+                    arme.cout * materiau.multiplicateur +
+                    (materiau.supplement ?? 0);
+                  variantes.push({
+                    ...original,
+                    id: `${original.id}-arme-l${indexBaseListe}-c${indexBaseCategorie}-e${indexBaseEntree}`,
+                    nom: `${arme.nom} (${materiau.materiau})`,
+                    categorie: 'Corps à corps',
+                    cout: prix,
+                    coutCommerce: materiau.multiplicateurCommerce
+                      ? arme.cout * materiau.multiplicateurCommerce +
+                        (materiau.supplement ?? 0)
+                      : original.commerceUniquement
+                        ? prix
+                        : undefined,
+                    achatDesactive: undefined,
+                    accordeDagueDeBase: false,
+                    profilsAutorises: autorises,
+                    quantiteMax: 2,
+                    regleSpeciale:
+                      `${arme.nom}, ${arme.cout} CO × ${materiau.multiplicateur}${materiau.supplement ? ` + ${materiau.supplement} CO` : ''}. ${arme.note ?? ''} ${entree.note ?? ''}`.trim(),
+                  });
+                }
+              }
+            }
+          }
+          const prixPaire = entree.formuleCout?.match(/^(\d+) CO la paire$/);
+          if (prixPaire && Number(prixPaire[1]) !== entree.cout * 2) {
+            variantes.push({
+              ...original,
+              id: `${original.id}-paire`,
+              nom: `Paire de ${entree.nom.toLocaleLowerCase('fr-FR')}`,
+              cout: Number(prixPaire[1]),
+              quantiteMax: 1,
+            });
+          }
+          return [original, ...variantes];
+        }),
       ),
     );
   },
@@ -1403,8 +1499,111 @@ export const equipements: Equipement[] = [
   ...equipementsReference,
 ];
 
+// Noms exacts des pistolets unitaires dont la paire est prévue par les listes.
+// Les entrées « Paire de ... » comptent déjà pour une arme. Les armes à
+// répétition et les éventuels pistolets-arbalètes ne sont pas inférés ici.
+const nomsPistoletsUnitairesParPaire = new Set([
+  'Pistolet',
+  'Pistolet de duel',
+  'Pistolet à malepierre',
+  'Pistolet à double canon',
+  'Pistolet de duel à double canon',
+]);
+const equipementsParIdComptage = new Map(equipements.map((e) => [e.id, e]));
+const idsPistoletsUnitairesParPaire = new Set(
+  equipements
+    .filter(
+      (e) => e.categorie === 'Tir' && nomsPistoletsUnitairesParPaire.has(e.nom),
+    )
+    .map((e) => e.id),
+);
+
+/** Rules Review 2005, errata p.4 : une paire de pistolets occupe une arme de tir. */
+export function compterArmesDeTir(equipementIds: string[]) {
+  const compteurs = new Map<string, number>();
+  for (const id of equipementIds) {
+    if (equipementsParIdComptage.get(id)?.categorie !== 'Tir') continue;
+    compteurs.set(id, (compteurs.get(id) ?? 0) + 1);
+  }
+  return [...compteurs].reduce(
+    (total, [id, quantite]) =>
+      total +
+      (idsPistoletsUnitairesParPaire.has(id)
+        ? Math.ceil(quantite / 2)
+        : quantite),
+    0,
+  );
+}
+
+const idsProfilsCoreReference: Record<string, string> = {
+  capitaine: 'capitaine-mercenaire',
+  champion: 'champion',
+  recrue: 'recrue',
+  guerrier: 'guerrier',
+  tireur: 'tireur',
+  bretteur: 'bretteur',
+  'possedes-magister': 'magister',
+  'possedes-possede': 'possede',
+  'possedes-mutant': 'mutant',
+  'possedes-ame-damnee': 'damne',
+  'possedes-frere': 'initie',
+  'possedes-homme-bete': 'homme-bete',
+  'repurgateurs-capitaine': 'capitaine-repurgateur',
+  'repurgateurs-repurgateur': 'repurgateur',
+  'repurgateurs-pretre': 'pretre-guerrier',
+  'repurgateurs-flagellant': 'flagellant',
+  'repurgateurs-zelote': 'seide',
+  'repurgateurs-chien': 'chien-de-guerre',
+  'soeurs-matriarche': 'matriarche',
+  'soeurs-superieure': 'soeur-superieure',
+  'soeurs-augure': 'augure',
+  'soeurs-sigmarite': 'soeur',
+  'soeurs-novice': 'novice',
+  'morts-vivants-vampire': 'vampire',
+  'morts-vivants-necromancien': 'necromancien',
+  'morts-vivants-paria': 'paria',
+  'morts-vivants-zombie': 'zombie',
+  'morts-vivants-goule': 'goule',
+  'morts-vivants-loup': 'loup-funeste',
+  'skavens-adepte': 'adepte-assassin',
+  'skavens-noir': 'skaven-noir',
+  'skavens-sorcier': 'sorcier-eshin',
+  'skavens-coureur': 'coureur-nocturne',
+  'skavens-vermine': 'vermineux',
+  'skavens-rat-geant': 'rat-geant',
+  'skavens-rat-ogre': 'rat-ogre',
+};
+
+function metadonneesProgressionCore(
+  definition: DefinitionBande,
+): DefinitionBande {
+  return {
+    ...definition,
+    profils: definition.profils.map((profil) => {
+      const id =
+        idsProfilsCoreReference[
+          profil.id.replace(/^(middenheim|marienburg)-/, '')
+        ];
+      const reference = fichesBandesReference[definition.id].profils.find(
+        (p) => p.id === id,
+      );
+      if (!reference)
+        throw new Error(`Métadonnées de progression absentes : ${profil.id}`);
+      return {
+        ...profil,
+        gagneExperience: reference.gagneExperience,
+        maximums: profil.maximums ?? reference.maximums,
+        sourceMaximums: reference.sourceMaximums,
+        progressionManuelle: profil.maximums
+          ? undefined
+          : reference.progressionManuelle,
+      };
+    }),
+  };
+}
+
 export const definitionsBandes: DefinitionBande[] = [
-  ...definitionsBandesAutomatisees,
+  ...definitionsBandesAutomatisees.map(metadonneesProgressionCore),
   ...definitionsBandesReference,
 ];
 

@@ -6,6 +6,9 @@ import type { EtatCampagne } from './mordheim-data.ts';
 
 const FORMAT_EXPORT = 'trackheim-campaign';
 const VERSION_EXPORT = 1;
+// Accepte aussi les anciennes sauvegardes indentées, avec une limite de
+// données compacte distincte et les contrôles de profondeur/nombre de nœuds.
+export const TAILLE_MAX_FICHIER_CAMPAGNE = 4 * 1024 * 1024;
 
 type ExportCampagne = {
   format: typeof FORMAT_EXPORT;
@@ -21,15 +24,14 @@ export function serialiserCampagne(campagne: EtatCampagne, date = new Date()) {
     exporteLe: date.toISOString(),
     campagne,
   };
-  return `${JSON.stringify(exportCampagne, null, 2)}\n`;
+  return `${JSON.stringify(exportCampagne)}\n`;
 }
 
 export function importerCampagneDepuisJson(texte: string) {
   if (
-    new TextEncoder().encode(texte).byteLength >
-    TAILLE_MAX_PAYLOAD_CAMPAGNE + 4096
+    new TextEncoder().encode(texte).byteLength > TAILLE_MAX_FICHIER_CAMPAGNE
   ) {
-    throw new Error('Le fichier dépasse la limite de 512 Ko.');
+    throw new Error('Le fichier dépasse la limite de 4 Mo.');
   }
 
   let valeur: unknown;
@@ -50,7 +52,17 @@ export function importerCampagneDepuisJson(texte: string) {
     );
   }
 
-  const validation = validerCampagneV4(valeur.campagne);
+  if (
+    new TextEncoder().encode(JSON.stringify(valeur.campagne)).byteLength >
+    TAILLE_MAX_PAYLOAD_CAMPAGNE
+  ) {
+    throw new Error(
+      'Les données de la campagne dépassent la limite de 512 Ko.',
+    );
+  }
+  const validation = validerCampagneV4(valeur.campagne, {
+    verifierReglesDeBande: false,
+  });
   if (!validation.ok) {
     throw new Error(`La campagne importée est invalide : ${validation.erreur}`);
   }

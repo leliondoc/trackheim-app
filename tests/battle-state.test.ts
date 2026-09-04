@@ -9,25 +9,44 @@ import {
 } from '../lib/battle-state.ts';
 import { campagneAvecCapitaineTest } from './fixtures.ts';
 
-test('mettre une figurine à zéro PV alimente le bilan hors combat', () => {
+test('zéro PV attend une blessure et ne compte pas encore comme une perte', () => {
   const combattant = campagneAvecCapitaineTest().combattants[0];
   const suivi = creerSuiviCombattant(combattant);
-  const horsCombat = modifierSuiviCombattant(suivi, combattant, {
+  const blesse = modifierSuiviCombattant(suivi, combattant, {
     figurinesTable: modifierFigurineTable(suivi, 0, {
       pointsVieActuels: 0,
     }),
   });
 
-  assert.equal(horsCombat.figurinesTable[0].etatTable, 'Hors de combat');
-  assert.equal(horsCombat.horsCombat, 1);
-  assert.equal(horsCombat.figurinesTable[0].pointsVieActuels, 0);
+  assert.equal(blesse.figurinesTable[0].etatTable, 'Debout');
+  assert.equal(blesse.horsCombat, 0);
+  assert.equal(blesse.figurinesTable[0].pointsVieActuels, 0);
+  assert.equal(blesse.figurinesTable[0].blessureAResoudre, true);
 
-  const retabli = modifierSuiviCombattant(horsCombat, combattant, {
-    horsCombat: 0,
+  const auSol = modifierSuiviCombattant(blesse, combattant, {
+    figurinesTable: modifierFigurineTable(blesse, 0, { etatTable: 'À terre' }),
+  });
+  assert.equal(auSol.horsCombat, 0);
+  assert.equal(auSol.figurinesTable[0].blessureAResoudre, false);
+  assert.equal(auSol.figurinesTable[0].pointsVieActuels, 0);
+  const retabli = modifierSuiviCombattant(auSol, combattant, {
+    figurinesTable: modifierFigurineTable(auSol, 0, { etatTable: 'Debout' }),
   });
   assert.equal(retabli.figurinesTable[0].etatTable, 'Debout');
   assert.equal(retabli.horsCombat, 0);
-  assert.equal(retabli.figurinesTable[0].pointsVieActuels, 1);
+  assert.equal(retabli.figurinesTable[0].pointsVieActuels, 0);
+  const nouvelleBlessure = modifierSuiviCombattant(retabli, combattant, {
+    figurinesTable: modifierFigurineTable(retabli, 0, { pointsVieActuels: 0 }),
+  });
+  assert.equal(nouvelleBlessure.figurinesTable[0].blessureAResoudre, true);
+  const perte = modifierSuiviCombattant(nouvelleBlessure, combattant, {
+    figurinesTable: modifierFigurineTable(nouvelleBlessure, 0, {
+      etatTable: 'Hors de combat',
+    }),
+  });
+  assert.equal(perte.horsCombat, 1);
+  assert.equal(perte.figurinesTable[0].blessureAResoudre, false);
+  assert.equal(perte.figurinesTable[0].pointsVieActuels, 0);
 });
 
 test('un groupe suit chaque figurine et ses PV indépendamment', () => {

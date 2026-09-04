@@ -9,6 +9,8 @@ import {
   pouvoirsMagiquesPourProfil,
   profilEstLanceurMagie,
 } from './magic-data.ts';
+import { fichesBandesReference } from './warbands/reference.ts';
+import type { RegleBandeReference } from './warbands/schema.ts';
 
 export type ChoixCompetence = {
   categorie: CategorieCompetence;
@@ -131,14 +133,72 @@ export function competencesPourProfil(
   profil: ProfilRecrue,
   factionId: FactionId,
   combattant?: Combattant,
+  campagne?: EtatCampagne,
 ): ChoixCompetence[] {
   return (profil.competencesDisponibles ?? []).flatMap((categorie) => {
+    const speciales =
+      fichesBandesReference[factionId]?.competencesSpeciales ?? [];
+    const idReference = profil.id.replace(`ref-${factionId}-`, '');
+    const possede = (nom: string) =>
+      combattant?.competences.includes(nom) ?? false;
+    const autorisee = (regle: RegleBandeReference) =>
+      regle.apprenable !== false &&
+      (!regle.profilsAutorises ||
+        regle.profilsAutorises.includes(idReference)) &&
+      (!regle.reserveAuChef || Boolean(combattant?.chef ?? profil.chef)) &&
+      (!regle.prerequis || regle.prerequis.every(possede)) &&
+      (!regle.incompatibleAvec || !regle.incompatibleAvec.some(possede)) &&
+      (!regle.maximumParBande ||
+        !campagne ||
+        campagne.combattants.filter((c) => c.competences.includes(regle.titre))
+          .length < regle.maximumParBande);
     const noms =
       categorie === 'Spécial'
-        ? (competencesSpeciales[factionId] ?? [])
+        ? (competencesSpeciales[factionId] ??
+          speciales.filter(autorisee).map((regle) => regle.titre))
         : competencesStandard[categorie];
     return noms
       .filter((nom) => competenceAutorisee(nom, profil, factionId, combattant))
       .map((nom) => ({ categorie, nom }));
   });
+}
+
+/** Vérifie le résultat du lot de progressions sans invalider les choix historiques. */
+export function erreurCompetencesSpecialesBande(
+  factionId: FactionId,
+  combattantsApres: Combattant[],
+  combattantsAvant: Combattant[],
+): string | null {
+  const regles = fichesBandesReference[factionId]?.competencesSpeciales ?? [];
+  for (const regle of regles) {
+    if (regle.apprenable === false) continue;
+    if (regle.maximumParBande) {
+      const porteurs = (combattants: Combattant[]) =>
+        combattants.filter((c) => c.competences.includes(regle.titre)).length;
+      const avant = porteurs(combattantsAvant);
+      const apres = porteurs(combattantsApres);
+      if (apres > regle.maximumParBande && apres > avant) {
+        return `${regle.titre} : la bande ne peut compter que ${regle.maximumParBande} bénéficiaire(s) de cette compétence.`;
+      }
+    }
+    for (const combattant of combattantsApres) {
+      const precedent = combattantsAvant.find((c) => c.id === combattant.id);
+      if (
+        !combattant.competences.includes(regle.titre) ||
+        precedent?.competences.includes(regle.titre)
+      )
+        continue;
+      const manquant = regle.prerequis?.find(
+        (nom) => !combattant.competences.includes(nom),
+      );
+      if (manquant)
+        return `${combattant.nom} : ${regle.titre} nécessite ${manquant}.`;
+      const incompatible = regle.incompatibleAvec?.find((nom) =>
+        combattant.competences.includes(nom),
+      );
+      if (incompatible)
+        return `${combattant.nom} : ${regle.titre} est incompatible avec ${incompatible}.`;
+    }
+  }
+  return null;
 }
