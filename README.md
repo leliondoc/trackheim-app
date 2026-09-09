@@ -28,8 +28,11 @@ de 512 Ko de données utiles et de 4 Mo pour le fichier d’import.
 
 Avant la première bataille, le budget de départ est indicatif : un dépassement
 affiche un avertissement et un trésor négatif, conservé dans les sauvegardes.
-Le bouton « Équipement » permet de corriger une recrue sans la recréer, avec
-débit ou remboursement de la différence. Retirer un combattant ou un groupe
+Le constructeur présente la composition par Héros et Hommes de main à côté
+du catalogue filtrable. Sélectionner un profil ouvre le recrutement ; sélectionner
+un membre ouvre son équipement dans le panneau voisin, sans fenêtre modale.
+Une recrue peut ainsi être corrigée sans la recréer, avec débit ou remboursement
+de la différence. Retirer un combattant ou un groupe
 rembourse son coût complet, équipement compris. Après la première bataille,
 les objets retirés retournent au magot et les nouveaux achats exigent les fonds
 nécessaires ; l’équipement reste verrouillé pendant une bataille en cours.

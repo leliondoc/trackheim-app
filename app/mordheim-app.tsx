@@ -2269,6 +2269,45 @@ function WarbandView({
 }) {
   const definition = obtenirDefinitionBande(campagne.factionId);
   const verrouillee = Boolean(campagne.batailleEnCours);
+  const [selection, setSelection] = useState<{
+    type: 'profil' | 'combattant';
+    id: string;
+  } | null>(null);
+  const [categorie, setCategorie] = useState('Tous');
+  const [recherche, setRecherche] = useState('');
+  const panneau = useRef<HTMLElement>(null);
+  const combattantChoisi =
+    selection?.type === 'combattant'
+      ? campagne.combattants.find((item) => item.id === selection.id)
+      : undefined;
+  const profilChoisi =
+    selection?.type === 'profil'
+      ? definition.profils.find((item) => item.id === selection.id)
+      : undefined;
+  const categories = ['Héros', 'Hommes de main'] as const;
+  useEffect(() => {
+    if (selection) panneau.current?.focus();
+  }, [selection]);
+  useEffect(() => {
+    const element = panneau.current;
+    function fermerAvecEchap(event: KeyboardEvent) {
+      if (event.key !== 'Escape') return;
+      event.stopPropagation();
+      setSelection(null);
+      setCategorie('Tous');
+      setRecherche('');
+      element?.focus();
+    }
+    element?.addEventListener('keydown', fermerAvecEchap);
+    return () => element?.removeEventListener('keydown', fermerAvecEchap);
+  }, []);
+  function ouvrirCatalogue(categorieChoisie = 'Tous') {
+    setSelection(null);
+    setCategorie(categorieChoisie);
+    setRecherche('');
+    panneau.current?.focus();
+    panneau.current?.scrollIntoView?.({ block: 'nearest' });
+  }
   const creationDeBande =
     campagne.numeroBataille === 0 && campagne.parties.length === 0;
   function modifierCombattant(id: string, modification: Partial<Combattant>) {
@@ -2291,6 +2330,7 @@ function WarbandView({
         : `Renvoyer ${combattant.nom} ? Son équipement sera replacé dans le magot. Cette action est définitive.`,
     );
     if (!confirme) return;
+    if (combattantChoisi?.id === id) setSelection(null);
     const inventaire = { ...campagne.inventaire };
     for (const idEquipement of creationDeBande
       ? []
@@ -2311,247 +2351,421 @@ function WarbandView({
   }
 
   return (
-    <section className="product-view">
+    <section className="product-view warband-builder">
       <PageHeader
         eyebrow="Constructeur de bande"
         title="Ma bande"
-        description={`Cliquez sur un profil pour le recruter, puis choisissez son équipement. Les limites ${definition.nom} sont contrôlées automatiquement.`}
+        description={definition.nom}
         action={
           <div className="page-header-actions">
             <WarbandExportDialog campagne={campagne} onExportJson={onExport} />
-            <Button
-              className="primary-action"
-              onClick={onChangerBande}
-              size="lg"
-            >
-              <Repeat2 aria-hidden="true" /> Changer de bande
+            <Button variant="outline" onClick={onChangerBande}>
+              <Repeat2 /> Changer de bande
             </Button>
-            <RecruitDialog
-              campagne={campagne}
-              verrouillee={verrouillee}
-              key={campagne.factionId}
-              onCampagneChange={onCampagneChange}
-            />
+            <Button onClick={() => ouvrirCatalogue()} disabled={verrouillee}>
+              <UserPlus /> Ajouter un combattant
+            </Button>
           </div>
         }
       />
-
-      {verrouillee && (
+      <div className="builder-budget" aria-label="Budget de la bande">
+        <div>
+          <span>Coût de la bande</span>
+          <strong>
+            {synthese.coutBande} <small>/ {definition.budgetInitial} CO</small>
+          </strong>
+        </div>
+        <div>
+          <span>Trésor disponible</span>
+          <strong className={campagne.couronnes < 0 ? 'budget-alert' : ''}>
+            {campagne.couronnes} CO
+          </strong>
+        </div>
+        <div>
+          <span>Effectif</span>
+          <strong>
+            {synthese.effectif}{' '}
+            <small>
+              {definition.effectifMaximum
+                ? `/ ${definition.effectifMaximum}`
+                : 'membres'}
+            </small>
+          </strong>
+        </div>
+        <div>
+          <span>Valeur de bande</span>
+          <strong>{synthese.valeurBande}</strong>
+        </div>
+      </div>
+      {synthese.coutBande > definition.budgetInitial && (
         <output className="form-alert">
-          <Swords aria-hidden="true" /> Une bataille est en cours. L’effectif,
-          l’expérience et les statuts sont verrouillés jusqu’à la fin de la
-          séquence.
+          <CircleAlert /> Budget initial dépassé de{' '}
+          {synthese.coutBande - definition.budgetInitial} CO
         </output>
       )}
-
-      <div className="constructeur-bande-resume">
-        <strong>{synthese.coutBande} CO</strong>
-        <span>
-          coût historique d’acquisition · budget initial{' '}
-          {definition.budgetInitial} CO
-        </span>
-        <div className="budget-track">
-          <span
-            style={{
-              width: `${Math.min(100, (synthese.coutBande / definition.budgetInitial) * 100)}%`,
-            }}
-          />
-        </div>
-        <span
-          className={
-            synthese.coutBande > definition.budgetInitial ? 'budget-alert' : ''
-          }
+      {verrouillee && (
+        <output className="form-alert">
+          <Swords /> Une bataille est en cours. L’effectif, l’expérience et
+          l’équipement sont verrouillés jusqu’à la fin de la séquence.
+        </output>
+      )}
+      <div className={`builder-workspace${selection ? ' has-selection' : ''}`}>
+        <section
+          className="builder-roster"
+          aria-label="Composition de la bande"
         >
-          {synthese.coutBande > definition.budgetInitial
-            ? `Budget initial dépassé de ${synthese.coutBande - definition.budgetInitial} CO`
-            : `${definition.budgetInitial - synthese.coutBande} CO restantes`}
-        </span>
-      </div>
-
-      <details className="warband-rules-summary">
-        <summary>Règles propres à la bande</summary>
-        <div>
-          {definition.regles.map((regle) => (
-            <p key={regle.titre}>
-              <strong>{regle.titre}.</strong> {regle.description}
-            </p>
-          ))}
-          <small>Source : {definition.source}</small>
-        </div>
-      </details>
-
-      <div className="recruitment-grid">
-        {definition.profils.map((profil) => {
-          const nombre = campagne.combattants
-            .filter((item) => item.profilId === profil.id)
-            .reduce((total, item) => total + item.quantite, 0);
-          return (
-            <article
-              className="profile-card search-destination"
-              id={`profil-${profil.id}`}
-              key={profil.id}
-              tabIndex={-1}
-            >
-              <div className="profile-card-header">
-                <span>{profil.categorie}</span>
-                <strong>{coutProfil(profil, campagne)} CO</strong>
-              </div>
-              <h3 aria-label={profil.nom}>
-                <RecruitDialog
-                  campagne={campagne}
-                  profilPropose={profil}
-                  verrouillee={verrouillee}
-                  onCampagneChange={onCampagneChange}
-                />
-              </h3>
-              <p className="stat-line">
-                {formaterStats(
-                  profil.statistiques,
-                  profil.statistiquesSpeciales,
-                )}
-              </p>
-              {profil.competencesDisponibles && (
-                <p className="profile-skills">
-                  Compétences : {profil.competencesDisponibles.join(', ')}
-                </p>
-              )}
-              <div className="profile-card-footer">
-                <span>
-                  {nombre} recruté{nombre > 1 ? 's' : ''}
-                </span>
-                <span>
-                  {profil.maximum ? `max. ${profil.maximum}` : 'sans limite'}
-                </span>
-                <span className="profile-recruit-hint" aria-hidden="true">
-                  <UserPlus /> {verrouillee ? 'En bataille' : 'Recruter'}
-                </span>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-
-      <section className="management-panel">
-        <div className="panel-header">
-          <div>
-            <p className="eyebrow">Feuille de bande</p>
-            <h2>
-              {synthese.effectif}{' '}
-              {synthese.effectif === 1 ? 'combattant' : 'combattants'}
-            </h2>
-          </div>
-          <span className="rating-chip">Valeur {synthese.valeurBande}</span>
-        </div>
-        <div className="management-list">
-          {campagne.combattants.map((combattant) => {
-            const profil = profilParId(combattant.profilId);
+          <header className="builder-panel-heading">
+            <div>
+              <p className="eyebrow">{campagne.nomBande}</p>
+              <h2>
+                {synthese.effectif}{' '}
+                {synthese.effectif === 1 ? 'combattant' : 'combattants'}
+              </h2>
+            </div>
+            <Users />
+          </header>
+          {categories.map((groupe) => {
+            const membres = campagne.combattants.filter(
+              (item) =>
+                (item.herosPromu
+                  ? 'Héros'
+                  : profilParId(item.profilId).categorie) === groupe,
+            );
             return (
-              <article
-                className="management-row search-destination"
-                id={`combattant-${combattant.id}`}
-                key={combattant.id}
-                tabIndex={-1}
+              <section
+                className="builder-group"
+                key={groupe}
+                aria-label={groupe}
               >
-                <div className="fighter-avatar">
-                  {initiales(combattant.nom)}
-                </div>
-                <div className="management-identity">
-                  <strong>{combattant.nom}</strong>
+                <header>
+                  <h3>{groupe}</h3>
                   <span>
-                    {profil.nom}
-                    {combattant.quantite > 1
-                      ? ` · ${combattant.quantite} membres`
-                      : ''}
-                    {combattant.chef ? ' · Chef' : ''}
-                    {combattant.herosPromu ? ' · Héros promu' : ''}
+                    {membres.reduce((total, item) => total + item.quantite, 0)}{' '}
+                    ·{' '}
+                    {membres.reduce(
+                      (total, item) => total + item.coutAcquisitionTotal,
+                      0,
+                    )}{' '}
+                    CO
                   </span>
-                  <span>
-                    {nomsEquipementsCombattant(combattant).join(' · ')}
-                  </span>
-                  {creationDeBande ? (
-                    <RecruitDialog
-                      campagne={campagne}
-                      combattantModifie={combattant}
-                      verrouillee={verrouillee}
-                      onCampagneChange={onCampagneChange}
-                    />
-                  ) : (
-                    <FighterEquipmentDialog
-                      campagne={campagne}
-                      combattant={combattant}
-                      onCampagneChange={onCampagneChange}
-                    />
-                  )}
-                </div>
-                <fieldset className="xp-control">
-                  <legend className="sr-only">
-                    Expérience de {combattant.nom}
-                  </legend>
-                  <Button
-                    aria-label={`Retirer 1 point d’expérience à ${combattant.nom}`}
-                    size="icon-xs"
-                    variant="outline"
-                    disabled={verrouillee}
-                    onClick={() =>
-                      modifierCombattant(combattant.id, {
-                        experience: Math.max(0, combattant.experience - 1),
-                      })
-                    }
-                  >
-                    <Minus />
-                  </Button>
-                  <output aria-live="polite">
-                    <strong>{combattant.experience}</strong> XP
-                  </output>
-                  <Button
-                    aria-label={`Ajouter 1 point d’expérience à ${combattant.nom}`}
-                    size="icon-xs"
-                    variant="outline"
-                    disabled={verrouillee}
-                    onClick={() =>
-                      modifierCombattant(combattant.id, {
-                        experience: combattant.experience + 1,
-                      })
-                    }
-                  >
-                    <Plus />
-                  </Button>
-                </fieldset>
-                <NativeSelect
-                  aria-label={`Statut de ${combattant.nom}`}
-                  disabled={verrouillee}
-                  value={combattant.statut}
-                  onChange={(event) =>
-                    modifierCombattant(combattant.id, {
-                      statut: event.target.value as Combattant['statut'],
-                    })
-                  }
-                >
-                  <NativeSelectOption value="Prêt">Prêt</NativeSelectOption>
-                  <NativeSelectOption value="Blessé">Blessé</NativeSelectOption>
-                  <NativeSelectOption value="Absent">Absent</NativeSelectOption>
-                </NativeSelect>
+                </header>
+                {membres.length === 0 && (
+                  <p className="builder-empty">
+                    {groupe === 'Héros'
+                      ? 'Aucun héros recruté.'
+                      : 'Aucun groupe recruté.'}
+                  </p>
+                )}
+                {membres.map((combattant) => {
+                  const profil = profilParId(combattant.profilId);
+                  return (
+                    <article
+                      className={`builder-member search-destination${combattantChoisi?.id === combattant.id ? ' selected' : ''}`}
+                      id={`combattant-${combattant.id}`}
+                      key={combattant.id}
+                      tabIndex={-1}
+                    >
+                      <button
+                        type="button"
+                        className="builder-member-select"
+                        disabled={verrouillee}
+                        aria-label={`Modifier l’équipement de ${combattant.nom}`}
+                        aria-pressed={combattantChoisi?.id === combattant.id}
+                        onClick={() =>
+                          setSelection({
+                            type: 'combattant',
+                            id: combattant.id,
+                          })
+                        }
+                      >
+                        <span>
+                          <strong>
+                            {combattant.quantite > 1
+                              ? `${combattant.quantite} × `
+                              : ''}
+                            {combattant.nom}
+                          </strong>
+                          <small>
+                            {profil.nom}
+                            {combattant.chef ? ' · Chef' : ''}
+                            {combattant.herosPromu ? ' · Héros promu' : ''}
+                          </small>
+                        </span>
+                        <b>
+                          {combattant.coutAcquisitionTotal} CO{' '}
+                          <span aria-hidden="true">›</span>
+                        </b>
+                        <small className="builder-loadout">
+                          {nomsEquipementsCombattant(combattant).join(' · ') ||
+                            'Sans équipement'}
+                        </small>
+                      </button>
+                      <div className="builder-member-controls">
+                        <fieldset className="xp-control">
+                          <legend className="sr-only">
+                            Expérience de {combattant.nom}
+                          </legend>
+                          <Button
+                            aria-label={`Retirer 1 point d’expérience à ${combattant.nom}`}
+                            size="icon-xs"
+                            variant="outline"
+                            disabled={verrouillee}
+                            onClick={() =>
+                              modifierCombattant(combattant.id, {
+                                experience: Math.max(
+                                  0,
+                                  combattant.experience - 1,
+                                ),
+                              })
+                            }
+                          >
+                            <Minus />
+                          </Button>
+                          <output aria-live="polite">
+                            <strong>{combattant.experience}</strong> XP
+                          </output>
+                          <Button
+                            aria-label={`Ajouter 1 point d’expérience à ${combattant.nom}`}
+                            size="icon-xs"
+                            variant="outline"
+                            disabled={verrouillee}
+                            onClick={() =>
+                              modifierCombattant(combattant.id, {
+                                experience: combattant.experience + 1,
+                              })
+                            }
+                          >
+                            <Plus />
+                          </Button>
+                        </fieldset>
+                        <NativeSelect
+                          aria-label={`Statut de ${combattant.nom}`}
+                          disabled={verrouillee}
+                          value={combattant.statut}
+                          onChange={(event) =>
+                            modifierCombattant(combattant.id, {
+                              statut: event.target
+                                .value as Combattant['statut'],
+                            })
+                          }
+                        >
+                          <NativeSelectOption value="Prêt">
+                            Prêt
+                          </NativeSelectOption>
+                          <NativeSelectOption value="Blessé">
+                            Blessé
+                          </NativeSelectOption>
+                          <NativeSelectOption value="Absent">
+                            Absent
+                          </NativeSelectOption>
+                        </NativeSelect>
+                        <Button
+                          aria-label={`Renvoyer ${combattant.nom}`}
+                          size="icon-sm"
+                          variant="ghost"
+                          disabled={
+                            (combattant.chef && !creationDeBande) || verrouillee
+                          }
+                          title={
+                            combattant.chef && !creationDeBande
+                              ? 'Le Chef ne peut pas être renvoyé.'
+                              : undefined
+                          }
+                          onClick={() => retirerCombattant(combattant.id)}
+                        >
+                          <Trash2 />
+                        </Button>
+                      </div>
+                    </article>
+                  );
+                })}
                 <Button
-                  aria-label={`Renvoyer ${combattant.nom}`}
-                  size="icon-sm"
-                  variant="ghost"
-                  disabled={
-                    (combattant.chef && !creationDeBande) || verrouillee
-                  }
-                  title={
-                    combattant.chef && !creationDeBande
-                      ? 'Le Chef ne peut pas être renvoyé.'
-                      : undefined
-                  }
-                  onClick={() => retirerCombattant(combattant.id)}
+                  className="builder-add"
+                  variant="outline"
+                  disabled={verrouillee}
+                  onClick={() => ouvrirCatalogue(groupe)}
                 >
-                  <Trash2 />
+                  <Plus />{' '}
+                  {groupe === 'Héros'
+                    ? 'Ajouter un héros'
+                    : 'Ajouter un groupe'}
                 </Button>
-              </article>
+              </section>
             );
           })}
-        </div>
-      </section>
+          <details className="warband-rules-summary">
+            <summary>Règles propres à la bande</summary>
+            <div>
+              {definition.regles.map((regle) => (
+                <p key={regle.titre}>
+                  <strong>{regle.titre}.</strong> {regle.description}
+                </p>
+              ))}
+              <small>Source : {definition.source}</small>
+            </div>
+          </details>
+        </section>
+        <section
+          className="builder-detail"
+          ref={panneau}
+          tabIndex={-1}
+          aria-label="Recrutement et équipement"
+        >
+          {selection && (
+            <Button
+              className="builder-back"
+              variant="ghost"
+              onClick={() => ouvrirCatalogue()}
+            >
+              <ArrowLeft /> Retour au catalogue
+            </Button>
+          )}
+          {profilChoisi ? (
+            <RecruitDialog
+              key={`profil-${profilChoisi.id}`}
+              campagne={campagne}
+              profilPropose={profilChoisi}
+              verrouillee={verrouillee}
+              onCampagneChange={onCampagneChange}
+              enLigne
+              onFermer={() => ouvrirCatalogue()}
+            />
+          ) : combattantChoisi ? (
+            creationDeBande ? (
+              <RecruitDialog
+                key={`membre-${combattantChoisi.id}`}
+                campagne={campagne}
+                combattantModifie={combattantChoisi}
+                verrouillee={verrouillee}
+                onCampagneChange={onCampagneChange}
+                enLigne
+                onFermer={() => ouvrirCatalogue()}
+              />
+            ) : (
+              <FighterEquipmentDialog
+                key={combattantChoisi.id}
+                campagne={campagne}
+                combattant={combattantChoisi}
+                onCampagneChange={onCampagneChange}
+                enLigne
+              />
+            )
+          ) : (
+            <>
+              <header className="builder-panel-heading">
+                <div>
+                  <p className="eyebrow">Recrutement</p>
+                  <h2>Ajouter à la bande</h2>
+                </div>
+                <UserPlus />
+              </header>
+              <div className="builder-catalog-tools">
+                <label
+                  className="builder-search"
+                  htmlFor="builder-profile-search"
+                >
+                  <Search aria-hidden="true" />
+                  <Input
+                    aria-label="Rechercher un profil"
+                    id="builder-profile-search"
+                    placeholder="Rechercher un profil…"
+                    value={recherche}
+                    onChange={(event) => setRecherche(event.target.value)}
+                  />
+                </label>
+                <div
+                  className="builder-filters"
+                  aria-label="Catégories de profils"
+                >
+                  {['Tous', ...categories].map((item) => (
+                    <button
+                      type="button"
+                      key={item}
+                      aria-pressed={categorie === item}
+                      onClick={() => setCategorie(item)}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {categories
+                .filter(
+                  (groupe) => categorie === 'Tous' || categorie === groupe,
+                )
+                .map((groupe) => {
+                  const profilsVisibles = definition.profils.filter(
+                    (profil) =>
+                      profil.categorie === groupe &&
+                      normaliser(profil.nom).includes(normaliser(recherche)),
+                  );
+                  if (!profilsVisibles.length) return null;
+                  return (
+                    <section className="builder-catalog-group" key={groupe}>
+                      <h3>{groupe}</h3>
+                      {profilsVisibles.map((profil) => {
+                        const nombre = campagne.combattants
+                          .filter((item) => item.profilId === profil.id)
+                          .reduce((total, item) => total + item.quantite, 0);
+                        return (
+                          <article
+                            className="builder-profile search-destination"
+                            id={`profil-${profil.id}`}
+                            key={profil.id}
+                            tabIndex={-1}
+                          >
+                            <h3 aria-label={profil.nom}>
+                              <button
+                                type="button"
+                                disabled={verrouillee}
+                                aria-label={`Recruter ${profil.nom}`}
+                                onClick={() =>
+                                  setSelection({
+                                    type: 'profil',
+                                    id: profil.id,
+                                  })
+                                }
+                              >
+                                <span>
+                                  {profil.nom}
+                                  <small>
+                                    {nombre} recruté{nombre > 1 ? 's' : ''}
+                                    {profil.maximum !== null
+                                      ? ` · max. ${profil.maximum}`
+                                      : ''}
+                                  </small>
+                                </span>
+                                <b>
+                                  {coutProfil(profil, campagne)} CO{' '}
+                                  <Plus aria-hidden="true" />
+                                </b>
+                              </button>
+                            </h3>
+                            <p className="stat-line">
+                              {formaterStats(
+                                profil.statistiques,
+                                profil.statistiquesSpeciales,
+                              )}
+                            </p>
+                          </article>
+                        );
+                      })}
+                    </section>
+                  );
+                })}
+              {!definition.profils.some(
+                (profil) =>
+                  (categorie === 'Tous' || profil.categorie === categorie) &&
+                  normaliser(profil.nom).includes(normaliser(recherche)),
+              ) && (
+                <output className="builder-empty">
+                  Aucun profil ne correspond à cette recherche.
+                </output>
+              )}
+            </>
+          )}
+        </section>
+      </div>
     </section>
   );
 }
@@ -2562,12 +2776,16 @@ function RecruitDialog({
   verrouillee = false,
   combattantModifie,
   profilPropose,
+  enLigne = false,
+  onFermer,
 }: {
   campagne: EtatCampagne;
   onCampagneChange: (campagne: EtatCampagne) => void;
   verrouillee?: boolean;
   combattantModifie?: Combattant;
   profilPropose?: ProfilRecrue;
+  enLigne?: boolean;
+  onFermer?: () => void;
 }) {
   const definition = obtenirDefinitionBande(campagne.factionId);
   const profilInitial =
@@ -2578,13 +2796,17 @@ function RecruitDialog({
   const [ouvert, setOuvert] = useState(false);
   const [profilId, setProfilId] = useState(profilInitial);
   const [groupeId, setGroupeId] = useState('');
-  const [nom, setNom] = useState('');
-  const [quantite, setQuantite] = useState(1);
-  const [selectionEquipement, setSelectionEquipement] = useState<string[]>([]);
+  const [nom, setNom] = useState(combattantModifie?.nom ?? '');
+  const [quantite, setQuantite] = useState(combattantModifie?.quantite ?? 1);
+  const [selectionEquipement, setSelectionEquipement] = useState<string[]>(
+    combattantModifie?.equipementIds ?? [],
+  );
   const [prixVariables, setPrixVariables] = useState<Record<string, string>>(
     {},
   );
-  const [marqueChaos, setMarqueChaos] = useState<MarqueChaos | ''>('');
+  const [marqueChaos, setMarqueChaos] = useState<MarqueChaos | ''>(
+    combattantModifie?.optionsRegles?.marqueChaos ?? '',
+  );
 
   const groupeCible = campagne.combattants.find((item) => item.id === groupeId);
   const profil = profilParId(groupeCible?.profilId ?? profilId);
@@ -2763,7 +2985,10 @@ function RecruitDialog({
       setSelectionEquipement([...combattantModifie.equipementIds]);
       setMarqueChaos(combattantModifie.optionsRegles?.marqueChaos ?? '');
     }
-    if (!nouvelEtat) reinitialiserBrouillon();
+    if (!nouvelEtat) {
+      reinitialiserBrouillon();
+      onFermer?.();
+    }
     setOuvert(nouvelEtat);
   }
 
@@ -2838,8 +3063,7 @@ function RecruitDialog({
             }
           : null,
       });
-      reinitialiserBrouillon();
-      setOuvert(false);
+      changerOuverture(false);
       return;
     }
     const combattant: Combattant = {
@@ -2874,8 +3098,7 @@ function RecruitDialog({
       couronnes: campagne.couronnes - cout,
       combattants: [...campagne.combattants, combattant],
     });
-    reinitialiserBrouillon();
-    setOuvert(false);
+    changerOuverture(false);
   }
 
   function basculerEquipement(id: string, selectionne: boolean) {
@@ -2918,55 +3141,64 @@ function RecruitDialog({
     });
   }
 
+  const Contenu = enLigne ? 'section' : DialogContent;
+  const Titre = enLigne ? 'h2' : DialogTitle;
+  const Description = enLigne ? 'p' : DialogDescription;
   return (
     <Dialog open={ouvert} onOpenChange={changerOuverture}>
-      <DialogTrigger
-        render={
-          profilPropose ? (
-            <button
-              type="button"
-              className="profile-recruit-trigger"
-              disabled={verrouillee}
-              aria-label={`Recruter ${profilPropose.nom}`}
-              title={
-                verrouillee
-                  ? 'Terminez la bataille avant de recruter.'
-                  : undefined
-              }
-            />
+      {!enLigne && (
+        <DialogTrigger
+          render={
+            profilPropose ? (
+              <button
+                type="button"
+                className="profile-recruit-trigger"
+                disabled={verrouillee}
+                aria-label={`Recruter ${profilPropose.nom}`}
+                title={
+                  verrouillee
+                    ? 'Terminez la bataille avant de recruter.'
+                    : undefined
+                }
+              />
+            ) : (
+              <Button
+                className={
+                  combattantModifie ? 'justify-self-start' : 'primary-action'
+                }
+                disabled={verrouillee}
+                size={combattantModifie ? 'sm' : 'lg'}
+                variant={combattantModifie ? 'outline' : 'default'}
+                aria-label={
+                  combattantModifie
+                    ? `Modifier l’équipement de ${combattantModifie.nom}`
+                    : undefined
+                }
+                title={
+                  verrouillee
+                    ? 'Terminez la bataille avant de modifier l’effectif.'
+                    : undefined
+                }
+              />
+            )
+          }
+        >
+          {profilPropose ? (
+            profilPropose.nom
+          ) : combattantModifie ? (
+            <PackageOpen data-icon="inline-start" />
           ) : (
-            <Button
-              className={
-                combattantModifie ? 'justify-self-start' : 'primary-action'
-              }
-              disabled={verrouillee}
-              size={combattantModifie ? 'sm' : 'lg'}
-              variant={combattantModifie ? 'outline' : 'default'}
-              aria-label={
-                combattantModifie
-                  ? `Modifier l’équipement de ${combattantModifie.nom}`
-                  : undefined
-              }
-              title={
-                verrouillee
-                  ? 'Terminez la bataille avant de modifier l’effectif.'
-                  : undefined
-              }
-            />
-          )
+            <UserPlus data-icon="inline-start" />
+          )}
+          {!profilPropose &&
+            (combattantModifie ? 'Équipement' : 'Ajouter un combattant')}
+        </DialogTrigger>
+      )}
+      <Contenu
+        className={
+          enLigne ? 'builder-inline-editor' : 'recruit-dialog sm:max-w-2xl'
         }
       >
-        {profilPropose ? (
-          profilPropose.nom
-        ) : combattantModifie ? (
-          <PackageOpen data-icon="inline-start" />
-        ) : (
-          <UserPlus data-icon="inline-start" />
-        )}
-        {!profilPropose &&
-          (combattantModifie ? 'Équipement' : 'Ajouter un combattant')}
-      </DialogTrigger>
-      <DialogContent className="recruit-dialog sm:max-w-2xl">
         <form
           className="dialog-form"
           onSubmit={(event) => {
@@ -2975,17 +3207,18 @@ function RecruitDialog({
           }}
         >
           <DialogHeader>
-            <DialogTitle>
+            <Titre>
               {combattantModifie
                 ? `Équipement de ${combattantModifie.nom}`
                 : 'Recruter un combattant'}
-            </DialogTitle>
-            <DialogDescription>
-              Profils {definition.nom}, appliqués selon le manifeste de règles
-              de la campagne.
-              {combattantModifie &&
-                ' Le coût est recalculé et la différence est débitée ou remboursée. Pour les objets à prix variable, ressaisissez le prix retenu.'}
-            </DialogDescription>
+            </Titre>
+            <Description>
+              {combattantModifie
+                ? 'Le coût est recalculé : la différence est débitée ou remboursée.'
+                : `Choisissez le nom et l’équipement de votre recrue. Profils ${definition.nom}.`}
+              {objetsPrixVariable.length > 0 &&
+                ' Pour les objets à prix variable, saisissez le prix retenu.'}
+            </Description>
           </DialogHeader>
 
           {!creationDeBande && groupesRenforcables.length > 0 && (
@@ -3026,95 +3259,98 @@ function RecruitDialog({
             </label>
           )}
 
-          <div className="form-grid recruit-identity-grid">
-            <label className="field-group" htmlFor="recruit-profile">
-              <span>Profil</span>
-              <NativeSelect
-                disabled={Boolean(groupeCible || combattantModifie)}
-                id="recruit-profile"
-                value={profil.id}
-                onChange={(event) => {
-                  setProfilId(event.target.value);
-                  setQuantite(1);
-                  setSelectionEquipement([]);
-                  setMarqueChaos('');
-                }}
-              >
-                {definition.profils.map((item) => (
-                  <NativeSelectOption key={item.id} value={item.id}>
-                    {item.nom} : {coutProfil(item, campagne)} CO
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
-            </label>
-            {profil.id === 'ref-maraudeurs-du-chaos-devin' ? (
-              <label className="field-group" htmlFor="recruit-chaos-mark">
-                <span>Marque du Chaos</span>
+          {(!enLigne || !combattantModifie) && (
+            <div className="form-grid recruit-identity-grid">
+              <label className="field-group" htmlFor="recruit-profile">
+                <span>Profil</span>
                 <NativeSelect
-                  id="recruit-chaos-mark"
-                  disabled={Boolean(combattantModifie)}
-                  value={marqueChaos}
-                  onChange={(event) =>
-                    setMarqueChaos(event.target.value as MarqueChaos | '')
-                  }
-                  required
+                  disabled={Boolean(groupeCible || combattantModifie)}
+                  id="recruit-profile"
+                  value={profil.id}
+                  onChange={(event) => {
+                    setProfilId(event.target.value);
+                    setQuantite(1);
+                    setSelectionEquipement([]);
+                    setMarqueChaos('');
+                  }}
                 >
-                  <NativeSelectOption value="">
-                    Choisir une marque...
-                  </NativeSelectOption>
-                  <NativeSelectOption value="Shornaal">
-                    Shornaal, le Serpent
-                  </NativeSelectOption>
-                  <NativeSelectOption value="Tchar">
-                    Tchar, l’Aigle
-                  </NativeSelectOption>
-                  <NativeSelectOption value="Onogal">
-                    Onogal, le Corbeau
-                  </NativeSelectOption>
-                  <NativeSelectOption value="Chaos Universel">
-                    Chaos Universel
-                  </NativeSelectOption>
-                  <NativeSelectOption value="Arkhar">
-                    Arkhar, le Chien
-                  </NativeSelectOption>
+                  {definition.profils.map((item) => (
+                    <NativeSelectOption key={item.id} value={item.id}>
+                      {item.nom} : {coutProfil(item, campagne)} CO
+                    </NativeSelectOption>
+                  ))}
                 </NativeSelect>
               </label>
-            ) : null}
-            <label className="field-group" htmlFor="recruit-name">
-              <span>Nom du combattant</span>
-              <Input
-                disabled={Boolean(groupeCible || combattantModifie)}
-                id="recruit-name"
-                maxLength={160}
-                value={nom}
-                onChange={(event) => setNom(event.target.value)}
-                placeholder="Ex. Dieter le Borgne"
-              />
-            </label>
-            <label className="field-group" htmlFor="recruit-quantity">
-              <span>
-                {profil.categorie === 'Héros' ? 'Individu' : 'Taille du groupe'}
-              </span>
-              <NativeSelect
-                id="recruit-quantity"
-                disabled={
-                  profil.categorie === 'Héros' || Boolean(combattantModifie)
-                }
-                value={`${quantiteDemandee}`}
-                onChange={(event) => setQuantite(Number(event.target.value))}
-              >
-                {Array.from(
-                  { length: profil.categorie === 'Héros' ? 1 : 5 },
-                  (_, index) => index + 1,
-                ).map((nombre) => (
-                  <NativeSelectOption key={nombre} value={`${nombre}`}>
-                    {nombre}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
-            </label>
-          </div>
-
+              {profil.id === 'ref-maraudeurs-du-chaos-devin' ? (
+                <label className="field-group" htmlFor="recruit-chaos-mark">
+                  <span>Marque du Chaos</span>
+                  <NativeSelect
+                    id="recruit-chaos-mark"
+                    disabled={Boolean(combattantModifie)}
+                    value={marqueChaos}
+                    onChange={(event) =>
+                      setMarqueChaos(event.target.value as MarqueChaos | '')
+                    }
+                    required
+                  >
+                    <NativeSelectOption value="">
+                      Choisir une marque...
+                    </NativeSelectOption>
+                    <NativeSelectOption value="Shornaal">
+                      Shornaal, le Serpent
+                    </NativeSelectOption>
+                    <NativeSelectOption value="Tchar">
+                      Tchar, l’Aigle
+                    </NativeSelectOption>
+                    <NativeSelectOption value="Onogal">
+                      Onogal, le Corbeau
+                    </NativeSelectOption>
+                    <NativeSelectOption value="Chaos Universel">
+                      Chaos Universel
+                    </NativeSelectOption>
+                    <NativeSelectOption value="Arkhar">
+                      Arkhar, le Chien
+                    </NativeSelectOption>
+                  </NativeSelect>
+                </label>
+              ) : null}
+              <label className="field-group" htmlFor="recruit-name">
+                <span>Nom du combattant</span>
+                <Input
+                  disabled={Boolean(groupeCible || combattantModifie)}
+                  id="recruit-name"
+                  maxLength={160}
+                  value={nom}
+                  onChange={(event) => setNom(event.target.value)}
+                  placeholder="Ex. Dieter le Borgne"
+                />
+              </label>
+              <label className="field-group" htmlFor="recruit-quantity">
+                <span>
+                  {profil.categorie === 'Héros'
+                    ? 'Individu'
+                    : 'Taille du groupe'}
+                </span>
+                <NativeSelect
+                  id="recruit-quantity"
+                  disabled={
+                    profil.categorie === 'Héros' || Boolean(combattantModifie)
+                  }
+                  value={`${quantiteDemandee}`}
+                  onChange={(event) => setQuantite(Number(event.target.value))}
+                >
+                  {Array.from(
+                    { length: profil.categorie === 'Héros' ? 1 : 5 },
+                    (_, index) => index + 1,
+                  ).map((nombre) => (
+                    <NativeSelectOption key={nombre} value={`${nombre}`}>
+                      {nombre}
+                    </NativeSelectOption>
+                  ))}
+                </NativeSelect>
+              </label>
+            </div>
+          )}
           <div className="profile-preview">
             <div>
               <strong>{profil.nom}</strong>
@@ -3285,6 +3521,15 @@ function RecruitDialog({
           )}
 
           <DialogFooter>
+            {enLigne && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => changerOuverture(false)}
+              >
+                Annuler
+              </Button>
+            )}
             <div className="dialog-total">
               <span>
                 Total
@@ -3325,7 +3570,7 @@ function RecruitDialog({
             </Button>
           </DialogFooter>
         </form>
-      </DialogContent>
+      </Contenu>
     </Dialog>
   );
 }

@@ -51,6 +51,38 @@ function avecGroupe(): EtatCampagne {
 }
 
 describe('corrections du constructeur de bande', () => {
+  it('filtre le catalogue et ouvre un éditeur à côté de la composition', async () => {
+    afficher();
+    const utilisateur = userEvent.setup();
+    await utilisateur.click(
+      await screen.findByRole('button', { name: 'Ajouter un héros' }),
+    );
+    expect(
+      screen.queryByRole('button', { name: 'Recruter Guerrier' }),
+    ).not.toBeInTheDocument();
+    await utilisateur.type(
+      screen.getByRole('textbox', { name: 'Rechercher un profil' }),
+      'champ',
+    );
+    expect(
+      screen.queryByRole('button', { name: 'Recruter Capitaine mercenaire' }),
+    ).not.toBeInTheDocument();
+    await utilisateur.click(
+      screen.getByRole('button', { name: 'Recruter Champion' }),
+    );
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('region', { name: 'Composition de la bande' }),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Profil')).toHaveValue('champion');
+    await utilisateur.click(screen.getByRole('button', { name: 'Annuler' }));
+    expect(
+      screen.getByRole('button', { name: 'Recruter Guerrier' }),
+    ).toBeInTheDocument();
+    expect(sauvegarde().combattants).toHaveLength(1);
+    expect(sauvegarde().couronnes).toBe(440);
+  });
+
   it('recrute depuis un profil et réinitialise le formulaire à chaque ouverture', async () => {
     afficher();
     const utilisateur = userEvent.setup();
@@ -97,7 +129,7 @@ describe('corrections du constructeur de bande', () => {
     const vue = afficher(campagne);
     const utilisateur = userEvent.setup();
     await utilisateur.click(
-      await screen.findByRole('button', { name: 'Ajouter un combattant' }),
+      await screen.findByRole('button', { name: 'Recruter Champion' }),
     );
     fireEvent.change(screen.getByLabelText('Nom du combattant'), {
       target: { value: 'Champion coûteux' },
@@ -263,7 +295,7 @@ describe('corrections du constructeur de bande', () => {
     afficher(campagne);
     const utilisateur = userEvent.setup();
     await utilisateur.click(
-      await screen.findByRole('button', { name: 'Ajouter un combattant' }),
+      await screen.findByRole('button', { name: 'Recruter Champion' }),
     );
     fireEvent.change(screen.getByLabelText('Nom du combattant'), {
       target: { value: 'Sans fonds' },

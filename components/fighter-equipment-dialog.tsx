@@ -29,7 +29,9 @@ export function FighterEquipmentDialog({
   campagne,
   combattant,
   onCampagneChange,
+  enLigne = false,
 }: {
+  enLigne?: boolean;
   campagne: EtatCampagne;
   combattant: Combattant;
   onCampagneChange: (campagne: EtatCampagne) => void;
@@ -138,6 +140,9 @@ export function FighterEquipmentDialog({
     });
   }
 
+  const Contenu = enLigne ? 'section' : DialogContent;
+  const Titre = enLigne ? 'h2' : DialogTitle;
+  const Description = enLigne ? 'p' : DialogDescription;
   return (
     <Dialog
       open={ouvert}
@@ -147,28 +152,30 @@ export function FighterEquipmentDialog({
         setSelection('');
       }}
     >
-      <DialogTrigger
-        render={
-          <Button
-            className="justify-self-start"
-            size="sm"
-            variant="outline"
-            disabled={verrouillee}
-            aria-label={`Modifier l’équipement de ${combattant.nom}`}
-          />
-        }
-      >
-        <PackageOpen /> Équipement
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-xl">
+      {!enLigne && (
+        <DialogTrigger
+          render={
+            <Button
+              className="justify-self-start"
+              size="sm"
+              variant="outline"
+              disabled={verrouillee}
+              aria-label={`Modifier l’équipement de ${combattant.nom}`}
+            />
+          }
+        >
+          <PackageOpen /> Équipement
+        </DialogTrigger>
+      )}
+      <Contenu className={enLigne ? 'builder-inline-editor' : 'sm:max-w-xl'}>
         <DialogHeader>
-          <DialogTitle>Équipement de {combattant.nom}</DialogTitle>
-          <DialogDescription>
+          <Titre>Équipement de {combattant.nom}</Titre>
+          <Description>
             Les modifications sont enregistrées immédiatement. Les objets
             retirés retournent au magot sans remboursement.
             {combattant.quantite > 1 &&
               ` Chaque modification concerne les ${combattant.quantite} membres du groupe.`}
-          </DialogDescription>
+          </Description>
         </DialogHeader>
         <div className="grid gap-2">
           {combattant.dagueDeBase && <p>Dague de base incluse gratuitement.</p>}
@@ -226,7 +233,7 @@ export function FighterEquipmentDialog({
         >
           {depuisMagot ? 'Équiper depuis le magot' : 'Acheter et équiper'}
         </Button>
-      </DialogContent>
+      </Contenu>
     </Dialog>
   );
 }

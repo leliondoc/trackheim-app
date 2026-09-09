@@ -206,10 +206,10 @@ describe('navigation principale', () => {
       screen.getByRole('button', { name: 'Créer la bande' }),
     );
 
-    expect(await screen.findByText('Les Voyageurs')).toBeInTheDocument();
     expect(
-      screen.getByText(/Les limites Strigannes sont contrôlées/i),
+      await screen.findByRole('button', { name: 'Les Voyageurs' }),
     ).toBeInTheDocument();
+    expect(screen.getByText('Strigannes', { exact: true })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Domnu' })).toBeInTheDocument();
   });
 
@@ -421,7 +421,9 @@ describe('navigation principale', () => {
       await utilisateur.click(
         screen.getByRole('button', { name: 'Créer la bande' }),
       );
-      expect(await screen.findByText('Bande en mémoire')).toBeInTheDocument();
+      expect(
+        await screen.findByRole('button', { name: 'Bande en mémoire' }),
+      ).toBeInTheDocument();
       expect(
         screen.getByText('Mode mémoire : export indispensable'),
       ).toBeInTheDocument();
