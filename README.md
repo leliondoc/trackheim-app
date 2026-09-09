@@ -42,6 +42,35 @@ l’application. Les règles particulières de table et certaines annexes se ré
 avec les sources et les notes du joueur ; leur présence dans une fiche ne signifie
 pas que chaque effet est automatique.
 
+## Homebrew
+
+L’atelier permet d’éditer, pour chaque bande, les profils existants (nom,
+catégorie, coût, minima et maxima, XP, caractéristiques, valeurs spéciales,
+plafonds de progression, tables de compétences et équipements autorisés),
+les équipements (nom, catégorie, coût, quantité maximale, disponibilité et
+rareté) et les limites de composition, de groupe et d’armement.
+Les règles complémentaires peuvent être ajoutées, modifiées ou désactivées.
+
+Les fiches sont préparées puis enregistrées ; le bouton « Appliquer le set
+homebrew » active leurs effets sans modifier le catalogue officiel. Les anciennes
+sauvegardes restent compatibles et l’export JSON inclut toute la surcouche.
+Avant la première bataille, un changement du budget actif ajuste le trésor
+uniquement de la différence. Les dépenses historiques ne sont pas recalculées.
+
+Les profils modifiés servent aux futures recrues. « Membres recrutés » permet
+de corriger directement les caractéristiques, XP, compétences, blessures et
+notes d’un membre existant ; ces corrections restent dans sa fiche même si
+le set est ensuite désactivé. L’atelier est verrouillé pendant une bataille.
+Lors du choix de l’équipement, « Homebrew : accès illimité aux armes » autorise
+les armes des autres profils et bandes pour ce membre ou groupe uniquement.
+Ce choix reste attaché à sa fiche indépendamment du set ; les coûts et les
+limites de port continuent de s’appliquer. Après le début de la campagne, les
+objets rares doivent toujours être achetés au comptoir.
+
+Les textes de règles spéciales sont des consignes de table, pas des formules
+exécutables. L’éditeur porte sur les profils et objets existants ; il ne crée
+pas de nouveaux types d’unités ou d’objets.
+
 ## Architecture
 
 - `app/` contient l’interface principale et les feuilles de style modulaires ;

@@ -1,7 +1,9 @@
+import { HomebrewDefinitionsEditor } from '@/components/homebrew-definitions-editor';
 import {
   lazy,
   Suspense,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -20,6 +22,7 @@ import {
   LayoutDashboard,
   Minus,
   PackageOpen,
+  Pencil,
   Plus,
   Repeat2,
   Search,
@@ -73,6 +76,8 @@ import {
   equipementAutorise,
   etapesApresBataille,
   obtenirDefinitionBande,
+  obtenirEquipements,
+  obtenirLimites,
   obtenirProfil,
   quantiteMaxEquipement,
   SOURCE_GLM,
@@ -1391,9 +1396,11 @@ function GlobalSearch({
           {campagne.combattants.length > 0 && (
             <CommandGroup heading="Combattants">
               {campagne.combattants.map((combattant) => {
-                const profil = profilParId(combattant.profilId);
-                const nomsEquipements =
-                  nomsEquipementsCombattant(combattant).join(' ');
+                const profil = profilParId(combattant.profilId, campagne);
+                const nomsEquipements = nomsEquipementsCombattant(
+                  combattant,
+                  campagne.homebrew,
+                ).join(' ');
                 return (
                   <CommandItem
                     key={combattant.id}
@@ -1428,33 +1435,34 @@ function GlobalSearch({
 
           {rechercheDetaillee && (
             <CommandGroup heading="Profils de recrue">
-              {obtenirDefinitionBande(campagne.factionId).profils.map(
-                (profil) => (
-                  <CommandItem
-                    key={profil.id}
-                    keywords={[
-                      profil.nom,
-                      profil.categorie,
-                      profil.regleSpeciale ?? '',
-                      `${profil.cout} couronnes`,
-                    ]}
-                    onSelect={() =>
-                      selectionner(() =>
-                        onNavigate('warband', `profil-${profil.id}`),
-                      )
-                    }
-                    value={`profil-${profil.id} ${profil.nom} ${profil.categorie} ${profil.regleSpeciale ?? ''}`}
-                  >
-                    <Shield aria-hidden="true" />
-                    <span className="search-result-copy">
-                      <strong>{profil.nom}</strong>
-                      <small>
-                        {profil.categorie} · {profil.cout} CO
-                      </small>
-                    </span>
-                  </CommandItem>
-                ),
-              )}
+              {obtenirDefinitionBande(
+                campagne.factionId,
+                campagne.homebrew,
+              ).profils.map((profil) => (
+                <CommandItem
+                  key={profil.id}
+                  keywords={[
+                    profil.nom,
+                    profil.categorie,
+                    profil.regleSpeciale ?? '',
+                    `${profil.cout} couronnes`,
+                  ]}
+                  onSelect={() =>
+                    selectionner(() =>
+                      onNavigate('warband', `profil-${profil.id}`),
+                    )
+                  }
+                  value={`profil-${profil.id} ${profil.nom} ${profil.categorie} ${profil.regleSpeciale ?? ''}`}
+                >
+                  <Shield aria-hidden="true" />
+                  <span className="search-result-copy">
+                    <strong>{profil.nom}</strong>
+                    <small>
+                      {profil.categorie} · {profil.cout} CO
+                    </small>
+                  </span>
+                </CommandItem>
+              ))}
             </CommandGroup>
           )}
 
@@ -1878,6 +1886,13 @@ function EmptyApplicationContent({
             <p className="eyebrow">Socle protégé</p>
             <h2>L’officiel reste la référence</h2>
             <p>
+              Créez ou ouvrez une bande pour modifier ses profils, ses
+              équipements et ses règles maison.
+            </p>
+            <Button onClick={() => onVueChange('warband')}>
+              Créer une bande
+            </Button>
+            <p>
               Le livre présente ses variantes comme des ajouts facultatifs. Dans
               Trackheim, aucune d’elles ne modifie silencieusement les profils,
               les coûts ou la séquence de campagne.
@@ -1933,7 +1948,11 @@ function OverviewView({
           </div>
           <div className="fighter-list">
             {campagne.combattants.slice(0, 5).map((combattant) => (
-              <FighterRow key={combattant.id} combattant={combattant} />
+              <FighterRow
+                key={combattant.id}
+                combattant={combattant}
+                campagne={campagne}
+              />
             ))}
             {campagne.combattants.length === 0 && (
               <EmptyState
@@ -1964,7 +1983,10 @@ function WarbandHeading({
   campagne: EtatCampagne;
   onCampagneChange: (campagne: EtatCampagne) => void;
 }) {
-  const definition = obtenirDefinitionBande(campagne.factionId);
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
   return (
     <section className="warband-heading">
       <div>
@@ -2005,7 +2027,10 @@ function Metrics({
   campagne: EtatCampagne;
   synthese: Synthese;
 }) {
-  const definition = obtenirDefinitionBande(campagne.factionId);
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
   return (
     <section className="metrics-grid" aria-label="Résumé de la bande">
       <MetricCard
@@ -2060,7 +2085,7 @@ function calculerSynthese(campagne: EtatCampagne): Synthese {
   let coutBande = 0;
 
   for (const combattant of campagne.combattants) {
-    const profil = profilParId(combattant.profilId);
+    const profil = profilParId(combattant.profilId, campagne);
     const quantite = Math.max(1, combattant.quantite);
     effectif += quantite;
     if (profil.categorie === 'Héros' || combattant.herosPromu)
@@ -2085,7 +2110,8 @@ function calculerSynthese(campagne: EtatCampagne): Synthese {
       campagne.combattants.map((combattant) => ({
         quantite: combattant.quantite,
         experience: combattant.experience,
-        grandeCreature: profilParId(combattant.profilId).grandeCreature,
+        grandeCreature: profilParId(combattant.profilId, campagne)
+          .grandeCreature,
       })),
     ),
   };
@@ -2124,9 +2150,18 @@ function MetricCard({
   );
 }
 
-function FighterRow({ combattant }: { combattant: Combattant }) {
-  const profil = profilParId(combattant.profilId);
-  const equipement = nomsEquipementsCombattant(combattant).join(' · ');
+function FighterRow({
+  combattant,
+  campagne,
+}: {
+  combattant: Combattant;
+  campagne: EtatCampagne;
+}) {
+  const profil = profilParId(combattant.profilId, campagne);
+  const equipement = nomsEquipementsCombattant(
+    combattant,
+    campagne.homebrew,
+  ).join(' · ');
 
   return (
     <article className="fighter-row">
@@ -2267,7 +2302,10 @@ function WarbandView({
   onChangerBande: () => void;
   onExport: () => void;
 }) {
-  const definition = obtenirDefinitionBande(campagne.factionId);
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
   const verrouillee = Boolean(campagne.batailleEnCours);
   const [selection, setSelection] = useState<{
     type: 'profil' | 'combattant';
@@ -2429,7 +2467,7 @@ function WarbandView({
               (item) =>
                 (item.herosPromu
                   ? 'Héros'
-                  : profilParId(item.profilId).categorie) === groupe,
+                  : profilParId(item.profilId, campagne).categorie) === groupe,
             );
             return (
               <section
@@ -2457,7 +2495,7 @@ function WarbandView({
                   </p>
                 )}
                 {membres.map((combattant) => {
-                  const profil = profilParId(combattant.profilId);
+                  const profil = profilParId(combattant.profilId, campagne);
                   return (
                     <article
                       className={`builder-member search-destination${combattantChoisi?.id === combattant.id ? ' selected' : ''}`}
@@ -2496,8 +2534,10 @@ function WarbandView({
                           <span aria-hidden="true">›</span>
                         </b>
                         <small className="builder-loadout">
-                          {nomsEquipementsCombattant(combattant).join(' · ') ||
-                            'Sans équipement'}
+                          {nomsEquipementsCombattant(
+                            combattant,
+                            campagne.homebrew,
+                          ).join(' · ') || 'Sans équipement'}
                         </small>
                       </button>
                       <div className="builder-member-controls">
@@ -2787,7 +2827,11 @@ function RecruitDialog({
   enLigne?: boolean;
   onFermer?: () => void;
 }) {
-  const definition = obtenirDefinitionBande(campagne.factionId);
+  const limites = obtenirLimites(campagne.homebrew);
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
   const profilInitial =
     combattantModifie?.profilId ??
     profilPropose?.id ??
@@ -2796,6 +2840,10 @@ function RecruitDialog({
   const [ouvert, setOuvert] = useState(false);
   const [profilId, setProfilId] = useState(profilInitial);
   const [groupeId, setGroupeId] = useState('');
+  const [accesArmesHomebrew, setAccesArmesHomebrew] = useState(
+    combattantModifie?.accesArmesHomebrew ?? false,
+  );
+  const [rechercheEquipement, setRechercheEquipement] = useState('');
   const [nom, setNom] = useState(combattantModifie?.nom ?? '');
   const [quantite, setQuantite] = useState(combattantModifie?.quantite ?? 1);
   const [selectionEquipement, setSelectionEquipement] = useState<string[]>(
@@ -2809,14 +2857,18 @@ function RecruitDialog({
   );
 
   const groupeCible = campagne.combattants.find((item) => item.id === groupeId);
-  const profil = profilParId(groupeCible?.profilId ?? profilId);
+  const accesArmes = groupeCible?.accesArmesHomebrew ?? accesArmesHomebrew;
+  const profil = profilParId(groupeCible?.profilId ?? profilId, campagne);
   const creationDeBande =
     campagne.numeroBataille === 0 && campagne.parties.length === 0;
   const disponibles = [
     ...new Map(
       [
-        ...equipementsPourProfil(profil, campagne, creationDeBande),
-        ...(combattantModifie?.equipementIds.map(equipementParId) ?? []),
+        ...equipementsPourProfil(profil, campagne, creationDeBande, accesArmes),
+        ...selectionEquipement.map((id) => equipementParId(id, campagne)),
+        ...(combattantModifie?.equipementIds.map((id) =>
+          equipementParId(id, campagne),
+        ) ?? []),
       ].map((item) => [item.id, item]),
     ).values(),
   ];
@@ -2824,11 +2876,20 @@ function RecruitDialog({
     (item) => item.accordeDagueDeBase,
   );
   const equipementRecrue = groupeCible?.equipementIds ?? selectionEquipement;
-  const equipementDesactive = equipementRecrue.some(
-    (id) => equipementParId(id).achatDesactive,
-  );
+  const equipementDesactive = equipementRecrue.some((id) => {
+    const item = equipementParId(id, campagne);
+    return (
+      item.achatDesactive ||
+      !equipementAutorise(
+        profil,
+        item,
+        profil.categorie === 'Héros' || combattantModifie?.herosPromu === true,
+        accesArmes,
+      )
+    );
+  });
   const objetsPrixVariable = [...new Set(equipementRecrue)]
-    .map(equipementParId)
+    .map((id) => equipementParId(id, campagne))
     .filter(
       (item) =>
         item.prixRecrutementFormule &&
@@ -2857,16 +2918,20 @@ function RecruitDialog({
     return coutEquipement(item, campagne, profil);
   }
   const nombreArmesCorpsACorps = equipementRecrue.filter(
-    (id) => equipementParId(id).categorie === 'Corps à corps',
+    (id) => equipementParId(id, campagne).categorie === 'Corps à corps',
   ).length;
-  const nombreArmesTir = compterArmesDeTir(equipementRecrue);
-  const limiteArmesDepassee = nombreArmesCorpsACorps > 2 || nombreArmesTir > 2;
+  const nombreArmesTir = compterArmesDeTir(equipementRecrue, campagne.homebrew);
+  const limiteArmesDepassee =
+    nombreArmesCorpsACorps > limites.armesCorpsACorps ||
+    nombreArmesTir > limites.armesTir;
   const quantiteDemandee =
     combattantModifie?.quantite ??
-    (profil.categorie === 'Héros' ? 1 : Math.max(1, Math.min(5, quantite)));
+    (profil.categorie === 'Héros'
+      ? 1
+      : Math.max(1, Math.min(limites.tailleGroupe, quantite)));
   const besoinsRares = groupeCible
     ? equipementRecrue.reduce<Record<string, number>>((besoins, id) => {
-        if (equipementParId(id).rareteCommerce !== undefined) {
+        if (equipementParId(id, campagne).rareteCommerce !== undefined) {
           besoins[id] = (besoins[id] ?? 0) + quantiteDemandee;
         }
         return besoins;
@@ -2876,7 +2941,7 @@ function RecruitDialog({
     ([id, besoin]) => (campagne.inventaire[id] ?? 0) < besoin,
   );
   const nombreMutations = equipementRecrue.filter(
-    (id) => equipementParId(id).categorie === 'Mutation',
+    (id) => equipementParId(id, campagne).categorie === 'Mutation',
   ).length;
   const mutationsInsuffisantes =
     nombreMutations < (profil.minimumMutations ?? 0);
@@ -2886,7 +2951,7 @@ function RecruitDialog({
     marqueChaos === '';
   const coutEquipementsSelectionnes = equipementRecrue.reduce(
     (accumulateur, id) => {
-      const equipement = equipementParId(id);
+      const equipement = equipementParId(id, campagne);
       // Un objet rare a déjà été payé au comptoir et provient donc du magot.
       if (groupeCible && equipement.rareteCommerce !== undefined) {
         return accumulateur;
@@ -2913,7 +2978,7 @@ function RecruitDialog({
   const cout = coutUnitaire * quantiteDemandee;
   const valeurRaresAlloues = Object.entries(besoinsRares).reduce(
     (total, [id, nombre]) => {
-      const equipement = equipementParId(id);
+      const equipement = equipementParId(id, campagne);
       const prixUnitaire =
         campagne.homebrew.actifs &&
         campagne.homebrew.coutsEquipements[equipement.id] !== undefined
@@ -2928,8 +2993,17 @@ function RecruitDialog({
       (item) => item.profilId === profilId && item.id !== combattantModifie?.id,
     )
     .reduce((total, item) => total + item.quantite, 0);
+  const herosPleins =
+    !combattantModifie &&
+    profil.categorie === 'Héros' &&
+    campagne.combattants.filter(
+      (c) =>
+        c.herosPromu || profilParId(c.profilId, campagne).categorie === 'Héros',
+    ).length >= limites.heros;
   const limiteAtteinte =
-    profil.maximum !== null && nombreProfil + quantiteDemandee > profil.maximum;
+    herosPleins ||
+    (profil.maximum !== null &&
+      nombreProfil + quantiteDemandee > profil.maximum);
   const bandePleine =
     definition.effectifMaximum !== null &&
     calculerSynthese(campagne).effectif -
@@ -2951,9 +3025,10 @@ function RecruitDialog({
     ? groupeCible.experience * quantiteDemandee
     : 0;
   const groupesRenforcables = campagne.combattants.filter((combattant) => {
-    const profilGroupe = profilParId(combattant.profilId);
+    const profilGroupe = profilParId(combattant.profilId, campagne);
     return (
-      profilGroupe.categorie === 'Hommes de main' && combattant.quantite < 5
+      profilGroupe.categorie === 'Hommes de main' &&
+      combattant.quantite < limites.tailleGroupe
     );
   });
   const veteranIndisponible = Boolean(
@@ -2963,10 +3038,13 @@ function RecruitDialog({
         disponibiliteVeterans),
   );
   const groupeDepasse = Boolean(
-    groupeCible && groupeCible.quantite + quantiteDemandee > 5,
+    groupeCible &&
+    groupeCible.quantite + quantiteDemandee > limites.tailleGroupe,
   );
 
   function reinitialiserBrouillon() {
+    setAccesArmesHomebrew(combattantModifie?.accesArmesHomebrew ?? false);
+    setRechercheEquipement('');
     setProfilId(profilInitial);
     setGroupeId('');
     setNom('');
@@ -2979,6 +3057,8 @@ function RecruitDialog({
   function changerOuverture(nouvelEtat: boolean) {
     if (nouvelEtat && verrouillee) return;
     if (nouvelEtat && combattantModifie) {
+      setAccesArmesHomebrew(combattantModifie.accesArmesHomebrew ?? false);
+      setRechercheEquipement('');
       setProfilId(combattantModifie.profilId);
       setNom(combattantModifie.nom);
       setQuantite(combattantModifie.quantite);
@@ -3020,6 +3100,7 @@ function RecruitDialog({
           item.id === combattantModifie.id
             ? {
                 ...item,
+                accesArmesHomebrew: accesArmes || undefined,
                 equipementIds: [...selectionEquipement],
                 coutAcquisition: coutUnitaire,
                 coutAcquisitionTotal: cout,
@@ -3081,6 +3162,7 @@ function RecruitDialog({
         profil.id === 'ref-maraudeurs-du-chaos-devin' && marqueChaos
           ? { marqueChaos }
           : undefined,
+      ...(accesArmes ? { accesArmesHomebrew: true } : {}),
       equipementIds: selectionEquipement,
       notes: '',
       quantite: quantiteDemandee,
@@ -3102,14 +3184,15 @@ function RecruitDialog({
   }
 
   function basculerEquipement(id: string, selectionne: boolean) {
-    const equipement = equipementParId(id);
+    const equipement = equipementParId(id, campagne);
     if (selectionne && equipement.achatDesactive) return;
     if (
       selectionne &&
       ((equipement.categorie === 'Corps à corps' &&
-        nombreArmesCorpsACorps >= 2) ||
+        nombreArmesCorpsACorps >= limites.armesCorpsACorps) ||
         (equipement.categorie === 'Tir' &&
-          compterArmesDeTir([...equipementRecrue, id]) > 2))
+          compterArmesDeTir([...equipementRecrue, id], campagne.homebrew) >
+            limites.armesTir))
     ) {
       return;
     }
@@ -3119,15 +3202,16 @@ function RecruitDialog({
   }
 
   function modifierQuantiteEquipement(id: string, variation: number) {
-    const equipement = equipementParId(id);
+    const equipement = equipementParId(id, campagne);
     if (variation > 0 && equipement.achatDesactive) return;
     const maximum = quantiteMaxEquipement(equipement, profil);
     if (
       variation > 0 &&
       ((equipement.categorie === 'Corps à corps' &&
-        nombreArmesCorpsACorps >= 2) ||
+        nombreArmesCorpsACorps >= limites.armesCorpsACorps) ||
         (equipement.categorie === 'Tir' &&
-          compterArmesDeTir([...equipementRecrue, id]) > 2))
+          compterArmesDeTir([...equipementRecrue, id], campagne.homebrew) >
+            limites.armesTir))
     ) {
       return;
     }
@@ -3251,8 +3335,8 @@ function RecruitDialog({
                 </NativeSelectOption>
                 {groupesRenforcables.map((groupe) => (
                   <NativeSelectOption key={groupe.id} value={groupe.id}>
-                    Renforcer {groupe.nom} : {groupe.quantite}/5 ·{' '}
-                    {groupe.experience} XP
+                    Renforcer {groupe.nom} : {groupe.quantite}/
+                    {limites.tailleGroupe} · {groupe.experience} XP
                   </NativeSelectOption>
                 ))}
               </NativeSelect>
@@ -3340,7 +3424,10 @@ function RecruitDialog({
                   onChange={(event) => setQuantite(Number(event.target.value))}
                 >
                   {Array.from(
-                    { length: profil.categorie === 'Héros' ? 1 : 5 },
+                    {
+                      length:
+                        profil.categorie === 'Héros' ? 1 : limites.tailleGroupe,
+                    },
                     (_, index) => index + 1,
                   ).map((nombre) => (
                     <NativeSelectOption key={nombre} value={`${nombre}`}>
@@ -3379,83 +3466,136 @@ function RecruitDialog({
                 <span>Dague de base incluse gratuitement</span>
               ) : null}
             </div>
+            <label className="homebrew-check">
+              <input
+                type="checkbox"
+                checked={accesArmes}
+                disabled={Boolean(groupeCible) || verrouillee}
+                onChange={(event) =>
+                  setAccesArmesHomebrew(event.target.checked)
+                }
+              />
+              Homebrew : accès illimité aux armes
+            </label>
+            <p className="homebrew-help">
+              Pour ce membre ou groupe uniquement. Autorise les armes des autres
+              profils et bandes ; leurs coûts et les limites de port restent
+              applicables.
+            </p>
+            {accesArmes && (
+              <Input
+                aria-label="Rechercher une arme ou un équipement"
+                placeholder="Rechercher une arme…"
+                value={rechercheEquipement}
+                onChange={(event) => setRechercheEquipement(event.target.value)}
+              />
+            )}
+            {accesArmes &&
+              disponibles.length > 80 &&
+              !rechercheEquipement.trim() && (
+                <p className="homebrew-help">
+                  Les 80 premiers équipements sont affichés. Utilisez la
+                  recherche pour trouver une arme dans le catalogue complet.
+                </p>
+              )}
             <div className="equipment-options">
               {(groupeCible
-                ? groupeCible.equipementIds.map(equipementParId)
+                ? groupeCible.equipementIds.map((id) =>
+                    equipementParId(id, campagne),
+                  )
                 : disponibles
-              ).map((item) => {
-                const maximum = quantiteMaxEquipement(item, profil);
-                const nombre = equipementRecrue.filter(
-                  (id) => id === item.id,
-                ).length;
-                const categoriePleine =
-                  (item.categorie === 'Corps à corps' &&
-                    nombreArmesCorpsACorps >= 2) ||
-                  (item.categorie === 'Tir' &&
-                    compterArmesDeTir([...equipementRecrue, item.id]) > 2);
-                return (
-                  <div className="equipment-option" key={item.id}>
-                    {maximum === 1 ? (
-                      <Checkbox
-                        aria-label={`Ajouter ${item.nom}`}
-                        checked={groupeCible ? true : nombre === 1}
-                        disabled={
-                          Boolean(groupeCible) ||
-                          (nombre === 0 && categoriePleine)
-                        }
-                        onCheckedChange={(checked) =>
-                          basculerEquipement(item.id, checked === true)
-                        }
-                      />
-                    ) : (
-                      <div className="equipment-quantity">
-                        <Button
-                          aria-label={`Retirer un exemplaire de ${item.nom}`}
-                          disabled={Boolean(groupeCible) || nombre === 0}
-                          onClick={() =>
-                            modifierQuantiteEquipement(item.id, -1)
-                          }
-                          size="icon-sm"
-                          type="button"
-                          variant="ghost"
-                        >
-                          <Minus />
-                        </Button>
-                        <output aria-label={`Quantité de ${item.nom}`}>
-                          {nombre}
-                        </output>
-                        <Button
-                          aria-label={`Ajouter un exemplaire de ${item.nom}`}
+              )
+                .filter(
+                  (item) =>
+                    !accesArmes ||
+                    normaliser(item.nom).includes(
+                      normaliser(rechercheEquipement),
+                    ),
+                )
+                .sort(
+                  (a, b) =>
+                    Number(equipementRecrue.includes(b.id)) -
+                    Number(equipementRecrue.includes(a.id)),
+                )
+                .slice(0, accesArmes ? 80 : undefined)
+                .map((item) => {
+                  const maximum = quantiteMaxEquipement(item, profil);
+                  const nombre = equipementRecrue.filter(
+                    (id) => id === item.id,
+                  ).length;
+                  const categoriePleine =
+                    (item.categorie === 'Corps à corps' &&
+                      nombreArmesCorpsACorps >= limites.armesCorpsACorps) ||
+                    (item.categorie === 'Tir' &&
+                      compterArmesDeTir(
+                        [...equipementRecrue, item.id],
+                        campagne.homebrew,
+                      ) > limites.armesTir);
+                  return (
+                    <div className="equipment-option" key={item.id}>
+                      {maximum === 1 ? (
+                        <Checkbox
+                          aria-label={`Ajouter ${item.nom}`}
+                          checked={groupeCible ? true : nombre === 1}
                           disabled={
                             Boolean(groupeCible) ||
-                            nombre >= maximum ||
-                            categoriePleine
+                            (nombre === 0 && categoriePleine)
                           }
-                          onClick={() => modifierQuantiteEquipement(item.id, 1)}
-                          size="icon-sm"
-                          type="button"
-                          variant="ghost"
-                        >
-                          <Plus />
-                        </Button>
-                      </div>
-                    )}
-                    <span>
-                      <strong>{item.nom}</strong>
-                      <small>{item.categorie}</small>
-                      {item.regleSpeciale && (
-                        <small>{item.regleSpeciale}</small>
+                          onCheckedChange={(checked) =>
+                            basculerEquipement(item.id, checked === true)
+                          }
+                        />
+                      ) : (
+                        <div className="equipment-quantity">
+                          <Button
+                            aria-label={`Retirer un exemplaire de ${item.nom}`}
+                            disabled={Boolean(groupeCible) || nombre === 0}
+                            onClick={() =>
+                              modifierQuantiteEquipement(item.id, -1)
+                            }
+                            size="icon-sm"
+                            type="button"
+                            variant="ghost"
+                          >
+                            <Minus />
+                          </Button>
+                          <output aria-label={`Quantité de ${item.nom}`}>
+                            {nombre}
+                          </output>
+                          <Button
+                            aria-label={`Ajouter un exemplaire de ${item.nom}`}
+                            disabled={
+                              Boolean(groupeCible) ||
+                              nombre >= maximum ||
+                              categoriePleine
+                            }
+                            onClick={() =>
+                              modifierQuantiteEquipement(item.id, 1)
+                            }
+                            size="icon-sm"
+                            type="button"
+                            variant="ghost"
+                          >
+                            <Plus />
+                          </Button>
+                        </div>
                       )}
-                    </span>
-                    <b>
-                      {groupeCible && item.rareteCommerce !== undefined
-                        ? 'Magot'
-                        : (item.prixRecrutementFormule ??
-                          `${coutEquipement(item, campagne, profil)} CO`)}
-                    </b>
-                  </div>
-                );
-              })}
+                      <span>
+                        <strong>{item.nom}</strong>
+                        <small>{item.categorie}</small>
+                        {item.regleSpeciale && (
+                          <small>{item.regleSpeciale}</small>
+                        )}
+                      </span>
+                      <b>
+                        {groupeCible && item.rareteCommerce !== undefined
+                          ? 'Magot'
+                          : (item.prixRecrutementFormule ??
+                            `${coutEquipement(item, campagne, profil)} CO`)}
+                      </b>
+                    </div>
+                  );
+                })}
             </div>
           </div>
 
@@ -3495,7 +3635,7 @@ function RecruitDialog({
             <div className="form-alert" role="alert">
               <CircleAlert />{' '}
               {equipementDesactive
-                ? 'Ce groupe utilise une ancienne entrée d’équipement à préciser. Remplacez-la par une arme définie avant de le renforcer.'
+                ? 'Un équipement sélectionné n’est plus autorisé. Retirez-le ou activez l’accès homebrew aux armes.'
                 : prixManquant
                   ? 'Saisissez le prix des équipements à coût variable avant de recruter.'
                   : fondsInsuffisants
@@ -3503,7 +3643,7 @@ function RecruitDialog({
                       ? `Budget dépassé de ${coutAPayer - campagne.couronnes} CO. Vous pouvez quand même ${combattantModifie ? 'enregistrer' : 'recruter'} ; le trésor affichera ce déficit.`
                       : `Trésor insuffisant : il manque ${coutAPayer - campagne.couronnes} CO.`
                     : limiteArmesDepassee
-                      ? 'Un combattant ne peut porter que deux armes de corps à corps et deux armes de tir.'
+                      ? `Limite : ${limites.armesCorpsACorps} armes de corps à corps et ${limites.armesTir} armes de tir.`
                       : marqueChaosManquante
                         ? 'Choisissez la marque du Devin. Elle détermine son répertoire magique.'
                         : mutationsInsuffisantes
@@ -3513,7 +3653,7 @@ function RecruitDialog({
                             : veteranIndisponible
                               ? `Réserve vétéran insuffisante : ${experienceVeteransDemandee} XP requis, ${Math.max(0, (disponibiliteVeterans ?? 0) - experienceVeteransDepensee)} encore disponible.`
                               : groupeDepasse
-                                ? 'Un groupe d’hommes de main ne peut pas dépasser cinq membres.'
+                                ? `Un groupe ne peut pas dépasser ${limites.tailleGroupe} membres.`
                                 : chefDejaRecrute
                                   ? 'Une bande ne peut pas recruter un second Chef.'
                                   : 'La limite de ce profil ou de la bande est atteinte.'}
@@ -4826,44 +4966,53 @@ function HomebrewView({
   ).length;
 
   function mettreAJourHomebrew(changements: Partial<ReglagesHomebrew>) {
+    if (campagne.batailleEnCours) return;
+    const homebrew = { ...campagne.homebrew, ...changements };
+    const differenceBudget =
+      campagne.numeroBataille === 0 && campagne.parties.length === 0
+        ? obtenirDefinitionBande(campagne.factionId, homebrew).budgetInitial -
+          obtenirDefinitionBande(campagne.factionId, campagne.homebrew)
+            .budgetInitial
+        : 0;
     onCampagneChange({
       ...campagne,
-      homebrew: { ...campagne.homebrew, ...changements },
+      couronnes: campagne.couronnes + differenceBudget,
+      homebrew,
     });
   }
 
-  function mettreAJourRecrue(id: string, valeur: number) {
+  function retablirPrixOfficiels() {
+    const profils = Object.fromEntries(
+      Object.entries(campagne.homebrew.profils ?? {}).map(([id, profil]) => [
+        id,
+        { ...profil, cout: obtenirProfil(id).cout },
+      ]),
+    );
+    const objets = Object.fromEntries(
+      Object.entries(campagne.homebrew.equipements ?? {}).map(([id, objet]) => {
+        const officiel = equipements.find((item) => item.id === id)!;
+        const suivant = { ...objet };
+        for (const cle of [
+          'cout',
+          'coutCommerce',
+          'coutsParListe',
+          'coutCommerceFormule',
+          'prixRecrutementFormule',
+          'prixRecrutementMinimum',
+        ] as const) {
+          delete suivant[cle];
+          if (officiel[cle] !== undefined)
+            Object.assign(suivant, { [cle]: officiel[cle] });
+        }
+        return [id, suivant];
+      }),
+    );
     mettreAJourHomebrew({
-      coutsRecrues: { ...campagne.homebrew.coutsRecrues, [id]: valeur },
+      coutsRecrues: {},
+      coutsEquipements: {},
+      profils,
+      equipements: objets,
     });
-  }
-
-  function mettreAJourEquipement(id: string, valeur: number) {
-    mettreAJourHomebrew({
-      coutsEquipements: { ...campagne.homebrew.coutsEquipements, [id]: valeur },
-    });
-  }
-
-  function basculerSurchargeRecrue(
-    id: string,
-    active: boolean,
-    officiel: number,
-  ) {
-    const valeurs = { ...campagne.homebrew.coutsRecrues };
-    if (active) valeurs[id] = officiel;
-    else delete valeurs[id];
-    mettreAJourHomebrew({ coutsRecrues: valeurs });
-  }
-
-  function basculerSurchargeEquipement(
-    id: string,
-    active: boolean,
-    officiel: number,
-  ) {
-    const valeurs = { ...campagne.homebrew.coutsEquipements };
-    if (active) valeurs[id] = officiel;
-    else delete valeurs[id];
-    mettreAJourHomebrew({ coutsEquipements: valeurs });
   }
 
   function ajouterRegle(regle: Omit<RegleHomebrew, 'id' | 'active'>) {
@@ -4890,209 +5039,188 @@ function HomebrewView({
   }
 
   return (
-    <section className="product-view">
+    <section className="product-view homebrew-view">
       <PageHeader
         eyebrow="Règles maison"
         title="Atelier homebrew"
-        description="Composez une couche de règles au-dessus du socle officiel. Seuls vos overrides remplacent les éléments concernés ; tout le reste demeure automatiquement en vanilla."
+        description="Personnalisez les profils, caractéristiques, équipements et limites de cette bande. Enregistrez chaque fiche, puis activez votre set pour l’appliquer."
         action={
           <Button
             variant="outline"
-            disabled={nombreSurcharges === 0}
-            onClick={() =>
-              mettreAJourHomebrew({ coutsRecrues: {}, coutsEquipements: {} })
+            disabled={
+              nombreSurcharges === 0 || Boolean(campagne.batailleEnCours)
             }
+            onClick={retablirPrixOfficiels}
           >
             <Trash2 aria-hidden="true" />
-            Retirer les overrides de prix
+            Rétablir tous les prix officiels
           </Button>
         }
       />
 
-      <section className="homebrew-toggle">
-        <div>
-          <FlaskConical />
-          <div>
-            <strong>Appliquer « {campagne.homebrew.nomSet} »</strong>
-            <p>
-              {nombreSurcharges} overrides · {reglesActives} règles
-              complémentaires actives
-            </p>
-          </div>
-        </div>
-        <Switch
-          aria-label="Appliquer le set homebrew"
-          checked={campagne.homebrew.actifs}
-          onCheckedChange={(actifs) => mettreAJourHomebrew({ actifs })}
-        />
-      </section>
-
-      <section
-        className="overlay-map"
-        aria-label="Ordre d’application des règles"
+      {campagne.batailleEnCours && (
+        <output>
+          Terminez la bataille en cours pour modifier les règles et les fiches.
+        </output>
+      )}
+      <fieldset
+        disabled={Boolean(campagne.batailleEnCours)}
+        className="homebrew-content"
       >
-        <div className="overlay-node official-layer">
-          <Shield />
-          <span>
-            <small>Socle</small>
-            <strong>Règles officielles</strong>
-          </span>
-          <b>Vanilla complet</b>
-        </div>
-        <span className="overlay-operator">+</span>
-        <div className="overlay-node homebrew-layer">
-          <FlaskConical />
-          <span>
-            <small>Surcouche</small>
-            <strong>{campagne.homebrew.nomSet}</strong>
-          </span>
-          <b>{nombreSurcharges + reglesActives} éléments</b>
-        </div>
-        <span className="overlay-operator">=</span>
-        <div className="overlay-node effective-layer">
-          <Sparkles />
-          <span>
-            <small>Résultat</small>
-            <strong>Règles effectives</strong>
-          </span>
-          <b>Vanilla + overrides</b>
-        </div>
-      </section>
-
-      <section
-        className="rule-set-card search-destination"
-        id="set-homebrew"
-        tabIndex={-1}
-      >
-        <div className="panel-header">
+        <section className="homebrew-toggle">
           <div>
-            <p className="eyebrow">Identité de la surcouche</p>
-            <h2>Votre set de règles</h2>
+            <FlaskConical />
+            <div>
+              <strong>Appliquer « {campagne.homebrew.nomSet} »</strong>
+              <p>
+                {nombreSurcharges} prix personnalisés · {reglesActives} règles
+                complémentaires actives
+              </p>
+            </div>
           </div>
-          <span
-            className={
-              campagne.homebrew.actifs ? 'layer-status active' : 'layer-status'
-            }
-          >
-            {campagne.homebrew.actifs ? 'Appliqué' : 'En préparation'}
-          </span>
-        </div>
-        <div className="rule-set-fields">
-          <label className="field-group" htmlFor="homebrew-set-name">
-            Nom du set
-            <Input
-              id="homebrew-set-name"
-              maxLength={160}
-              value={campagne.homebrew.nomSet}
-              onChange={(event) =>
-                mettreAJourHomebrew({ nomSet: event.target.value })
-              }
-            />
-          </label>
-          <label className="field-group" htmlFor="homebrew-set-description">
-            Intention de la règle maison
-            <Textarea
-              id="homebrew-set-description"
-              maxLength={10000}
-              value={campagne.homebrew.description}
-              onChange={(event) =>
-                mettreAJourHomebrew({ description: event.target.value })
-              }
-            />
-          </label>
-        </div>
-      </section>
-
-      <section className="custom-rules-panel">
-        <div className="panel-header">
-          <div>
-            <p className="eyebrow">Compléments au livre de règles</p>
-            <h2>Règles personnalisées</h2>
-          </div>
-          <AddRuleDialog onAdd={ajouterRegle} />
-        </div>
-        {campagne.homebrew.regles.length > 0 ? (
-          <div className="custom-rule-list">
-            {campagne.homebrew.regles.map((regle) => (
-              <article
-                className={
-                  regle.active
-                    ? 'custom-rule active search-destination'
-                    : 'custom-rule search-destination'
-                }
-                id={`regle-${regle.id}`}
-                key={regle.id}
-                tabIndex={-1}
-              >
-                <Switch
-                  aria-label={`Activer ${regle.titre}`}
-                  checked={regle.active}
-                  onCheckedChange={(active) =>
-                    modifierRegle(regle.id, { active })
-                  }
-                />
-                <div>
-                  <div className="custom-rule-title">
-                    <strong>{regle.titre}</strong>
-                    <span>{regle.portee}</span>
-                  </div>
-                  <p>{regle.description}</p>
-                </div>
-                <Button
-                  aria-label={`Supprimer ${regle.titre}`}
-                  size="icon-sm"
-                  variant="ghost"
-                  onClick={() => supprimerRegle(regle.id)}
-                >
-                  <Trash2 />
-                </Button>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <EmptyState
-            icon={FlaskConical}
-            title="Aucune règle complémentaire"
-            text="Ajoutez uniquement ce qui change ou complète le livre officiel."
+          <Switch
+            aria-label="Appliquer le set homebrew"
+            checked={campagne.homebrew.actifs}
+            onCheckedChange={(actifs) => mettreAJourHomebrew({ actifs })}
           />
-        )}
-      </section>
+        </section>
 
-      <div className="homebrew-grid">
-        <PriceTable
-          title="Recrues"
-          items={obtenirDefinitionBande(campagne.factionId).profils.map(
-            (profil) => ({
-              id: profil.id,
-              nom: profil.nom,
-              officiel: profil.cout,
-              valeur: campagne.homebrew.coutsRecrues[profil.id],
-            }),
+        <p className="homebrew-help">
+          {campagne.homebrew.actifs
+            ? 'Le set est appliqué.'
+            : 'Le set est en pause : vous pouvez le modifier, puis l’activer ci-dessus.'}{' '}
+          Les profils s’appliquent aux futures recrues ; les fiches existantes
+          se corrigent dans « Membres recrutés ». Les textes de règles spéciales
+          sont à résoudre à la table et ne changent pas automatiquement les
+          calculs.
+        </p>
+        <HomebrewDefinitionsEditor
+          campagne={campagne}
+          onChange={mettreAJourHomebrew}
+          onCampagneChange={onCampagneChange}
+        />
+
+        <section
+          className="rule-set-card search-destination"
+          id="set-homebrew"
+          tabIndex={-1}
+        >
+          <div className="panel-header">
+            <div>
+              <p className="eyebrow">Identité de la surcouche</p>
+              <h2>Votre set de règles</h2>
+            </div>
+            <span
+              className={
+                campagne.homebrew.actifs
+                  ? 'layer-status active'
+                  : 'layer-status'
+              }
+            >
+              {campagne.homebrew.actifs ? 'Appliqué' : 'En préparation'}
+            </span>
+          </div>
+          <div className="rule-set-fields">
+            <label className="field-group" htmlFor="homebrew-set-name">
+              Nom du set
+              <Input
+                id="homebrew-set-name"
+                maxLength={160}
+                value={campagne.homebrew.nomSet}
+                onChange={(event) =>
+                  mettreAJourHomebrew({ nomSet: event.target.value })
+                }
+              />
+            </label>
+            <label className="field-group" htmlFor="homebrew-set-description">
+              Intention de la règle maison
+              <Textarea
+                id="homebrew-set-description"
+                maxLength={10000}
+                value={campagne.homebrew.description}
+                onChange={(event) =>
+                  mettreAJourHomebrew({ description: event.target.value })
+                }
+              />
+            </label>
+          </div>
+        </section>
+
+        <section className="custom-rules-panel">
+          <div className="panel-header">
+            <div>
+              <p className="eyebrow">Compléments au livre de règles</p>
+              <h2>Règles personnalisées</h2>
+            </div>
+            <HomebrewRuleDialog onSave={ajouterRegle} />
+          </div>
+          {campagne.homebrew.regles.length > 0 ? (
+            <div className="custom-rule-list">
+              {campagne.homebrew.regles.map((regle) => (
+                <article
+                  className={
+                    regle.active
+                      ? 'custom-rule active search-destination'
+                      : 'custom-rule search-destination'
+                  }
+                  id={`regle-${regle.id}`}
+                  key={regle.id}
+                  tabIndex={-1}
+                >
+                  <Switch
+                    aria-label={`Activer ${regle.titre}`}
+                    checked={regle.active}
+                    onCheckedChange={(active) =>
+                      modifierRegle(regle.id, { active })
+                    }
+                  />
+                  <div>
+                    <div className="custom-rule-title">
+                      <strong>{regle.titre}</strong>
+                      <span>{regle.portee}</span>
+                    </div>
+                    <p>{regle.description}</p>
+                  </div>
+                  <div className="custom-rule-actions">
+                    <HomebrewRuleDialog
+                      regle={regle}
+                      onSave={(changements) =>
+                        modifierRegle(regle.id, changements)
+                      }
+                    />
+                    <Button
+                      aria-label={`Supprimer ${regle.titre}`}
+                      size="icon-sm"
+                      variant="ghost"
+                      onClick={() => supprimerRegle(regle.id)}
+                    >
+                      <Trash2 />
+                    </Button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              icon={FlaskConical}
+              title="Aucune règle complémentaire"
+              text="Ajoutez uniquement ce qui change ou complète le livre officiel."
+            />
           )}
-          onChange={mettreAJourRecrue}
-          onToggle={basculerSurchargeRecrue}
-        />
-        <PriceTable
-          title="Équipements"
-          items={equipements.map((item) => ({
-            id: item.id,
-            nom: item.nom,
-            officiel: item.cout,
-            valeur: campagne.homebrew.coutsEquipements[item.id],
-          }))}
-          onChange={mettreAJourEquipement}
-          onToggle={basculerSurchargeEquipement}
-        />
-      </div>
+        </section>
+      </fieldset>
     </section>
   );
 }
 
-function AddRuleDialog({
-  onAdd,
+function HomebrewRuleDialog({
+  regle,
+  onSave,
 }: {
-  onAdd: (regle: Omit<RegleHomebrew, 'id' | 'active'>) => void;
+  regle?: RegleHomebrew;
+  onSave: (regle: Omit<RegleHomebrew, 'id' | 'active'>) => void;
 }) {
+  const champId = useId();
   const [ouvert, setOuvert] = useState(false);
   const [titre, setTitre] = useState('');
   const [portee, setPortee] = useState<RegleHomebrew['portee']>('Campagne');
@@ -5100,7 +5228,7 @@ function AddRuleDialog({
 
   function ajouter() {
     if (!titre.trim() || !description.trim()) return;
-    onAdd({ titre: titre.trim(), portee, description: description.trim() });
+    onSave({ titre: titre.trim(), portee, description: description.trim() });
     setTitre('');
     setDescription('');
     setPortee('Campagne');
@@ -5108,19 +5236,28 @@ function AddRuleDialog({
   }
 
   function changerOuverture(nouvelEtat: boolean) {
-    if (!nouvelEtat) {
-      setTitre('');
-      setDescription('');
-      setPortee('Campagne');
-    }
+    setTitre(regle?.titre ?? '');
+    setDescription(regle?.description ?? '');
+    setPortee(regle?.portee ?? 'Campagne');
     setOuvert(nouvelEtat);
   }
 
   return (
     <Dialog open={ouvert} onOpenChange={changerOuverture}>
-      <DialogTrigger render={<Button variant="outline" />}>
-        <Plus data-icon="inline-start" />
-        Ajouter une règle
+      <DialogTrigger
+        render={
+          <Button
+            variant="outline"
+            aria-label={regle ? `Modifier ${regle.titre}` : undefined}
+          />
+        }
+      >
+        {regle ? (
+          <Pencil data-icon="inline-start" />
+        ) : (
+          <Plus data-icon="inline-start" />
+        )}
+        {regle ? 'Modifier' : 'Ajouter une règle'}
       </DialogTrigger>
       <DialogContent className="homebrew-rule-dialog sm:max-w-lg">
         <form
@@ -5131,27 +5268,29 @@ function AddRuleDialog({
           }}
         >
           <DialogHeader>
-            <DialogTitle>Nouvelle règle complémentaire</DialogTitle>
+            <DialogTitle>
+              {regle ? 'Modifier la règle' : 'Nouvelle règle complémentaire'}
+            </DialogTitle>
             <DialogDescription>
               Décrivez uniquement l’écart au livre officiel. La règle vanilla
               reste héritée partout ailleurs.
             </DialogDescription>
           </DialogHeader>
           <div className="homebrew-rule-form">
-            <label className="field-group" htmlFor="homebrew-rule-title">
+            <label className="field-group" htmlFor={`${champId}-title`}>
               Nom de la règle
               <Input
-                id="homebrew-rule-title"
+                id={`${champId}-title`}
                 maxLength={300}
                 value={titre}
                 onChange={(event) => setTitre(event.target.value)}
                 placeholder="Ex. Prime du chasseur"
               />
             </label>
-            <label className="field-group" htmlFor="homebrew-rule-scope">
+            <label className="field-group" htmlFor={`${champId}-scope`}>
               Portée
               <NativeSelect
-                id="homebrew-rule-scope"
+                id={`${champId}-scope`}
                 value={portee}
                 onChange={(event) =>
                   setPortee(event.target.value as RegleHomebrew['portee'])
@@ -5167,10 +5306,10 @@ function AddRuleDialog({
                 </NativeSelectOption>
               </NativeSelect>
             </label>
-            <label className="field-group" htmlFor="homebrew-rule-description">
-              Texte de l’override ou du complément
+            <label className="field-group" htmlFor={`${champId}-description`}>
+              Texte de la règle
               <Textarea
-                id="homebrew-rule-description"
+                id={`${champId}-description`}
                 maxLength={10000}
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
@@ -5190,81 +5329,12 @@ function AddRuleDialog({
               disabled={!titre.trim() || !description.trim()}
               type="submit"
             >
-              Ajouter au set
+              {regle ? 'Enregistrer les modifications' : 'Ajouter au set'}
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
-  );
-}
-
-function PriceTable({
-  title,
-  items,
-  onChange,
-  onToggle,
-}: {
-  title: string;
-  items: Array<{ id: string; nom: string; officiel: number; valeur?: number }>;
-  onChange: (id: string, valeur: number) => void;
-  onToggle: (id: string, active: boolean, officiel: number) => void;
-}) {
-  return (
-    <section className="price-panel">
-      <div className="panel-header">
-        <div>
-          <p className="eyebrow">Overrides ciblés</p>
-          <h2>{title}</h2>
-        </div>
-      </div>
-      <div className="price-list">
-        {items.map((item) => {
-          const surchargeActive = item.valeur !== undefined;
-          return (
-            <div
-              className={
-                surchargeActive ? 'price-row override-active' : 'price-row'
-              }
-              key={item.id}
-            >
-              <span>
-                <strong>{item.nom}</strong>
-                <small>
-                  Officiel : {item.officiel} CO ·{' '}
-                  {surchargeActive ? 'override actif' : 'hérité en vanilla'}
-                </small>
-              </span>
-              <Switch
-                aria-label={`Surcharger le prix de ${item.nom}`}
-                checked={surchargeActive}
-                onCheckedChange={(active) =>
-                  onToggle(item.id, active, item.officiel)
-                }
-              />
-              <Input
-                aria-label={`Prix homebrew de ${item.nom}`}
-                disabled={!surchargeActive}
-                type="number"
-                min="0"
-                step="1"
-                value={item.valeur ?? item.officiel}
-                onChange={(event) => {
-                  const valeur = Number(event.target.value);
-                  onChange(
-                    item.id,
-                    Number.isFinite(valeur)
-                      ? Math.max(0, Math.trunc(valeur))
-                      : 0,
-                  );
-                }}
-              />
-              <b>CO</b>
-            </div>
-          );
-        })}
-      </div>
-    </section>
   );
 }
 
@@ -5364,12 +5434,14 @@ function coutEquipement(
   return campagne.homebrew.coutsEquipements[equipement.id] ?? coutOfficiel;
 }
 
-function profilParId(id: string) {
-  return obtenirProfil(id);
+function profilParId(id: string, campagne: EtatCampagne) {
+  return obtenirProfil(id, campagne.homebrew);
 }
 
-function equipementParId(id: string) {
-  const equipement = equipements.find((candidat) => candidat.id === id);
+function equipementParId(id: string, campagne: EtatCampagne) {
+  const equipement = obtenirEquipements(campagne.homebrew).find(
+    (candidat) => candidat.id === id,
+  );
   if (!equipement) throw new Error(`Équipement inconnu : ${id}`);
   return equipement;
 }
@@ -5378,9 +5450,12 @@ function equipementsPourProfil(
   profil: ProfilRecrue,
   campagne: EtatCampagne,
   creationDeBande: boolean,
+  accesArmesHomebrew = false,
 ) {
-  return equipements.filter((item) => {
+  return obtenirEquipements(campagne.homebrew).filter((item) => {
     if (item.achatDesactive) return false;
+    if (accesArmesHomebrew && ['Corps à corps', 'Tir'].includes(item.categorie))
+      return true;
     if (item.commerceUniquement) return false;
     if (!creationDeBande && item.rareteCommerce !== undefined) return false;
     if (!creationDeBande && item.categorie === 'Mutation') return false;

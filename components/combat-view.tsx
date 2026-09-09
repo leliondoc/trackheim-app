@@ -23,6 +23,7 @@ import {
   obtenirProfil,
   type BatailleEnCours,
   type Combattant,
+  type ReglagesHomebrew,
   type EtatFigurineTable,
   type EtatCampagne,
   type SuiviCombattantBataille,
@@ -113,7 +114,9 @@ export function CombatView({
             {campagne.combattants.map((combattant) => (
               <li key={combattant.id}>
                 <strong>{combattant.nom}</strong>
-                <span>{obtenirProfil(combattant.profilId).nom}</span>
+                <span>
+                  {obtenirProfil(combattant.profilId, campagne.homebrew).nom}
+                </span>
                 <b>{combattant.statut}</b>
               </li>
             ))}
@@ -223,6 +226,7 @@ export function CombatView({
         <div className="combatant-table-grid">
           {participants.map(({ combattant, suivi }) => (
             <CombatantTableCard
+              homebrew={campagne.homebrew}
               combattant={combattant}
               key={combattant.id}
               onChange={(modification) =>
@@ -248,15 +252,17 @@ export function CombatView({
 }
 
 function CombatantTableCard({
+  homebrew,
   combattant,
   suivi,
   onChange,
 }: {
+  homebrew: ReglagesHomebrew;
   combattant: Combattant;
   suivi: SuiviCombattantBataille;
   onChange: (modification: Partial<SuiviCombattantBataille>) => void;
 }) {
-  const profil = obtenirProfil(combattant.profilId);
+  const profil = obtenirProfil(combattant.profilId, homebrew);
   const effectifBataille = suivi.effectifInitial;
   const pointsVieMaximum = suivi.pointsVieMaximumInitial;
   const figurines = suivi.figurinesTable;
@@ -266,7 +272,7 @@ function CombatantTableCard({
       : suivi.horsCombat === effectifBataille
         ? 'Hors de combat'
         : 'Debout';
-  const equipement = nomsEquipementsCombattant(combattant);
+  const equipement = nomsEquipementsCombattant(combattant, homebrew);
   const sorts = combattant.competences
     .filter((competence) => competence.startsWith('Sort ou prière : '))
     .map((competence) => {

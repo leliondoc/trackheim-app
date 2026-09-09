@@ -1,7 +1,12 @@
+import { validerDefinitionsHomebrew } from './homebrew-validation.ts';
 import {
   bandesBibliotheque,
   compterArmesDeTir,
   definitionsBandes,
+  obtenirDefinitionBande,
+  obtenirEquipements,
+  obtenirLimites,
+  type ReglagesHomebrew,
   equipements,
   equipementAutorise,
   profils,
@@ -110,9 +115,12 @@ export function validerCampagneV4(
     return echec("L'état des dix étapes d'après-bataille est invalide.");
   }
 
-  const definition = definitionsBandes.find(
-    (item) => item.id === valeur.factionId,
-  )!;
+  const erreurHomebrew = validerHomebrew(valeur.homebrew);
+  if (erreurHomebrew) return echec(erreurHomebrew);
+  const definition = obtenirDefinitionBande(
+    valeur.factionId as FactionId,
+    valeur.homebrew as ReglagesHomebrew,
+  );
   const erreurCombattants = validerCombattants(
     valeur.combattants,
     new Set(definition.profils.map((profil) => profil.id)),
@@ -144,15 +152,13 @@ export function validerCampagneV4(
   const erreurParties = validerParties(valeur.parties);
   if (erreurParties) return echec(erreurParties);
 
-  const erreurHomebrew = validerHomebrew(valeur.homebrew);
-  if (erreurHomebrew) return echec(erreurHomebrew);
-
   return { ok: true, campagne: valeur as unknown as EtatCampagne };
 }
 
 export function avertissementReglesCampagne(campagne: EtatCampagne) {
-  const definition = definitionsBandes.find(
-    (item) => item.id === campagne.factionId,
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
   );
   return definition
     ? validerReglesMetier(campagne as unknown as ObjetJson, definition)
@@ -163,6 +169,9 @@ function validerReglesMetier(
   campagne: ObjetJson,
   definition: (typeof definitionsBandes)[number],
 ) {
+  const homebrew = campagne.homebrew as ReglagesHomebrew;
+  const limites = obtenirLimites(homebrew);
+  const equipements = obtenirEquipements(homebrew);
   const combattants = campagne.combattants as ObjetJson[];
   const effectif = combattants.reduce(
     (total, combattant) => total + Number(combattant.quantite),
@@ -174,6 +183,18 @@ function validerReglesMetier(
   ) {
     return `L’effectif dépasse la limite de ${definition.effectifMaximum} guerriers.`;
   }
+
+  if (
+    homebrew.actifs &&
+    homebrew.limites?.heros !== undefined &&
+    combattants.filter(
+      (c) =>
+        c.herosPromu === true ||
+        definition.profils.find((p) => p.id === c.profilId)?.categorie ===
+          'Héros',
+    ).length > limites.heros
+  )
+    return `La bande dépasse sa limite homebrew de ${limites.heros} Héros.`;
 
   const chefs = combattants.filter((combattant) => combattant.chef === true);
   if (chefs.length > 1) return 'Une bande ne peut avoir qu’un seul Chef.';
@@ -204,6 +225,13 @@ function validerReglesMetier(
     if (estHeros && quantite !== 1) {
       return `${String(combattant.nom)} est un Héros et ne peut pas représenter un groupe.`;
     }
+    if (
+      homebrew.actifs &&
+      homebrew.limites?.tailleGroupe !== undefined &&
+      !estHeros &&
+      quantite > limites.tailleGroupe
+    )
+      return `${String(combattant.nom)} dépasse la taille de groupe homebrew de ${limites.tailleGroupe}.`;
     if (combattant.chef === true && !estHeros) {
       return `${String(combattant.nom)} ne peut pas être Chef sans être un Héros.`;
     }
@@ -220,18 +248,28 @@ function validerReglesMetier(
 
     const ids = combattant.equipementIds as string[];
     let armesCorpsACorps = 0;
-    const armesDeTir = compterArmesDeTir(ids);
+    const armesDeTir = compterArmesDeTir(ids, homebrew);
     const compteurs = new Map<string, number>();
     for (const id of ids) {
       const equipement = equipements.find((item) => item.id === id)!;
-      if (!equipementAutorise(profil, equipement, estHeros)) {
+      if (
+        !equipementAutorise(
+          profil,
+          equipement,
+          estHeros,
+          combattant.accesArmesHomebrew === true,
+        )
+      ) {
         return `${equipement.nom} n’est pas autorisé pour ${String(combattant.nom)}.`;
       }
       compteurs.set(id, (compteurs.get(id) ?? 0) + 1);
       if (equipement.categorie === 'Corps à corps') armesCorpsACorps += 1;
     }
-    if (armesCorpsACorps > 2 || armesDeTir > 2) {
-      return `${String(combattant.nom)} dépasse la limite de deux armes de corps à corps ou de tir.`;
+    if (
+      armesCorpsACorps > limites.armesCorpsACorps ||
+      armesDeTir > limites.armesTir
+    ) {
+      return `${String(combattant.nom)} dépasse la limite d’armes de corps à corps ou de tir.`;
     }
     for (const [id, nombre] of compteurs) {
       const equipement = equipements.find((item) => item.id === id)!;
@@ -331,6 +369,12 @@ function validerCombattants(valeur: unknown, idsProfilsAutorises: Set<string>) {
     ) {
       return `${chemin}.optionsRegles.marqueChaos est réservée au Devin.`;
     }
+
+    if (
+      combattant.accesArmesHomebrew !== undefined &&
+      typeof combattant.accesArmesHomebrew !== 'boolean'
+    )
+      return `${chemin}.accesArmesHomebrew est invalide.`;
 
     const erreurEquipement = validerListeTextes(
       combattant.equipementIds,
@@ -997,6 +1041,8 @@ function validerPersonnel(valeur: unknown, idsCombattants: Set<string>) {
 
 function validerHomebrew(valeur: unknown) {
   if (!estObjet(valeur)) return 'Les réglages homebrew doivent être un objet.';
+  const erreurDefinitions = validerDefinitionsHomebrew(valeur);
+  if (erreurDefinitions) return erreurDefinitions;
   if (typeof valeur.actifs !== 'boolean')
     return 'homebrew.actifs est invalide.';
   if (!estTexte(valeur.nomSet, 0, 160)) return 'homebrew.nomSet est invalide.';

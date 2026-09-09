@@ -59,6 +59,7 @@ export type ProfilRecrue = {
   progressionManuelle?: string;
   competencesDisponibles?: CategorieCompetence[];
   listesEquipement: ListeEquipementId[];
+  equipementsAutorises?: string[];
   chef?: boolean;
   /** Les grandes créatures comptent 20 points de base dans la valeur de bande. */
   grandeCreature?: boolean;
@@ -113,6 +114,8 @@ export type Combattant = {
   optionsRegles?: {
     marqueChaos?: MarqueChaos;
   };
+  /** Autorisation maison propre à cette fiche, indépendante du set de profils. */
+  accesArmesHomebrew?: boolean;
   equipementIds: string[];
   notes: string;
   /** Les Hommes de main d'un même groupe partagent profil, XP et équipement. */
@@ -286,6 +289,21 @@ export type BatailleEnCours = {
 };
 
 export type ReglagesHomebrew = {
+  /** Définitions propres à cette bande ; absentes dans les anciennes sauvegardes. */
+  limites?: Partial<{
+    armesCorpsACorps: number;
+    armesTir: number;
+    tailleGroupe: number;
+    heros: number;
+  }>;
+  bande?: Partial<
+    Pick<
+      DefinitionBande,
+      'budgetInitial' | 'effectifMinimum' | 'effectifMaximum'
+    >
+  >;
+  profils?: Record<string, ProfilRecrue>;
+  equipements?: Record<string, Equipement>;
   actifs: boolean;
   nomSet: string;
   description: string;
@@ -943,7 +961,15 @@ export function equipementAutorise(
   profil: ProfilRecrue,
   equipement: Equipement,
   estHeros = profil.categorie === 'Héros',
+  accesArmesHomebrew = false,
 ) {
+  if (
+    accesArmesHomebrew &&
+    ['Corps à corps', 'Tir'].includes(equipement.categorie)
+  )
+    return true;
+  if (profil.equipementsAutorises)
+    return profil.equipementsAutorises.includes(equipement.id);
   if (equipement.patchGlm) return false;
   if (equipement.reserveAuxHeros && !estHeros) return false;
   if (
@@ -1519,10 +1545,16 @@ const idsPistoletsUnitairesParPaire = new Set(
 );
 
 /** Rules Review 2005, errata p.4 : une paire de pistolets occupe une arme de tir. */
-export function compterArmesDeTir(equipementIds: string[]) {
+export function compterArmesDeTir(
+  equipementIds: string[],
+  homebrew?: ReglagesHomebrew,
+) {
+  const catalogue = homebrew?.actifs
+    ? new Map(obtenirEquipements(homebrew).map((item) => [item.id, item]))
+    : equipementsParIdComptage;
   const compteurs = new Map<string, number>();
   for (const id of equipementIds) {
-    if (equipementsParIdComptage.get(id)?.categorie !== 'Tir') continue;
+    if (catalogue.get(id)?.categorie !== 'Tir') continue;
     compteurs.set(id, (compteurs.get(id) ?? 0) + 1);
   }
   return [...compteurs].reduce(
@@ -1611,16 +1643,60 @@ export const profils = definitionsBandes.flatMap(
   (definition) => definition.profils,
 );
 
-export function obtenirDefinitionBande(factionId: FactionId) {
+export function obtenirDefinitionBande(
+  factionId: FactionId,
+  homebrew?: ReglagesHomebrew,
+) {
   const definition = definitionsBandes.find((item) => item.id === factionId);
   if (!definition) throw new Error(`Faction inconnue : ${factionId}`);
-  return definition;
+  if (!homebrew?.actifs) return definition;
+  return {
+    ...definition,
+    ...homebrew.bande,
+    profils: definition.profils.map((profil) =>
+      obtenirProfil(profil.id, homebrew),
+    ),
+  };
 }
 
-export function obtenirProfil(profilId: string) {
+export function obtenirProfil(profilId: string, homebrew?: ReglagesHomebrew) {
   const profil = profils.find((item) => item.id === profilId);
   if (!profil) throw new Error(`Profil inconnu : ${profilId}`);
-  return profil;
+  if (!homebrew?.actifs) return profil;
+  const personnalise = homebrew.profils?.[profilId] ?? profil;
+  return {
+    ...personnalise,
+    cout: homebrew.coutsRecrues[profilId] ?? personnalise.cout,
+  };
+}
+
+export function obtenirLimites(homebrew?: ReglagesHomebrew) {
+  return {
+    armesCorpsACorps: 2,
+    armesTir: 2,
+    tailleGroupe: 5,
+    heros: 6,
+    ...(homebrew?.actifs ? homebrew.limites : {}),
+  };
+}
+
+export function obtenirEquipements(homebrew?: ReglagesHomebrew): Equipement[] {
+  if (!homebrew?.actifs) return equipements;
+  return equipements.map((officiel) => {
+    const objet = homebrew.equipements?.[officiel.id] ?? officiel;
+    const prix = homebrew.coutsEquipements[officiel.id];
+    return prix === undefined
+      ? objet
+      : {
+          ...objet,
+          cout: prix,
+          coutCommerce: prix,
+          coutsParListe: {},
+          prixRecrutementFormule: undefined,
+          prixRecrutementMinimum: undefined,
+          coutCommerceFormule: undefined,
+        };
+  });
 }
 
 export const etapesApresBataille = [

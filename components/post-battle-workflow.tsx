@@ -66,7 +66,9 @@ import {
   sortsPourProfil,
 } from '@/lib/competences-data';
 import {
-  equipements,
+  obtenirEquipements,
+  obtenirLimites,
+  type ReglagesHomebrew,
   compterArmesDeTir,
   equipementAutorise,
   quantiteMaxEquipement,
@@ -334,15 +336,24 @@ export function PostBattleWorkflow({
 
   /* Les actions du workflow ne sont rendues que lorsqu'une bataille existe. */
   const bataille = campagne.batailleEnCours as BatailleEnCours;
-  const definition = obtenirDefinitionBande(campagne.factionId);
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
 
   const profilsParId = useMemo(
     () => new Map(definition.profils.map((profil) => [profil.id, profil])),
     [definition.profils],
   );
   const equipementsParId = useMemo(
-    () => new Map(equipements.map((equipement) => [equipement.id, equipement])),
-    [],
+    () =>
+      new Map(
+        obtenirEquipements(campagne.homebrew).map((equipement) => [
+          equipement.id,
+          equipement,
+        ]),
+      ),
+    [campagne.homebrew],
   );
 
   function publierBataille(
@@ -1022,9 +1033,9 @@ export function PostBattleWorkflow({
       );
       if (!promotion || combattant.herosPromu) return [applique];
 
-      if (nombreHeros >= 6) {
+      if (nombreHeros >= obtenirLimites(campagne.homebrew).heros) {
         erreurs.push(
-          `${combattant.nom} : la bande possède déjà le maximum de six Héros. Relancez la progression du groupe.`,
+          `${combattant.nom} : la bande possède déjà le maximum de ${obtenirLimites(campagne.homebrew).heros} Héros. Relancez la progression du groupe.`,
         );
         return [combattant];
       }
@@ -1726,7 +1737,14 @@ export function PostBattleWorkflow({
       setErreur('Sélectionnez un objet et un combattant.');
       return;
     }
-    if (!peutRecevoirEquipement(combattant, equipement, profilsParId)) {
+    if (
+      !peutRecevoirEquipement(
+        combattant,
+        equipement,
+        profilsParId,
+        campagne.homebrew,
+      )
+    ) {
       setErreur(
         'Ce combattant ne peut pas utiliser cet objet avec sa liste actuelle.',
       );
@@ -4370,12 +4388,19 @@ function EtapeRarete({
       obtenirSuiviParticipant(bataille, combattant.id)?.horsCombat === 0 &&
       !heroesDramatis.has(combattant.id),
   );
-  const rares = equipements.filter(
+  const rares = obtenirEquipements(campagne.homebrew).filter(
     (equipement) =>
       !equipement.achatDesactive &&
       equipement.rareteCommerce &&
       Array.from(profilsParId.values()).some((profil) =>
-        equipementAutorise(profil, equipement),
+        equipementAutorise(
+          profil,
+          equipement,
+          profil.categorie === 'Héros',
+          campagne.combattants.some(
+            (c) => c.profilId === profil.id && c.accesArmesHomebrew,
+          ),
+        ),
       ),
   );
   const equipementSelectionne = equipementsParId.get(brouillon.equipementId);
@@ -4763,18 +4788,28 @@ function EtapeRecrutement({
   onSell: (id: string) => void;
   onContinue: () => void;
 }) {
-  const definition = obtenirDefinitionBande(campagne.factionId);
-  const communs = equipements.filter(
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
+  const communs = obtenirEquipements(campagne.homebrew).filter(
     (equipement) =>
       !equipement.achatDesactive &&
       equipement.cout > 0 &&
       equipement.rareteCommerce === undefined &&
       !equipement.patchGlm &&
       definition.profils.some((profil) =>
-        equipementAutorise(profil, equipement),
+        equipementAutorise(
+          profil,
+          equipement,
+          profil.categorie === 'Héros',
+          campagne.combattants.some(
+            (c) => c.profilId === profil.id && c.accesArmesHomebrew,
+          ),
+        ),
       ),
   );
-  const objetSelectionne = equipements.find(
+  const objetSelectionne = obtenirEquipements(campagne.homebrew).find(
     (equipement) => equipement.id === objetCommunId,
   );
   return (
@@ -4832,7 +4867,9 @@ function EtapeRecrutement({
           {Object.entries(campagne.inventaire)
             .filter(([, nombre]) => nombre > 0)
             .map(([id, nombre]) => {
-              const equipement = equipements.find((item) => item.id === id);
+              const equipement = obtenirEquipements(campagne.homebrew).find(
+                (item) => item.id === id,
+              );
               if (!equipement) return null;
               const prix = Math.floor(prixCommerce(equipement, campagne) / 2);
               return (
@@ -5903,7 +5940,12 @@ function peutRecevoirEquipement(
   combattant: Combattant,
   equipement: Equipement,
   profilsParId: Map<string, ProfilRecrue>,
+  homebrew: ReglagesHomebrew,
 ) {
+  const limites = obtenirLimites(homebrew);
+  const equipementsParId = new Map(
+    obtenirEquipements(homebrew).map((item) => [item.id, item]),
+  );
   const profil = profilsParId.get(combattant.profilId);
   if (!profil) return false;
   if (equipement.achatDesactive) return false;
@@ -5914,18 +5956,16 @@ function peutRecevoirEquipement(
   )
     return false;
   if (
-    compterArmesDeTir(ids) > 2 ||
-    ids.filter(
-      (id) =>
-        equipements.find((objet) => objet.id === id)?.categorie ===
-        'Corps à corps',
-    ).length > 2
+    compterArmesDeTir(ids, homebrew) > limites.armesTir ||
+    ids.filter((id) => equipementsParId.get(id)?.categorie === 'Corps à corps')
+      .length > limites.armesCorpsACorps
   )
     return false;
   return equipementAutorise(
     profil,
     equipement,
     profil.categorie === 'Héros' || combattant.herosPromu === true,
+    combattant.accesArmesHomebrew,
   );
 }
 

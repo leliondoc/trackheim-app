@@ -1,0 +1,159 @@
+.homebrew-content {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.homebrew-view .homebrew-help {
+  margin: 0;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+.homebrew-editor {
+  min-width: 0;
+  border: 1px solid #baa282;
+  border-radius: 6px;
+  background: #f8efd9;
+  overflow: hidden;
+}
+.homebrew-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #baa282;
+}
+.homebrew-detail,
+.homebrew-catalogue {
+  padding: 20px;
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.homebrew-detail form {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.homebrew-catalogue > button {
+  width: 100%;
+  justify-content: space-between;
+  height: auto;
+  min-height: 46px;
+  white-space: normal;
+  text-align: left;
+  gap: 14px;
+}
+.homebrew-catalogue > button > span:last-child {
+  font-size: 12px;
+  opacity: 0.7;
+}
+.homebrew-editor h3,
+.homebrew-editor h4 {
+  font-family: var(--font-fell), serif;
+  font-size: 22px;
+}
+.homebrew-editor p {
+  margin: 0;
+  line-height: 1.5;
+  color: #68523c;
+}
+.homebrew-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.homebrew-fields > div {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.homebrew-fields label {
+  min-width: 0;
+}
+.homebrew-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+}
+.homebrew-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  cursor: pointer;
+}
+.homebrew-check input {
+  accent-color: #813c34;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.homebrew-editor details {
+  border: 1px solid #baa282;
+  border-radius: 5px;
+  padding: 14px;
+}
+.homebrew-editor summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.homebrew-editor details[open] > * + * {
+  margin-top: 14px;
+}
+.homebrew-equipment-access {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-height: 350px;
+  overflow: auto;
+  gap: 4px 16px;
+}
+.homebrew-form-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #baa282;
+  padding-top: 16px;
+}
+.homebrew-form-footer [role='alert'] {
+  width: 100%;
+  color: #8d2927;
+}
+.homebrew-view .custom-rule-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.homebrew-view .custom-rule p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 720px) {
+  .homebrew-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .homebrew-tabs,
+  .homebrew-detail,
+  .homebrew-catalogue {
+    padding: 14px;
+  }
+  .homebrew-tabs > button {
+    flex: 1 1 40%;
+  }
+  .homebrew-view .custom-rule-actions {
+    grid-column: 2 / -1;
+    justify-self: end;
+  }
+}
+@media (max-width: 440px) {
+  .homebrew-fields,
+  .homebrew-equipment-access {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .homebrew-form-footer > button {
+    width: 100%;
+  }
+}

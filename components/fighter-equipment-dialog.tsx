@@ -17,7 +17,8 @@ import {
   compterArmesDeTir,
   coutEquipementPourProfil,
   equipementAutorise,
-  equipements,
+  obtenirEquipements,
+  obtenirLimites,
   obtenirProfil,
   quantiteMaxEquipement,
   type Combattant,
@@ -39,7 +40,9 @@ export function FighterEquipmentDialog({
   const [ouvert, setOuvert] = useState(false);
   const [selection, setSelection] = useState('');
   const verrouillee = Boolean(campagne.batailleEnCours);
-  const profil = obtenirProfil(combattant.profilId);
+  const limites = obtenirLimites(campagne.homebrew);
+  const profil = obtenirProfil(combattant.profilId, campagne.homebrew);
+  const equipements = obtenirEquipements(campagne.homebrew);
   const disponibles = equipements.filter(
     (item) =>
       !item.achatDesactive &&
@@ -48,6 +51,7 @@ export function FighterEquipmentDialog({
         profil,
         item,
         profil.categorie === 'Héros' || combattant.herosPromu === true,
+        combattant.accesArmesHomebrew,
       ),
   );
   const objet = disponibles.find((item) => item.id === selection);
@@ -68,12 +72,12 @@ export function FighterEquipmentDialog({
     objet &&
     (nouveauxIds.filter((id) => id === objet.id).length >
       quantiteMaxEquipement(objet, profil) ||
-      compterArmesDeTir(nouveauxIds) > 2 ||
+      compterArmesDeTir(nouveauxIds, campagne.homebrew) > limites.armesTir ||
       nouveauxIds.filter(
         (id) =>
           equipements.find((item) => item.id === id)?.categorie ===
           'Corps à corps',
-      ).length > 2),
+      ).length > limites.armesCorpsACorps),
   );
   const achatImpossible = Boolean(
     objet &&
@@ -200,6 +204,33 @@ export function FighterEquipmentDialog({
             );
           })}
         </div>
+        <label className="homebrew-check">
+          <input
+            type="checkbox"
+            checked={combattant.accesArmesHomebrew ?? false}
+            disabled={verrouillee}
+            onChange={(event) => {
+              if (verrouillee) return;
+              onCampagneChange({
+                ...campagne,
+                combattants: campagne.combattants.map((item) =>
+                  item.id === combattant.id
+                    ? {
+                        ...item,
+                        accesArmesHomebrew: event.target.checked || undefined,
+                      }
+                    : item,
+                ),
+              });
+              setSelection('');
+            }}
+          />
+          Homebrew : accès illimité aux armes
+        </label>
+        <p className="homebrew-help">
+          Pour ce membre ou groupe uniquement. Les coûts, les limites de port et
+          les achats d’objets rares au comptoir restent applicables.
+        </p>
         <label className="field-group">
           <span>Objet à équiper</span>
           <NativeSelect

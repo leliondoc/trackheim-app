@@ -1,5 +1,5 @@
 import {
-  equipements,
+  obtenirEquipements,
   obtenirDefinitionBande,
   obtenirProfil,
   type Combattant,
@@ -32,7 +32,10 @@ export function nomBaseExport(campagne: EtatCampagne) {
 }
 
 export function construireExportTexteSimple(campagne: EtatCampagne) {
-  const definition = obtenirDefinitionBande(campagne.factionId);
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
   const lignes = [
     campagne.nomBande,
     `${definition.nom} | valeur ${valeurBande(campagne)} | ${campagne.couronnes} CO`,
@@ -45,10 +48,11 @@ export function construireExportTexteSimple(campagne: EtatCampagne) {
 
   if (campagne.combattants.length === 0) lignes.push('Aucun combattant.');
   for (const combattant of campagne.combattants) {
-    const profil = obtenirProfil(combattant.profilId);
+    const profil = obtenirProfil(combattant.profilId, campagne.homebrew);
     const quantite = combattant.quantite > 1 ? ` x${combattant.quantite}` : '';
     const equipement =
-      nomsEquipements(combattant).join(', ') || 'Aucun équipement enregistré';
+      nomsEquipements(combattant, campagne).join(', ') ||
+      'Aucun équipement enregistré';
     lignes.push(
       `${combattant.nom}${quantite} | ${profil.nom} | XP ${combattant.experience} | ${combattant.statut} | ${equipement}`,
     );
@@ -58,7 +62,10 @@ export function construireExportTexteSimple(campagne: EtatCampagne) {
 }
 
 export function construireExportTexteDetaille(campagne: EtatCampagne) {
-  const definition = obtenirDefinitionBande(campagne.factionId);
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
   const lignes = [
     'TRACKHEIM | FEUILLE DE BANDE',
     campagne.nomBande,
@@ -70,13 +77,13 @@ export function construireExportTexteDetaille(campagne: EtatCampagne) {
   ];
 
   for (const combattant of campagne.combattants) {
-    const profil = obtenirProfil(combattant.profilId);
+    const profil = obtenirProfil(combattant.profilId, campagne.homebrew);
     lignes.push(
       '',
       `${combattant.nom}${combattant.quantite > 1 ? ` x${combattant.quantite}` : ''}`,
       `${profil.nom} | ${combattant.chef ? 'Chef | ' : ''}${combattant.statut} | XP ${combattant.experience}`,
       ligneStatistiques(combattant),
-      `Équipement : ${nomsEquipements(combattant).join(', ') || 'Aucun équipement enregistré'}`,
+      `Équipement : ${nomsEquipements(combattant, campagne).join(', ') || 'Aucun équipement enregistré'}`,
       `Compétences : ${combattant.competences.join(', ') || 'Aucune'}`,
       ...(ameliorationsMagiques(combattant)
         ? [`Sorts et prières améliorés : ${ameliorationsMagiques(combattant)}`]
@@ -91,7 +98,9 @@ export function construireExportTexteDetaille(campagne: EtatCampagne) {
   const inventaire = Object.entries(campagne.inventaire)
     .filter(([, quantite]) => quantite > 0)
     .map(([id, quantite]) => {
-      const nom = equipements.find((item) => item.id === id)?.nom ?? id;
+      const nom =
+        obtenirEquipements(campagne.homebrew).find((item) => item.id === id)
+          ?.nom ?? id;
       return `${nom} x${quantite}`;
     });
   lignes.push('', `Magot : ${inventaire.join(', ') || 'Vide'}`);
@@ -109,10 +118,13 @@ export function construireExportTexteDetaille(campagne: EtatCampagne) {
 }
 
 export function construireFeuilleImprimable(campagne: EtatCampagne) {
-  const definition = obtenirDefinitionBande(campagne.factionId);
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
   const combattants = campagne.combattants
     .map((combattant) => {
-      const profil = obtenirProfil(combattant.profilId);
+      const profil = obtenirProfil(combattant.profilId, campagne.homebrew);
       const cellules = nomsStatistiques
         .map(([cle, libelle]) => {
           const valeur =
@@ -125,7 +137,7 @@ export function construireFeuilleImprimable(campagne: EtatCampagne) {
         <header><div><h2>${echapper(combattant.nom)}</h2><p>${echapper(profil.nom)}${combattant.quantite > 1 ? `, groupe de ${combattant.quantite}` : ''}</p></div><b>${echapper(combattant.statut)} · ${combattant.experience} XP</b></header>
         <table aria-label="Caractéristiques de ${echapper(combattant.nom)}"><tbody><tr>${cellules}</tr></tbody></table>
         <dl>
-          <div><dt>Équipement</dt><dd>${echapper(nomsEquipements(combattant).join(', ') || 'Aucun équipement enregistré')}</dd></div>
+          <div><dt>Équipement</dt><dd>${echapper(nomsEquipements(combattant, campagne).join(', ') || 'Aucun équipement enregistré')}</dd></div>
           <div><dt>Compétences</dt><dd>${echapper(combattant.competences.join(', ') || 'Aucune')}</dd></div>
           ${ameliorationsMagiques(combattant) ? `<div><dt>Sorts et prières améliorés</dt><dd>${echapper(ameliorationsMagiques(combattant))}</dd></div>` : ''}
           <div><dt>Blessures</dt><dd>${echapper(combattant.blessures.join(', ') || 'Aucune')}</dd></div>
@@ -173,13 +185,14 @@ function valeurBande(campagne: EtatCampagne) {
     campagne.combattants.map((combattant) => ({
       quantite: combattant.quantite,
       experience: combattant.experience,
-      grandeCreature: obtenirProfil(combattant.profilId).grandeCreature,
+      grandeCreature: obtenirProfil(combattant.profilId, campagne.homebrew)
+        .grandeCreature,
     })),
   );
 }
 
-function nomsEquipements(combattant: Combattant) {
-  return nomsEquipementsCombattant(combattant);
+function nomsEquipements(combattant: Combattant, campagne: EtatCampagne) {
+  return nomsEquipementsCombattant(combattant, campagne.homebrew);
 }
 
 function ameliorationsMagiques(combattant: Combattant) {
