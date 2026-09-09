@@ -98,6 +98,7 @@ import { RulesetProvenance } from '@/components/ruleset-provenance';
 import { CombatView } from '@/components/combat-view';
 import { SpellsView } from '@/components/spells-view';
 import { WarbandExportDialog } from '@/components/warband-export-dialog';
+import { FighterEquipmentDialog } from '@/components/fighter-equipment-dialog';
 import { nomsEquipementsCombattant } from '@/lib/equipment-display';
 import {
   IndicationNouvelOnglet,
@@ -284,12 +285,22 @@ export function MordheimApp() {
       navigationInitialisee.current = true;
       return;
     }
-    requestAnimationFrame(() => {
+    const frame = requestAnimationFrame(() => {
       if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
+      // Une saisie commencée entre le rendu et cette frame garde le focus.
+      const actif = document.activeElement;
+      if (
+        actif instanceof HTMLElement &&
+        actif.matches(
+          'input, textarea, select, button, [contenteditable="true"]',
+        )
+      )
+        return;
       contenuPrincipal.current?.focus({ preventScroll: true });
     });
+    return () => cancelAnimationFrame(frame);
   }, [bandeBibliothequeSlug, vue]);
 
   function naviguerVers(vueCible: Vue) {
@@ -2258,6 +2269,8 @@ function WarbandView({
 }) {
   const definition = obtenirDefinitionBande(campagne.factionId);
   const verrouillee = Boolean(campagne.batailleEnCours);
+  const creationDeBande =
+    campagne.numeroBataille === 0 && campagne.parties.length === 0;
   function modifierCombattant(id: string, modification: Partial<Combattant>) {
     if (verrouillee) return;
     onCampagneChange({
@@ -2270,19 +2283,27 @@ function WarbandView({
 
   function retirerCombattant(id: string) {
     const combattant = campagne.combattants.find((item) => item.id === id);
-    if (!combattant || combattant.chef || verrouillee) return;
+    if (!combattant || (combattant.chef && !creationDeBande) || verrouillee)
+      return;
     const confirme = window.confirm(
-      `Renvoyer ${combattant.nom} ? Son équipement sera replacé dans le magot. Cette action est définitive.`,
+      creationDeBande
+        ? `Retirer ${combattant.nom} ? Les ${combattant.coutAcquisitionTotal} CO de son recrutement et de son équipement seront remboursées. Cette action est définitive.`
+        : `Renvoyer ${combattant.nom} ? Son équipement sera replacé dans le magot. Cette action est définitive.`,
     );
     if (!confirme) return;
     const inventaire = { ...campagne.inventaire };
-    for (const idEquipement of combattant.equipementIds) {
+    for (const idEquipement of creationDeBande
+      ? []
+      : combattant.equipementIds) {
       inventaire[idEquipement] =
         (inventaire[idEquipement] ?? 0) + combattant.quantite;
     }
     onCampagneChange({
       ...campagne,
       inventaire,
+      couronnes:
+        campagne.couronnes +
+        (creationDeBande ? combattant.coutAcquisitionTotal : 0),
       combattants: campagne.combattants.filter(
         (combattant) => combattant.id !== id,
       ),
@@ -2341,7 +2362,9 @@ function WarbandView({
             synthese.coutBande > definition.budgetInitial ? 'budget-alert' : ''
           }
         >
-          {definition.budgetInitial - synthese.coutBande} CO restantes
+          {synthese.coutBande > definition.budgetInitial
+            ? `Budget initial dépassé de ${synthese.coutBande - definition.budgetInitial} CO`
+            : `${definition.budgetInitial - synthese.coutBande} CO restantes`}
         </span>
       </div>
 
@@ -2432,6 +2455,23 @@ function WarbandView({
                     {combattant.chef ? ' · Chef' : ''}
                     {combattant.herosPromu ? ' · Héros promu' : ''}
                   </span>
+                  <span>
+                    {nomsEquipementsCombattant(combattant).join(' · ')}
+                  </span>
+                  {creationDeBande ? (
+                    <RecruitDialog
+                      campagne={campagne}
+                      combattantModifie={combattant}
+                      verrouillee={verrouillee}
+                      onCampagneChange={onCampagneChange}
+                    />
+                  ) : (
+                    <FighterEquipmentDialog
+                      campagne={campagne}
+                      combattant={combattant}
+                      onCampagneChange={onCampagneChange}
+                    />
+                  )}
                 </div>
                 <fieldset className="xp-control">
                   <legend className="sr-only">
@@ -2485,9 +2525,11 @@ function WarbandView({
                   aria-label={`Renvoyer ${combattant.nom}`}
                   size="icon-sm"
                   variant="ghost"
-                  disabled={combattant.chef || verrouillee}
+                  disabled={
+                    (combattant.chef && !creationDeBande) || verrouillee
+                  }
                   title={
-                    combattant.chef
+                    combattant.chef && !creationDeBande
                       ? 'Le Chef ne peut pas être renvoyé.'
                       : undefined
                   }
@@ -2508,13 +2550,16 @@ function RecruitDialog({
   campagne,
   onCampagneChange,
   verrouillee = false,
+  combattantModifie,
 }: {
   campagne: EtatCampagne;
   onCampagneChange: (campagne: EtatCampagne) => void;
   verrouillee?: boolean;
+  combattantModifie?: Combattant;
 }) {
   const definition = obtenirDefinitionBande(campagne.factionId);
   const profilInitial =
+    combattantModifie?.profilId ??
     definition.profils.find((item) => !item.chef)?.id ??
     definition.profils[0]!.id;
   const [ouvert, setOuvert] = useState(false);
@@ -2532,7 +2577,14 @@ function RecruitDialog({
   const profil = profilParId(groupeCible?.profilId ?? profilId);
   const creationDeBande =
     campagne.numeroBataille === 0 && campagne.parties.length === 0;
-  const disponibles = equipementsPourProfil(profil, campagne, creationDeBande);
+  const disponibles = [
+    ...new Map(
+      [
+        ...equipementsPourProfil(profil, campagne, creationDeBande),
+        ...(combattantModifie?.equipementIds.map(equipementParId) ?? []),
+      ].map((item) => [item.id, item]),
+    ).values(),
+  ];
   const dagueDeBaseDisponible = disponibles.some(
     (item) => item.accordeDagueDeBase,
   );
@@ -2575,7 +2627,8 @@ function RecruitDialog({
   const nombreArmesTir = compterArmesDeTir(equipementRecrue);
   const limiteArmesDepassee = nombreArmesCorpsACorps > 2 || nombreArmesTir > 2;
   const quantiteDemandee =
-    profil.categorie === 'Héros' ? 1 : Math.max(1, Math.min(5, quantite));
+    combattantModifie?.quantite ??
+    (profil.categorie === 'Héros' ? 1 : Math.max(1, Math.min(5, quantite)));
   const besoinsRares = groupeCible
     ? equipementRecrue.reduce<Record<string, number>>((besoins, id) => {
         if (equipementParId(id).rareteCommerce !== undefined) {
@@ -2636,17 +2689,25 @@ function RecruitDialog({
     0,
   );
   const nombreProfil = campagne.combattants
-    .filter((item) => item.profilId === profilId)
+    .filter(
+      (item) => item.profilId === profilId && item.id !== combattantModifie?.id,
+    )
     .reduce((total, item) => total + item.quantite, 0);
   const limiteAtteinte =
     profil.maximum !== null && nombreProfil + quantiteDemandee > profil.maximum;
   const bandePleine =
     definition.effectifMaximum !== null &&
-    calculerSynthese(campagne).effectif + quantiteDemandee >
+    calculerSynthese(campagne).effectif -
+      (combattantModifie?.quantite ?? 0) +
+      quantiteDemandee >
       definition.effectifMaximum;
-  const fondsInsuffisants = cout > campagne.couronnes;
+  const coutAPayer = cout - (combattantModifie?.coutAcquisitionTotal ?? 0);
+  const fondsInsuffisants = coutAPayer > campagne.couronnes;
   const chefDejaRecrute =
-    Boolean(profil.chef) && campagne.combattants.some((item) => item.chef);
+    Boolean(profil.chef) &&
+    campagne.combattants.some(
+      (item) => item.chef && item.id !== combattantModifie?.id,
+    );
   const disponibiliteVeterans =
     campagne.batailleEnCours?.veterans.disponibilite ?? null;
   const experienceVeteransDepensee =
@@ -2682,6 +2743,13 @@ function RecruitDialog({
 
   function changerOuverture(nouvelEtat: boolean) {
     if (nouvelEtat && verrouillee) return;
+    if (nouvelEtat && combattantModifie) {
+      setProfilId(combattantModifie.profilId);
+      setNom(combattantModifie.nom);
+      setQuantite(combattantModifie.quantite);
+      setSelectionEquipement([...combattantModifie.equipementIds]);
+      setMarqueChaos(combattantModifie.optionsRegles?.marqueChaos ?? '');
+    }
     if (!nouvelEtat) reinitialiserBrouillon();
     setOuvert(nouvelEtat);
   }
@@ -2689,10 +2757,11 @@ function RecruitDialog({
   function recruter() {
     if (
       verrouillee ||
+      (Boolean(combattantModifie) && !creationDeBande) ||
       (!groupeCible && !nom.trim()) ||
       limiteAtteinte ||
       bandePleine ||
-      fondsInsuffisants ||
+      (fondsInsuffisants && !creationDeBande) ||
       chefDejaRecrute ||
       veteranIndisponible ||
       groupeDepasse ||
@@ -2704,6 +2773,25 @@ function RecruitDialog({
       equipementDesactive
     )
       return;
+
+    if (combattantModifie) {
+      onCampagneChange({
+        ...campagne,
+        couronnes: campagne.couronnes - coutAPayer,
+        combattants: campagne.combattants.map((item) =>
+          item.id === combattantModifie.id
+            ? {
+                ...item,
+                equipementIds: [...selectionEquipement],
+                coutAcquisition: coutUnitaire,
+                coutAcquisitionTotal: cout,
+              }
+            : item,
+        ),
+      });
+      changerOuverture(false);
+      return;
+    }
 
     if (groupeCible) {
       const inventaire = { ...campagne.inventaire };
@@ -2822,9 +2910,17 @@ function RecruitDialog({
       <DialogTrigger
         render={
           <Button
-            className="primary-action"
+            className={
+              combattantModifie ? 'justify-self-start' : 'primary-action'
+            }
             disabled={verrouillee}
-            size="lg"
+            size={combattantModifie ? 'sm' : 'lg'}
+            variant={combattantModifie ? 'outline' : 'default'}
+            aria-label={
+              combattantModifie
+                ? `Modifier l’équipement de ${combattantModifie.nom}`
+                : undefined
+            }
             title={
               verrouillee
                 ? 'Terminez la bataille avant de modifier l’effectif.'
@@ -2833,8 +2929,12 @@ function RecruitDialog({
           />
         }
       >
-        <UserPlus data-icon="inline-start" />
-        Ajouter un combattant
+        {combattantModifie ? (
+          <PackageOpen data-icon="inline-start" />
+        ) : (
+          <UserPlus data-icon="inline-start" />
+        )}
+        {combattantModifie ? 'Équipement' : 'Ajouter un combattant'}
       </DialogTrigger>
       <DialogContent className="recruit-dialog sm:max-w-2xl">
         <form
@@ -2845,10 +2945,16 @@ function RecruitDialog({
           }}
         >
           <DialogHeader>
-            <DialogTitle>Recruter un combattant</DialogTitle>
+            <DialogTitle>
+              {combattantModifie
+                ? `Équipement de ${combattantModifie.nom}`
+                : 'Recruter un combattant'}
+            </DialogTitle>
             <DialogDescription>
               Profils {definition.nom}, appliqués selon le manifeste de règles
               de la campagne.
+              {combattantModifie &&
+                ' Le coût est recalculé et la différence est débitée ou remboursée. Pour les objets à prix variable, ressaisissez le prix retenu.'}
             </DialogDescription>
           </DialogHeader>
 
@@ -2894,7 +3000,7 @@ function RecruitDialog({
             <label className="field-group" htmlFor="recruit-profile">
               <span>Profil</span>
               <NativeSelect
-                disabled={Boolean(groupeCible)}
+                disabled={Boolean(groupeCible || combattantModifie)}
                 id="recruit-profile"
                 value={profil.id}
                 onChange={(event) => {
@@ -2916,6 +3022,7 @@ function RecruitDialog({
                 <span>Marque du Chaos</span>
                 <NativeSelect
                   id="recruit-chaos-mark"
+                  disabled={Boolean(combattantModifie)}
                   value={marqueChaos}
                   onChange={(event) =>
                     setMarqueChaos(event.target.value as MarqueChaos | '')
@@ -2946,7 +3053,7 @@ function RecruitDialog({
             <label className="field-group" htmlFor="recruit-name">
               <span>Nom du combattant</span>
               <Input
-                disabled={Boolean(groupeCible)}
+                disabled={Boolean(groupeCible || combattantModifie)}
                 id="recruit-name"
                 maxLength={160}
                 value={nom}
@@ -2960,7 +3067,9 @@ function RecruitDialog({
               </span>
               <NativeSelect
                 id="recruit-quantity"
-                disabled={profil.categorie === 'Héros'}
+                disabled={
+                  profil.categorie === 'Héros' || Boolean(combattantModifie)
+                }
                 value={`${quantiteDemandee}`}
                 onChange={(event) => setQuantite(Number(event.target.value))}
               >
@@ -3124,7 +3233,9 @@ function RecruitDialog({
                 : prixManquant
                   ? 'Saisissez le prix des équipements à coût variable avant de recruter.'
                   : fondsInsuffisants
-                    ? `Trésor insuffisant : il manque ${cout - campagne.couronnes} CO.`
+                    ? creationDeBande
+                      ? `Budget dépassé de ${coutAPayer - campagne.couronnes} CO. Vous pouvez quand même ${combattantModifie ? 'enregistrer' : 'recruter'} ; le trésor affichera ce déficit.`
+                      : `Trésor insuffisant : il manque ${coutAPayer - campagne.couronnes} CO.`
                     : limiteArmesDepassee
                       ? 'Un combattant ne peut porter que deux armes de corps à corps et deux armes de tir.'
                       : marqueChaosManquante
@@ -3150,6 +3261,13 @@ function RecruitDialog({
                 {quantiteDemandee > 1 ? ` · ${quantiteDemandee} membres` : ''}
               </span>
               <strong>{cout} CO</strong>
+              {combattantModifie && (
+                <span>
+                  {coutAPayer < 0
+                    ? `${-coutAPayer} CO remboursées`
+                    : `${coutAPayer} CO à payer`}
+                </span>
+              )}
             </div>
             <Button
               type="submit"
@@ -3157,7 +3275,7 @@ function RecruitDialog({
                 (!groupeCible && !nom.trim()) ||
                 limiteAtteinte ||
                 bandePleine ||
-                fondsInsuffisants ||
+                (fondsInsuffisants && !creationDeBande) ||
                 chefDejaRecrute ||
                 veteranIndisponible ||
                 groupeDepasse ||
@@ -3169,7 +3287,11 @@ function RecruitDialog({
                 equipementDesactive
               }
             >
-              {groupeCible ? 'Renforcer le groupe' : 'Recruter'}
+              {combattantModifie
+                ? 'Enregistrer l’équipement'
+                : groupeCible
+                  ? 'Renforcer le groupe'
+                  : 'Recruter'}
             </Button>
           </DialogFooter>
         </form>
@@ -3212,7 +3334,10 @@ function CampaignView({
   ) {
     onCampagneChange({
       ...campagne,
-      [cle]: Math.max(0, campagne[cle] + variation),
+      [cle]:
+        cle === 'couronnes'
+          ? campagne[cle] + variation
+          : Math.max(0, campagne[cle] + variation),
     });
   }
 

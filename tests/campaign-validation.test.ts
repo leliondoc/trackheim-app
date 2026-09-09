@@ -49,6 +49,19 @@ function batailleMinimale(): BatailleEnCours {
 }
 
 describe('contrat persistant des campagnes', () => {
+  it('conserve un déficit de trésorerie sans accepter des ressources mal formées', () => {
+    const campagne = { ...campagneVideTest(), couronnes: -25 };
+    assert.equal(validerCampagneV4(campagne).ok, true);
+    assert.equal(
+      importerCampagneDepuisJson(serialiserCampagne(campagne)).couronnes,
+      -25,
+    );
+    for (const couronnes of [-1.5, NaN, Infinity, '25']) {
+      assert.equal(validerCampagneV4({ ...campagne, couronnes }).ok, false);
+    }
+    assert.equal(validerCampagneV4({ ...campagne, fragments: -1 }).ok, false);
+  });
+
   it('accepte l’état v4 livré et les identifiants techniques attendus', () => {
     assert.equal(validerCampagneV4(campagneVideTest()).ok, true);
     assert.equal(estIdentifiantCampagneValide('campagne-abc_123'), true);

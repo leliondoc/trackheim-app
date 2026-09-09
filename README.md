@@ -26,6 +26,14 @@ Le stockage refusé par le navigateur active un mode mémoire avec export explic
 Les exports compacts et les anciens exports indentés sont acceptés, dans la limite
 de 512 Ko de données utiles et de 4 Mo pour le fichier d’import.
 
+Avant la première bataille, le budget de départ est indicatif : un dépassement
+affiche un avertissement et un trésor négatif, conservé dans les sauvegardes.
+Le bouton « Équipement » permet de corriger une recrue sans la recréer, avec
+débit ou remboursement de la différence. Retirer un combattant ou un groupe
+rembourse son coût complet, équipement compris. Après la première bataille,
+les objets retirés retournent au magot et les nouveaux achats exigent les fonds
+nécessaires ; l’équipement reste verrouillé pendant une bataille en cours.
+
 Les 49 fiches distinguent la référence documentaire et le suivi proposé par
 l’application. Les règles particulières de table et certaines annexes se résolvent
 avec les sources et les notes du joueur ; leur présence dans une fiche ne signifie

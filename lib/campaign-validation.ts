@@ -88,8 +88,12 @@ export function validerCampagneV4(
     return echec('Le grade de la campagne ne correspond pas à sa faction.');
   }
 
+  // Le constructeur autorise un dépassement de budget, conservé comme solde
+  // négatif même après le démarrage d’une campagne ou un transfert JSON.
+  if (!Number.isSafeInteger(valeur.couronnes)) {
+    return echec('Le champ « couronnes » doit être un entier.');
+  }
   for (const [cle, contenu] of [
-    ['couronnes', valeur.couronnes],
     ['fragments', valeur.fragments],
     ['numeroBataille', valeur.numeroBataille],
   ] as const) {
