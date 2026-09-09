@@ -2315,7 +2315,7 @@ function WarbandView({
       <PageHeader
         eyebrow="Constructeur de bande"
         title="Ma bande"
-        description={`Recrutez, équipez et faites progresser chaque combattant. Les limites ${definition.nom} sont contrôlées automatiquement.`}
+        description={`Cliquez sur un profil pour le recruter, puis choisissez son équipement. Les limites ${definition.nom} sont contrôlées automatiquement.`}
         action={
           <div className="page-header-actions">
             <WarbandExportDialog campagne={campagne} onExportJson={onExport} />
@@ -2396,7 +2396,14 @@ function WarbandView({
                 <span>{profil.categorie}</span>
                 <strong>{coutProfil(profil, campagne)} CO</strong>
               </div>
-              <h3>{profil.nom}</h3>
+              <h3 aria-label={profil.nom}>
+                <RecruitDialog
+                  campagne={campagne}
+                  profilPropose={profil}
+                  verrouillee={verrouillee}
+                  onCampagneChange={onCampagneChange}
+                />
+              </h3>
               <p className="stat-line">
                 {formaterStats(
                   profil.statistiques,
@@ -2414,6 +2421,9 @@ function WarbandView({
                 </span>
                 <span>
                   {profil.maximum ? `max. ${profil.maximum}` : 'sans limite'}
+                </span>
+                <span className="profile-recruit-hint" aria-hidden="true">
+                  <UserPlus /> {verrouillee ? 'En bataille' : 'Recruter'}
                 </span>
               </div>
             </article>
@@ -2551,15 +2561,18 @@ function RecruitDialog({
   onCampagneChange,
   verrouillee = false,
   combattantModifie,
+  profilPropose,
 }: {
   campagne: EtatCampagne;
   onCampagneChange: (campagne: EtatCampagne) => void;
   verrouillee?: boolean;
   combattantModifie?: Combattant;
+  profilPropose?: ProfilRecrue;
 }) {
   const definition = obtenirDefinitionBande(campagne.factionId);
   const profilInitial =
     combattantModifie?.profilId ??
+    profilPropose?.id ??
     definition.profils.find((item) => !item.chef)?.id ??
     definition.profils[0]!.id;
   const [ouvert, setOuvert] = useState(false);
@@ -2909,32 +2922,49 @@ function RecruitDialog({
     <Dialog open={ouvert} onOpenChange={changerOuverture}>
       <DialogTrigger
         render={
-          <Button
-            className={
-              combattantModifie ? 'justify-self-start' : 'primary-action'
-            }
-            disabled={verrouillee}
-            size={combattantModifie ? 'sm' : 'lg'}
-            variant={combattantModifie ? 'outline' : 'default'}
-            aria-label={
-              combattantModifie
-                ? `Modifier l’équipement de ${combattantModifie.nom}`
-                : undefined
-            }
-            title={
-              verrouillee
-                ? 'Terminez la bataille avant de modifier l’effectif.'
-                : undefined
-            }
-          />
+          profilPropose ? (
+            <button
+              type="button"
+              className="profile-recruit-trigger"
+              disabled={verrouillee}
+              aria-label={`Recruter ${profilPropose.nom}`}
+              title={
+                verrouillee
+                  ? 'Terminez la bataille avant de recruter.'
+                  : undefined
+              }
+            />
+          ) : (
+            <Button
+              className={
+                combattantModifie ? 'justify-self-start' : 'primary-action'
+              }
+              disabled={verrouillee}
+              size={combattantModifie ? 'sm' : 'lg'}
+              variant={combattantModifie ? 'outline' : 'default'}
+              aria-label={
+                combattantModifie
+                  ? `Modifier l’équipement de ${combattantModifie.nom}`
+                  : undefined
+              }
+              title={
+                verrouillee
+                  ? 'Terminez la bataille avant de modifier l’effectif.'
+                  : undefined
+              }
+            />
+          )
         }
       >
-        {combattantModifie ? (
+        {profilPropose ? (
+          profilPropose.nom
+        ) : combattantModifie ? (
           <PackageOpen data-icon="inline-start" />
         ) : (
           <UserPlus data-icon="inline-start" />
         )}
-        {combattantModifie ? 'Équipement' : 'Ajouter un combattant'}
+        {!profilPropose &&
+          (combattantModifie ? 'Équipement' : 'Ajouter un combattant')}
       </DialogTrigger>
       <DialogContent className="recruit-dialog sm:max-w-2xl">
         <form

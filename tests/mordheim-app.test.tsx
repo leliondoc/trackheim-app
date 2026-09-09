@@ -614,6 +614,9 @@ describe('navigation principale', () => {
     expect(
       screen.getByRole('button', { name: /Ajouter un combattant/i }),
     ).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Recruter Guerrier' }),
+    ).toBeDisabled();
 
     await utilisateur.click(
       screen.getByRole('link', { name: /^Mode combat$/ }),

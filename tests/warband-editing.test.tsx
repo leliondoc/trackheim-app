@@ -51,6 +51,45 @@ function avecGroupe(): EtatCampagne {
 }
 
 describe('corrections du constructeur de bande', () => {
+  it('recrute depuis un profil et réinitialise le formulaire à chaque ouverture', async () => {
+    afficher();
+    const utilisateur = userEvent.setup();
+    await utilisateur.click(
+      await screen.findByRole('button', { name: 'Recruter Guerrier' }),
+    );
+    expect(screen.getByLabelText('Profil')).toHaveValue('guerrier');
+    fireEvent.change(screen.getByLabelText('Nom du combattant'), {
+      target: { value: 'Les nouvelles lames' },
+    });
+    await utilisateur.selectOptions(
+      screen.getByLabelText('Taille du groupe'),
+      '2',
+    );
+    await utilisateur.click(screen.getByRole('button', { name: 'Recruter' }));
+    await waitFor(() =>
+      expect(sauvegarde().combattants[1]).toMatchObject({
+        profilId: 'guerrier',
+        quantite: 2,
+        nom: 'Les nouvelles lames',
+      }),
+    );
+    const bouton = screen.getByRole('button', { name: 'Recruter Tireur' });
+    bouton.focus();
+    await utilisateur.keyboard('{Enter}');
+    expect(screen.getByLabelText('Profil')).toHaveValue('tireur');
+    await utilisateur.selectOptions(
+      screen.getByLabelText('Profil'),
+      'champion',
+    );
+    await utilisateur.keyboard('{Escape}');
+    await utilisateur.click(
+      screen.getByRole('button', { name: 'Recruter Tireur' }),
+    );
+    expect(screen.getByLabelText('Profil')).toHaveValue('tireur');
+    expect(screen.getByLabelText('Nom du combattant')).toHaveValue('');
+    expect(screen.getByLabelText('Taille du groupe')).toHaveValue('1');
+  });
+
   it('recrute au-delà du budget et conserve le déficit au rechargement et à l’export', async () => {
     const campagne = campagneAvecCapitaineTest();
     campagne.homebrew.actifs = true;
