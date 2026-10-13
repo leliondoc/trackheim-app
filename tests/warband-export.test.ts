@@ -79,3 +79,26 @@ test('la feuille imprimable protège les contenus longs et les fiches multipages
   assert.match(html, new RegExp('B{160}'));
   assert.match(html, new RegExp('N{10000}'));
 });
+
+test('la feuille imprimable neutralise aussi les valeurs numériques mal formées', () => {
+  const campagne = campagneAvecCapitaineTest();
+  const payload = '<img src=x onerror=alert(1)>';
+  campagne.couronnes = payload as unknown as number;
+  campagne.fragments = payload as unknown as number;
+  campagne.combattants[0].experience = payload as unknown as number;
+
+  const html = construireFeuilleImprimable(campagne);
+
+  assert.doesNotMatch(html, /<img src=x/);
+  assert.equal(html.split('&lt;img src=x onerror=alert(1)&gt;').length - 1, 3);
+});
+
+test('le nom du combattant reste du texte dans un attribut HTML', () => {
+  const campagne = campagneAvecCapitaineTest();
+  campagne.combattants[0].nom = '" onmouseover="alert(1)';
+
+  const html = construireFeuilleImprimable(campagne);
+
+  assert.doesNotMatch(html, /aria-label="[^"]*" onmouseover=/);
+  assert.match(html, /&quot; onmouseover=&quot;alert\(1\)/);
+});
