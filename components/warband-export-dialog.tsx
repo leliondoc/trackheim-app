@@ -14,7 +14,7 @@ import type { EtatCampagne } from '@/lib/mordheim-data';
 import {
   construireExportTexteDetaille,
   construireExportTexteSimple,
-  construireFeuilleImprimable,
+  construireDocumentImprimable,
   nomBaseExport,
 } from '@/lib/warband-export';
 
@@ -48,15 +48,7 @@ export function WarbandExportDialog({
       return;
     }
     feuille.opener = null;
-    const documentPrepare = new DOMParser().parseFromString(
-      construireFeuilleImprimable(campagne),
-      'text/html',
-    );
-    const racine = feuille.document.importNode(
-      documentPrepare.documentElement,
-      true,
-    );
-    feuille.document.replaceChild(racine, feuille.document.documentElement);
+    construireDocumentImprimable(campagne, feuille.document);
     feuille.focus();
     void feuille.document.fonts.ready.then(() => {
       feuille.requestAnimationFrame(() => feuille.print());

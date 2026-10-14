@@ -21,6 +21,29 @@ const nomsStatistiques: Array<[keyof Statistiques, string]> = [
   ['commandement', 'Cd'],
 ];
 
+const stylesFeuilleImprimable = `@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; min-width: 0; }
+body { margin: 0; color: #211914; background: white; font: 10pt/1.35 Georgia, serif; }
+header.hero { display: flex; justify-content: space-between; gap: 20px; border-bottom: 3px solid #6d2a24; padding-bottom: 8px; }
+h1 { margin: 0; font-size: 25pt; } h2 { margin: 0; font-size: 14pt; }
+p { margin: 2px 0 0; } h1, h2, p, b, dt, dd { overflow-wrap: anywhere; }
+.summary { max-width: 42%; text-align: right; }
+.roster { display: grid; gap: 7mm; margin-top: 8mm; }
+.fighter { break-inside: avoid-page; border: 1px solid #8b765d; padding: 4mm; }
+.fighter > header { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 3mm; }
+.fighter header p, .fighter header b { color: #684f3f; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+td { border: 1px solid #c8b99e; padding: 2mm; text-align: center; }
+td small, td strong { display: block; } td small { color: #755f4d; font-size: 7pt; }
+dl { display: grid; gap: 1mm; margin: 3mm 0 0; } dl div { display: grid; grid-template-columns: 28mm 1fr; }
+dt { font-weight: 700; } dd { margin: 0; }
+footer { margin-top: 7mm; border-top: 1px solid #c8b99e; padding-top: 3mm; color: #755f4d; font-size: 8pt; }
+@media print {
+  body { print-color-adjust: exact; }
+  .fighter { break-inside: auto; }
+  .fighter > header, .fighter table { break-inside: avoid; }
+}`;
+
 export function nomBaseExport(campagne: EtatCampagne) {
   const nom = campagne.nomBande
     .normalize('NFD')
@@ -150,34 +173,131 @@ export function construireFeuilleImprimable(campagne: EtatCampagne) {
   return `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><title>${echapper(campagne.nomBande)} | Trackheim</title>
 <style>
-@page { size: A4; margin: 12mm; }
-* { box-sizing: border-box; min-width: 0; }
-body { margin: 0; color: #211914; background: white; font: 10pt/1.35 Georgia, serif; }
-header.hero { display: flex; justify-content: space-between; gap: 20px; border-bottom: 3px solid #6d2a24; padding-bottom: 8px; }
-h1 { margin: 0; font-size: 25pt; } h2 { margin: 0; font-size: 14pt; }
-p { margin: 2px 0 0; } h1, h2, p, b, dt, dd { overflow-wrap: anywhere; }
-.summary { max-width: 42%; text-align: right; }
-.roster { display: grid; gap: 7mm; margin-top: 8mm; }
-.fighter { break-inside: avoid-page; border: 1px solid #8b765d; padding: 4mm; }
-.fighter > header { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 3mm; }
-.fighter header p, .fighter header b { color: #684f3f; }
-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-td { border: 1px solid #c8b99e; padding: 2mm; text-align: center; }
-td small, td strong { display: block; } td small { color: #755f4d; font-size: 7pt; }
-dl { display: grid; gap: 1mm; margin: 3mm 0 0; } dl div { display: grid; grid-template-columns: 28mm 1fr; }
-dt { font-weight: 700; } dd { margin: 0; }
-footer { margin-top: 7mm; border-top: 1px solid #c8b99e; padding-top: 3mm; color: #755f4d; font-size: 8pt; }
-@media print {
-  body { print-color-adjust: exact; }
-  .fighter { break-inside: auto; }
-  .fighter > header, .fighter table { break-inside: avoid; }
-}
+${stylesFeuilleImprimable}
 </style></head><body>
 <header class="hero"><div><p>TRACKHEIM · FEUILLE DE BANDE</p><h1>${echapper(campagne.nomBande)}</h1><p>${echapper(definition.nom)} · grade ${echapper(campagne.grade)}</p></div>
 <div class="summary"><b>Valeur ${echapper(String(valeurBande(campagne)))}</b><p>${echapper(String(campagne.couronnes))} CO · ${echapper(String(campagne.fragments))} fragment(s)</p><p>${echapper(campagne.campagneActive ? campagne.nomCampagne : 'Bande indépendante')}</p></div></header>
 <main class="roster">${combattants || '<p>Aucun combattant recruté.</p>'}</main>
 <footer>Document généré depuis les données locales de Trackheim. Vérifiez les règles particulières de la bande avant la partie.</footer>
 </body></html>`;
+}
+
+export function construireDocumentImprimable(
+  campagne: EtatCampagne,
+  cible: Document,
+) {
+  function element<K extends keyof HTMLElementTagNameMap>(
+    tag: K,
+    texte?: string | number,
+    classe?: string,
+  ): HTMLElementTagNameMap[K] {
+    const noeud = cible.createElement(tag);
+    if (texte !== undefined) noeud.textContent = String(texte);
+    if (classe) noeud.className = classe;
+    return noeud;
+  }
+
+  const definition = obtenirDefinitionBande(
+    campagne.factionId,
+    campagne.homebrew,
+  );
+  cible.documentElement.lang = 'fr';
+  const meta = element('meta');
+  meta.setAttribute('charset', 'utf-8');
+  cible.head.replaceChildren(
+    meta,
+    element('title', campagne.nomBande + ' | Trackheim'),
+    element('style', stylesFeuilleImprimable),
+  );
+
+  const hero = element('header', undefined, 'hero');
+  const identite = element('div');
+  identite.append(
+    element('p', 'TRACKHEIM · FEUILLE DE BANDE'),
+    element('h1', campagne.nomBande),
+    element('p', definition.nom + ' · grade ' + campagne.grade),
+  );
+  const resume = element('div', undefined, 'summary');
+  resume.append(
+    element('b', 'Valeur ' + valeurBande(campagne)),
+    element(
+      'p',
+      campagne.couronnes + ' CO · ' + campagne.fragments + ' fragment(s)',
+    ),
+    element(
+      'p',
+      campagne.campagneActive ? campagne.nomCampagne : 'Bande indépendante',
+    ),
+  );
+  hero.append(identite, resume);
+
+  const roster = element('main', undefined, 'roster');
+  for (const combattant of campagne.combattants) {
+    const profil = obtenirProfil(combattant.profilId, campagne.homebrew);
+    const fiche = element('article', undefined, 'fighter');
+    const entete = element('header');
+    const identiteCombattant = element('div');
+    identiteCombattant.append(
+      element('h2', combattant.nom),
+      element(
+        'p',
+        profil.nom +
+          (combattant.quantite > 1 ? ', groupe de ' + combattant.quantite : ''),
+      ),
+    );
+    entete.append(
+      identiteCombattant,
+      element('b', combattant.statut + ' · ' + combattant.experience + ' XP'),
+    );
+
+    const table = element('table');
+    table.setAttribute('aria-label', 'Caractéristiques de ' + combattant.nom);
+    const ligne = element('tr');
+    for (const [cle, libelle] of nomsStatistiques) {
+      const cellule = element('td');
+      cellule.append(
+        element('small', libelle),
+        element(
+          'strong',
+          combattant.statistiquesSpeciales?.[cle] ??
+            combattant.statistiques[cle],
+        ),
+      );
+      ligne.append(cellule);
+    }
+    const corps = element('tbody');
+    corps.append(ligne);
+    table.append(corps);
+
+    const details = element('dl');
+    function detail(libelle: string, valeur: string) {
+      const ligneDetail = element('div');
+      ligneDetail.append(element('dt', libelle), element('dd', valeur));
+      details.append(ligneDetail);
+    }
+    detail(
+      'Équipement',
+      nomsEquipements(combattant, campagne).join(', ') ||
+        'Aucun équipement enregistré',
+    );
+    detail('Compétences', combattant.competences.join(', ') || 'Aucune');
+    const magie = ameliorationsMagiques(combattant);
+    if (magie) detail('Sorts et prières améliorés', magie);
+    detail('Blessures', combattant.blessures.join(', ') || 'Aucune');
+    if (combattant.notes.trim()) detail('Notes', combattant.notes.trim());
+    fiche.append(entete, table, details);
+    roster.append(fiche);
+  }
+  if (!campagne.combattants.length)
+    roster.append(element('p', 'Aucun combattant recruté.'));
+  cible.body.replaceChildren(
+    hero,
+    roster,
+    element(
+      'footer',
+      'Document généré depuis les données locales de Trackheim. Vérifiez les règles particulières de la bande avant la partie.',
+    ),
+  );
 }
 
 function valeurBande(campagne: EtatCampagne) {
