@@ -134,7 +134,7 @@ export function construireFeuilleImprimable(campagne: EtatCampagne) {
         })
         .join('');
       return `<article class="fighter">
-        <header><div><h2>${echapper(combattant.nom)}</h2><p>${echapper(profil.nom)}${combattant.quantite > 1 ? `, groupe de ${combattant.quantite}` : ''}</p></div><b>${echapper(combattant.statut)} · ${combattant.experience} XP</b></header>
+        <header><div><h2>${echapper(combattant.nom)}</h2><p>${echapper(profil.nom)}${combattant.quantite > 1 ? `, groupe de ${echapper(String(combattant.quantite))}` : ''}</p></div><b>${echapper(combattant.statut)} · ${echapper(String(combattant.experience))} XP</b></header>
         <table aria-label="Caractéristiques de ${echapper(combattant.nom)}"><tbody><tr>${cellules}</tr></tbody></table>
         <dl>
           <div><dt>Équipement</dt><dd>${echapper(nomsEquipements(combattant, campagne).join(', ') || 'Aucun équipement enregistré')}</dd></div>
@@ -174,7 +174,7 @@ footer { margin-top: 7mm; border-top: 1px solid #c8b99e; padding-top: 3mm; color
 }
 </style></head><body>
 <header class="hero"><div><p>TRACKHEIM · FEUILLE DE BANDE</p><h1>${echapper(campagne.nomBande)}</h1><p>${echapper(definition.nom)} · grade ${echapper(campagne.grade)}</p></div>
-<div class="summary"><b>Valeur ${valeurBande(campagne)}</b><p>${campagne.couronnes} CO · ${campagne.fragments} fragment(s)</p><p>${echapper(campagne.campagneActive ? campagne.nomCampagne : 'Bande indépendante')}</p></div></header>
+<div class="summary"><b>Valeur ${echapper(String(valeurBande(campagne)))}</b><p>${echapper(String(campagne.couronnes))} CO · ${echapper(String(campagne.fragments))} fragment(s)</p><p>${echapper(campagne.campagneActive ? campagne.nomCampagne : 'Bande indépendante')}</p></div></header>
 <main class="roster">${combattants || '<p>Aucun combattant recruté.</p>'}</main>
 <footer>Document généré depuis les données locales de Trackheim. Vérifiez les règles particulières de la bande avant la partie.</footer>
 </body></html>`;
