@@ -26,6 +26,17 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Reject tracked private environment files
+        shell: python
+        run: |
+          import pathlib, subprocess
+          files = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          allowed = {'.env.example', '.env.sample', '.env.template', '.env.dist'}
+          bad = [p for p in files if any((part == '.env' or part.startswith('.env.')) and part not in allowed for part in pathlib.PurePosixPath(p).parts)]
+          if bad:
+              raise SystemExit('Private environment files tracked: ' + ', '.join(bad))
+      - name: Test public output protection
+        run: node scripts/test-public-output.mjs
       - name: Scan tracked history and files
         env:
           GITLEAKS_VERSION: 8.30.1
