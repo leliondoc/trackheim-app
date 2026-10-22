@@ -27,9 +27,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: 22
+          node-version: '>=22.23.4 <23'
+          check-latest: true
           cache: npm
 
+      - name: Require patched Node.js
+        run: |
+          node -e 'const [major, minor, patch] = process.versions.node.split(".").map(Number); if (major !== 22 || minor < 23 || (minor === 23 && patch < 4)) throw new Error("Node.js 22.23.4 minimum required"); console.log(process.version)'
       - name: Install dependencies
         run: npm ci
 
