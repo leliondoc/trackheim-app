@@ -51,7 +51,11 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: '24'
+          node-version: '>=24.22.1 <25'
+          check-latest: true
+      - name: Require patched Node.js
+        run: |
+          node -e 'const [major, minor, patch] = process.versions.node.split(".").map(Number); if (major !== 24 || minor < 22 || (minor === 22 && patch < 1)) throw new Error("Node.js 24.22.1 minimum required"); console.log(process.version)'
       - name: Audit all locked dependencies
         working-directory: ${{ matrix.directory }}
         run: npm audit --package-lock-only --ignore-scripts --audit-level=high
